@@ -36,7 +36,6 @@ public class ViewController : MonoBehaviour
 
     void RotateCamera(Vector2 movementVector)
     {
-        Debug.Log(movementVector);
         targetPosY += movementVector.x * Time.fixedDeltaTime * _rotationSpeed;
         targetPosX += movementVector.y * Time.fixedDeltaTime * _rotationSpeed;
 

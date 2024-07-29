@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class Manager : MonoBehaviour
     [SerializeField] float _newSpeed = 5f;
     [SerializeField] float _timeForReachNewSpeed;
     [SerializeField] float _t = 0;
+    [SerializeField] TextMeshProUGUI _fpsCounter;
 
     public static float GlobalMoveSpeed;
 
@@ -20,13 +22,20 @@ public class Manager : MonoBehaviour
 
     [SerializeField] Image _sliderFillImage;
 
+    private void Start()
+    {
+        Application.targetFrameRate = 240;
+    }
+
     private void Update()
     {
         GlobalMoveSpeed = _globalMoveSpeed;
+        _fpsCounter.text = string.Format("{0:f0}", 1 / Time.deltaTime);
+        //_fpsCounter.text = (1/Time.deltaTime).ToString();
 
         //if (!_speedUpdated)
         //{
-            
+
 
         //    _globalMoveSpeed = Mathf.Lerp(_globalMoveSpeed, _newSpeed, _t);
         //}
@@ -65,7 +74,6 @@ public class Manager : MonoBehaviour
         _lastSpeed = _globalMoveSpeed;
         while (_t <= 1)
         {
-            Debug.LogWarning("NewSPEED");
             _t += Time.deltaTime / _timeForReachNewSpeed;
             _globalMoveSpeed = Mathf.Lerp(_lastSpeed, newSpeed, _t);
             _sliderFillImage.fillAmount = Mathf.Lerp(startFillValue, sliderValue, _t);

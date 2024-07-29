@@ -6,11 +6,12 @@ public class CarController : MonoBehaviour
     [SerializeField] float _rotateSpeed;
     [SerializeField] Transform[] _wheels;
     [SerializeField] ParticleSystem[] _wheelsDustPS;
+    [SerializeField] float _translateDuration;
 
-    Vector3 _startPos;
+    [SerializeField] Vector3 _startPos;
     Vector3 _maxRightPos;
     Vector3 _maxLeftPos;
-    Vector3 _offsetX = new(500,0,0);
+    Vector3 _offsetX = new(500, 0, 0);
     float _maxSlideSpeed = 100;
     float _changeDirectionMaxDelay = 5f;
 
@@ -32,11 +33,13 @@ public class CarController : MonoBehaviour
         _startPos = transform.position;
         _maxRightPos = transform.position + _offsetX;
         _maxLeftPos = transform.position - _offsetX;
-        if(gameObject.name == "MilitaryTruck2") return;
+        if (gameObject.name == "MilitaryTruck2") return;
         _currentDelay = Random.Range(0, _changeDirectionMaxDelay);
         _curentSpeed = Random.Range(-_maxSlideSpeed, _maxSlideSpeed);
         //Invoke(nameof(ChangeDirection), _currentDelay);
-        InvokeRepeating(nameof(ChangeOffset), 0, 6);
+
+        StartCoroutine(TranslateToPlayer());
+
     }
 
     void FixedUpdate()
@@ -53,12 +56,12 @@ public class CarController : MonoBehaviour
                 main.startSpeed = 185 * Manager.GlobalMoveSpeed;
                 var emmision = dust.emission;
 
-                emmision.rateOverTime = 10 * Manager.GlobalMoveSpeed;
+                emmision.rateOverTime = 5 * Manager.GlobalMoveSpeed;
             }
 
         if (gameObject.name == "MilitaryTruck2") return;
 
-        
+
         float offsetX = _currentOffset * Mathf.Cos(Time.time);
 
         float xPos = _startPos.x + offsetX;
@@ -111,6 +114,33 @@ public class CarController : MonoBehaviour
     }
 
 
+    IEnumerator TranslateToPlayer()
+    {
+        yield return null;
+        float randomXOffset = Random.Range(-_xOffset, _xOffset);
+        Vector3 targetPos = new(randomXOffset, _startPos.y, _startPos.z);
+
+        float t = 0;
+        while (t <= 1)
+        {
+            
+            if (t >= 0.75f)
+            {
+                t += Time.deltaTime / _translateDuration / 5;
+            }
+            else
+            {
+                t += Time.deltaTime / _translateDuration;
+            }
+            transform.position = Vector3.Lerp(_startPos, targetPos, t);
+            yield return null;
+        }
+        _startPos = targetPos;
+
+        InvokeRepeating(nameof(ChangeOffset), 0, 6);
+    }
+
+
     //void ChangeDirection()
     //{
     //    _currentDelay = Random.Range(2, _changeDirectionMaxDelay);
@@ -118,5 +148,5 @@ public class CarController : MonoBehaviour
     //    Invoke(nameof(ChangeDirection), _currentDelay);
     //}
 
-    
+
 }
