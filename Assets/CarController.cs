@@ -66,18 +66,16 @@ public class CarController : MonoBehaviour
         transform.position = new Vector3(xPos, transform.position.y, _startPos.z);
 
 
-        _diferenceInPos = transform.position.x - _lastXPos;
+        //_diferenceInPos = transform.position.x - _lastXPos;
 
-        if (_diferenceInPos > 0)
-        {            
-            _lastXPos = transform.position.x;
-        }
-        else
-        {            
-            _lastXPos = transform.position.x;
-        }
-
-        Debug.Log(_diferenceInPos);
+        //if (_diferenceInPos > 0)
+        //{            
+        //    _lastXPos = transform.position.x;
+        //}
+        //else
+        //{            
+        //    _lastXPos = transform.position.x;
+        //}
 
         //_currentRotateSpeed = _rotateSpeed + _diferenceInPos / _rotateSpeed;
 
