@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976fea576407abd4cb4df198f4930a31, type: 3}
+  m_Name: Energy_Simple_Cannon
+  m_EditorClassIdentifier: 
+  deffWeaponName: Energy_Simple_Cannon
+  weaponNameEN: Energy Simple Cannon
+  weaponNameRU: "\u041F\u0440\u043E\u0441\u0442\u0430\u044F \u042D\u043D\u0435\u0440\u0433\u043E
+    \u041F\u0443\u0448\u043A\u0430"
+  weaponType: 0
+  weaponRaritie: 0
+  hullDmgByLvl: 1
+  hullDmgCurLvl: 1
+  hullDmgMaxLvl: 6
+  shieldDmgByLvl: 2
+  shieldDmgCurLvl: 1
+  shieldDmgMaxLvl: 5
+  fireRateByLvl: 0.5
+  fireRateCurtLvl: 1
+  fireRateMaxLvl: 6
+  rotationSpeedByLvl: 15
+  rotationSpeedCurLvl: 1
+  rotationSpeedMaxLvl: 6

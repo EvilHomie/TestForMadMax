@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0974e22602f27e84db57a86f2d20d8ab, type: 3}
+  m_Name: GameItems
+  m_EditorClassIdentifier: 
+  _weapons:
+  - {fileID: 7069817358049926704, guid: 548f481084ebf5f49a00f93cdea22bdd, type: 3}
+  - {fileID: 257131958389177027, guid: dfdc7e17016d5424baeacd5e840ac1c4, type: 3}
+  - {fileID: 257131958389177027, guid: 2f16a2f8682f06940812b1c3173331fa, type: 3}
+  - {fileID: 7069817358049926704, guid: 1385276b2089d0c4c897596bce2f4e0f, type: 3}
+  _itemsSpritesAtlas: {fileID: 100100200, guid: 8ba0462ead0b4d54596dae3a30bd14b9,
+    type: 3}
+  _playerVehicles:
+  - {fileID: 4091442796374768174, guid: 8adc2b9fa90db854f8cfab06c6b863fc, type: 3}
+  - {fileID: 4091442796374768174, guid: 29bd34ed40344f142828a577078d256c, type: 3}
+  _SchemeData:
+  - {fileID: 11400000, guid: 6f99f161d485f0b458b920ea7f4fd38f, type: 2}
+  - {fileID: 11400000, guid: 4a398722107d31340956841cb388095b, type: 2}
+  - {fileID: 11400000, guid: 95d6977253f7cc44abab2bbc9ea5f457, type: 2}
+  - {fileID: 11400000, guid: e74e1fd4a5917c448864fef477f6aa35, type: 2}
+  - {fileID: 11400000, guid: e74d9f432f746654aaa09f0214ac0ba9, type: 2}
+  - {fileID: 11400000, guid: 8981695e2d38b8945a8f31bf9222e42b, type: 2}
