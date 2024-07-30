@@ -14,7 +14,7 @@ public class BumpController : MonoBehaviour
             {
                 bumps.position = new Vector3(1200, bumps.position.y, bumps.position.z);
             }
-            else bumps.Translate(_moveSpeed * Manager.GlobalMoveSpeed * Time.fixedDeltaTime * Vector3.left);
+            else bumps.Translate(_moveSpeed * RaidManager.Instance.PlayerMoveSpeed * Time.fixedDeltaTime * Vector3.left);
         }
     }
 }

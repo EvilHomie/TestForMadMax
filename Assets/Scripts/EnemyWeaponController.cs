@@ -26,7 +26,7 @@ public class EnemyWeaponController : MonoBehaviour
 }
 
 [Serializable]
-struct Weapon
+class Weapon
 {
     public AudioClip shootSound;
     public AudioSource soundSource;

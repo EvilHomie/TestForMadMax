@@ -6,6 +6,12 @@ public class GameLogicParameters : MonoBehaviour
 
     [SerializeField] bool _isTesting = false;
 
+    [Header("RAID")]
+    [SerializeField] float _minSpeed = 5f;
+    [SerializeField] float _maxSpeed = 10f;
+    [SerializeField] float _timeForChangeSpeed = 2f;
+    [SerializeField] float _moveRoadMod = 0.1f;
+
     [Header("VISUAL")]
     [SerializeField] float _wheelsRotateSpeedMod = 3;
     [SerializeField] float _dustPSSpeedMod = 185f;
@@ -22,25 +28,35 @@ public class GameLogicParameters : MonoBehaviour
     [SerializeField] float _changeSlideOffsetDelay = 5;
     [SerializeField] float _slideXValue = 500f;
 
+    [Header("PlayerWeapon")]
+    [SerializeField] float _maxYRotateAngle;
+    [SerializeField] float _maxXRotateAngle;
+
+
+    public float MinSpeed => _minSpeed;
+    public float MaxSpeed => _maxSpeed;
+    public float TimeForChangeSpeed => _timeForChangeSpeed;
+    public float MoveRoadMod => _moveRoadMod;
+
 
     public float WheelsRotateSpeedMod => _wheelsRotateSpeedMod;
-
     public float DustPSSpeedMod => _dustPSSpeedMod;
-
     public float DustPSEmmisionRateMod => _dustPSEmmisionRateMod;
 
 
     public float GameZoneXSize => _gameZoneXSize;
-
     public float MinTranslateDuration => _minTranslateDuration;
     public float MaxTranslateDuration => _maxTranslateDuration;
     public float ValueToStartSlowTranslate => _valueToStartSlowTranslate;
     public float SlowTranslateValue => _slowTranslateValue;
 
 
-
     public float ChangeSlideOffsetDelay => _changeSlideOffsetDelay;
     public float SlideXValue => _slideXValue;
+
+
+    public float MaxYRotateAngle => _maxYRotateAngle;
+    public float MaxXRotateAngle => _maxXRotateAngle;
 
 
 
