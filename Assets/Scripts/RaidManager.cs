@@ -21,8 +21,7 @@ public class RaidManager : MonoBehaviour
     }
     private void Start()
     {
-        _playerMoveSpeed = GameLogicParameters.Instance.MinSpeed;
-        Application.targetFrameRate = 1000;
+        _playerMoveSpeed = GameLogicParameters.Instance.MinSpeed;        
     }
 
     void FixedUpdate()

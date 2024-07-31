@@ -65,6 +65,7 @@ public class GameLogicParameters : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
+        Application.targetFrameRate = 1000;
     }
 
     private void Update()

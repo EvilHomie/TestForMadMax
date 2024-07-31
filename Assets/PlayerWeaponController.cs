@@ -41,7 +41,6 @@ public class PlayerWeaponController : MonoBehaviour
         //float targetPosYClamped = Mathf.Clamp(targetPosY, -45, 45); // Clamp вызывает ступор при достижении краёв.
         //float targetPosXClamped = Mathf.Clamp(targetPosX, -30, 0); // Clamp вызывает ступор при достижении краёв.
 
-        Debug.LogWarning(targetPosY + " " + targetPosX);
         _weaponTransform.rotation = Quaternion.Euler(-targetPosX, targetPosY, 0);
         Camera.main.transform.rotation = _weaponTransform.rotation;
     }
