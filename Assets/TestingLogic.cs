@@ -5,9 +5,13 @@ public class TestingLogic : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _fpsCounter;
 
+    int _fps = 0;
+    string _strFPS;
+
     void Update()
     {
-        _fpsCounter.text = string.Format("{0:f0}", 1 / Time.deltaTime);
+        _fps = (int)(1 / Time.deltaTime);
+        _fpsCounter.text = _fps.ToString();
 
         if (Input.GetKeyDown(KeyCode.T))
             Time.timeScale += 1;
@@ -16,4 +20,5 @@ public class TestingLogic : MonoBehaviour
             Time.timeScale -= 1;
     }
 }
+
 

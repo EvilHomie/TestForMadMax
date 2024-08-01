@@ -54,7 +54,7 @@ Material:
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _HeatDistortion: 0.001
+    - _HeatDistortion: 0.003
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SampleGI: 0
@@ -65,7 +65,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DistortionSpeed: {r: 1, g: 1, b: 0, a: 0}
+    - _DistortionSpeed: {r: 2, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5311607003215769462
 MonoBehaviour:
