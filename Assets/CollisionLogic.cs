@@ -34,7 +34,7 @@ public class CollisionLogic : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log(other.name);
+        Debug.Log(gameObject.name);
     }
 
     private void OnParticleTrigger()

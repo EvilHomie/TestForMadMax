@@ -68,6 +68,11 @@ public class GameLogicParameters : MonoBehaviour
         Application.targetFrameRate = 1000;
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         if (!_isTesting) return;
