@@ -311,7 +311,6 @@ GameObject:
   m_Component:
   - component: {fileID: 28145689}
   - component: {fileID: 28145688}
-  - component: {fileID: 28145690}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -396,29 +395,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &28145690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28145687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
 --- !u!4 &30980094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 717898f1e82d6b94f8dfa819112cc432,
@@ -1532,18 +1508,6 @@ PrefabInstance:
     - target: {fileID: 19800004, guid: 5d73f72c6be7d0440bbc9c87d4f718c0, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900000, guid: 5d73f72c6be7d0440bbc9c87d4f718c0, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900002, guid: 5d73f72c6be7d0440bbc9c87d4f718c0, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900004, guid: 5d73f72c6be7d0440bbc9c87d4f718c0, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5045,18 +5009,6 @@ PrefabInstance:
     - target: {fileID: 19800000, guid: 9e95c7b2183a4f345aaf86846f8f1918, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900000, guid: 9e95c7b2183a4f345aaf86846f8f1918, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900004, guid: 9e95c7b2183a4f345aaf86846f8f1918, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900006, guid: 9e95c7b2183a4f345aaf86846f8f1918, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

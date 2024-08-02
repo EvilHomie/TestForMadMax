@@ -16,6 +16,14 @@ public class PlayerShootManager : MonoBehaviour
     ParticleSystem.EmissionModule _emissionModule;
 
 
+
+    [SerializeField] float _shakeDuration = 0.2f;
+    [SerializeField] float _shakeIntensity = 0.1f;
+
+    Vector3 _initialPos;
+    float _currentChakeDuration = 0.0f;
+
+
     private void Awake()
     {
         _emissionModule = _particleSystem.emission;
@@ -24,7 +32,7 @@ public class PlayerShootManager : MonoBehaviour
 
     private void Start()
     {
-        
+        _initialPos = Camera.main.transform.localPosition;
     }
 
     private void Update()
@@ -38,6 +46,7 @@ public class PlayerShootManager : MonoBehaviour
             _particleSystem.Emit(1);
             _soundSource.PlayOneShot(_shootSound);
 
+            ShakeWeapon();
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
             {
@@ -46,9 +55,19 @@ public class PlayerShootManager : MonoBehaviour
             }
         }
 
-            
+        if (_currentChakeDuration > 0)
+        {
+            Vector3 randomOffset = Random.insideUnitSphere * _shakeIntensity;
+            Camera.main.transform.localPosition = _initialPos + randomOffset;
+            _currentChakeDuration -= Time.deltaTime;
+        }
+        else
+        {
+            Camera.main.transform.localPosition = _initialPos;
+        }
 
-        Debug.DrawRay(transform.position, transform.forward * 1000, Color.green) ;
+
+        //Debug.DrawRay(transform.position, transform.forward * 1000, Color.green) ;
 
 
         
@@ -70,6 +89,9 @@ public class PlayerShootManager : MonoBehaviour
         _particleSystem.Stop();
     }
 
-    
+    void ShakeWeapon()
+    {
+        _currentChakeDuration = _shakeDuration;
+    }
 
 }

@@ -11,10 +11,11 @@ public class GameLogicParameters : MonoBehaviour
     [SerializeField] float _maxSpeed = 10f;
     [SerializeField] float _timeForChangeSpeed = 2f;
     [SerializeField] float _moveRoadMod = 0.1f;
+    [SerializeField] float _speedMod = 185f;
+    [SerializeField] float _xOffsetForDestroyObject = 10000f;
 
     [Header("VISUAL")]
-    [SerializeField] float _wheelsRotateSpeedMod = 3;
-    [SerializeField] float _dustPSSpeedMod = 185f;
+    [SerializeField] float _wheelsRotateSpeedMod = 3;    
     [SerializeField] float _dustPSEmmisionRateMod = 5f;
 
     [Header("ENEMY TRANSLATE TO PLAYER")]
@@ -26,21 +27,25 @@ public class GameLogicParameters : MonoBehaviour
 
     [Header("ENEMY SLIDE")]
     [SerializeField] float _changeSlideOffsetDelay = 5;
-    [SerializeField] float _slideXValue = 500f;
+    [SerializeField] float _slideOffsetXValue = 500f;
 
     [Header("PlayerWeapon")]
     [SerializeField] float _maxYRotateAngle;
     [SerializeField] float _maxXRotateAngle;
+
+    [Header("PhysicData")]
+    [SerializeField] float _touchRoadImpulseMod = 25;
 
 
     public float MinSpeed => _minSpeed;
     public float MaxSpeed => _maxSpeed;
     public float TimeForChangeSpeed => _timeForChangeSpeed;
     public float MoveRoadMod => _moveRoadMod;
+    public float SpeedMod => _speedMod;
+    public float XOffsetForDestroyObject => _xOffsetForDestroyObject;
 
 
     public float WheelsRotateSpeedMod => _wheelsRotateSpeedMod;
-    public float DustPSSpeedMod => _dustPSSpeedMod;
     public float DustPSEmmisionRateMod => _dustPSEmmisionRateMod;
 
 
@@ -52,13 +57,13 @@ public class GameLogicParameters : MonoBehaviour
 
 
     public float ChangeSlideOffsetDelay => _changeSlideOffsetDelay;
-    public float SlideXValue => _slideXValue;
+    public float SlideOffsetXValue => _slideOffsetXValue;
 
 
     public float MaxYRotateAngle => _maxYRotateAngle;
     public float MaxXRotateAngle => _maxXRotateAngle;
 
-
+    public float TouchRoadImpulseMod => _touchRoadImpulseMod;
 
 
     void Awake()

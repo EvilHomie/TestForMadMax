@@ -62,7 +62,7 @@ public class VehicleMovementController : MonoBehaviour
         {
             if (dust == null) continue;
             var main = dust.main;
-            main.startSpeed = GameLogicParameters.Instance.DustPSSpeedMod * RaidManager.Instance.PlayerMoveSpeed;
+            main.startSpeed = GameLogicParameters.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed;
 
             var emmision = dust.emission;
             emmision.rateOverTime = GameLogicParameters.Instance.DustPSEmmisionRateMod * RaidManager.Instance.PlayerMoveSpeed;
@@ -112,19 +112,19 @@ public class VehicleMovementController : MonoBehaviour
 
     IEnumerator LerpXOffset()
     {
-        float _targetOffset = Random.Range(-GameLogicParameters.Instance.SlideXValue, GameLogicParameters.Instance.SlideXValue);
+        float _targetOffset = Random.Range(-GameLogicParameters.Instance.SlideOffsetXValue, GameLogicParameters.Instance.SlideOffsetXValue);
         float startOffset = _currentOffset;
 
         float t = 0;
         while (t <= 1)
         {
-            t += Time.deltaTime / 5;
+            t += Time.deltaTime / 3;
             _currentOffset = Mathf.Lerp(startOffset, _targetOffset, t);
             yield return null;
         }
     }
 
-    public void IsDead()
+    public void OnDead()
     {
         _isDead = true;
         foreach (var dust in _wheelsDustPS)
@@ -133,6 +133,17 @@ public class VehicleMovementController : MonoBehaviour
             var emmision = dust.emission;
             emmision.enabled = false;
         }
+        StartCoroutine(MoveIfDead());
+    }
+
+    IEnumerator MoveIfDead()
+    {
+        while (transform.position.x > -GameLogicParameters.Instance.XOffsetForDestroyObject)
+        {
+            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * -Vector3.right, Space.World);
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 
 }
