@@ -8,6 +8,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
     float _currentOffset;
 
     bool _reachGameZone = false;
+    bool _tryRun = false;
 
     Coroutine _runAwayCoroutine;
     Coroutine _translateToPlayerCoroutine;
@@ -21,7 +22,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     public void MotionSimulation()
     {
-        if (!_reachGameZone) return;
+        if (!_reachGameZone || _tryRun) return;
 
         float offsetX = _currentOffset * Mathf.Cos(Time.time);
 
@@ -107,6 +108,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(GameLogicParameters.Instance.MinDelayForRun, GameLogicParameters.Instance.MaxDelayForRun));
         if (_translateToPlayerCoroutine != null)
             StopCoroutine(_translateToPlayerCoroutine);
+        _tryRun = true;
 
         float runSpeedMod = Random.Range(GameLogicParameters.Instance.MinRunSpeed, GameLogicParameters.Instance.MaxRunSpeed);
         bool randomDirection = Random.value < 0.5f;
