@@ -5,7 +5,8 @@ public class PlayerShootManager : MonoBehaviour
     [SerializeField] AudioClip _shootSound;
     [SerializeField] AudioClip _hitSound;
     [SerializeField] AudioSource _soundSource;
-    [SerializeField] ParticleSystem _particleSystem;
+    [SerializeField] ParticleSystem _bulletsPS;
+    [SerializeField] ParticleSystem[] _shootsPS;
 
     [SerializeField] float _fireRate;
 
@@ -26,7 +27,7 @@ public class PlayerShootManager : MonoBehaviour
 
     private void Awake()
     {
-        _emissionModule = _particleSystem.emission;
+        _emissionModule = _bulletsPS.emission;
         StopShoot();
     }
 
@@ -43,7 +44,8 @@ public class PlayerShootManager : MonoBehaviour
         if (_isShooting && Time.time >= _nextTimeTofire)
         {
             _nextTimeTofire = Time.time + 1f / _fireRate;
-            _particleSystem.Emit(1);
+            _bulletsPS.Emit(1);
+            foreach (var ps in _shootsPS) ps.Emit(1);
             _soundSource.PlayOneShot(_shootSound);
 
             ShakeWeapon();
@@ -76,6 +78,7 @@ public class PlayerShootManager : MonoBehaviour
     public void StartShoot()
     {
         _isShooting = true;
+        //_shootsPS.Play();
 
         //_particleSystem.Emit(1);
         //_soundSource.PlayOneShot(_shootSound);
@@ -86,7 +89,8 @@ public class PlayerShootManager : MonoBehaviour
     public void StopShoot()
     {
         _isShooting = false;
-        _particleSystem.Stop();
+        //_bulletsPS.Stop();
+        //_shootsPS.Stop();
     }
 
     void ShakeWeapon()

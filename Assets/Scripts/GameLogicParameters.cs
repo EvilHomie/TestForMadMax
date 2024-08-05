@@ -17,6 +17,7 @@ public class GameLogicParameters : MonoBehaviour
     [Header("VISUAL")]
     [SerializeField] float _wheelsRotateSpeedMod = 3;    
     [SerializeField] float _dustPSEmmisionRateMod = 5f;
+    [SerializeField] float _hitVisualDuration = 0.1f;
 
     [Header("ENEMY TRANSLATE TO PLAYER")]
     [SerializeField] float _gameZoneXSize = 500f;
@@ -25,9 +26,13 @@ public class GameLogicParameters : MonoBehaviour
     [SerializeField] float _valueToStartSlowTranslate = 0.8f;
     [SerializeField] float _slowTranslateValue = 5f;
 
-    [Header("ENEMY SLIDE")]
+    [Header("ENEMY BRAINS")]
     [SerializeField] float _changeSlideOffsetDelay = 5;
     [SerializeField] float _slideOffsetXValue = 500f;
+    [SerializeField] float _minDelayForRun = 2f;
+    [SerializeField] float _maxDelayForRun = 4f;
+    [SerializeField] float _minRunSpeed = 0.3f;
+    [SerializeField] float _maxRunSpeed = 0.5f;
 
     [Header("PlayerWeapon")]
     [SerializeField] float _maxYRotateAngle;
@@ -47,6 +52,7 @@ public class GameLogicParameters : MonoBehaviour
 
     public float WheelsRotateSpeedMod => _wheelsRotateSpeedMod;
     public float DustPSEmmisionRateMod => _dustPSEmmisionRateMod;
+    public float HitVisualDuration => _hitVisualDuration;
 
 
     public float GameZoneXSize => _gameZoneXSize;
@@ -58,6 +64,11 @@ public class GameLogicParameters : MonoBehaviour
 
     public float ChangeSlideOffsetDelay => _changeSlideOffsetDelay;
     public float SlideOffsetXValue => _slideOffsetXValue;
+    public float MinDelayForRun => _minDelayForRun;
+    public float MaxDelayForRun => _maxDelayForRun;
+    public float MinRunSpeed => _minRunSpeed;
+    public float MaxRunSpeed => _maxRunSpeed;
+
 
 
     public float MaxYRotateAngle => _maxYRotateAngle;

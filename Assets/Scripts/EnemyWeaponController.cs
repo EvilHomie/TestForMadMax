@@ -1,36 +1,51 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyWeaponController : MonoBehaviour
 {
-    [SerializeField] Weapon[] weapons;
-    [SerializeField] bool _isShooting;
+    [SerializeField] Weapon[] _weapons;
 
-    private void FixedUpdate()
+    AudioSource _audioSource;
+
+    bool _weaponsDestroyed = false;
+
+    private void Awake()
     {
-        foreach (var weapon in weapons)
+        _audioSource = transform.root.GetComponent<AudioSource>();
+    }
+
+    public void RotateToPlayer()
+    {
+        if (_weaponsDestroyed) return;
+
+        foreach (var weapon in _weapons)
         {
             weapon.transform.LookAt(Camera.main.transform.position);
-            Shoot(weapon);
         }
     }
 
-    void Shoot(Weapon weapon)
+    public void StartShooting()
     {
-        if (_isShooting && Time.time >= weapon.nextTimeTofire)
+        _weaponsDestroyed = false;
+        foreach (var weapon in _weapons)
         {
-            weapon.nextTimeTofire = Time.time + 1f / weapon.fireRate;
-            weapon.soundSource.PlayOneShot(weapon.shootSound);
+            StartCoroutine(PlayShootEffects(weapon));
         }
+    }
+
+    IEnumerator PlayShootEffects(Weapon weapon)
+    {
+        while (!_weaponsDestroyed) 
+        {
+            weapon.weaponParticlesManager.Emit(1);
+            _audioSource.PlayOneShot(weapon.shootSound);
+            yield return new WaitForSeconds(1 / weapon.fireRate);
+        }
+    }
+
+    public void StopShooting()
+    {
+        _weaponsDestroyed = true;
     }
 }
 
-[Serializable]
-class Weapon
-{
-    public AudioClip shootSound;
-    public AudioSource soundSource;
-    public Transform transform;
-    public float fireRate;
-    public float nextTimeTofire;
-}

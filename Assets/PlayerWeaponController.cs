@@ -9,7 +9,7 @@ public class PlayerWeaponController : MonoBehaviour
     float targetPosX = 0;
 
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         RotateCamera(TouchController.Instance.GetTouchPosition);
         RotateCameraByWASD();
@@ -17,8 +17,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     void RotateCamera(Vector2 movementVector)
     {
-        targetPosY += movementVector.x * Time.fixedDeltaTime * _rotationSpeed;
-        targetPosX += movementVector.y * Time.fixedDeltaTime * _rotationSpeed;
+        targetPosY += movementVector.x * Time.deltaTime * _rotationSpeed;
+        targetPosX += movementVector.y * Time.deltaTime * _rotationSpeed;
 
         float targetPosYClamped = Mathf.Clamp(targetPosY, -GameLogicParameters.Instance.MaxYRotateAngle, GameLogicParameters.Instance.MaxYRotateAngle);
         float targetPosXClamped = Mathf.Clamp(targetPosX, -GameLogicParameters.Instance.MaxXRotateAngle, GameLogicParameters.Instance.MaxXRotateAngle);
@@ -29,8 +29,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     void RotateCameraByWASD()
     {
-        targetPosY += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * _rotationSpeed;
-        targetPosX += Input.GetAxis("Vertical") * Time.fixedDeltaTime * _rotationSpeed;
+        targetPosY += Input.GetAxis("Horizontal") * Time.deltaTime * _rotationSpeed;
+        targetPosX += Input.GetAxis("Vertical") * Time.deltaTime * _rotationSpeed;
 
         if (targetPosY < -GameLogicParameters.Instance.MaxYRotateAngle) targetPosY = -GameLogicParameters.Instance.MaxYRotateAngle;
         if (targetPosY > GameLogicParameters.Instance.MaxYRotateAngle) targetPosY = GameLogicParameters.Instance.MaxYRotateAngle;
