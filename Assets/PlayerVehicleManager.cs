@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVehicleManager : MonoBehaviour
 {
+    public static PlayerVehicleManager Instance;
     VehicleVisualController _vehicleVisualController;
     AudioSource _audioSource;
 
@@ -11,17 +11,22 @@ public class PlayerVehicleManager : MonoBehaviour
     [SerializeField] ParticleSystem[] _wheelsDustPS;
 
     float _lastMoveSpeed = 0;
-
     float _audioPitch = 0.9f;
+
+    bool _isStarted = false;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+
         _vehicleVisualController = GetComponent<VehicleVisualController>();
         _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
+        if(!_isStarted) return;
         _vehicleVisualController.RotateWheels();
         if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
         {
@@ -34,9 +39,10 @@ public class PlayerVehicleManager : MonoBehaviour
     }
 
 
-    private void Start()
+    public void StartVehicle()
     {
         StartCoroutine(StartMovement());
+        _isStarted = true;
     }
 
 
