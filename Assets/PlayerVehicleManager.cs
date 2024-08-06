@@ -5,14 +5,10 @@ using UnityEngine;
 public class PlayerVehicleManager : MonoBehaviour
 {
     VehicleVisualController _vehicleVisualController;
-    RaidManager _raidManager;
     AudioSource _audioSource;
 
     [SerializeField] GameObject _garage;
     [SerializeField] ParticleSystem[] _wheelsDustPS;
-
-    [SerializeField] float firstdelay;
-    [SerializeField] float seconddelay;
 
     float _lastMoveSpeed = 0;
 
@@ -46,7 +42,6 @@ public class PlayerVehicleManager : MonoBehaviour
 
     IEnumerator StartMovement()
     {
-        //_vehicleVisualController.StopVisualEffects();
         _audioSource.Play();
         ShakeCamera.Instance.Shake(0.8f, 0.5f);
         yield return new WaitForSeconds(2);
@@ -57,34 +52,15 @@ public class PlayerVehicleManager : MonoBehaviour
         {
             ps.Play();
         }
-
-        //yield return new WaitForSeconds(firstdelay);
-        //Debug.LogWarning("1");
-        //_wheelsDustPS[0].Play();
-        //yield return new WaitForSeconds(seconddelay);
-        //Debug.LogWarning("2");
-        //_wheelsDustPS[1].Play();
     }
 
     IEnumerator MoveGarage()
     {
         while (_garage.transform.position.x > -10000)
         {
-            _garage.transform.Translate(RaidManager.Instance.PlayerMoveSpeed * Vector3.left / 1.5f);
+            _garage.transform.position += Vector3.left * RaidManager.Instance.PlayerMoveSpeed * 170 * Time.deltaTime;
             yield return null;
         }
         _garage.SetActive(false);
     }
-
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    _wheelsDustPS[0].Play();
-    //}   
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    _wheelsDustPS[1].Play();
-    //}
-
-
 }
