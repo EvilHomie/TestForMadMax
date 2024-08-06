@@ -9,7 +9,7 @@ public class RaidManager : MonoBehaviour
     [SerializeField] Image _speedSliderFillImage;
     [SerializeField] MeshRenderer _mainRoadRenderer;
 
-    float _playerMoveSpeed = 5f;
+    float _playerMoveSpeed = 0f;
     public float PlayerMoveSpeed => _playerMoveSpeed;
 
     Coroutine _UpdateSpeedCoroutine;
@@ -19,10 +19,10 @@ public class RaidManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    private void Start()
-    {
-        _playerMoveSpeed = GameLogicParameters.Instance.MinSpeed;        
-    }
+    //private void Start()
+    //{
+    //    _playerMoveSpeed = GameLogicParameters.Instance.MinSpeed;        
+    //}
 
     void FixedUpdate()
     {
@@ -35,19 +35,24 @@ public class RaidManager : MonoBehaviour
     }
 
 
-    public void ChangeSpeed(float value)
+    public void ChangeSpeed(float sliderValue)
     {
-        float newSpeed = GameLogicParameters.Instance.MinSpeed + value * GameLogicParameters.Instance.MinSpeed;
+        float newSpeed = GameLogicParameters.Instance.MinSpeed + sliderValue * GameLogicParameters.Instance.MinSpeed;
 
         if (_UpdateSpeedCoroutine != null)
         {
             StopCoroutine(_UpdateSpeedCoroutine);
-            _UpdateSpeedCoroutine = StartCoroutine(LerpSpeed(newSpeed, value));
+            _UpdateSpeedCoroutine = StartCoroutine(LerpSpeed(newSpeed, sliderValue));
         }
         else
         {
-            _UpdateSpeedCoroutine = StartCoroutine(LerpSpeed(newSpeed, value));
+            _UpdateSpeedCoroutine = StartCoroutine(LerpSpeed(newSpeed, sliderValue));
         }
+    }
+
+    public void StartMove(float speed, float duration)
+    {
+        StartCoroutine(StartLerpSpeed(speed, duration));
     }
 
 
@@ -61,6 +66,18 @@ public class RaidManager : MonoBehaviour
             t += Time.deltaTime / GameLogicParameters.Instance.TimeForChangeSpeed;
             _playerMoveSpeed = Mathf.Lerp(_lastSpeed, newSpeed, t);
             _speedSliderFillImage.fillAmount = Mathf.Lerp(startFillValue, sliderValue, t);
+            yield return null;
+        }
+        _UpdateSpeedCoroutine = null;
+    }
+
+    IEnumerator StartLerpSpeed(float speed, float duration)
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            t += Time.deltaTime / duration;
+            _playerMoveSpeed = Mathf.Lerp(0, speed, t);
             yield return null;
         }
         _UpdateSpeedCoroutine = null;

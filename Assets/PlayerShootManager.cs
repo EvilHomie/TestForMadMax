@@ -21,8 +21,8 @@ public class PlayerShootManager : MonoBehaviour
     [SerializeField] float _shakeDuration = 0.2f;
     [SerializeField] float _shakeIntensity = 0.1f;
 
-    Vector3 _initialPos;
-    float _currentChakeDuration = 0.0f;
+    //Vector3 _initialPos;
+    //float _currentChakeDuration = 0.0f;
 
 
     private void Awake()
@@ -31,10 +31,10 @@ public class PlayerShootManager : MonoBehaviour
         StopShoot();
     }
 
-    private void Start()
-    {
-        _initialPos = Camera.main.transform.localPosition;
-    }
+    //private void Start()
+    //{
+    //    _initialPos = Camera.main.transform.localPosition;
+    //}
 
     private void Update()
     {
@@ -48,7 +48,7 @@ public class PlayerShootManager : MonoBehaviour
             foreach (var ps in _shootsPS) ps.Emit(1);
             _soundSource.PlayOneShot(_shootSound);
 
-            ShakeWeapon();
+            ShakeCamera.Instance.Shake(1f / _fireRate, 0.2f);
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
             {
@@ -57,16 +57,16 @@ public class PlayerShootManager : MonoBehaviour
             }
         }
 
-        if (_currentChakeDuration > 0)
-        {
-            Vector3 randomOffset = Random.insideUnitSphere * _shakeIntensity;
-            Camera.main.transform.localPosition = _initialPos + randomOffset;
-            _currentChakeDuration -= Time.deltaTime;
-        }
-        else
-        {
-            Camera.main.transform.localPosition = _initialPos;
-        }
+        //if (_currentChakeDuration > 0)
+        //{
+        //    Vector3 randomOffset = Random.insideUnitSphere * _shakeIntensity;
+        //    Camera.main.transform.localPosition = _initialPos + randomOffset;
+        //    _currentChakeDuration -= Time.deltaTime;
+        //}
+        //else
+        //{
+        //    Camera.main.transform.localPosition = _initialPos;
+        //}
 
 
         //Debug.DrawRay(transform.position, transform.forward * 1000, Color.green) ;
@@ -93,9 +93,9 @@ public class PlayerShootManager : MonoBehaviour
         //_shootsPS.Stop();
     }
 
-    void ShakeWeapon()
-    {
-        _currentChakeDuration = _shakeDuration;
-    }
+    //void ShakeWeapon()
+    //{
+    //    _currentChakeDuration = _shakeDuration;
+    //}
 
 }

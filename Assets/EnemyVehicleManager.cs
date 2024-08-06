@@ -1,10 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemyVehicleManager : MonoBehaviour
 {
     EnemyVehicleMovementController _vehicleMovementController;
-    EnemyVehicleVisualController _enemyVehicleVisualController;
+    VehicleVisualController _vehicleVisualController;
     EnemyWeaponController _enemyWeaponController;
     ResourcesInVehicle _resourcesInVehicle;
     AudioSource _vehicleAudioSource;
@@ -18,7 +17,7 @@ public class EnemyVehicleManager : MonoBehaviour
     private void Awake()
     {
         _vehicleMovementController = GetComponent<EnemyVehicleMovementController>();
-        _enemyVehicleVisualController = GetComponent<EnemyVehicleVisualController>();
+        _vehicleVisualController = GetComponent<VehicleVisualController>();
         _enemyWeaponController = GetComponent<EnemyWeaponController>();
         _vehicleAudioSource = GetComponent<AudioSource>();
         _resourcesInVehicle = GetComponent<ResourcesInVehicle>();
@@ -28,13 +27,13 @@ public class EnemyVehicleManager : MonoBehaviour
     private void Start()
     {
         _vehicleMovementController.StartTranslateToPlayer();
-        _enemyVehicleVisualController.UpdateVisualEffect();
+        _vehicleVisualController.UpdateVisualEffect();
         _enemyWeaponController.StartShooting();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        _enemyVehicleVisualController.RotateWheels();
+        _vehicleVisualController.RotateWheels();
 
         if (_isDead) return;
 
@@ -43,7 +42,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
         if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
         {
-            _enemyVehicleVisualController.UpdateVisualEffect();
+            _vehicleVisualController.UpdateVisualEffect();
             _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
         }
     }
@@ -69,7 +68,7 @@ public class EnemyVehicleManager : MonoBehaviour
         _isDead = true;
         _enemyWeaponController.StopShooting();
         _vehicleMovementController.OnDieMovementLogic();
-        _enemyVehicleVisualController.StopVisualEffects();
+        _vehicleVisualController.StopVisualEffects();
         _blowParticleSystem.Play();
         _vehicleAudioSource.PlayOneShot(_blowAudioClip);
         _resourcesInVehicle.DropResources();
