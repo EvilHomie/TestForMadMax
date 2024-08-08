@@ -7,11 +7,16 @@ public class PlayerVehicleManager : MonoBehaviour
     VehicleVisualController _vehicleVisualController;
     AudioSource _audioSource;
 
-    [SerializeField] GameObject _garage;
     [SerializeField] ParticleSystem[] _wheelsDustPS;
+    [SerializeField] float _shakeIntensityOnStart = 0.5f;
+    [SerializeField] float _shakedelayOnStart = 0.5f;
+    [SerializeField] float _shakedurationOnStart = 0.8f;
+    [SerializeField] float _delayBeforeStartMove = 2;
+    [SerializeField] float _targetSpeedOnStart = 5;
+    [SerializeField] float _reachTargetSpeedDuration = 10;
 
     float _lastMoveSpeed = 0;
-    float _audioPitch = 0.9f;
+    float _deffAudioPitch = 0.9f;
 
     bool _isStarted = false;
 
@@ -28,31 +33,43 @@ public class PlayerVehicleManager : MonoBehaviour
     {
         if(!_isStarted) return;
         _vehicleVisualController.RotateWheels();
-        if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
+        if (_lastMoveSpeed != RaidObjectsManager.Instance.PlayerMoveSpeed)
         {
             _vehicleVisualController.UpdateVisualEffect();
 
-            if (RaidManager.Instance.PlayerMoveSpeed <= 5f) return;
-            _audioSource.pitch = _audioPitch + ((RaidManager.Instance.PlayerMoveSpeed - 5f) / 50f);
-            _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
+            if (RaidObjectsManager.Instance.PlayerMoveSpeed <= GameLogicParameters.Instance.MinPlayerSpeed) return;
+            _audioSource.pitch = _deffAudioPitch + ((RaidObjectsManager.Instance.PlayerMoveSpeed - GameLogicParameters.Instance.MinPlayerSpeed) / 50f);
+            _lastMoveSpeed = RaidObjectsManager.Instance.PlayerMoveSpeed;
         }
     }
 
 
-    public void StartVehicle()
+    public void OnPlayerStartRaid()
     {
         StartCoroutine(StartMovement());
         _isStarted = true;
+    }
+
+    public void OnPlayerEndRaid()
+    {
+        StopAllCoroutines();
+        _isStarted = false;
+        _audioSource.Stop();
+        foreach (var ps in _wheelsDustPS)
+        {
+            ps.Stop();
+        }
     }
 
 
     IEnumerator StartMovement()
     {
         _audioSource.Play();
-        ShakeCamera.Instance.Shake(0.8f, 0.5f);
-        yield return new WaitForSeconds(2);
-        StartCoroutine(MoveGarage());
-        RaidManager.Instance.StartMove(5, 11);
+        yield return new WaitForSeconds(_shakedelayOnStart);
+        ShakeCamera.Instance.Shake(_shakedurationOnStart, _shakeIntensityOnStart);
+        yield return new WaitForSeconds(_delayBeforeStartMove);
+        GarageBoxManager.Instance.OnPlayerStartRaid(); // перенести в GameManager с задержкой запуска двигателя (нужно определиться со звуком)
+        RaidObjectsManager.Instance.ChangeSpeedOnStartRaid(_targetSpeedOnStart, _reachTargetSpeedDuration);
 
         foreach (var ps in _wheelsDustPS)
         {
@@ -60,13 +77,5 @@ public class PlayerVehicleManager : MonoBehaviour
         }
     }
 
-    IEnumerator MoveGarage()
-    {
-        while (_garage.transform.position.x > -10000)
-        {
-            _garage.transform.position += Vector3.left * RaidManager.Instance.PlayerMoveSpeed * 170 * Time.deltaTime;
-            yield return null;
-        }
-        _garage.SetActive(false);
-    }
+    
 }

@@ -7,8 +7,8 @@ public class GameLogicParameters : MonoBehaviour
     [SerializeField] bool _isTesting = false;
 
     [Header("RAID")]
-    [SerializeField] float _minSpeed = 5f;
-    [SerializeField] float _maxSpeed = 10f;
+    [SerializeField] float _minPlayerSpeed = 5f;
+    [SerializeField] float _maxPlayerSpeed = 10f;
     [SerializeField] float _timeForChangeSpeed = 2f;
     [SerializeField] float _moveRoadMod = 0.1f;
     [SerializeField] float _speedMod = 185f;
@@ -42,8 +42,8 @@ public class GameLogicParameters : MonoBehaviour
     [SerializeField] float _touchRoadImpulseMod = 25;
 
 
-    public float MinSpeed => _minSpeed;
-    public float MaxSpeed => _maxSpeed;
+    public float MinPlayerSpeed => _minPlayerSpeed;
+    public float MaxPlayerSpeed => _maxPlayerSpeed;
     public float TimeForChangeSpeed => _timeForChangeSpeed;
     public float MoveRoadMod => _moveRoadMod;
     public float SpeedMod => _speedMod;

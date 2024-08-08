@@ -97,7 +97,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
     {
         while (transform.position.x > -GameLogicParameters.Instance.XOffsetForDestroyObject)
         {
-            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * -Vector3.right, Space.World);
+            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * Time.deltaTime * -Vector3.right, Space.World);
             yield return null;
         }
         Destroy(gameObject);
@@ -117,7 +117,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
         while (transform.position.x > -GameLogicParameters.Instance.XOffsetForDestroyObject && transform.position.x < GameLogicParameters.Instance.XOffsetForDestroyObject)
         {
-            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * runSpeedMod * Time.deltaTime * Vector3.right, Space.World);
+            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * runSpeedMod * Time.deltaTime * Vector3.right, Space.World);
             yield return null;
         }
         _runAwayCoroutine = null;

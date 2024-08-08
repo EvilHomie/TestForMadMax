@@ -11,7 +11,7 @@ public class VehicleVisualController : MonoBehaviour
         foreach (var wheel in _wheels)
         {
             if (wheel == null) continue;
-            wheel.Rotate(GameLogicParameters.Instance.WheelsRotateSpeedMod * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime, 0, 0, Space.Self);
+            wheel.Rotate(GameLogicParameters.Instance.WheelsRotateSpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * Time.deltaTime, 0, 0, Space.Self);
         }
     }
 
@@ -21,10 +21,10 @@ public class VehicleVisualController : MonoBehaviour
         {
             if (dust == null) continue;
             var main = dust.main;
-            main.startSpeed = GameLogicParameters.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed;
+            main.startSpeed = GameLogicParameters.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed;
 
             var emmision = dust.emission;
-            emmision.rateOverTime = GameLogicParameters.Instance.DustPSEmmisionRateMod * RaidManager.Instance.PlayerMoveSpeed;
+            emmision.rateOverTime = GameLogicParameters.Instance.DustPSEmmisionRateMod * RaidObjectsManager.Instance.PlayerMoveSpeed;
         }
     }
 

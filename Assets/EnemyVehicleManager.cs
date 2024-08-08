@@ -40,10 +40,10 @@ public class EnemyVehicleManager : MonoBehaviour
         _enemyWeaponController.RotateToPlayer();
         _vehicleMovementController.MotionSimulation();
 
-        if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
+        if (_lastMoveSpeed != RaidObjectsManager.Instance.PlayerMoveSpeed)
         {
             _vehicleVisualController.UpdateVisualEffect();
-            _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
+            _lastMoveSpeed = RaidObjectsManager.Instance.PlayerMoveSpeed;
         }
     }
 

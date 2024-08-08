@@ -24,9 +24,9 @@ public class PartHPManager : MonoBehaviour, IDamageable
         _renderer.material.DisableKeyword("_EMISSION");
     }   
 
-    public void OnHit(int hitValue, AudioClip hitSound)
+    public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
-        _HP -= hitValue;
+        _HP -= hullDmgValue;
         _vehicleAudioSource.PlayOneShot(hitSound);
         _hitVisualCoroutine ??= StartCoroutine(HitEffect());
 

@@ -12,3 +12,16 @@ public enum ResourcesType
     Wires,
     ScrapMetal
 }
+public enum WeaponType
+{
+    SingleBarreled,
+    MultyBarreled
+}
+
+public enum Raritie
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic
+}

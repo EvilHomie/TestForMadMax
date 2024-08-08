@@ -37,7 +37,7 @@ public class EnemyWeaponController : MonoBehaviour
     {
         while (!_weaponsDestroyed) 
         {
-            weapon.weaponParticlesManager.Emit(1);
+            //weapon.weaponParticlesManager.Emit(1);
             _audioSource.PlayOneShot(weapon.shootSound);
             yield return new WaitForSeconds(1 / weapon.fireRate);
         }

@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class ShakeCamera : MonoBehaviour
 {
-    public static ShakeCamera Instance;    
+    public static ShakeCamera Instance;
 
     Vector3 _initialPos;
-    float _shakeIntensity = 0.1f;
+    float _passiveOnRaidShakeIntensity = 0.1f;
+    float _shakeIntensity = 0;
+
+    bool _playerOnRaid = false;
 
     private void Awake()
     {
@@ -20,9 +23,21 @@ public class ShakeCamera : MonoBehaviour
     }
     void Update()
     {
-
+        if(!_playerOnRaid) return;
         Vector3 randomOffset = Random.insideUnitSphere * _shakeIntensity;
         transform.position = _initialPos + randomOffset;
+    }
+
+    public void OnPlayerStartRaid()
+    {
+        _playerOnRaid = true;
+        _shakeIntensity = _passiveOnRaidShakeIntensity;
+    }
+
+    public void OnPlayerEndRaid()
+    {
+        _playerOnRaid = false;
+        _shakeIntensity = 0;
     }
 
     public void Shake(float duration, float intensity)

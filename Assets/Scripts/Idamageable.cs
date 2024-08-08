@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    public void OnHit(int hitValue, AudioClip hitSound);
+    public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound);
 }

@@ -8,7 +8,7 @@ public class Weapon
     public AudioClip hitSound;
     public Transform transform;
     public float fireRate;
-    public WeaponParticles weaponParticlesManager;
+    public FirePointManager weaponParticlesManager;
 }
 
 [Serializable]
@@ -17,4 +17,12 @@ public class DropedResource
     public ResourcesType type;
     public int dropChance;
     public int amount;
+}
+
+[Serializable]
+
+public class FirePoint
+{
+    [SerializeField] AudioSource soundSource;
+    [SerializeField] ParticleSystem[] shootPS;
 }
