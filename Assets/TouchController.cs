@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TouchController : MonoBehaviour
 {
     public static TouchController Instance;
 
-    [SerializeField] RectTransform _joystickArea;
+    [SerializeField] RectTransform _joystickArea;    
 
     CanvasGroup _canvasGroup;
     bool _isRotating = false;
@@ -90,5 +91,4 @@ public class TouchController : MonoBehaviour
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
     }
-
 }

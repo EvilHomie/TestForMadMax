@@ -25,3 +25,11 @@ public enum Raritie
     Rare,
     Epic
 }
+
+public enum MenuNavigation
+{
+    InRaid,
+    InGarage,
+    EnterUpgrades,
+    ExitUpgrades
+}

@@ -12,7 +12,9 @@ public class ProjectileWeapon : MonoBehaviour, IWeapon
     [SerializeField] FirePointManager[] _firePoints;
     [SerializeField] float _shakeOnShootIntensity = 0.2f;
 
-    [SerializeField] Vector3 _cameraPos;
+    [SerializeField] GameObject _targetMarker;
+
+    [SerializeField] Vector3 _observerPos;
 
     [Header("HULL DMG")]
     [SerializeField] float _hullDmgByLvl;
@@ -36,6 +38,7 @@ public class ProjectileWeapon : MonoBehaviour, IWeapon
 
     bool _isShooting = false;
     float _nextTimeTofire = 0;
+    int _lastShootBarrelNumber = 0;
 
     float CurHullDmg => _hullDmgByLvl * _hullDmgCurLvl;
 
@@ -44,6 +47,9 @@ public class ProjectileWeapon : MonoBehaviour, IWeapon
     float CurFireRate => _fireRateByLvl * _fireRateCurtLvl;
 
     public float RotationSpeed => _rotationSpeedByLvl * _rotationSpeedCurLvl;
+    public Vector3 ObserverPos => _observerPos;
+
+    public GameObject TargetMarker => _targetMarker;
 
     public void StartShooting()
     {
@@ -72,7 +78,7 @@ public class ProjectileWeapon : MonoBehaviour, IWeapon
             if (Time.time >= _nextTimeTofire)
             {                
                 _firePoints[0].OneShoot(_shootSound);
-                ShakeCamera.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
+                CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -86,21 +92,19 @@ public class ProjectileWeapon : MonoBehaviour, IWeapon
 
     IEnumerator MultyBarreledShoot(float BarrelCount)
     {        
-        int lastBarrelNumber = 0;
-
         while (_isShooting)
         {
             if (Time.time >= _nextTimeTofire)
             {
-                if (lastBarrelNumber >= BarrelCount) lastBarrelNumber = 0;
+                if (_lastShootBarrelNumber >= BarrelCount) _lastShootBarrelNumber = 0;
 
-                _firePoints[lastBarrelNumber].OneShoot(_shootSound);
-                ShakeCamera.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
+                _firePoints[_lastShootBarrelNumber].OneShoot(_shootSound);
+                CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
                 }
-                lastBarrelNumber++;
+                _lastShootBarrelNumber++;
                 _nextTimeTofire = Time.time + 1f / CurFireRate;
             }
             yield return null;

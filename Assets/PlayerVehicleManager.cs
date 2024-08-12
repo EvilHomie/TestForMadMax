@@ -66,7 +66,7 @@ public class PlayerVehicleManager : MonoBehaviour
     {
         _audioSource.Play();
         yield return new WaitForSeconds(_shakedelayOnStart);
-        ShakeCamera.Instance.Shake(_shakedurationOnStart, _shakeIntensityOnStart);
+        CameraManager.Instance.Shake(_shakedurationOnStart, _shakeIntensityOnStart);
         yield return new WaitForSeconds(_delayBeforeStartMove);
         GarageBoxManager.Instance.OnPlayerStartRaid(); // перенести в GameManager с задержкой запуска двигателя (нужно определиться со звуком)
         RaidObjectsManager.Instance.ChangeSpeedOnStartRaid(_targetSpeedOnStart, _reachTargetSpeedDuration);

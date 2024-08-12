@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,10 +6,14 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _garageBtn;
-    [SerializeField] Button _menuBtn;
+    [SerializeField] Button _openUpgradesBtn;
+    [SerializeField] Button _closeUpgradesBtn;
+    [SerializeField] Button _settingsBtn;
 
-    CanvasGroup _menuCanvasGroup;
-    CanvasGroup _startRaidBtnCG;
+    GameObject _inRaidBtns;
+    GameObject _inGarageBtns;
+    GameObject _menuWindow;
+    GameObject _upgradeMenu;
 
     float _showControllerDelay = 13f; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
 
@@ -18,47 +23,74 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        _menuCanvasGroup = _startRaidBtn.transform.parent.GetComponent<CanvasGroup>();
-        _startRaidBtnCG = _startRaidBtn.GetComponent<CanvasGroup>();
+        _inGarageBtns = _startRaidBtn.transform.parent.gameObject;
+        _inRaidBtns = _garageBtn.transform.parent.gameObject;
+        _menuWindow = _inGarageBtns.transform.parent.gameObject;
+        _upgradeMenu = _closeUpgradesBtn.transform.parent.gameObject;
     }
 
     void Start()
     {
+        _settingsBtn.onClick.AddListener(ToggleMenu);
+
         _startRaidBtn.onClick.AddListener(StartRaid);
         _garageBtn.onClick.AddListener(ReturntToGarage);
-        _menuBtn.onClick.AddListener(ToggleMenu);
-        _menuCanvasGroup.alpha = 1;
-        _menuCanvasGroup.interactable = true;
-        _startRaidBtnCG.alpha = 1;
+
+        _openUpgradesBtn.onClick.AddListener(OpenUpgrades);
+        _closeUpgradesBtn.onClick.AddListener(CloseUpgrades);
+
         TouchController.Instance.HideControllers();
+        WeaponsSwitcher.Instance.OnPlayerEndRaid();
+        PlayerWeaponPointManager.Instance.OnPlayerEndRaid();
+
+        _playerOnRaid = false;
+        SwitchMenuBtns();
     }
 
     void ToggleMenu()
+    {        
+        _menuWindow.SetActive(!_menuWindow.activeSelf);
+
+        //Time.timeScale = _menuCanvasGroup.alpha == 1 ? 0 : 1 ;
+    }
+
+    void OpenUpgrades()
     {
-        _menuCanvasGroup.alpha = _menuCanvasGroup.alpha == 1 ? 0 : 1;
-        _menuCanvasGroup.interactable = _menuCanvasGroup.alpha == 1;
+        _upgradeMenu.SetActive(true);
+    }
+    void CloseUpgrades()
+    {
+        _upgradeMenu.SetActive(false);
     }
 
     void StartRaid()
     {
-        PlayerVehicleManager.Instance.OnPlayerStartRaid();
-        ShakeCamera.Instance.OnPlayerStartRaid();
         _playerOnRaid = true;
-        ToggleMenu();
-        _startRaidBtnCG.alpha = 0;
-        _startRaidBtnCG.interactable = false;
+        PlayerVehicleManager.Instance.OnPlayerStartRaid();
+        CameraManager.Instance.OnPlayerStartRaid();        
         TouchController.Instance.ShowControllers(_showControllerDelay);
+        SwitchMenuBtns();
+        _menuWindow.SetActive(false);
     }
 
     void ReturntToGarage()
     {
         _playerOnRaid = false;
+        WeaponsSwitcher.Instance.OnPlayerEndRaid();
+        PlayerWeaponPointManager.Instance.OnPlayerEndRaid();
         GarageBoxManager.Instance.OnPlayerEndRaid();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         RaidObjectsManager.Instance.OnPlayerEndRaid();
-        ShakeCamera.Instance.OnPlayerEndRaid();
-        _startRaidBtnCG.alpha = 1;
-        _startRaidBtnCG.interactable = true;
+        CameraManager.Instance.OnPlayerEndRaid();
         TouchController.Instance.HideControllers();
+        SwitchMenuBtns();
+    }
+
+    void SwitchMenuBtns()
+    {
+        _inRaidBtns.SetActive(_playerOnRaid);
+        _inGarageBtns.SetActive(!_playerOnRaid);
     }
 }
+
+
