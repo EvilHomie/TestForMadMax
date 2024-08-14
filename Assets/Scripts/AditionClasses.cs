@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Weapon
+public class EnemyWeapon
 {
     public AudioClip shootSound;
     public AudioClip hitSound;

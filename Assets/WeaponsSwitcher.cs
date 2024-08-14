@@ -29,7 +29,7 @@ public class WeaponsSwitcher : MonoBehaviour
 
     public void OnSelectWeapon(int index)
     {
-        PlayerWeaponPointManager.Instance.ChangeWeapon(index);
+        PlayerWeaponManager.Instance.ChangeWeapon(index);
         if (index == 0)
         {
             _weaponButton_0.image.sprite = _weaponBGSelected;

@@ -37,12 +37,12 @@ public class TouchController : MonoBehaviour
 
     public void OnPressShootBtn()
     {
-        PlayerWeaponPointManager.Instance.StartShoot();
+        PlayerWeaponManager.Instance.StartShoot();
     }
 
     public void OnReleasedShootBtn()
     {
-        PlayerWeaponPointManager.Instance.StopShoot();
+        PlayerWeaponManager.Instance.StopShoot();
     }
 
     public void OnRotation(Vector2 value)

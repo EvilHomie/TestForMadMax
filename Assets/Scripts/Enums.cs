@@ -15,7 +15,8 @@ public enum ResourcesType
 public enum WeaponType
 {
     SingleBarreled,
-    MultyBarreled
+    MultyBarreled,
+    Beam
 }
 
 public enum Raritie

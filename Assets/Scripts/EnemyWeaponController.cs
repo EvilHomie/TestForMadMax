@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyWeaponController : MonoBehaviour
 {
-    [SerializeField] Weapon[] _weapons;
+    [SerializeField] EnemyWeapon[] _weapons;
 
     AudioSource _audioSource;
 
@@ -33,7 +33,7 @@ public class EnemyWeaponController : MonoBehaviour
         }
     }
 
-    IEnumerator PlayShootEffects(Weapon weapon)
+    IEnumerator PlayShootEffects(EnemyWeapon weapon)
     {
         while (!_weaponsDestroyed) 
         {

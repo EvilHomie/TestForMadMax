@@ -1,14 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class PlayerResourcesManager : MonoBehaviour
 {
     public static PlayerResourcesManager Instance;
-
-    Dictionary<ResourcesType, int> _resources = new();
-
     [SerializeField] TextMeshProUGUI _copperAmountText;
     [SerializeField] TextMeshProUGUI _wiresAmountText;
     [SerializeField] TextMeshProUGUI _scrapMetalAmountText;
@@ -31,9 +27,9 @@ public class PlayerResourcesManager : MonoBehaviour
 
     void UpdateCounters()
     {
-        _copperAmountText.text = _resources.ContainsKey(ResourcesType.Ñopper) ? _resources[ResourcesType.Ñopper].ToString() : 0.ToString();
-        _wiresAmountText.text = _resources.ContainsKey(ResourcesType.Wires) ? _resources[ResourcesType.Wires].ToString() : 0.ToString();
-        _scrapMetalAmountText.text = _resources.ContainsKey(ResourcesType.ScrapMetal) ? _resources[ResourcesType.ScrapMetal].ToString() : 0.ToString();
+        _copperAmountText.text = PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.Ñopper) ? PlayerData.Instance.AvailableResources[ResourcesType.Ñopper].ToString() : 0.ToString();
+        _wiresAmountText.text = PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.Wires) ? PlayerData.Instance.AvailableResources[ResourcesType.Wires].ToString() : 0.ToString();
+        _scrapMetalAmountText.text = PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.ScrapMetal) ? PlayerData.Instance.AvailableResources[ResourcesType.ScrapMetal].ToString() : 0.ToString();
     }
 
     void DisableAddTexts()
@@ -76,26 +72,26 @@ public class PlayerResourcesManager : MonoBehaviour
     {
         if (copperAmount != 0)
         {
-            if (!_resources.ContainsKey(ResourcesType.Ñopper))
-                _resources.Add(ResourcesType.Ñopper, copperAmount);
+            if (!PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.Ñopper))
+                PlayerData.Instance.AvailableResources.Add(ResourcesType.Ñopper, copperAmount);
             else
-                _resources[ResourcesType.Ñopper] += copperAmount;
+                PlayerData.Instance.AvailableResources[ResourcesType.Ñopper] += copperAmount;
         }
 
         if (wiresAmount != 0)
         {
-            if (!_resources.ContainsKey(ResourcesType.Wires))
-                _resources.Add(ResourcesType.Wires, wiresAmount);
+            if (!PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.Wires))
+                PlayerData.Instance.AvailableResources.Add(ResourcesType.Wires, wiresAmount);
             else
-                _resources[ResourcesType.Wires] += wiresAmount;
+                PlayerData.Instance.AvailableResources[ResourcesType.Wires] += wiresAmount;
         }
 
         if (scrapMetalAmount != 0)
         {
-            if (!_resources.ContainsKey(ResourcesType.ScrapMetal))
-                _resources.Add(ResourcesType.ScrapMetal, scrapMetalAmount);
+            if (!PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.ScrapMetal))
+                PlayerData.Instance.AvailableResources.Add(ResourcesType.ScrapMetal, scrapMetalAmount);
             else
-                _resources[ResourcesType.ScrapMetal] += scrapMetalAmount;
+                PlayerData.Instance.AvailableResources[ResourcesType.ScrapMetal] += scrapMetalAmount;
         }
 
         UpdateCounters();

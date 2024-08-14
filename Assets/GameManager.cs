@@ -1,9 +1,14 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("GAME DATA")]
+    [SerializeField] GameItems _originalItems;
+    [SerializeField] GameItems _cloneItems;
+    [Space(50)]
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _garageBtn;
     [SerializeField] Button _openUpgradesBtn;
@@ -16,9 +21,9 @@ public class GameManager : MonoBehaviour
     GameObject _upgradeMenu;
 
     float _showControllerDelay = 13f; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
-
-
     bool _playerOnRaid = false;
+
+    string _deffaulWeaponName = "Simple Cannon";
 
 
     void Awake()
@@ -41,10 +46,13 @@ public class GameManager : MonoBehaviour
 
         TouchController.Instance.HideControllers();
         WeaponsSwitcher.Instance.OnPlayerEndRaid();
-        PlayerWeaponPointManager.Instance.OnPlayerEndRaid();
+        PlayerWeaponManager.Instance.OnPlayerEndRaid();
 
         _playerOnRaid = false;
         SwitchMenuBtns();
+
+        _cloneItems = Instantiate(_originalItems);
+        PlayerData.Instance.FillFromDeffaultData(_cloneItems, _deffaulWeaponName);
     }
 
     void ToggleMenu()
@@ -56,7 +64,9 @@ public class GameManager : MonoBehaviour
 
     void OpenUpgrades()
     {
+        UpgradeManager.Instance.OnOpenUpgrades();
         _upgradeMenu.SetActive(true);
+
     }
     void CloseUpgrades()
     {
@@ -77,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         _playerOnRaid = false;
         WeaponsSwitcher.Instance.OnPlayerEndRaid();
-        PlayerWeaponPointManager.Instance.OnPlayerEndRaid();
+        PlayerWeaponManager.Instance.OnPlayerEndRaid();
         GarageBoxManager.Instance.OnPlayerEndRaid();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         RaidObjectsManager.Instance.OnPlayerEndRaid();
