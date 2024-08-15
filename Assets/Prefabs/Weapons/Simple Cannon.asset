@@ -25,7 +25,7 @@ MonoBehaviour:
   shieldDmgByLvl: 0
   shieldDmgCurLvl: 0
   shieldDmgMaxLvl: 0
-  fireRateByLvl: 1
+  fireRateByLvl: 0.5
   fireRateCurtLvl: 2
   fireRateMaxLvl: 6
   rotationSpeedByLvl: 20

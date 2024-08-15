@@ -87,7 +87,7 @@ public class PlayerWeapon : MonoBehaviour, IWeapon, IItem
         return _weaponData;
     }
 
-    public void SetItemCopyData(object obj)
+    public void SetItemData(object obj)
     {
         _weaponData = obj as WeaponData;
     }

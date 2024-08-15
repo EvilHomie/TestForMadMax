@@ -6,4 +6,6 @@ public class GameItems : ScriptableObject
 {
     public int test = 0;
     public List<PlayerWeapon> playerWeapons;
+
+    //public List<PlayerWeapon> playerVehicles;
 }

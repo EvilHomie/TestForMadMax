@@ -9,11 +9,14 @@ public class PlayerData : MonoBehaviour
     Dictionary<ResourcesType, int> _availableResources = new();
     Dictionary<string, IItem> _availableItemsByName = new();
 
-    List<WeaponData> _availableWeaponsByName = new();
-
-    public Dictionary<ResourcesType, int> AvailableResources => _availableResources;
+    List<IItemData> _playerWeaponsData = new();    
 
     public Dictionary<string, IItem> AvailableItemsByName => _availableItemsByName;
+
+
+
+    public List<IItemData> PlayerWeaponsData => _playerWeaponsData;
+    public Dictionary<ResourcesType, int> AvailableResources => _availableResources;
 
     void Awake()
     {
@@ -37,25 +40,41 @@ public class PlayerData : MonoBehaviour
 
     }
 
-    public void FillFromDeffaultData(GameItems gameItems, string weaponName)
+    public void FillPlayerItemsData(GameItems gameItems, string[] ItemsNames)
     {
-        PlayerWeapon weapon = gameItems.playerWeapons.Find(weapon => weapon.name == weaponName);
-        WeaponData copyData = Instantiate((WeaponData)weapon.GetItemData());
-        //weapon.SetItemCopyData(copyData);
+        foreach (var itemName in ItemsNames) 
+        {
+            PlayerWeapon weapon = gameItems.playerWeapons.Find(weapon => weapon.name == itemName);
+            if(weapon != null) _playerWeaponsData.Add(Instantiate((WeaponData)weapon.GetItemData()));
+        }
 
-        _availableItemsByName.Add(weapon.name, weapon);
+
+        
 
 
-        //WeaponData weaponData = (WeaponData)_availableItemsByName[weapon.name].GetItemData();
 
-        copyData.fireRateByLvl = 19;
 
-        Debug.LogWarning(gameItems.test);
-        //Debug.LogWarning(weaponData.fireRateMaxLvl);
+        //PlayerWeapon weapon = gameItems.playerWeapons.Find(weapon => weapon.name == weaponName);
+        //WeaponData copyData = Instantiate((WeaponData)weapon.GetItemData());
 
-        PlayerWeapon playerWeapon = Instantiate(weapon);
-        playerWeapon.SetItemCopyData(copyData);
-        WeaponData newweaponData = (WeaponData)playerWeapon.GetItemData();
-        Debug.LogWarning(newweaponData.fireRateByLvl);
+
+
+
+        ////weapon.SetItemCopyData(copyData);
+
+        //_availableItemsByName.Add(weapon.name, weapon);
+
+
+        ////WeaponData weaponData = (WeaponData)_availableItemsByName[weapon.name].GetItemData();
+
+        //copyData.fireRateByLvl = 19;
+
+        //Debug.LogWarning(gameItems.test);
+        ////Debug.LogWarning(weaponData.fireRateMaxLvl);
+
+        //PlayerWeapon playerWeapon = Instantiate(weapon);
+        //playerWeapon.SetItemCopyData(copyData);
+        //WeaponData newweaponData = (WeaponData)playerWeapon.GetItemData();
+        //Debug.LogWarning(newweaponData.fireRateByLvl);
     }
 }

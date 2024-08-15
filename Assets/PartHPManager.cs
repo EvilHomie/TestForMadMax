@@ -52,7 +52,7 @@ public class PartHPManager : MonoBehaviour, IDamageable
     IEnumerator HitEffect()
     {
         _renderer.material.EnableKeyword("_EMISSION");
-        yield return new WaitForSeconds(GameLogicParameters.Instance.HitVisualDuration);
+        yield return new WaitForSeconds(GameConfig.Instance.HitVisualDuration);
         _renderer.material.DisableKeyword("_EMISSION");
         _hitVisualCoroutine = null;
     }

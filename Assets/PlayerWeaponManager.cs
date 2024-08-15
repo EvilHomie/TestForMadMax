@@ -101,8 +101,8 @@ public class PlayerWeaponManager : MonoBehaviour
         targetRotationY += movementVector.x * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
         targetRotationX += movementVector.y * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
 
-        float targetPosYClamped = Mathf.Clamp(targetRotationY, -GameLogicParameters.Instance.MaxYRotateAngle, GameLogicParameters.Instance.MaxYRotateAngle);
-        float targetPosXClamped = Mathf.Clamp(targetRotationX, -GameLogicParameters.Instance.MaxXRotateAngle, GameLogicParameters.Instance.MaxXRotateAngle);
+        float targetPosYClamped = Mathf.Clamp(targetRotationY, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        float targetPosXClamped = Mathf.Clamp(targetRotationX, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
 
         _weaponPoints[_selectedWeaponIndex].rotation = Quaternion.Euler(-targetPosXClamped, targetPosYClamped, 0);
         Camera.main.transform.rotation = _weaponPoints[_selectedWeaponIndex].rotation;
@@ -116,11 +116,11 @@ public class PlayerWeaponManager : MonoBehaviour
         targetRotationY += Input.GetAxis("Horizontal") * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
         targetRotationX += Input.GetAxis("Vertical") * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
 
-        if (targetRotationY < -GameLogicParameters.Instance.MaxYRotateAngle) targetRotationY = -GameLogicParameters.Instance.MaxYRotateAngle;
-        if (targetRotationY > GameLogicParameters.Instance.MaxYRotateAngle) targetRotationY = GameLogicParameters.Instance.MaxYRotateAngle;
+        if (targetRotationY < -GameConfig.Instance.MaxYRotateAngle) targetRotationY = -GameConfig.Instance.MaxYRotateAngle;
+        if (targetRotationY > GameConfig.Instance.MaxYRotateAngle) targetRotationY = GameConfig.Instance.MaxYRotateAngle;
 
-        if (targetRotationX < -GameLogicParameters.Instance.MaxXRotateAngle) targetRotationX = -GameLogicParameters.Instance.MaxXRotateAngle;
-        if (targetRotationX > GameLogicParameters.Instance.MaxXRotateAngle) targetRotationX = GameLogicParameters.Instance.MaxXRotateAngle;
+        if (targetRotationX < -GameConfig.Instance.MaxXRotateAngle) targetRotationX = -GameConfig.Instance.MaxXRotateAngle;
+        if (targetRotationX > GameConfig.Instance.MaxXRotateAngle) targetRotationX = GameConfig.Instance.MaxXRotateAngle;
 
         //float targetPosYClamped = Mathf.Clamp(targetPosY, -45, 45); // Clamp вызывает ступор при достижении краёв.
         //float targetPosXClamped = Mathf.Clamp(targetPosX, -30, 0); // Clamp вызывает ступор при достижении краёв.

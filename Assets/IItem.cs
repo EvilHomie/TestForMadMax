@@ -6,5 +6,5 @@ public interface IItem
 
     public Sprite GetItemSprite();
 
-    public void SetItemCopyData(object obj);
+    public void SetItemData(object obj);
 }

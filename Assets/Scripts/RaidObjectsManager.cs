@@ -27,13 +27,13 @@ public class RaidObjectsManager : MonoBehaviour
 
     void MoveMainRoad()
     {
-        _mainRoadRenderer.material.mainTextureOffset += GameLogicParameters.Instance.MoveRoadMod * _playerMoveSpeed * Time.deltaTime * Vector2.left;
+        _mainRoadRenderer.material.mainTextureOffset += GameConfig.Instance.MoveRoadMod * _playerMoveSpeed * Time.deltaTime * Vector2.left;
     }
 
 
     public void ChangeSpeedWhileInRaid(float sliderValue)
     {
-        float newSpeed = GameLogicParameters.Instance.MinPlayerSpeed + sliderValue * GameLogicParameters.Instance.MinPlayerSpeed;
+        float newSpeed = GameConfig.Instance.MinPlayerSpeed + sliderValue * GameConfig.Instance.MinPlayerSpeed;
 
         if (_UpdateSpeedCoroutine != null)
         {
@@ -65,7 +65,7 @@ public class RaidObjectsManager : MonoBehaviour
         float _lastSpeed = _playerMoveSpeed;
         while (t <= 1)
         {
-            t += Time.deltaTime / GameLogicParameters.Instance.TimeForChangeSpeed;
+            t += Time.deltaTime / GameConfig.Instance.TimeForChangeSpeed;
             _playerMoveSpeed = Mathf.Lerp(_lastSpeed, newSpeed, t);
             _speedSliderFillImage.fillAmount = Mathf.Lerp(startFillValue, sliderValue, t);
             yield return null;

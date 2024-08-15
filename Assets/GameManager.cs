@@ -5,13 +5,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("GAME DATA")]
-    [SerializeField] GameItems _originalItems;
-    [SerializeField] GameItems _cloneItems;
-    [Space(50)]
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _garageBtn;
-    [SerializeField] Button _openUpgradesBtn;
+    [SerializeField] Button _openInventoryBtn;
     [SerializeField] Button _closeUpgradesBtn;
     [SerializeField] Button _settingsBtn;
 
@@ -23,7 +19,7 @@ public class GameManager : MonoBehaviour
     float _showControllerDelay = 13f; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
     bool _playerOnRaid = false;
 
-    string _deffaulWeaponName = "Simple Cannon";
+    string[] _deffaulItemsNames = new string[] { "Simple Cannon", "Dual Cannon" } ;
 
 
     void Awake()
@@ -41,7 +37,7 @@ public class GameManager : MonoBehaviour
         _startRaidBtn.onClick.AddListener(StartRaid);
         _garageBtn.onClick.AddListener(ReturntToGarage);
 
-        _openUpgradesBtn.onClick.AddListener(OpenUpgrades);
+        _openInventoryBtn.onClick.AddListener(OnOpenInventory);
         _closeUpgradesBtn.onClick.AddListener(CloseUpgrades);
 
         TouchController.Instance.HideControllers();
@@ -51,8 +47,9 @@ public class GameManager : MonoBehaviour
         _playerOnRaid = false;
         SwitchMenuBtns();
 
-        _cloneItems = Instantiate(_originalItems);
-        PlayerData.Instance.FillFromDeffaultData(_cloneItems, _deffaulWeaponName);
+
+
+        PlayerData.Instance.FillPlayerItemsData(GameConfig.Instance.GameItems, _deffaulItemsNames);
     }
 
     void ToggleMenu()
@@ -62,9 +59,9 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = _menuCanvasGroup.alpha == 1 ? 0 : 1 ;
     }
 
-    void OpenUpgrades()
+    void OnOpenInventory()
     {
-        UpgradeManager.Instance.OnOpenUpgrades();
+        InventoryManager.Instance.OnOpenInventory();
         _upgradeMenu.SetActive(true);
 
     }

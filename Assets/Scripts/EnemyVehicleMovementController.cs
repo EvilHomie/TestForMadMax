@@ -16,7 +16,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
     public void StartTranslateToPlayer()
     {
         _startZPos = transform.position.z;
-        float translateDuration = Random.Range(GameLogicParameters.Instance.MinTranslateDuration, GameLogicParameters.Instance.MaxTranslateDuration);
+        float translateDuration = Random.Range(GameConfig.Instance.MinTranslateDuration, GameConfig.Instance.MaxTranslateDuration);
         _translateToPlayerCoroutine = StartCoroutine(TranslateToPlayer(transform.position.x, translateDuration));
     }
 
@@ -33,14 +33,14 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     IEnumerator TranslateToPlayer(float startXPos, float translateDuration)
     {
-        float randomXPos = Random.Range(-GameLogicParameters.Instance.GameZoneXSize, GameLogicParameters.Instance.GameZoneXSize);
+        float randomXPos = Random.Range(-GameConfig.Instance.GameZoneXSize, GameConfig.Instance.GameZoneXSize);
 
         float t = 0;
         while (t <= 1)
         {
-            if (t >= GameLogicParameters.Instance.ValueToStartSlowTranslate)
+            if (t >= GameConfig.Instance.ValueToStartSlowTranslate)
             {
-                t += Time.deltaTime / translateDuration / GameLogicParameters.Instance.SlowTranslateValue;
+                t += Time.deltaTime / translateDuration / GameConfig.Instance.SlowTranslateValue;
             }
             else
             {
@@ -51,7 +51,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
         }
         _inGameZoneXPos = randomXPos;
 
-        InvokeRepeating(nameof(ChangeXPos), 0, GameLogicParameters.Instance.ChangeSlideOffsetDelay);
+        InvokeRepeating(nameof(ChangeXPos), 0, GameConfig.Instance.ChangeSlideOffsetDelay);
         _reachGameZone = true;
         _translateToPlayerCoroutine = null;
     }
@@ -63,13 +63,13 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     IEnumerator LerpXPos()
     {
-        float randomXPos = Random.Range(-GameLogicParameters.Instance.SlideOffsetXValue, GameLogicParameters.Instance.SlideOffsetXValue);
+        float randomXPos = Random.Range(-GameConfig.Instance.SlideOffsetXValue, GameConfig.Instance.SlideOffsetXValue);
         float startOffset = _currentOffset;
 
         float t = 0;
         while (t <= 1)
         {
-            t += Time.deltaTime / (GameLogicParameters.Instance.ChangeSlideOffsetDelay - 1);
+            t += Time.deltaTime / (GameConfig.Instance.ChangeSlideOffsetDelay - 1);
             _currentOffset = Mathf.Lerp(startOffset, randomXPos, t);
             yield return null;
         }
@@ -95,9 +95,9 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     IEnumerator MoveOnDie()
     {
-        while (transform.position.x > -GameLogicParameters.Instance.XOffsetForDestroyObject)
+        while (transform.position.x > -GameConfig.Instance.XOffsetForDestroyObject)
         {
-            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * Time.deltaTime * -Vector3.right, Space.World);
+            transform.Translate(GameConfig.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * Time.deltaTime * -Vector3.right, Space.World);
             yield return null;
         }
         Destroy(gameObject);
@@ -105,19 +105,19 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     IEnumerator RunAway()
     {
-        yield return new WaitForSeconds(Random.Range(GameLogicParameters.Instance.MinDelayForRun, GameLogicParameters.Instance.MaxDelayForRun));
+        yield return new WaitForSeconds(Random.Range(GameConfig.Instance.MinDelayForRun, GameConfig.Instance.MaxDelayForRun));
         if (_translateToPlayerCoroutine != null)
             StopCoroutine(_translateToPlayerCoroutine);
         _tryRun = true;
 
-        float runSpeedMod = Random.Range(GameLogicParameters.Instance.MinRunSpeed, GameLogicParameters.Instance.MaxRunSpeed);
+        float runSpeedMod = Random.Range(GameConfig.Instance.MinRunSpeed, GameConfig.Instance.MaxRunSpeed);
         bool randomDirection = Random.value < 0.5f;
 
         runSpeedMod = randomDirection ? -runSpeedMod : runSpeedMod;
 
-        while (transform.position.x > -GameLogicParameters.Instance.XOffsetForDestroyObject && transform.position.x < GameLogicParameters.Instance.XOffsetForDestroyObject)
+        while (transform.position.x > -GameConfig.Instance.XOffsetForDestroyObject && transform.position.x < GameConfig.Instance.XOffsetForDestroyObject)
         {
-            transform.Translate(GameLogicParameters.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * runSpeedMod * Time.deltaTime * Vector3.right, Space.World);
+            transform.Translate(GameConfig.Instance.SpeedMod * RaidObjectsManager.Instance.PlayerMoveSpeed * runSpeedMod * Time.deltaTime * Vector3.right, Space.World);
             yield return null;
         }
         _runAwayCoroutine = null;

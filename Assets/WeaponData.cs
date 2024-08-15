@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "ScriptableObjects/Weapon")]
-public class WeaponData : ScriptableObject
+public class WeaponData : ScriptableObject, IItemData
 {
     public string weaponName;
     public WeaponType weaponType;
@@ -14,21 +14,28 @@ public class WeaponData : ScriptableObject
 
     [Header("HULL DMG")]
     public float hullDmgByLvl;
-    public float hullDmgCurLvl;
-    public float hullDmgMaxLvl;
+    public int hullDmgCurLvl;
+    public int hullDmgMaxLvl;
 
     [Header("SHIELD DMG")]
     public float shieldDmgByLvl;
-    public float shieldDmgCurLvl;
-    public float shieldDmgMaxLvl;
+    public int shieldDmgCurLvl;
+    public int shieldDmgMaxLvl;
 
     [Header("FIRERATE")]
     public float fireRateByLvl;
-    public float fireRateCurtLvl;
-    public float fireRateMaxLvl;
+    public int fireRateCurtLvl;
+    public int fireRateMaxLvl;
 
     [Header("ROTATION SPEED")]
     public float rotationSpeedByLvl;
-    public float rotationSpeedCurLvl;
-    public float rotationSpeedMaxLvl;
+    public int rotationSpeedCurLvl;
+    public int rotationSpeedMaxLvl;
+
+    //[Header("UPGRADES")]
+    //public float upgradeMod;
+
+    public string ItemName => weaponName;
+
+    public Sprite ItemSprite => weaponSprite;
 }

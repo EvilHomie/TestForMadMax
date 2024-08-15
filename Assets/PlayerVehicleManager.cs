@@ -37,8 +37,8 @@ public class PlayerVehicleManager : MonoBehaviour
         {
             _vehicleVisualController.UpdateVisualEffect();
 
-            if (RaidObjectsManager.Instance.PlayerMoveSpeed <= GameLogicParameters.Instance.MinPlayerSpeed) return;
-            _audioSource.pitch = _deffAudioPitch + ((RaidObjectsManager.Instance.PlayerMoveSpeed - GameLogicParameters.Instance.MinPlayerSpeed) / 50f);
+            if (RaidObjectsManager.Instance.PlayerMoveSpeed <= GameConfig.Instance.MinPlayerSpeed) return;
+            _audioSource.pitch = _deffAudioPitch + ((RaidObjectsManager.Instance.PlayerMoveSpeed - GameConfig.Instance.MinPlayerSpeed) / 50f);
             _lastMoveSpeed = RaidObjectsManager.Instance.PlayerMoveSpeed;
         }
     }
