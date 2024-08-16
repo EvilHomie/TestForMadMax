@@ -25,7 +25,7 @@ public class InventoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var item in PlayerData.Instance.PlayerWeaponsData)
+        foreach (var item in PlayerData.Instance.PlayerItemsData)
         {
             InventoryItem InventoryItem = Instantiate(_inventoryItemPF, _mainInventoryContainer);
             InventoryItem.SetitemData(item);

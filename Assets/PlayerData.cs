@@ -8,13 +8,13 @@ public class PlayerData : MonoBehaviour
     Dictionary<ResourcesType, int> _availableResources = new();
     Dictionary<string, IItem> _availableItemsByName = new();
 
-    List<IItemData> _playerWeaponsData = new();    
+    List<IItemData> _playerItemsData = new();
 
     public Dictionary<string, IItem> AvailableItemsByName => _availableItemsByName;
 
 
 
-    public List<IItemData> PlayerWeaponsData => _playerWeaponsData;
+    public List<IItemData> PlayerItemsData => _playerItemsData;
     public Dictionary<ResourcesType, int> AvailableResources => _availableResources;
 
 
@@ -43,13 +43,26 @@ public class PlayerData : MonoBehaviour
 
     public void FillPlayerItemsData(GameItems gameItems, string[] ItemsNames)
     {
-        foreach (var itemName in ItemsNames) 
+        foreach (var itemName in ItemsNames)
         {
-            Weapon weapon = gameItems.Weapons.Find(weapon => weapon.name == itemName);
-            if(weapon != null) _playerWeaponsData.Add(Instantiate((WeaponData)weapon.GetItemData()));
+            PlayerWeapon weapon = gameItems.Weapons.Find(weapon => weapon.name == itemName);
+            if (weapon != null)
+            {
+                _playerItemsData.Add(Instantiate((WeaponData)weapon.GetItemData()));
+                continue;
+            }
+            else
+            {
+                PlayerVehicle playerVehicle = gameItems.PlayerVehicle.Find(weapon => weapon.name == itemName);
+                if (playerVehicle != null)
+                {
+                    _playerItemsData.Add(Instantiate((VehicleData)playerVehicle.GetItemData()));
+                    continue;
+                }
+            }
         }
 
-        
+
 
 
 

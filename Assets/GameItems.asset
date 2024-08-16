@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: GameItems
   m_EditorClassIdentifier: 
   _weapons:
-  - {fileID: 2645702154592852617, guid: dfdc7e17016d5424baeacd5e840ac1c4, type: 3}
-  - {fileID: 5937934090757547522, guid: 548f481084ebf5f49a00f93cdea22bdd, type: 3}
+  - {fileID: 7069817358049926704, guid: 548f481084ebf5f49a00f93cdea22bdd, type: 3}
+  - {fileID: 257131958389177027, guid: dfdc7e17016d5424baeacd5e840ac1c4, type: 3}
   _itemsSpritesAtlas: {fileID: 100100200, guid: 8ba0462ead0b4d54596dae3a30bd14b9,
     type: 3}
+  _playerVehicles:
+  - {fileID: 4091442796374768174, guid: 8adc2b9fa90db854f8cfab06c6b863fc, type: 3}

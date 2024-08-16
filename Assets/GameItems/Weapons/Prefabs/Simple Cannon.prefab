@@ -19792,7 +19792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3540572807730037328}
-  - component: {fileID: 5937934090757547522}
+  - component: {fileID: 7069817358049926704}
   m_Layer: 0
   m_Name: Simple Cannon
   m_TagString: Untagged
@@ -19816,7 +19816,7 @@ Transform:
   - {fileID: 9085368505717821845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5937934090757547522
+--- !u!114 &7069817358049926704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19825,16 +19825,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7730165186287206479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e1018516b35f1458ece628f94c16ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dd4da47d67c020449243a2a07c13c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponData: {fileID: 11400000, guid: d57e18271e7a4224e92dc3192e7cfb31, type: 2}
   _firePoints:
   - {fileID: 1272160519433873267}
-  _targetMarker: {fileID: 4646189005581052952}
-  _observerPos: {x: 0, y: 25, z: -15}
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
+  _weaponData: {fileID: 11400000, guid: d57e18271e7a4224e92dc3192e7cfb31, type: 2}
+  _targetMarker: {fileID: 4646189005581052952}
+  _observerPos: {x: 0, y: 25, z: -15}
   _shakeOnShootIntensity: 0.2
 --- !u!1 &8496503144304956807
 GameObject:

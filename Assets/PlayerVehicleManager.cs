@@ -14,12 +14,13 @@ public class PlayerVehicleManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    private void Start()
-    {
-        ChangeVehicle(GetComponentInChildren<PlayerVehicle>());
-    }
+    //private void Start()
+    //{
+    //    ChangeVehicle(GetComponentInChildren<PlayerVehicle>());
+    //}
     void ChangeVehicle(PlayerVehicle newVehicle)
     {
+        if (_playerVehicle != null) Destroy(_playerVehicle.gameObject);
         _playerVehicle = newVehicle;
     }
 

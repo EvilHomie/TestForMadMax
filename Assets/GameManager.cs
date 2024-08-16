@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
 
-    string[] _deffaulItemsNames = new string[] { "Simple Cannon", "Dual Cannon" };
+    string[] _deffaulItemsNames = new string[] { "Simple Cannon", "Dual Cannon", "Simple Truck" };
 
     void Start()
     {
@@ -29,9 +29,9 @@ public class GameManager : MonoBehaviour
         _closeUpgradesBtn.onClick.AddListener(OnCloseInventory);
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
 
-        TouchController.Instance.HideControllers();
-        WeaponsSwitcher.Instance.OnPlayerEndRaid();
-        PlayerWeaponManager.Instance.OnPlayerEndRaid();
+        //TouchController.Instance.HideControllers();
+        //WeaponsSwitcher.Instance.OnPlayerEndRaid();
+        //PlayerWeaponManager.Instance.OnPlayerEndRaid();
         SwitchButtonsElements();
         OnCloseInventory();
         ToggleMenu();

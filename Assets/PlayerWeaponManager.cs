@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
     public static PlayerWeaponManager Instance;
 
-    [SerializeField] Transform[] _weaponPoints;
-
-    IWeapon[] _weapons;
+    Transform[] _weaponPoints;
+    List<PlayerWeapon> _weapons = new();
 
     int _selectedWeaponIndex = 0;
     Vector2[] _lastWeaponsRotations = new Vector2[2];
@@ -20,21 +20,30 @@ public class PlayerWeaponManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
 
-        _weapons = new IWeapon[_weaponPoints.Length];
-
-        for (int i = 0; i < _weaponPoints.Length; i++)
-        {
-            if (_weaponPoints[i].childCount != 0)
-            {
-                _weapons[i] = _weaponPoints[i].GetComponentInChildren<IWeapon>();
-            }
-        }
+       
     }
     private void LateUpdate()
     {
         RotateWeaponAndCameraByJoystick(TouchController.Instance.GetJoystickPosition);
         RotateWeaponAndCameraByWASD();
     }
+
+    //private void Start()
+    //{
+    //    OnChangeVehicle(PlayerVehicleManager.Instance.PlayerVehicle);
+    //}
+
+
+    void OnChangeVehicle(PlayerVehicle newVehicle)
+    {
+        _weapons.Clear();
+        _weaponPoints = newVehicle.WeaponPoints;
+        foreach (Transform weapon in _weaponPoints)
+        {
+            _weapons.Add(weapon.GetComponentInChildren<PlayerWeapon>());
+        }
+    }
+
 
     public void OnPlayerEndRaid()
     {
@@ -45,7 +54,7 @@ public class PlayerWeaponManager : MonoBehaviour
         Camera.main.transform.position = _weaponPoints[0].position + _weapons[0].ObserverPos;
         Array.Clear(_lastWeaponsRotations, 0, _lastWeaponsRotations.Length);
 
-        foreach (IWeapon weapon in _weapons)
+        foreach (PlayerWeapon weapon in _weapons)
         {
             if (weapon == _weapons[0])
             {
@@ -65,7 +74,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         _selectedWeaponIndex = index;
 
-        foreach (IWeapon weapon in _weapons)
+        foreach (PlayerWeapon weapon in _weapons)
         {
             if (weapon == _weapons[index])
             {

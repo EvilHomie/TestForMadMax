@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerVehicle : MonoBehaviour
+public class PlayerVehicle : MonoBehaviour, IItem
 {
+    [SerializeField] VehicleData _vehicleData;
     [SerializeField] float _shakeIntensityOnStart = 0.5f;
     [SerializeField] float _shakeDelayOnStart = 0.5f;
     [SerializeField] float _shakeDurationOnStart = 0.8f;
@@ -60,5 +61,15 @@ public class PlayerVehicle : MonoBehaviour
         CameraManager.Instance.Shake(_shakeDurationOnStart, _shakeIntensityOnStart);
         yield return new WaitForSeconds(_delayBeforeStartMove + _delayForDustAfterMove);
         _vehicleEffectsController.PlayDustPS();
+    }
+
+    public object GetItemData()
+    {
+        return _vehicleData;
+    }
+
+    public void SetItemData(object obj)
+    {
+        _vehicleData = obj as VehicleData;
     }
 }
