@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
@@ -40,10 +39,10 @@ public class PlayerWeaponManager : MonoBehaviour
     public void OnPlayerEndRaid()
     {
         _selectedWeaponIndex = 0;
-        CameraManager.Instance.ChangeInitPos(_weapons[0].ObserverPos);
+        CameraManager.Instance.ChangeInitPos(_weaponPoints[0].position + _weapons[0].ObserverPos);
         targetRotationY = 0;
         targetRotationX = 0;
-        Camera.main.transform.position = _weapons[0].ObserverPos;
+        Camera.main.transform.position = _weaponPoints[0].position + _weapons[0].ObserverPos;
         Array.Clear(_lastWeaponsRotations, 0, _lastWeaponsRotations.Length);
 
         foreach (IWeapon weapon in _weapons)
@@ -81,7 +80,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 weapon.TargetMarker.SetActive(false);
             }
         }
-        CameraManager.Instance.ChangeInitPos(_weapons[index].ObserverPos);
+        CameraManager.Instance.ChangeInitPos(_weaponPoints[index].position + _weapons[index].ObserverPos);
     }
 
     public void StartShoot()

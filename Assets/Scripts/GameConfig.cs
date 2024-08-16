@@ -42,10 +42,7 @@ public class GameConfig : MonoBehaviour
     [Header("PhysicData")]
     [SerializeField] float _touchRoadImpulseMod = 25;
 
-    [Header("GAME Items Data")]
-    [SerializeField] GameItems _gameItems;
-    [SerializeField] UpgradeCosts _upgradeCosts;
-    [SerializeField] List<ResSprite> _resSprites;
+    
 
     public float MinPlayerSpeed => _minPlayerSpeed;
     public float MaxPlayerSpeed => _maxPlayerSpeed;
@@ -81,22 +78,11 @@ public class GameConfig : MonoBehaviour
 
     public float TouchRoadImpulseMod => _touchRoadImpulseMod;
 
-
-    public GameItems GameItems => _gameItems;
-    public UpgradeCosts UpgradeCosts => _upgradeCosts;
-    public List<ResSprite> ResSprites => _resSprites;
-
-
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
         Application.targetFrameRate = 1000;
-    }
-
-    private void Start()
-    {
-
     }
 
     private void Update()

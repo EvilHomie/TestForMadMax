@@ -3,39 +3,39 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaponData", menuName = "ScriptableObjects/Weapon")]
 public class WeaponData : ScriptableObject, IItemData
 {
-    public string weaponName;
-    public WeaponType weaponType;
-    public Raritie weaponRaritie;
-    public Sprite weaponSprite;
+    [SerializeField] string weaponName;
+    [SerializeField] WeaponType weaponType;
+    [SerializeField] Raritie weaponRaritie;
 
-    public AudioClip shootSound;
-    public AudioClip hitSound;
-    public float shakeOnShootIntensity = 0.2f;
-
-    [Header("HULL DMG")]
+    [Header(Constants.HULLDMG)]
     public float hullDmgByLvl;
     public int hullDmgCurLvl;
-    public int hullDmgMaxLvl;
+    [SerializeField] int _hullDmgMaxLvl;
 
-    [Header("SHIELD DMG")]
+    [Header(Constants.SHIELDDMG)]
     public float shieldDmgByLvl;
     public int shieldDmgCurLvl;
-    public int shieldDmgMaxLvl;
+    [SerializeField] int _shieldDmgMaxLvl;
 
-    [Header("FIRERATE")]
+    [Header(Constants.FIRERATE)]
     public float fireRateByLvl;
     public int fireRateCurtLvl;
-    public int fireRateMaxLvl;
+    [SerializeField] int _fireRateMaxLvl;
 
-    [Header("ROTATION SPEED")]
+    [Header(Constants.ROTATIONSPEED)]
     public float rotationSpeedByLvl;
     public int rotationSpeedCurLvl;
-    public int rotationSpeedMaxLvl;
-
-    //[Header("UPGRADES")]
-    //public float upgradeMod;
+    [SerializeField] int _rotationSpeedMaxLvl;
 
     public string ItemName => weaponName;
 
-    public Sprite ItemSprite => weaponSprite;
+    public Raritie Raritie => weaponRaritie;
+
+    public WeaponType Type => weaponType;
+
+    public int HullDmgMaxLvl => _hullDmgMaxLvl;
+    public int ShieldDmgMaxLvl => _shieldDmgMaxLvl;
+    public int FireRateMaxLvl => _fireRateMaxLvl;
+    public int RotationSpeedMaxLvl => _rotationSpeedMaxLvl;
+
 }

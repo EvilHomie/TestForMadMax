@@ -64,8 +64,8 @@ public class UpgradeRow : MonoBehaviour
         {
             if (i <= resCosts.Count - 1)
             {
-                Sprite sprite = GameConfig.Instance.ResSprites.Find(sprite => sprite.ResourcesType == resCosts[i].ResourcesType).Sprite;
-                _costRows[i].SetData(sprite, resCosts[i].Amount);
+                ResSprite resData = GameAssets.Instance.ResSprites.Find(sprite => sprite.ResourcesType == resCosts[i].ResourcesType);
+                _costRows[i].SetData(resData.Sprite, resCosts[i].Amount, resData.TextColor);
             }
             else
             {
@@ -76,7 +76,7 @@ public class UpgradeRow : MonoBehaviour
 
     void OnBuyUpgrade()
     {
-        InventoryManager.Instance.OnBuyUpdate(_charName.text);
+        InventoryManager.Instance.OnBuyUpdate(_charName.text, _upgradeCost);
     }
 
 

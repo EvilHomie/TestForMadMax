@@ -1,81 +1,53 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerVehicleManager : MonoBehaviour
 {
     public static PlayerVehicleManager Instance;
-    VehicleVisualController _vehicleVisualController;
-    AudioSource _audioSource;
 
-    [SerializeField] ParticleSystem[] _wheelsDustPS;
-    [SerializeField] float _shakeIntensityOnStart = 0.5f;
-    [SerializeField] float _shakedelayOnStart = 0.5f;
-    [SerializeField] float _shakedurationOnStart = 0.8f;
-    [SerializeField] float _delayBeforeStartMove = 2;
-    [SerializeField] float _targetSpeedOnStart = 5;
-    [SerializeField] float _reachTargetSpeedDuration = 10;
-
-    float _lastMoveSpeed = 0;
-    float _deffAudioPitch = 0.9f;
-
-    bool _isStarted = false;
+    PlayerVehicle _playerVehicle;
+    float _lastMoveSpeed = 0;    
+    bool _engineIsStarted = false;
+    public PlayerVehicle PlayerVehicle => _playerVehicle;
 
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-
-        _vehicleVisualController = GetComponent<VehicleVisualController>();
-        _audioSource = GetComponent<AudioSource>();
+    }
+    private void Start()
+    {
+        ChangeVehicle(GetComponentInChildren<PlayerVehicle>());
+    }
+    void ChangeVehicle(PlayerVehicle newVehicle)
+    {
+        _playerVehicle = newVehicle;
     }
 
     private void Update()
     {
-        if(!_isStarted) return;
-        _vehicleVisualController.RotateWheels();
-        if (_lastMoveSpeed != RaidObjectsManager.Instance.PlayerMoveSpeed)
-        {
-            _vehicleVisualController.UpdateVisualEffect();
+        if (!_engineIsStarted) return;
 
-            if (RaidObjectsManager.Instance.PlayerMoveSpeed <= GameConfig.Instance.MinPlayerSpeed) return;
-            _audioSource.pitch = _deffAudioPitch + ((RaidObjectsManager.Instance.PlayerMoveSpeed - GameConfig.Instance.MinPlayerSpeed) / 50f);
-            _lastMoveSpeed = RaidObjectsManager.Instance.PlayerMoveSpeed;
+        _playerVehicle.OnMove();
+        if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
+        {
+            _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
+            _playerVehicle.ChangeEngineAudioPitch(_lastMoveSpeed);
         }
     }
 
-
-    public void OnPlayerStartRaid()
+    public void OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration)
     {
-        StartCoroutine(StartMovement());
-        _isStarted = true;
+        _engineIsStarted = true;
+        _playerVehicle.StartVehicle();
+        _playerVehicle.GetVehicleStartData(out float startDelay, out float speed, out float duration);
+        startMoveDelay = startDelay;
+        startSpeed = speed;
+        reachStartSpeedDuration = duration;
     }
 
     public void OnPlayerEndRaid()
     {
-        StopAllCoroutines();
-        _isStarted = false;
-        _audioSource.Stop();
-        foreach (var ps in _wheelsDustPS)
-        {
-            ps.Stop();
-        }
+        _engineIsStarted = false;
+        _playerVehicle.StopVehicle();
     }
-
-
-    IEnumerator StartMovement()
-    {
-        _audioSource.Play();
-        yield return new WaitForSeconds(_shakedelayOnStart);
-        CameraManager.Instance.Shake(_shakedurationOnStart, _shakeIntensityOnStart);
-        yield return new WaitForSeconds(_delayBeforeStartMove);
-        GarageBoxManager.Instance.OnPlayerStartRaid(); // перенести в GameManager с задержкой запуска двигателя (нужно определиться со звуком)
-        RaidObjectsManager.Instance.ChangeSpeedOnStartRaid(_targetSpeedOnStart, _reachTargetSpeedDuration);
-
-        foreach (var ps in _wheelsDustPS)
-        {
-            ps.Play();
-        }
-    }
-
-    
 }

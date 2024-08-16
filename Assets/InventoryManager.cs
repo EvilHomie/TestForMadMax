@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -37,8 +39,31 @@ public class InventoryManager : MonoBehaviour
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(itemData);
     }
 
-    public void OnBuyUpdate(string charName)
+    public void OnBuyUpdate(string charName, List<ResCost> upgradeCost)
     {
-        Debug.LogWarning("UPGRADE" + "  " + charName);
+        int scrapMetalAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.ScrapMetal).Amount;
+        int wiresAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Wires).Amount;
+        int copperAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Ñopper).Amount;
+
+        bool result = ResourcesManager.Instance.SpendResources(scrapMetalAmount, wiresAmount, copperAmount);
+
+        if (!result) return;
+
+        if (_selectedItem is WeaponData data)
+        {
+            UpgradeWeapon(data, charName);
+        }
+
+        InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
+        InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(_selectedItem);
+    }
+
+
+    void UpgradeWeapon(WeaponData weaponData, string charName)
+    {
+        if (charName == Constants.HULLDMG) weaponData.hullDmgCurLvl++;
+        if (charName == Constants.SHIELDDMG) weaponData.shieldDmgCurLvl++;
+        if (charName == Constants.ROTATIONSPEED) weaponData.rotationSpeedCurLvl++;
+        if (charName == Constants.FIRERATE) weaponData.fireRateCurtLvl++;
     }
 }

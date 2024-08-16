@@ -5,7 +5,6 @@ public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
 
-
     Dictionary<ResourcesType, int> _availableResources = new();
     Dictionary<string, IItem> _availableItemsByName = new();
 
@@ -18,13 +17,15 @@ public class PlayerData : MonoBehaviour
     public List<IItemData> PlayerWeaponsData => _playerWeaponsData;
     public Dictionary<ResourcesType, int> AvailableResources => _availableResources;
 
+
+
+
+
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-
-
 
     public void FillResources()
     {
@@ -44,12 +45,12 @@ public class PlayerData : MonoBehaviour
     {
         foreach (var itemName in ItemsNames) 
         {
-            PlayerWeapon weapon = gameItems.playerWeapons.Find(weapon => weapon.name == itemName);
+            Weapon weapon = gameItems.Weapons.Find(weapon => weapon.name == itemName);
             if(weapon != null) _playerWeaponsData.Add(Instantiate((WeaponData)weapon.GetItemData()));
         }
 
-
         
+
 
 
 

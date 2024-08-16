@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976fea576407abd4cb4df198f4930a31, type: 3}
+  m_Name: Simple Cannon
+  m_EditorClassIdentifier: 
+  weaponName: Simple Cannon
+  weaponType: 0
+  weaponRaritie: 0
+  hullDmgByLvl: 1
+  hullDmgCurLvl: 3
+  _hullDmgMaxLvl: 5
+  shieldDmgByLvl: 0
+  shieldDmgCurLvl: 0
+  _shieldDmgMaxLvl: 0
+  fireRateByLvl: 0.5
+  fireRateCurtLvl: 2
+  _fireRateMaxLvl: 4
+  rotationSpeedByLvl: 20
+  rotationSpeedCurLvl: 4
+  _rotationSpeedMaxLvl: 5

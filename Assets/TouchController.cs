@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TouchController : MonoBehaviour
 {
@@ -57,7 +56,7 @@ public class TouchController : MonoBehaviour
 
     public void OnChangeSpeed(float sliderValue)
     {
-        RaidObjectsManager.Instance.ChangeSpeedWhileInRaid(sliderValue);
+        RaidManager.Instance.ChangeSpeedWhileInRaid(sliderValue);
     }
 
     public void HideControllers()

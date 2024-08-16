@@ -10,7 +10,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
     public void SetitemData(IItemData item)
     {
         _item = item;
-        _itemImage.sprite = _item.ItemSprite;
+        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(_item.ItemName);
     }
 
     public void OnPointerDown(PointerEventData eventData)

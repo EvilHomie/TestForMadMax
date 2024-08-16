@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,11 +18,22 @@ public class InventoryInfoPanelManager : MonoBehaviour
         else Instance = this;
     }
 
+    private void Start()
+    {
+        _itemNameText.text = Constants.ITEMNAME;
+        _itemImage.gameObject.SetActive(false);
+        foreach (var characteristicRow in characteristicRows)
+        {
+            characteristicRow.gameObject.SetActive(false);
+        }
+    }
+
 
     public void UpdateInfoPanel(IItemData itemData)
     {
+        _itemImage.gameObject.SetActive(true);
         _itemNameText.text = itemData.ItemName;
-        _itemImage.sprite = itemData.ItemSprite;
+        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(itemData.ItemName);
 
         if (itemData is WeaponData data)
         {
@@ -31,12 +43,12 @@ public class InventoryInfoPanelManager : MonoBehaviour
 
     void ShowWeaponInfo(WeaponData data)
     {
-        characteristicRows[0].SetData("Hull Damage", $"{data.hullDmgByLvl * data.hullDmgCurLvl} Per Hit");
-        characteristicRows[1].SetData("Shield Damage", $"{data.shieldDmgByLvl * data.shieldDmgCurLvl} Per Hit");
-        characteristicRows[2].SetData("Rotation Speed", $"{data.rotationSpeedByLvl * data.rotationSpeedCurLvl} DGS/Second");
+        characteristicRows[0].SetData(Constants.HULLDMG, $"{data.hullDmgByLvl * data.hullDmgCurLvl} {Constants.PERHIT}");
+        characteristicRows[1].SetData(Constants.SHIELDDMG, $"{data.shieldDmgByLvl * data.shieldDmgCurLvl} {Constants.PERHIT}");
+        characteristicRows[2].SetData(Constants.ROTATIONSPEED, $"{data.rotationSpeedByLvl * data.rotationSpeedCurLvl} {Constants.DGSINSECOND}");
 
-        if (data.weaponType != WeaponType.Beam)
-            characteristicRows[3].SetData("FireRate", $"{data.fireRateByLvl * data.fireRateCurtLvl} /Second");
+        if (data.Type != WeaponType.Beam)
+            characteristicRows[3].SetData(Constants.FIRERATE, $"{data.fireRateByLvl * data.fireRateCurtLvl} {Constants.INSECOND}");
         else characteristicRows[3].gameObject.SetActive(false);
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyVehicleManager : MonoBehaviour
 {
     EnemyVehicleMovementController _vehicleMovementController;
-    VehicleVisualController _vehicleVisualController;
+    VehicleEffectsController _vehicleVisualController;
     EnemyWeaponController _enemyWeaponController;
     ResourcesInVehicle _resourcesInVehicle;
     AudioSource _vehicleAudioSource;
@@ -17,35 +17,35 @@ public class EnemyVehicleManager : MonoBehaviour
     private void Awake()
     {
         _vehicleMovementController = GetComponent<EnemyVehicleMovementController>();
-        _vehicleVisualController = GetComponent<VehicleVisualController>();
+        _vehicleVisualController = GetComponent<VehicleEffectsController>();
         _enemyWeaponController = GetComponent<EnemyWeaponController>();
         _vehicleAudioSource = GetComponent<AudioSource>();
         _resourcesInVehicle = GetComponent<ResourcesInVehicle>();
     }
 
 
-    private void Start()
-    {
-        _vehicleMovementController.StartTranslateToPlayer();
-        _vehicleVisualController.UpdateVisualEffect();
-        _enemyWeaponController.StartShooting();
-    }
+    //private void Start()
+    //{
+    //    _vehicleMovementController.StartTranslateToPlayer();
+    //    _vehicleVisualController.UpdateVisualEffect();
+    //    _enemyWeaponController.StartShooting();
+    //}
 
-    void Update()
-    {
-        _vehicleVisualController.RotateWheels();
+    //void Update()
+    //{
+    //    _vehicleVisualController.RotateWheels();
 
-        if (_isDead) return;
+    //    if (_isDead) return;
 
-        _enemyWeaponController.RotateToPlayer();
-        _vehicleMovementController.MotionSimulation();
+    //    _enemyWeaponController.RotateToPlayer();
+    //    _vehicleMovementController.MotionSimulation();
 
-        if (_lastMoveSpeed != RaidObjectsManager.Instance.PlayerMoveSpeed)
-        {
-            _vehicleVisualController.UpdateVisualEffect();
-            _lastMoveSpeed = RaidObjectsManager.Instance.PlayerMoveSpeed;
-        }
-    }
+    //    if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
+    //    {
+    //        _vehicleVisualController.UpdateVisualEffect();
+    //        _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
+    //    }
+    //}
 
     public void OnBodyDestoyed()
     {
@@ -68,7 +68,7 @@ public class EnemyVehicleManager : MonoBehaviour
         _isDead = true;
         _enemyWeaponController.StopShooting();
         _vehicleMovementController.OnDieMovementLogic();
-        _vehicleVisualController.StopVisualEffects();
+        _vehicleVisualController.StopDustEmmiting();
         _blowParticleSystem.Play();
         _vehicleAudioSource.PlayOneShot(_blowAudioClip);
         _resourcesInVehicle.DropResources();

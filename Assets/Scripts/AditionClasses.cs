@@ -60,7 +60,10 @@ public struct ResSprite
 {
     [SerializeField] ResourcesType _resourcesType;
     [SerializeField] Sprite _sprite;
+    [SerializeField] Color _textColor;
 
     public ResourcesType ResourcesType => _resourcesType;
     public Sprite Sprite => _sprite;
+    public Color TextColor => _textColor;
+
 }

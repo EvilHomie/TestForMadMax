@@ -10,9 +10,9 @@ public class GarageBoxManager : MonoBehaviour
         else Instance = this;
     }
 
-    public void OnPlayerStartRaid()
+    public void OnPlayerStartRaid(float startMoveDelay)
     {
-        StartCoroutine(MoveGarage());
+        StartCoroutine(MoveGarage(startMoveDelay));
     }
 
     public void OnPlayerEndRaid()
@@ -22,11 +22,12 @@ public class GarageBoxManager : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    IEnumerator MoveGarage()
+    IEnumerator MoveGarage(float startMoveDelay)
     {
+        yield return new WaitForSeconds(startMoveDelay);
         while (transform.position.x > -10000)
         {
-            transform.position += 170 * RaidObjectsManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left;
+            transform.position += 170 * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left;
             yield return null;
         }
         gameObject.SetActive(false);

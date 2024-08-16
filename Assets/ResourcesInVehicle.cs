@@ -36,6 +36,6 @@ public class ResourcesInVehicle : MonoBehaviour
             }
         }
 
-        PlayerResourcesManager.Instance.AddResources(copperAmount, wiresAmount, scrapMetalAmount);
+        ResourcesManager.Instance.AddResources(copperAmount, wiresAmount, scrapMetalAmount);
     }
 }

@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 [CreateAssetMenu(fileName = "GameItems", menuName = "ScriptableObjects/GameItems")]
 public class GameItems : ScriptableObject
 {
-    public int test = 0;
-    public List<PlayerWeapon> playerWeapons;
+    [SerializeField] List<Weapon> _weapons;
+    [SerializeField] SpriteAtlas _itemsSpritesAtlas;
 
-    //public List<PlayerWeapon> playerVehicles;
+
+
+    public List<Weapon> Weapons => _weapons;
+
+    public SpriteAtlas ItemsSpritesAtlas => _itemsSpritesAtlas;
 }
