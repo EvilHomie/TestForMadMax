@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce97a6d9e765f7d489aae23f19c0eb16, type: 3}
   m_Name: Simple Truck
   m_EditorClassIdentifier: 
-  _vehicleName: Simple Truck
-  _vehicleRaritie: 0
+  vehicleName: Simple Truck
+  vehicleRaritie: 0
   hullHPByLvl: 100
   hullHPCurLvl: 1
-  _hullHPMaxLvl: 3
+  hullHPMaxLvl: 4
   shieldHPByLvl: 0
   shieldHPCurLvl: 0
-  _shieldHPMaxLvl: 0
+  shieldHPMaxLvl: 0
   shieldRegenRateByLvl: 0
   shieldRegenCurtLvl: 0
-  _shieldRegenMaxLvl: 0
+  shieldRegenMaxLvl: 0
   curWeaponsCount: 1
   maxWeaponsCount: 2

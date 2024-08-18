@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         OnCloseInventory();
         ToggleMenu();
 
-        //SaveLoadManager.Instance.LoadItemsData();
+        SaveLoadManager.Instance.LoadItemsData();
 
         //“≈—“Œ¬¿ﬂ Œ¡À¿—“‹
         ResourcesManager.Instance.AddResources(1000, 1000, 1000);
@@ -46,6 +46,25 @@ public class GameManager : MonoBehaviour
         PlayerData.Instance.SelectedWeapons.Add("Simple Cannon");
         //PlayerVehicleManager.Instance.ChangeVehicle();
         //PlayerWeaponManager.Instance.OnChangeVehicle();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SaveLoadManager.Instance.SaveItemsData();
+
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SaveLoadManager.Instance.LoadItemsData();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.LogWarning("SAVE CLEAR");
+        }
+
     }
 
     void ToggleMenu()

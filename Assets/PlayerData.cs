@@ -8,8 +8,7 @@ public class PlayerData : MonoBehaviour
     public static PlayerData Instance;
 
     string _selectedVehicleName;
-
-    List<string> _selectedWeapons = new();
+    List<string> _selectedWeaponsNames = new();
 
     Dictionary<ResourcesType, int> _availableResources = new();
     List<IItemData> _playerItemsData = new();
@@ -19,7 +18,7 @@ public class PlayerData : MonoBehaviour
 
     public string SelectedVehicleName { get => _selectedVehicleName; set => _selectedVehicleName = value; }
 
-    public List<string> SelectedWeapons => _selectedWeapons;
+    public List<string> SelectedWeapons { get => _selectedWeaponsNames; set => _selectedWeaponsNames = value; }
 
 
 
