@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0974e22602f27e84db57a86f2d20d8ab, type: 3}
+  m_Name: GameItems
+  m_EditorClassIdentifier: 
+  _weapons:
+  - {fileID: 7069817358049926704, guid: 548f481084ebf5f49a00f93cdea22bdd, type: 3}
+  - {fileID: 257131958389177027, guid: dfdc7e17016d5424baeacd5e840ac1c4, type: 3}
+  _itemsSpritesAtlas: {fileID: 100100200, guid: 8ba0462ead0b4d54596dae3a30bd14b9,
+    type: 3}
+  _playerVehicles:
+  - {fileID: 4091442796374768174, guid: 8adc2b9fa90db854f8cfab06c6b863fc, type: 3}

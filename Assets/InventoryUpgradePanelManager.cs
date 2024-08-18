@@ -14,9 +14,13 @@ public class InventoryUpgradePanelManager : MonoBehaviour
 
     public void UpdateUpgradePanel(IItemData itemData)
     {
-        if (itemData is WeaponData data)
+        if (itemData is WeaponData WData)
         {
-            ShowUpgradeInfo(data);
+            ShowWeaponUpgradeInfo(WData);
+        }
+        else if (itemData is VehicleData VData)
+        {
+            ShowVehicleUpgradeInfo(VData);
         }
     }
 
@@ -28,46 +32,77 @@ public class InventoryUpgradePanelManager : MonoBehaviour
         }
     }
 
-    void ShowUpgradeInfo(WeaponData data)
+    void ShowWeaponUpgradeInfo(WeaponData data)
     {
-        UpgradeCost upgradeCost = GameAssets.Instance.UpgradeCosts.Costs.Find(cost => cost.RaritieType == data.Raritie);
+        UpgradeCost upgradeCost = GameAssets.Instance.WeaponUpgradeCosts.Costs.Find(cost => cost.RaritieType == data.weaponRaritie);
 
 
-        if (data.hullDmgCurLvl < data.HullDmgMaxLvl)
+        if (data.hullDmgCurLvl < data.hullDmgMaxLvl)
         {
             LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.hullDmgCurLvl + 1);
-            upgradeRows[0].SetData(Constants.HULLDMG, data.hullDmgCurLvl, data.HullDmgMaxLvl, data.hullDmgByLvl, lvlCost.ResCost);
+            upgradeRows[0].SetData(Constants.HULLDMG, data.hullDmgCurLvl, data.hullDmgMaxLvl, data.hullDmgByLvl, lvlCost.ResCost);
         }
-        else upgradeRows[0].OnMaxLvlReached(Constants.HULLDMG, data.hullDmgCurLvl, data.HullDmgMaxLvl);
+        else upgradeRows[0].OnMaxLvlReached(Constants.HULLDMG, data.hullDmgCurLvl, data.hullDmgMaxLvl);
 
-        if (data.shieldDmgCurLvl < data.ShieldDmgMaxLvl)
+        if (data.shieldDmgCurLvl < data.shieldDmgMaxLvl)
         {
             LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.shieldDmgCurLvl + 1);
-            upgradeRows[1].SetData(Constants.SHIELDDMG, data.shieldDmgCurLvl, data.ShieldDmgMaxLvl, data.shieldDmgByLvl, lvlCost.ResCost);
+            upgradeRows[1].SetData(Constants.SHIELDDMG, data.shieldDmgCurLvl, data.shieldDmgMaxLvl, data.shieldDmgByLvl, lvlCost.ResCost);
         }
-        else upgradeRows[1].OnMaxLvlReached(Constants.SHIELDDMG, data.shieldDmgCurLvl, data.ShieldDmgMaxLvl);
+        else upgradeRows[1].OnMaxLvlReached(Constants.SHIELDDMG, data.shieldDmgCurLvl, data.shieldDmgMaxLvl);
 
-
-
-        if (data.rotationSpeedCurLvl < data.RotationSpeedMaxLvl)
+        if (data.rotationSpeedCurLvl < data.rotationSpeedMaxLvl)
         {
             LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.rotationSpeedCurLvl + 1);
-            upgradeRows[2].SetData(Constants.ROTATIONSPEED, data.rotationSpeedCurLvl, data.RotationSpeedMaxLvl, data.rotationSpeedByLvl, lvlCost.ResCost);
+            upgradeRows[2].SetData(Constants.ROTATIONSPEED, data.rotationSpeedCurLvl, data.rotationSpeedMaxLvl, data.rotationSpeedByLvl, lvlCost.ResCost);
         }
-        else upgradeRows[2].OnMaxLvlReached(Constants.ROTATIONSPEED, data.rotationSpeedCurLvl, data.RotationSpeedMaxLvl);
+        else upgradeRows[2].OnMaxLvlReached(Constants.ROTATIONSPEED, data.rotationSpeedCurLvl, data.rotationSpeedMaxLvl);
 
-        if (data.Type == WeaponType.Beam)
+        if (data.weaponType == WeaponType.Beam)
         {
             upgradeRows[3].gameObject.SetActive(false);
             return;
         }
 
-        if (data.fireRateCurtLvl < data.FireRateMaxLvl)
+        if (data.fireRateCurtLvl < data.fireRateMaxLvl)
         {
             LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.fireRateCurtLvl + 1);
-            upgradeRows[3].SetData(Constants.FIRERATE, data.fireRateCurtLvl, data.FireRateMaxLvl, data.fireRateByLvl, lvlCost.ResCost);
+            upgradeRows[3].SetData(Constants.FIRERATE, data.fireRateCurtLvl, data.fireRateMaxLvl, data.fireRateByLvl, lvlCost.ResCost);
         }
-        else upgradeRows[2].OnMaxLvlReached(Constants.FIRERATE, data.fireRateCurtLvl, data.FireRateMaxLvl);
+        else upgradeRows[3].OnMaxLvlReached(Constants.FIRERATE, data.fireRateCurtLvl, data.fireRateMaxLvl);
     }
 
+    void ShowVehicleUpgradeInfo(VehicleData data)
+    {
+        UpgradeCost upgradeCost = GameAssets.Instance.VehicleUpgradeCosts.Costs.Find(cost => cost.RaritieType == data.Raritie);
+        UpgradeCost slotCost = GameAssets.Instance.VehicleSlotCosts.Costs.Find(cost => cost.RaritieType == data.Raritie);
+
+        if (data.hullHPCurLvl < data.HullHPMaxLvl)
+        {
+            LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.hullHPCurLvl + 1);
+            upgradeRows[0].SetData(Constants.HULLHP, data.hullHPCurLvl, data.HullHPMaxLvl, data.hullHPByLvl, lvlCost.ResCost);
+        }
+        else upgradeRows[0].OnMaxLvlReached(Constants.HULLHP, data.hullHPCurLvl, data.HullHPMaxLvl);
+
+        if (data.shieldHPCurLvl < data.ShieldHPMaxLvl)
+        {
+            LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.shieldHPCurLvl + 1);
+            upgradeRows[1].SetData(Constants.SHIELDHP, data.shieldHPCurLvl, data.ShieldHPMaxLvl, data.shieldHPByLvl, lvlCost.ResCost);
+        }
+        else upgradeRows[1].OnMaxLvlReached(Constants.SHIELDHP, data.shieldHPCurLvl, data.ShieldHPMaxLvl);
+
+        if (data.shieldRegenCurtLvl < data.ShieldRegenMaxLvl)
+        {
+            LvlCost lvlCost = upgradeCost.LvlCosts.Find(cost => cost.lvlNumber == data.shieldRegenCurtLvl + 1);
+            upgradeRows[2].SetData(Constants.SHIELREGENRATE, data.shieldRegenCurtLvl, data.ShieldRegenMaxLvl, data.shieldRegenRateByLvl, lvlCost.ResCost);
+        }
+        else upgradeRows[2].OnMaxLvlReached(Constants.SHIELREGENRATE, data.shieldRegenCurtLvl, data.ShieldRegenMaxLvl);
+
+        if (data.curWeaponsCount < data.MaxWeaponsCount)
+        {
+            LvlCost lvlCost = slotCost.LvlCosts.Find(cost => cost.lvlNumber == data.curWeaponsCount + 1);
+            upgradeRows[3].SetData(Constants.WEAPONSCOUNT, data.curWeaponsCount, data.MaxWeaponsCount, 1, lvlCost.ResCost);
+        }
+        else upgradeRows[3].OnMaxLvlReached(Constants.WEAPONSCOUNT, data.curWeaponsCount, data.MaxWeaponsCount);
+    }
 }

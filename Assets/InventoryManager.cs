@@ -9,12 +9,20 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] InventoryItem _inventoryItemPF;
     [SerializeField] Transform _mainInventoryContainer;
 
+    VehicleData _equipedPlayerVehicle;
+    List<WeaponData> _equipedWeapons = new();
+
     IItemData _selectedItem;
 
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
+    }
+
+    public void OnLoad()
+    {
+        OnChangeVehicle(PlayerData.Instance.GetLastVehicle());
     }
 
 
@@ -49,9 +57,13 @@ public class InventoryManager : MonoBehaviour
 
         if (!result) return;
 
-        if (_selectedItem is WeaponData data)
+        if (_selectedItem is WeaponData WData)
         {
-            UpgradeWeapon(data, charName);
+            UpgradeWeapon(WData, charName);
+        }
+        else if (_selectedItem is VehicleData VData)
+        {
+            UpgradeVehicle(VData, charName);
         }
 
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
@@ -62,8 +74,24 @@ public class InventoryManager : MonoBehaviour
     void UpgradeWeapon(WeaponData weaponData, string charName)
     {
         if (charName == Constants.HULLDMG) weaponData.hullDmgCurLvl++;
-        if (charName == Constants.SHIELDDMG) weaponData.shieldDmgCurLvl++;
-        if (charName == Constants.ROTATIONSPEED) weaponData.rotationSpeedCurLvl++;
-        if (charName == Constants.FIRERATE) weaponData.fireRateCurtLvl++;
+        else if(charName == Constants.SHIELDDMG) weaponData.shieldDmgCurLvl++;
+        else if (charName == Constants.ROTATIONSPEED) weaponData.rotationSpeedCurLvl++;
+        else if (charName == Constants.FIRERATE) weaponData.fireRateCurtLvl++;
+    }
+
+    void UpgradeVehicle(VehicleData vehicleData, string charName)
+    {
+        if (charName == Constants.HULLHP) vehicleData.hullHPCurLvl++;
+        else if (charName == Constants.SHIELDHP) vehicleData.shieldHPCurLvl++;
+        else if (charName == Constants.SHIELREGENRATE) vehicleData.shieldRegenCurtLvl++;
+        else if (charName == Constants.WEAPONSCOUNT) vehicleData.curWeaponsCount++;
+    }
+
+
+    void OnChangeVehicle(VehicleData vehicleData)
+    {
+        _equipedPlayerVehicle = vehicleData;
+        PlayerData.Instance.SelectedVehicleName = vehicleData.ItemName;
+        PlayerVehicleManager.Instance.ChangeVehicle(vehicleData);
     }
 }

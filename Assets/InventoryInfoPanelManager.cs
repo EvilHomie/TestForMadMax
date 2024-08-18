@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,7 +50,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
         characteristicRows[1].SetData(Constants.SHIELDDMG, $"{data.shieldDmgByLvl * data.shieldDmgCurLvl} {Constants.PERHIT}");
         characteristicRows[2].SetData(Constants.ROTATIONSPEED, $"{data.rotationSpeedByLvl * data.rotationSpeedCurLvl} {Constants.DGSINSECOND}");
 
-        if (data.Type != WeaponType.Beam)
+        if (data.weaponType != WeaponType.Beam)
             characteristicRows[3].SetData(Constants.FIRERATE, $"{data.fireRateByLvl * data.fireRateCurtLvl} {Constants.INSECOND}");
         else characteristicRows[3].gameObject.SetActive(false);
     }

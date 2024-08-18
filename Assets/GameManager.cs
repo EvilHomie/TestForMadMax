@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
 
-    string[] _deffaulItemsNames = new string[] { "Simple Cannon", "Dual Cannon", "Simple Truck" };
+    
 
     void Start()
     {
@@ -36,11 +36,16 @@ public class GameManager : MonoBehaviour
         OnCloseInventory();
         ToggleMenu();
 
-
+        //SaveLoadManager.Instance.LoadItemsData();
 
         //“≈—“Œ¬¿ﬂ Œ¡À¿—“‹
-        ResourcesManager.Instance.AddResources(100, 100, 100);
-        PlayerData.Instance.FillPlayerItemsData(GameAssets.Instance.GameItems, _deffaulItemsNames);
+        ResourcesManager.Instance.AddResources(1000, 1000, 1000);
+        //SaveLoadManager.Instance.LoadDeffaultItems(_deffaulItemsNames);
+        
+        PlayerData.Instance.SelectedVehicleName = "Simple Truck";
+        PlayerData.Instance.SelectedWeapons.Add("Simple Cannon");
+        //PlayerVehicleManager.Instance.ChangeVehicle();
+        //PlayerWeaponManager.Instance.OnChangeVehicle();
     }
 
     void ToggleMenu()

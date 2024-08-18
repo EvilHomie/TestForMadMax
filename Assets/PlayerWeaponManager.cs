@@ -19,8 +19,6 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-
-       
     }
     private void LateUpdate()
     {
@@ -28,19 +26,23 @@ public class PlayerWeaponManager : MonoBehaviour
         RotateWeaponAndCameraByWASD();
     }
 
-    //private void Start()
-    //{
-    //    OnChangeVehicle(PlayerVehicleManager.Instance.PlayerVehicle);
-    //}
-
-
-    void OnChangeVehicle(PlayerVehicle newVehicle)
+    public void OnChangeVehicle()
     {
+        PlayerVehicle newVehicle = PlayerVehicleManager.Instance.PlayerVehicle;
         _weapons.Clear();
         _weaponPoints = newVehicle.WeaponPoints;
-        foreach (Transform weapon in _weaponPoints)
+        UpdateWeapons();
+    }
+
+    void UpdateWeapons()
+    {
+        for (int i = 0; i < PlayerData.Instance.SelectedWeapons.Count; i++)
         {
-            _weapons.Add(weapon.GetComponentInChildren<PlayerWeapon>());
+            string weaponName = PlayerData.Instance.SelectedWeapons[i];
+            PlayerWeapon originalWeapon = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == weaponName);
+            PlayerWeapon newWeapon = Instantiate(originalWeapon, _weaponPoints[i]);
+            newWeapon.SetItemData(PlayerData.Instance.GetItemData(weaponName));
+            _weapons.Add(newWeapon);
         }
     }
 
@@ -61,7 +63,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 weapon.TargetMarker.SetActive(true);
                 continue;
             }
-            else 
+            else
             {
                 weapon.TargetMarker.SetActive(false);
             }
@@ -69,7 +71,7 @@ public class PlayerWeaponManager : MonoBehaviour
     }
 
     public void ChangeWeapon(int index)
-    {        
+    {
         if (_selectedWeaponIndex == index) return;
 
         _selectedWeaponIndex = index;
@@ -104,7 +106,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void RotateWeaponAndCameraByJoystick(Vector2 movementVector)
     {
-        if(movementVector == Vector2.zero) return;
+        if (movementVector == Vector2.zero) return;
 
         targetRotationY += movementVector.x * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
         targetRotationX += movementVector.y * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;

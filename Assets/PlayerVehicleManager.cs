@@ -14,13 +14,14 @@ public class PlayerVehicleManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    //private void Start()
-    //{
-    //    ChangeVehicle(GetComponentInChildren<PlayerVehicle>());
-    //}
-    void ChangeVehicle(PlayerVehicle newVehicle)
+
+    public void ChangeVehicle(VehicleData vehicleData)
     {
         if (_playerVehicle != null) Destroy(_playerVehicle.gameObject);
+
+        PlayerVehicle newVehicle = Instantiate(GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == vehicleData.ItemName),transform);
+        newVehicle.SetItemData(vehicleData);
+
         _playerVehicle = newVehicle;
     }
 

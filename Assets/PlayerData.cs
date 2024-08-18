@@ -1,23 +1,25 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
 
-    Dictionary<ResourcesType, int> _availableResources = new();
-    Dictionary<string, IItem> _availableItemsByName = new();
+    string _selectedVehicleName;
 
+    List<string> _selectedWeapons = new();
+
+    Dictionary<ResourcesType, int> _availableResources = new();
     List<IItemData> _playerItemsData = new();
 
-    public Dictionary<string, IItem> AvailableItemsByName => _availableItemsByName;
-
-
-
     public List<IItemData> PlayerItemsData => _playerItemsData;
-    public Dictionary<ResourcesType, int> AvailableResources => _availableResources;
+    public Dictionary<ResourcesType, int> AvailableResources { get => _availableResources; set => _availableResources = value; }
 
+    public string SelectedVehicleName { get => _selectedVehicleName; set => _selectedVehicleName = value; }
 
+    public List<string> SelectedWeapons => _selectedWeapons;
 
 
 
@@ -27,68 +29,15 @@ public class PlayerData : MonoBehaviour
         else Instance = this;
     }
 
-    public void FillResources()
+    public IItemData GetItemData(string itemName)
     {
-
+        return PlayerItemsData.Find(item => item.ItemName == itemName);
     }
 
-    public void FillItems(GameItems gameItems)
+    public VehicleData GetLastVehicle()
     {
-
-
-
-
-
+        return (VehicleData)PlayerItemsData.Find(item => item.ItemName == _selectedVehicleName);
     }
 
-    public void FillPlayerItemsData(GameItems gameItems, string[] ItemsNames)
-    {
-        foreach (var itemName in ItemsNames)
-        {
-            PlayerWeapon weapon = gameItems.Weapons.Find(weapon => weapon.name == itemName);
-            if (weapon != null)
-            {
-                _playerItemsData.Add(Instantiate((WeaponData)weapon.GetItemData()));
-                continue;
-            }
-            else
-            {
-                PlayerVehicle playerVehicle = gameItems.PlayerVehicle.Find(weapon => weapon.name == itemName);
-                if (playerVehicle != null)
-                {
-                    _playerItemsData.Add(Instantiate((VehicleData)playerVehicle.GetItemData()));
-                    continue;
-                }
-            }
-        }
-
-
-
-
-
-
-
-        //PlayerWeapon weapon = gameItems.playerWeapons.Find(weapon => weapon.name == weaponName);
-        //WeaponData copyData = Instantiate((WeaponData)weapon.GetItemData());
-
-
-
-
-        ////weapon.SetItemCopyData(copyData);
-
-        //_availableItemsByName.Add(weapon.name, weapon);
-
-
-        ////WeaponData weaponData = (WeaponData)_availableItemsByName[weapon.name].GetItemData();
-
-        //copyData.fireRateByLvl = 19;
-
-        //Debug.LogWarning(gameItems.test);
-        ////Debug.LogWarning(weaponData.fireRateMaxLvl);
-
-        //PlayerWeapon playerWeapon = Instantiate(weapon);
-        //playerWeapon.SetItemCopyData(copyData);
-        //WeaponData newweaponData = (WeaponData)playerWeapon.GetItemData();
-        //Debug.LogWarning(newweaponData.fireRateByLvl);
-    }
+    
 }
