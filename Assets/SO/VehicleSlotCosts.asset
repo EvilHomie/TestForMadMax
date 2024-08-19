@@ -23,3 +23,11 @@ MonoBehaviour:
         _amount: 250
       - _resourcesType: 0
         _amount: 250
+    - _lvlNumber: 3
+      _resCosts:
+      - _resourcesType: 2
+        _amount: 400
+      - _resourcesType: 1
+        _amount: 400
+      - _resourcesType: 0
+        _amount: 400

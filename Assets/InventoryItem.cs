@@ -8,7 +8,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
     IItemData _item;
 
     public void SetitemData(IItemData item)
-    {
+    {        
         _item = item;
         if (item == null)
         {

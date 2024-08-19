@@ -20,10 +20,90 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
     public void ResetData()
     {
+        DisableWeaponEquipOption();
         _equipedVehicleSlot.SetitemData(null);
         foreach (var weaponSlot in EquipeWeaponsSlots)
         {
             weaponSlot.InventoryItem.SetitemData(null);
+            weaponSlot.ActiveStatus = false;
+        }
+        FillSlotsFromPlayerData();
+    }
+
+    void FillSlotsFromPlayerData()
+    {
+        for (int i = 0; i < PlayerData.Instance.EquipedItems.Count; i++)
+        {
+            IItemData itemData = PlayerData.Instance.GetItemData(PlayerData.Instance.EquipedItems[i]);
+            if (i == 0) _equipedVehicleSlot.SetitemData(itemData);           
+            else
+            {
+                WeaponSlot wSlot = _equipeWeaponsSlots.Find(slot => slot.SlotIndex == i);
+                wSlot.InventoryItem.SetitemData(itemData);
+                wSlot.ActiveStatus = true;
+            }
+        }
+    }
+
+    public void EnableWeaponEquipOption(IItemData newWeapon)
+    {
+        _equipedVehicleSlot.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        _equipPanelRT.localScale = Vector3.one * 2;
+        foreach (var weaponSlot in _equipeWeaponsSlots)
+        {
+            weaponSlot.SelectBtn.gameObject.SetActive(true);
+            weaponSlot.SelectBtn.onClick.AddListener(delegate { OnEquipWeapon(weaponSlot, newWeapon); });
+        }
+    }
+
+    public void OnEquipNewVehicle(IItemData newVehicle)
+    {
+        PlayerData.Instance.EquipedItems[0] = newVehicle.ItemName;
+        IItemData previousItem = _equipedVehicleSlot.GetitemData();
+
+        InventoryManager.Instance.OnSelectedItemEquiped(newVehicle, previousItem);
+        _equipedVehicleSlot.SetitemData(newVehicle);
+        OnCheckWeaponsSlotsCount();
+    }
+
+    void DisableWeaponEquipOption()
+    {
+        _equipedVehicleSlot.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        _equipPanelRT.localScale = Vector3.one;
+        foreach (var weaponSlot in _equipeWeaponsSlots)
+        {
+            weaponSlot.SelectBtn.gameObject.SetActive(false);
+            weaponSlot.SelectBtn.onClick.RemoveAllListeners();
+        }
+    }
+
+    void OnEquipWeapon(WeaponSlot slot, IItemData newWeapon)
+    {
+        PlayerData.Instance.EquipedItems[slot.SlotIndex] = newWeapon.ItemName;
+        IItemData previousItem = slot.InventoryItem.GetitemData();
+
+        slot.InventoryItem.SetitemData(newWeapon);
+        InventoryManager.Instance.OnSelectedItemEquiped(newWeapon, previousItem);
+        DisableWeaponEquipOption();  
+    }
+
+    public void OnCheckWeaponsSlotsCount()
+    {
+        VehicleData currentVehicle = (VehicleData)_equipedVehicleSlot.GetitemData();
+        int newSlotsCount = currentVehicle.curWeaponsCount;
+
+        foreach (var weaponSlot in EquipeWeaponsSlots)
+        {
+            if(weaponSlot.SlotIndex <= newSlotsCount) 
+            weaponSlot.ActiveStatus = true;
+            else
+            {
+                IItemData previousItem = weaponSlot.InventoryItem.GetitemData();
+                InventoryManager.Instance.OnSelectedItemEquiped(null, previousItem);
+                weaponSlot.InventoryItem.SetitemData(null);
+                weaponSlot.ActiveStatus = false;
+                PlayerData.Instance.EquipedItems.Remove(weaponSlot.SlotIndex);
+            }
         }
     }
 }

@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
     void OnStartRaid()
     {
         _playerOnRaid = true;
+        WeaponsSwitcher.Instance.OnPlayerStartRaid();
         PlayerVehicleManager.Instance.OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration);
         CameraManager.Instance.OnPlayerStartRaid();
         TouchController.Instance.ShowControllers(_showControllerDelay);
