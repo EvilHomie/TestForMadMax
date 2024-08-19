@@ -6,8 +6,8 @@ public class PlayerWeaponManager : MonoBehaviour
 {
     public static PlayerWeaponManager Instance;
 
-    Transform[] _weaponPoints;
-    List<PlayerWeapon> _weapons = new();
+    List<Transform> _weaponPoints = new();
+    Dictionary<int, PlayerWeapon> _weapons = new();
 
     int _selectedWeaponIndex = 0;
     Vector2[] _lastWeaponsRotations = new Vector2[2];
@@ -26,16 +26,32 @@ public class PlayerWeaponManager : MonoBehaviour
         RotateWeaponAndCameraByWASD();
     }
 
-    public void OnChangeVehicle()
-    {
-        PlayerVehicle newVehicle = PlayerVehicleManager.Instance.PlayerVehicle;
-        _weapons.Clear();
-        _weaponPoints = newVehicle.WeaponPoints;
-        UpdateWeapons();
-    }
+    //public void OnChangeVehicle()
+    //{
+    //    PlayerVehicle newVehicle = PlayerVehicleManager.Instance.PlayerVehicle;
+    //    _weapons.Clear();
+    //    _weaponPoints = newVehicle.WeaponPoints;
+    //    UpdateWeapons();
+    //}
 
-    void UpdateWeapons()
+    public void UpdateWeaponsData()
     {
+        _weaponPoints = PlayerVehicleManager.Instance.PlayerVehicle.WeaponPoints;
+        for (int weaponIndex = 1; weaponIndex < PlayerData.Instance.EquipedItems.Count; weaponIndex++)
+        {
+            Debug.LogWarning(weaponIndex);
+            ChangeWeaponOnPoint(_weaponPoints[weaponIndex - 1], weaponIndex);
+        }
+
+
+
+
+
+
+
+
+
+
         //for (int i = 0; i < PlayerData.Instance.SelectedWeapons.Count; i++)
         //{
         //    string weaponName = PlayerData.Instance.SelectedWeapons[i];
@@ -46,52 +62,100 @@ public class PlayerWeaponManager : MonoBehaviour
         //}
     }
 
+    void ChangeWeaponOnPoint(Transform weaponPoint, int weaponIndex)
+    {
+        if (weaponPoint.childCount > 1)
+        {
+            foreach (Transform t in weaponPoint) Destroy(t.gameObject);
+            CreateWeaponInstance(weaponPoint, weaponIndex);
+        }
+        else if (weaponPoint.childCount == 0)
+        {
+            CreateWeaponInstance(weaponPoint, weaponIndex);
+        }
+        else if (weaponPoint.childCount == 1)
+        {
+            WeaponData existWeaponData = (WeaponData)_weapons[weaponIndex].GetItemData();
+            if (PlayerData.Instance.EquipedItems[weaponIndex] == existWeaponData.weaponName) return;
+            foreach (Transform t in weaponPoint) Destroy(t.gameObject);
+            CreateWeaponInstance(weaponPoint, weaponIndex);
+        }
+    }
+
+    void CreateWeaponInstance(Transform weaponPoint, int weaponIndex)
+    {
+        string weaponName = PlayerData.Instance.EquipedItems[weaponIndex];
+        WeaponData wData = (WeaponData)PlayerData.Instance.GetItemDataByName(weaponName);
+        PlayerWeapon weaponPF = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == weaponName);
+
+        PlayerWeapon newWeaponInstance = Instantiate(weaponPF, weaponPoint);
+        newWeaponInstance.SetItemData(wData);
+        _weapons[weaponIndex] = newWeaponInstance;
+    }
+
+
+    public void OnPlayerStartRaid()
+    {
+
+    }
+
 
     public void OnPlayerEndRaid()
     {
-        _selectedWeaponIndex = 0;
-        CameraManager.Instance.ChangeInitPos(_weaponPoints[0].position + _weapons[0].ObserverPos);
-        targetRotationY = 0;
-        targetRotationX = 0;
-        Camera.main.transform.position = _weaponPoints[0].position + _weapons[0].ObserverPos;
-        Array.Clear(_lastWeaponsRotations, 0, _lastWeaponsRotations.Length);
+        UpdateWeaponsData();
+        _selectedWeaponIndex = 1;
+        CameraManager.Instance.ChangeInitPos(_weaponPoints[_selectedWeaponIndex - 1].position + _weapons[_selectedWeaponIndex].ObserverPos);
 
-        foreach (PlayerWeapon weapon in _weapons)
-        {
-            if (weapon == _weapons[0])
-            {
-                weapon.TargetMarker.SetActive(true);
-                continue;
-            }
-            else
-            {
-                weapon.TargetMarker.SetActive(false);
-            }
-        }
+
+
+
+
+
+
+
+        //_selectedWeaponIndex = 0;
+        //CameraManager.Instance.ChangeInitPos(_weaponPoints[0].position + _weapons[0].ObserverPos);
+        //targetRotationY = 0;
+        //targetRotationX = 0;
+        //Camera.main.transform.position = _weaponPoints[0].position + _weapons[0].ObserverPos;
+        //Array.Clear(_lastWeaponsRotations, 0, _lastWeaponsRotations.Length);
+
+        //foreach (PlayerWeapon weapon in _weapons)
+        //{
+        //    if (weapon == _weapons[0])
+        //    {
+        //        weapon.TargetMarker.SetActive(true);
+        //        continue;
+        //    }
+        //    else
+        //    {
+        //        weapon.TargetMarker.SetActive(false);
+        //    }
+        //}
     }
 
     public void ChangeWeapon(int index)
     {
-        if (_selectedWeaponIndex == index) return;
+        //if (_selectedWeaponIndex == index) return;
 
-        _selectedWeaponIndex = index;
+        //_selectedWeaponIndex = index;
 
-        foreach (PlayerWeapon weapon in _weapons)
-        {
-            if (weapon == _weapons[index])
-            {
-                weapon.TargetMarker.SetActive(true);
-                targetRotationX = _lastWeaponsRotations[index].x;
-                targetRotationY = _lastWeaponsRotations[index].y;
-                continue;
-            }
+        //foreach (PlayerWeapon weapon in _weapons)
+        //{
+        //    if (weapon == _weapons[index])
+        //    {
+        //        weapon.TargetMarker.SetActive(true);
+        //        targetRotationX = _lastWeaponsRotations[index].x;
+        //        targetRotationY = _lastWeaponsRotations[index].y;
+        //        continue;
+        //    }
 
-            if (weapon != _weapons[index])
-            {
-                weapon.TargetMarker.SetActive(false);
-            }
-        }
-        CameraManager.Instance.ChangeInitPos(_weaponPoints[index].position + _weapons[index].ObserverPos);
+        //    if (weapon != _weapons[index])
+        //    {
+        //        weapon.TargetMarker.SetActive(false);
+        //    }
+        //}
+        //CameraManager.Instance.ChangeInitPos(_weaponPoints[index].position + _weapons[index].ObserverPos);
     }
 
     public void StartShoot()
@@ -114,9 +178,9 @@ public class PlayerWeaponManager : MonoBehaviour
         float targetPosYClamped = Mathf.Clamp(targetRotationY, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
         float targetPosXClamped = Mathf.Clamp(targetRotationX, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
 
-        _weaponPoints[_selectedWeaponIndex].rotation = Quaternion.Euler(-targetPosXClamped, targetPosYClamped, 0);
-        Camera.main.transform.rotation = _weaponPoints[_selectedWeaponIndex].rotation;
-        _lastWeaponsRotations[_selectedWeaponIndex] = new Vector2(targetRotationX, targetRotationY);
+        _weaponPoints[_selectedWeaponIndex - 1].rotation = Quaternion.Euler(-targetPosXClamped, targetPosYClamped, 0);
+        Camera.main.transform.rotation = _weaponPoints[_selectedWeaponIndex - 1].rotation;
+        _lastWeaponsRotations[_selectedWeaponIndex - 1] = new Vector2(targetRotationX, targetRotationY);
     }
 
     void RotateWeaponAndCameraByWASD()
@@ -135,8 +199,8 @@ public class PlayerWeaponManager : MonoBehaviour
         //float targetPosYClamped = Mathf.Clamp(targetPosY, -45, 45); // Clamp вызывает ступор при достижении краёв.
         //float targetPosXClamped = Mathf.Clamp(targetPosX, -30, 0); // Clamp вызывает ступор при достижении краёв.
 
-        _weaponPoints[_selectedWeaponIndex].rotation = Quaternion.Euler(-targetRotationX, targetRotationY, 0);
-        Camera.main.transform.rotation = _weaponPoints[_selectedWeaponIndex].rotation;
-        _lastWeaponsRotations[_selectedWeaponIndex] = new Vector2(targetRotationX, targetRotationY);
+        _weaponPoints[_selectedWeaponIndex - 1].rotation = Quaternion.Euler(-targetRotationX, targetRotationY, 0);
+        Camera.main.transform.rotation = _weaponPoints[_selectedWeaponIndex - 1].rotation;
+        _lastWeaponsRotations[_selectedWeaponIndex - 1] = new Vector2(targetRotationX, targetRotationY);
     }
 }

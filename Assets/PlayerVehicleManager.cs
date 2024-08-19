@@ -5,7 +5,7 @@ public class PlayerVehicleManager : MonoBehaviour
     public static PlayerVehicleManager Instance;
 
     PlayerVehicle _playerVehicle;
-    float _lastMoveSpeed = 0;    
+    float _lastMoveSpeed = 0;
     bool _engineIsStarted = false;
     public PlayerVehicle PlayerVehicle => _playerVehicle;
 
@@ -15,14 +15,22 @@ public class PlayerVehicleManager : MonoBehaviour
         else Instance = this;
     }
 
-    public void ChangeVehicle(VehicleData vehicleData)
+    public void OnChangeVehicle()
     {
-        if (_playerVehicle != null) Destroy(_playerVehicle.gameObject);
-
-        PlayerVehicle newVehicle = Instantiate(GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == vehicleData.ItemName),transform);
-        newVehicle.SetItemData(vehicleData);
-
-        _playerVehicle = newVehicle;
+        if (_playerVehicle != null)
+        {
+            VehicleData existVehicleData = (VehicleData)_playerVehicle.GetItemData();
+            if (PlayerData.Instance.EquipedItems[0] == existVehicleData.vehicleName)
+            {
+                return;
+            }
+            else
+            {
+                Destroy(_playerVehicle.gameObject);
+                CreateVehicleInstance();
+            }
+        }
+        else CreateVehicleInstance();
     }
 
     private void Update()
@@ -37,6 +45,17 @@ public class PlayerVehicleManager : MonoBehaviour
         }
     }
 
+    void CreateVehicleInstance()
+    {
+        string equipedVehicleName = PlayerData.Instance.EquipedItems[0];
+        VehicleData vehicleData = (VehicleData)PlayerData.Instance.GetItemDataByName(equipedVehicleName);
+        PlayerVehicle vehiclePF = GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == equipedVehicleName);
+
+        PlayerVehicle newVehicleInstance = Instantiate(vehiclePF, transform);
+        newVehicleInstance.SetItemData(vehicleData);
+        _playerVehicle = newVehicleInstance;
+    }
+
     public void OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration)
     {
         _engineIsStarted = true;
@@ -49,6 +68,7 @@ public class PlayerVehicleManager : MonoBehaviour
 
     public void OnPlayerEndRaid()
     {
+        OnChangeVehicle();
         _engineIsStarted = false;
         _playerVehicle.StopVehicle();
     }

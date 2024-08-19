@@ -32,16 +32,21 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
     void FillSlotsFromPlayerData()
     {
-        for (int i = 0; i < PlayerData.Instance.EquipedItems.Count; i++)
+        VehicleData vehicleData = (VehicleData)PlayerData.Instance.GetItemDataByName(PlayerData.Instance.EquipedItems[0]);
+        _equipedVehicleSlot.SetitemData(vehicleData);
+
+
+        for (int i = 0; i < vehicleData.curWeaponsCount; i++)
         {
-            IItemData itemData = PlayerData.Instance.GetItemData(PlayerData.Instance.EquipedItems[i]);
-            if (i == 0) _equipedVehicleSlot.SetitemData(itemData);           
-            else
-            {
-                WeaponSlot wSlot = _equipeWeaponsSlots.Find(slot => slot.SlotIndex == i);
-                wSlot.InventoryItem.SetitemData(itemData);
-                wSlot.ActiveStatus = true;
-            }
+            _equipeWeaponsSlots[i].ActiveStatus = true;
+        }
+
+        for (int i = 1; i < PlayerData.Instance.EquipedItems.Count; i++)
+        {
+            IItemData weaponData = PlayerData.Instance.GetItemDataByName(PlayerData.Instance.EquipedItems[i]);            
+
+            WeaponSlot wSlot = _equipeWeaponsSlots.Find(slot => slot.SlotIndex == i);
+            wSlot.InventoryItem.SetitemData(weaponData);
         }
     }
 

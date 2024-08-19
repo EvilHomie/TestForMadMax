@@ -24,8 +24,8 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
-                _firePoints[0].OneShoot(_shootSound);
                 if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
+                _firePoints[0].OneShoot(_shootSound);
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -42,10 +42,11 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
+                if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
+
                 if (_lastShootBarrelNumber >= BarrelCount) _lastShootBarrelNumber = 0;
 
                 _firePoints[_lastShootBarrelNumber].OneShoot(_shootSound);
-                if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);

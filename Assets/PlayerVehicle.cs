@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVehicle : MonoBehaviour, IItem
@@ -12,13 +13,13 @@ public class PlayerVehicle : MonoBehaviour, IItem
     [SerializeField] float _reachTargetSpeedDuration = 10;
     [SerializeField] float _delayForDustAfterMove = 3;
 
-    [SerializeField] Transform[] _weaponPoints;
+    [SerializeField] List<Transform> _weaponPoints;
 
     AudioSource _engineAudioSource;
     VehicleEffectsController _vehicleEffectsController;
     float _deffAudioPitch = 0.9f;
 
-    public Transform[] WeaponPoints => _weaponPoints;
+    public List<Transform> WeaponPoints => _weaponPoints;
 
     private void Awake()
     {

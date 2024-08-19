@@ -37,6 +37,7 @@ public class InventoryManager : MonoBehaviour
 
     public void OnOpenInventory()
     {
+        gameObject.SetActive(true);
         foreach (Transform child in _mainInventoryContainer)
         {
             Destroy(child.gameObject);
@@ -50,6 +51,12 @@ public class InventoryManager : MonoBehaviour
         }
 
         InventoryEquipPanelManager.Instance.ResetData();
+    }
+    public void OnCloseInventory()
+    {
+        PlayerVehicleManager.Instance.OnChangeVehicle();
+        PlayerWeaponManager.Instance.UpdateWeaponsData();
+        gameObject.SetActive(false);
     }
 
     public void OnSelectInventoryItem(IItemData itemData)

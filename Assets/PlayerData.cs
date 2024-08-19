@@ -7,9 +7,6 @@ public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
 
-    //string _selectedVehicleName;
-    //List<string> _selectedWeaponsNames = new();
-
     Dictionary<ResourcesType, int> _availableResources = new();
     List<IItemData> _playerItemsData = new();
     Dictionary<int, string> _equipedItems = new();
@@ -17,29 +14,18 @@ public class PlayerData : MonoBehaviour
     public List<IItemData> PlayerItemsData => _playerItemsData;
     public Dictionary<ResourcesType, int> AvailableResources { get => _availableResources; set => _availableResources = value; }
 
+    // под индексом 0 имя транспорта, остальное = имена оружий
     public Dictionary<int, string> EquipedItems { get => _equipedItems; set => _equipedItems = value; }
 
-//public string SelectedVehicleName { get => _selectedVehicleName; set => _selectedVehicleName = value; }
 
-//public List<string> SelectedWeapons { get => _selectedWeaponsNames; set => _selectedWeaponsNames = value; }
-
-
-
-void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
 
-    public IItemData GetItemData(string itemName)
+    public IItemData GetItemDataByName(string itemName)
     {
         return PlayerItemsData.Find(item => item.ItemName == itemName);
     }
-
-    //public VehicleData GetLastVehicle()
-    //{
-    //    return (VehicleData)PlayerItemsData.Find(item => item.ItemName == _selectedVehicleName);
-    //}
-
-    
 }

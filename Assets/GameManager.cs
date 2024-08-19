@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button _changeLevelsBtn;
     [SerializeField] Button _closeUpgradesBtn;
     [SerializeField] Button _settingsBtn;
-    [SerializeField] GameObject _inventory;
 
     float _showControllerDelay = 13f; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
     bool _playerOnRaid = false;
@@ -25,31 +25,19 @@ public class GameManager : MonoBehaviour
         _settingsBtn.onClick.AddListener(ToggleMenu);
         _startRaidBtn.onClick.AddListener(OnStartRaid);
         _garageBtn.onClick.AddListener(OnReturntToGarage);
-        _openInventoryBtn.onClick.AddListener(OnOpenInventory);
-        _closeUpgradesBtn.onClick.AddListener(OnCloseInventory);
+        _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
+        _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
-
 
         SaveLoadManager.Instance.LoadSaveData();
         ResourcesManager.Instance.UpdateCounters();
 
-
-
-        //TouchController.Instance.HideControllers();
-        //WeaponsSwitcher.Instance.OnPlayerEndRaid();
-        //PlayerWeaponManager.Instance.OnPlayerEndRaid();
-        SwitchButtonsElements();
-        OnCloseInventory();
+        OnReturntToGarage();
+        InventoryManager.Instance.OnCloseInventory();
         ToggleMenu();
-
-
-        //ТЕСТОВАЯ ОБЛАСТЬ
-        
-        
-        //PlayerVehicleManager.Instance.ChangeVehicle();
-        //PlayerWeaponManager.Instance.OnChangeVehicle();
     }
 
+    //ТЕСТОВАЯ ОБЛАСТЬ
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
@@ -76,19 +64,10 @@ public class GameManager : MonoBehaviour
     void ToggleMenu()
     {
         _settingsIsopened = !_settingsIsopened;
-        if (_settingsIsopened) SwitchButtonsElements();       
+        if (_settingsIsopened) SwitchMenuElements();       
         else DisableMenuElements();
     }
 
-    void OnOpenInventory()
-    {
-        _inventory.SetActive(true);
-        InventoryManager.Instance.OnOpenInventory();
-    }
-    void OnCloseInventory()
-    {
-        _inventory.SetActive(false);
-    }
     void OnOpenLevels()
     {
 
@@ -97,26 +76,36 @@ public class GameManager : MonoBehaviour
     void OnStartRaid()
     {
         _playerOnRaid = true;
-        WeaponsSwitcher.Instance.OnPlayerStartRaid();
         PlayerVehicleManager.Instance.OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration);
-        CameraManager.Instance.OnPlayerStartRaid();
+        PlayerWeaponManager.Instance.OnPlayerStartRaid();
+
         TouchController.Instance.ShowControllers(_showControllerDelay);
         GarageBoxManager.Instance.OnPlayerStartRaid(startMoveDelay);
+        WeaponsSwitcher.Instance.OnPlayerStartRaid();
+        CameraManager.Instance.OnPlayerStartRaid();
         RaidManager.Instance.ChangeSpeedOnStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
+
+
+
         DisableMenuElements();
     }
 
     void OnReturntToGarage()
     {
         _playerOnRaid = false;
-        WeaponsSwitcher.Instance.OnPlayerEndRaid();
-        PlayerWeaponManager.Instance.OnPlayerEndRaid();
-        GarageBoxManager.Instance.OnPlayerEndRaid();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
-        RaidManager.Instance.OnPlayerEndRaid();
-        CameraManager.Instance.OnPlayerEndRaid();
+        PlayerWeaponManager.Instance.OnPlayerEndRaid();
+
         TouchController.Instance.HideControllers();
-        SwitchButtonsElements();
+        GarageBoxManager.Instance.OnPlayerEndRaid();
+        WeaponsSwitcher.Instance.OnPlayerEndRaid();
+        CameraManager.Instance.OnPlayerEndRaid();
+        RaidManager.Instance.OnPlayerEndRaid();
+
+
+
+        
+        SwitchMenuElements();
     }
 
     void DisableMenuElements()
@@ -126,10 +115,10 @@ public class GameManager : MonoBehaviour
         _openInventoryBtn.gameObject.SetActive(false);
         _changeLevelsBtn.gameObject.SetActive(false);
         _settingsIsopened = false;
-        OnCloseInventory();
+        InventoryManager.Instance.OnCloseInventory();
     }
 
-    void SwitchButtonsElements()
+    void SwitchMenuElements()
     {
         _startRaidBtn.gameObject.SetActive(!_playerOnRaid);
         _garageBtn.gameObject.SetActive(_playerOnRaid);
