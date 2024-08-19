@@ -10,11 +10,23 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
     public void SetitemData(IItemData item)
     {
         _item = item;
+        if (item == null)
+        {
+            _itemImage.gameObject.SetActive(false);
+            return;
+        }
+        _itemImage.gameObject.SetActive(true);
         _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(_item.ItemName);
+    }
+
+    public IItemData GetitemData()
+    {
+        return _item;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_item == null) return; 
         InventoryManager.Instance.OnSelectInventoryItem(_item);
     }
 }

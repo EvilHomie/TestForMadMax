@@ -32,7 +32,7 @@ public class ResourcesManager : MonoBehaviour
         DisableAddTexts();
     }
 
-    void UpdateCounters()
+    public void UpdateCounters()
     {
         _copperAmountText.text = PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.Ñopper) ? PlayerData.Instance.AvailableResources[ResourcesType.Ñopper].ToString() : 0.ToString();
         _wiresAmountText.text = PlayerData.Instance.AvailableResources.ContainsKey(ResourcesType.Wires) ? PlayerData.Instance.AvailableResources[ResourcesType.Wires].ToString() : 0.ToString();
@@ -73,6 +73,12 @@ public class ResourcesManager : MonoBehaviour
         _copperAddText.color = Color.clear;
         _wiresAddText.color = Color.clear;
         _scrapMetalAddText.color = Color.clear;
+    }
+
+    public void RemoveAllResources()
+    {
+        PlayerData.Instance.AvailableResources.Clear();
+        UpdateCounters();
     }
 
     public void AddResources(int copperAmount, int wiresAmount, int scrapMetalAmount)

@@ -76,7 +76,7 @@ public class UpgradeRow : MonoBehaviour
 
     void OnBuyUpgrade()
     {
-        InventoryManager.Instance.OnBuyUpdate(_charName.text, _upgradeCost);
+        InventoryManager.Instance.OnBuyUpgrade(_charName.text, _upgradeCost);
     }
 
 

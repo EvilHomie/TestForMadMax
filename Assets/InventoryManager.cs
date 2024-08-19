@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -8,10 +9,12 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] InventoryItem _inventoryItemPF;
     [SerializeField] Transform _mainInventoryContainer;
+    [SerializeField] Button _equipBtn;
+    [SerializeField] Button _unlockBtn;
 
-    VehicleData _equipedPlayerVehicle;
-    List<WeaponData> _equipedWeapons = new();
+    [SerializeField] CanvasGroup _vehicleSlotCG;
 
+    List<InventoryItem> _inventoryItems = new();
     IItemData _selectedItem;
 
     private void Awake()
@@ -20,23 +23,50 @@ public class InventoryManager : MonoBehaviour
         else Instance = this;
     }
 
-    public void OnLoad()
+    //public void OnLoad()
+    //{
+    //    OnChangeVehicle(PlayerData.Instance.GetLastVehicle());
+    //}
+    private void Start()
     {
-        OnChangeVehicle(PlayerData.Instance.GetLastVehicle());
+        _equipBtn.onClick.AddListener(OnEquipItem);
+        _equipBtn.gameObject.SetActive(false);
+        _unlockBtn.gameObject.SetActive(false); // временно... пока нет логики с чертежами
     }
 
-
     public void OnOpenInventory()
-    {
+    {        
         foreach (Transform child in _mainInventoryContainer)
         {
             Destroy(child.gameObject);
         }
-
+        _inventoryItems.Clear();
         foreach (var item in PlayerData.Instance.PlayerItemsData)
         {
-            InventoryItem InventoryItem = Instantiate(_inventoryItemPF, _mainInventoryContainer);
-            InventoryItem.SetitemData(item);
+            ADDItemToInventory(item);
+        }
+
+        SetUpEquipSlots();
+
+        DisableReplacesWeaponOption();
+    }
+
+    void SetUpEquipSlots()
+    {
+        InventoryEquipPanelManager.Instance.ResetData();
+        for (int i = 0; i < PlayerData.Instance.EquipedItems.Count; i++)
+        {
+            IItemData itemData = PlayerData.Instance.GetItemData(PlayerData.Instance.EquipedItems[i]);
+            if (i == 0)
+            {
+                InventoryEquipPanelManager.Instance.EquipedVehicleSlot.SetitemData(itemData);
+            }
+            else
+            {
+                WeaponSlot wSlot = InventoryEquipPanelManager.Instance.EquipeWeaponsSlots.Find(slot => slot.SlotIndex == i);
+                wSlot.InventoryItem.SetitemData(itemData);
+            }
+            RemoveItemFromInventory(itemData);
         }
     }
 
@@ -45,17 +75,18 @@ public class InventoryManager : MonoBehaviour
         _selectedItem = itemData;
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(itemData);
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(itemData);
+        _equipBtn.gameObject.SetActive(!PlayerData.Instance.EquipedItems.ContainsValue(itemData.ItemName));
     }
 
-    public void OnBuyUpdate(string charName, List<ResCost> upgradeCost)
+    public void OnBuyUpgrade(string charName, List<ResCost> upgradeCost)
     {
         int scrapMetalAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.ScrapMetal).Amount;
         int wiresAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Wires).Amount;
         int copperAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Сopper).Amount;
 
-        bool result = ResourcesManager.Instance.SpendResources(scrapMetalAmount, wiresAmount, copperAmount);
+        bool enoughResources = ResourcesManager.Instance.SpendResources(scrapMetalAmount, wiresAmount, copperAmount);
 
-        if (!result) return;
+        if (!enoughResources) return;
 
         if (_selectedItem is WeaponData WData)
         {
@@ -88,10 +119,65 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    void OnChangeVehicle(VehicleData vehicleData)
+    void OnEquipItem()
     {
-        _equipedPlayerVehicle = vehicleData;
-        PlayerData.Instance.SelectedVehicleName = vehicleData.ItemName;
-        PlayerVehicleManager.Instance.ChangeVehicle(vehicleData);
+        if (_selectedItem is WeaponData)
+        {
+            EnableReplacesWeaponOption(_selectedItem);
+        }
+        else if (_selectedItem is VehicleData)
+        {
+            PlayerData.Instance.EquipedItems[0] = _selectedItem.ItemName;
+            InventoryEquipPanelManager.Instance.EquipedVehicleSlot.SetitemData(_selectedItem);
+            RemoveItemFromInventory(_selectedItem);
+        }
+    }
+
+    void ADDItemToInventory(IItemData item)
+    {
+        InventoryItem InventoryItem = Instantiate(_inventoryItemPF, _mainInventoryContainer);
+        _inventoryItems.Add(InventoryItem);
+        InventoryItem.SetitemData(item);
+    }
+    void RemoveItemFromInventory(IItemData item)
+    {
+        InventoryItem inventoryItem = _inventoryItems.Find(invItem => invItem.GetitemData() == item);
+        Destroy(inventoryItem.gameObject);
+        _inventoryItems.Remove(inventoryItem);
+    }
+
+    void DisableReplacesWeaponOption()
+    {
+        _vehicleSlotCG.blocksRaycasts = true;
+        InventoryEquipPanelManager.Instance.EquipPanelRT.localScale = Vector3.one;
+        foreach (var weaponSlot in InventoryEquipPanelManager.Instance.EquipeWeaponsSlots)
+        {
+            weaponSlot.SelectBtn.gameObject.SetActive(false);
+            weaponSlot.SelectBtn.onClick.RemoveAllListeners();
+        }
+    }
+
+    void EnableReplacesWeaponOption(IItemData newItemData)
+    {
+        _vehicleSlotCG.blocksRaycasts = false;
+        InventoryEquipPanelManager.Instance.EquipPanelRT.localScale = Vector3.one * 2;
+        foreach (var weaponSlot in InventoryEquipPanelManager.Instance.EquipeWeaponsSlots)
+        {
+            weaponSlot.SelectBtn.gameObject.SetActive(true);
+            weaponSlot.SelectBtn.onClick.AddListener(delegate { OnReplaceWeapon(weaponSlot, newItemData); });
+        }          
+    }
+    void OnReplaceWeapon(WeaponSlot slot, IItemData newItemData)
+    {
+        if (slot.InventoryItem.GetitemData() != null)
+        {
+            IItemData oldItem = slot.InventoryItem.GetitemData();
+            ADDItemToInventory(oldItem);
+        }
+        _equipBtn.gameObject.SetActive(false);
+        slot.InventoryItem.SetitemData(newItemData);
+        RemoveItemFromInventory(newItemData);
+        PlayerData.Instance.EquipedItems[slot.SlotIndex] = newItemData.ItemName;
+        DisableReplacesWeaponOption();
     }
 }

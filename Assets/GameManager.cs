@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
         _closeUpgradesBtn.onClick.AddListener(OnCloseInventory);
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
 
+
+        SaveLoadManager.Instance.LoadSaveData();
+        ResourcesManager.Instance.UpdateCounters();
+
+
+
         //TouchController.Instance.HideControllers();
         //WeaponsSwitcher.Instance.OnPlayerEndRaid();
         //PlayerWeaponManager.Instance.OnPlayerEndRaid();
@@ -36,14 +42,10 @@ public class GameManager : MonoBehaviour
         OnCloseInventory();
         ToggleMenu();
 
-        SaveLoadManager.Instance.LoadItemsData();
 
         //“≈—“Œ¬¿ﬂ Œ¡À¿—“‹
-        ResourcesManager.Instance.AddResources(1000, 1000, 1000);
-        //SaveLoadManager.Instance.LoadDeffaultItems(_deffaulItemsNames);
         
-        PlayerData.Instance.SelectedVehicleName = "Simple Truck";
-        PlayerData.Instance.SelectedWeapons.Add("Simple Cannon");
+        
         //PlayerVehicleManager.Instance.ChangeVehicle();
         //PlayerWeaponManager.Instance.OnChangeVehicle();
     }
@@ -52,12 +54,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            SaveLoadManager.Instance.SaveItemsData();
+            SaveLoadManager.Instance.SaveData();
 
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SaveLoadManager.Instance.LoadItemsData();
+            SaveLoadManager.Instance.LoadSaveData();
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -65,6 +67,10 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("SAVE CLEAR");
         }
 
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            ResourcesManager.Instance.AddResources(1000, 1000, 1000);
+        }
     }
 
     void ToggleMenu()

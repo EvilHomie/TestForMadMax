@@ -12,8 +12,10 @@ public class SaveLoadManager : MonoBehaviour
         else Instance = this;
     }
 
-    void LoadDeffaultItems(string[] ItemsNames)
+    void ResetProgress(string[] ItemsNames)
     {
+        PlayerData.Instance.PlayerItemsData.Clear();
+        ResourcesManager.Instance.RemoveAllResources();
         foreach (var itemName in ItemsNames)
         {
             PlayerWeapon weapon = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == itemName);
@@ -27,8 +29,8 @@ public class SaveLoadManager : MonoBehaviour
             PlayerData.Instance.PlayerItemsData.Add(Instantiate((VehicleData)playerVehicle.GetItemData()));
         }
     }
-    
-    public void SaveItemsData()
+
+    public void SaveData()
     {
         List<VehicleData> vehiclesData = new();
         List<WeaponData> weaponsData = new();
@@ -59,20 +61,26 @@ public class SaveLoadManager : MonoBehaviour
         string savedResources = JsonConvert.SerializeObject(PlayerData.Instance.AvailableResources);
         PlayerPrefs.SetString("SavedResourcesData", savedResources);
 
-        PlayerPrefs.SetString("SelectedVehicle", PlayerData.Instance.SelectedVehicleName);
-
-        string selectedWeapons = JsonConvert.SerializeObject(PlayerData.Instance.SelectedWeapons);
-        PlayerPrefs.SetString("SelectedWeapons", selectedWeapons);
+        string savedEquipedItems = JsonConvert.SerializeObject(PlayerData.Instance.EquipedItems);
+        PlayerPrefs.SetString("SavedEquipedItems", savedEquipedItems);
 
         Debug.LogWarning("DATA SAVED");
     }
 
-    public void LoadItemsData()
+    public void LoadSaveData()
     {
-        if (!PlayerPrefs.HasKey("SavedWeaponsData") || !PlayerPrefs.HasKey("SavedVehiclesData") || !PlayerPrefs.HasKey("SavedResourcesData") || !PlayerPrefs.HasKey("SelectedVehicle") || !PlayerPrefs.HasKey("SelectedWeapons"))
+        if (!PlayerPrefs.HasKey("SavedWeaponsData") || !PlayerPrefs.HasKey("SavedVehiclesData") || !PlayerPrefs.HasKey("SavedResourcesData") || !PlayerPrefs.HasKey("SavedEquipedItems"))
         {
             PlayerData.Instance.AvailableResources = new();
-            LoadDeffaultItems(_deffaultItemsNames);
+            ResetProgress(_deffaultItemsNames);
+            PlayerPrefs.DeleteAll();
+
+            PlayerData.Instance.EquipedItems = new Dictionary<int, string>()
+            {
+                {0, "Simple Truck" },
+                {1, "Simple Cannon" }
+            };
+
             Debug.LogWarning("LOADED DEFFAULT ITEMS");
             return;
         }
@@ -86,7 +94,6 @@ public class SaveLoadManager : MonoBehaviour
         }
         Debug.LogWarning("WEAPONS LOADED");
 
-
         List<string> vehiclesDataAsStrings = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedVehiclesData"));
         foreach (var vehicleStringData in vehiclesDataAsStrings)
         {
@@ -99,10 +106,7 @@ public class SaveLoadManager : MonoBehaviour
         PlayerData.Instance.AvailableResources = JsonConvert.DeserializeObject<Dictionary<ResourcesType, int>>(PlayerPrefs.GetString("SavedResourcesData"));
         Debug.LogWarning("RESOURCES LOADED");
 
-        PlayerData.Instance.SelectedVehicleName = PlayerPrefs.GetString("SelectedVehicle");
-        Debug.LogWarning("SelectedVehicle LOADED");
-
-        PlayerData.Instance.SelectedWeapons = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SelectedWeapons"));
-        Debug.LogWarning("SelectedWeapons LOADED");
+        PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int,string>>(PlayerPrefs.GetString("SavedEquipedItems"));
+        Debug.LogWarning("EquipedItems LOADED");
     }
 }

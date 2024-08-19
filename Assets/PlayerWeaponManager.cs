@@ -36,14 +36,14 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void UpdateWeapons()
     {
-        for (int i = 0; i < PlayerData.Instance.SelectedWeapons.Count; i++)
-        {
-            string weaponName = PlayerData.Instance.SelectedWeapons[i];
-            PlayerWeapon originalWeapon = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == weaponName);
-            PlayerWeapon newWeapon = Instantiate(originalWeapon, _weaponPoints[i]);
-            newWeapon.SetItemData(PlayerData.Instance.GetItemData(weaponName));
-            _weapons.Add(newWeapon);
-        }
+        //for (int i = 0; i < PlayerData.Instance.SelectedWeapons.Count; i++)
+        //{
+        //    string weaponName = PlayerData.Instance.SelectedWeapons[i];
+        //    PlayerWeapon originalWeapon = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == weaponName);
+        //    PlayerWeapon newWeapon = Instantiate(originalWeapon, _weaponPoints[i]);
+        //    newWeapon.SetItemData(PlayerData.Instance.GetItemData(weaponName));
+        //    _weapons.Add(newWeapon);
+        //}
     }
 
 
