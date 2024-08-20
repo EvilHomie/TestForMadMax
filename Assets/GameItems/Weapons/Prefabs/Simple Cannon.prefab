@@ -19832,9 +19832,10 @@ MonoBehaviour:
   - {fileID: 1272160519433873267}
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
+  _shakeOnShootDuration: 0.1
   _weaponData: {fileID: 11400000, guid: d57e18271e7a4224e92dc3192e7cfb31, type: 2}
   _targetMarker: {fileID: 4646189005581052952}
-  _observerPos: {x: 0, y: 25, z: -15}
+  _observerPos: {x: 0, y: 25, z: -20}
   _shakeOnShootIntensity: 0.2
 --- !u!1 &8496503144304956807
 GameObject:

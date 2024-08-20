@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,13 +7,23 @@ public class WeaponsSwitcher : MonoBehaviour
 {
     public static WeaponsSwitcher Instance;
 
-    [SerializeField] Button _weaponButton_0;
-    [SerializeField] Image _weaponImage_0;
-    [SerializeField] Button _weaponButton_1;
-    [SerializeField] Image _weaponImage_1;
-
     [SerializeField] Sprite _weaponBGNotSelected;
     [SerializeField] Sprite _weaponBGSelected;
+
+    [SerializeField] List<UIWeaponSlot> UIWeaponSlots;
+
+
+
+    int _lastSelectedWeaponIndex = 1;
+
+
+
+    //[SerializeField] Button _weaponButton_0;
+    //[SerializeField] Image _weaponImage_0;
+
+    //[SerializeField] Button _weaponButton_1;
+    //[SerializeField] Image _weaponImage_1;
+
 
 
     private void Awake()
@@ -21,47 +33,55 @@ public class WeaponsSwitcher : MonoBehaviour
     }
     private void Start()
     {
-        _weaponButton_0.onClick.AddListener(delegate { OnSelectWeapon(0); });
-        _weaponButton_1.onClick.AddListener(delegate { OnSelectWeapon(1); });
+        foreach (var uiSlot in UIWeaponSlots)
+        {
+            uiSlot.selectBtn.onClick.AddListener(delegate { OnSelectWeapon(uiSlot.slotIndex); });
+        }
     }
 
-    public void OnPlayerEndRaid()
-    {
-        _weaponButton_0.image.sprite = _weaponBGSelected;
-    }
+    //public void OnPlayerEndRaid()
+    //{
+    //    _weaponButton_0.image.sprite = _weaponBGSelected;
+    //}
 
     public void OnPlayerStartRaid()
     {
-        PlayerData.Instance.EquipedItems.TryGetValue(1, out string weaponName1);
-        if (weaponName1 != null)
+        foreach (var uiSlot in UIWeaponSlots)
         {
-            _weaponImage_0.gameObject.SetActive(true);
-            _weaponImage_0.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName1);
+            PlayerData.Instance.EquipedItems.TryGetValue(uiSlot.slotIndex, out string weaponName);
+            if (weaponName != null)
+            {
+                uiSlot.selectBtn.gameObject.SetActive(true);
+                uiSlot.weaponImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName);
+                if(uiSlot.slotIndex == 1) uiSlot.selectBtn.image.sprite = _weaponBGSelected;
+                else uiSlot.selectBtn.image.sprite = _weaponBGNotSelected;
+            }
+            else uiSlot.selectBtn.gameObject.SetActive(false);
         }
-        else _weaponImage_0.gameObject.SetActive(false);
 
-        PlayerData.Instance.EquipedItems.TryGetValue(2, out string weaponName2);
-        if (weaponName2 != null)
-        {
-            _weaponImage_1.gameObject.SetActive(true);
-            _weaponImage_1.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName2);
-        }
-        else _weaponImage_1.gameObject.SetActive(false);
+        UIWeaponSlot slot = UIWeaponSlots.Find(slot => slot.slotIndex == 1);
+        slot.selectBtn.image.sprite = _weaponBGSelected;
     }
 
-
-    public void OnSelectWeapon(int index)
+    public void OnSelectWeapon(int weaponIndex)
     {
-        PlayerWeaponManager.Instance.ChangeWeapon(index);
-        if (index == 0 && _weaponImage_0.gameObject.activeSelf)
-        {
-            _weaponButton_0.image.sprite = _weaponBGSelected;
-            _weaponButton_1.image.sprite = _weaponBGNotSelected;
-        }
-        else if (index == 1 && _weaponImage_1.gameObject.activeSelf)
-        {
-            _weaponButton_0.image.sprite = _weaponBGNotSelected;
-            _weaponButton_1.image.sprite = _weaponBGSelected;
-        }
+        if (_lastSelectedWeaponIndex == weaponIndex) return;
+
+        UIWeaponSlot newSlot = UIWeaponSlots.Find(slot => slot.slotIndex == weaponIndex);
+        newSlot.selectBtn.image.sprite = _weaponBGSelected;
+
+        UIWeaponSlot previousSlot = UIWeaponSlots.Find(slot => slot.slotIndex == _lastSelectedWeaponIndex);
+        previousSlot.selectBtn.image.sprite = _weaponBGNotSelected;
+
+        _lastSelectedWeaponIndex = weaponIndex;
+        PlayerWeaponManager.Instance.ChangeWeapon(weaponIndex);
     }
+}
+
+[Serializable]
+class UIWeaponSlot
+{
+    public int slotIndex;
+    public Button selectBtn;
+    public Image weaponImage;
 }

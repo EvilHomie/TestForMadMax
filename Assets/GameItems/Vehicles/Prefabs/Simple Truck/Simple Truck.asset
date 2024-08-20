@@ -24,4 +24,4 @@ MonoBehaviour:
   shieldRegenCurtLvl: 0
   shieldRegenMaxLvl: 0
   curWeaponsCount: 1
-  maxWeaponsCount: 3
+  maxWeaponsCount: 2

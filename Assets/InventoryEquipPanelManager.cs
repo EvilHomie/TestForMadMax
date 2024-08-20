@@ -68,7 +68,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
         InventoryManager.Instance.OnSelectedItemEquiped(newVehicle, previousItem);
         _equipedVehicleSlot.SetitemData(newVehicle);
-        OnCheckWeaponsSlotsCount();
+        CheckWeaponsSlotsCount();
     }
 
     void DisableWeaponEquipOption()
@@ -92,7 +92,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
         DisableWeaponEquipOption();  
     }
 
-    public void OnCheckWeaponsSlotsCount()
+    public void CheckWeaponsSlotsCount()
     {
         VehicleData currentVehicle = (VehicleData)_equipedVehicleSlot.GetitemData();
         int newSlotsCount = currentVehicle.curWeaponsCount;

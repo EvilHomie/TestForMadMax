@@ -13,13 +13,13 @@ public class PlayerVehicle : MonoBehaviour, IItem
     [SerializeField] float _reachTargetSpeedDuration = 10;
     [SerializeField] float _delayForDustAfterMove = 3;
 
-    [SerializeField] List<Transform> _weaponPoints;
+    [SerializeField] List<WeaponPoint> _weaponPoints;
 
     AudioSource _engineAudioSource;
     VehicleEffectsController _vehicleEffectsController;
     float _deffAudioPitch = 0.9f;
 
-    public List<Transform> WeaponPoints => _weaponPoints;
+    public List<WeaponPoint> WeaponPoints => _weaponPoints;
 
     private void Awake()
     {

@@ -13,6 +13,7 @@ public class UpgradeRow : MonoBehaviour
     [SerializeField] TextMeshProUGUI _maxLvlText;
 
     List<ResCost> _upgradeCost;
+    Color _notAvailableColir = new Color(0.128f, 0.128f, 0.128f, 1);
 
 
     private void Awake()
@@ -54,7 +55,7 @@ public class UpgradeRow : MonoBehaviour
         {
             if (i <= currentLvl) _lvlIcons[i - 1].color = Color.green;
             else if (i > currentLvl && i <= maxLvl) _lvlIcons[i - 1].color = Color.grey;
-            else if (i > maxLvl) _lvlIcons[i - 1].color = Color.red;
+            else if (i > maxLvl) _lvlIcons[i - 1].color = _notAvailableColir;
         }
     }
 

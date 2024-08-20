@@ -6,6 +6,7 @@ public class WeaponLogic : MonoBehaviour
     [SerializeField] protected FirePointManager[] _firePoints;
     [SerializeField] AudioClip _shootSound;
     [SerializeField] AudioClip _hitSound;
+    [SerializeField] float _shakeOnShootDuration;
 
     protected bool _isShooting = false;
     float _nextTimeTofire = 0;
@@ -24,7 +25,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
-                if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
+                if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(_shakeOnShootDuration, _shakeOnShootIntensity);
                 _firePoints[0].OneShoot(_shootSound);
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
                 {
@@ -42,7 +43,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
-                if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(1f / CurFireRate, _shakeOnShootIntensity);
+                if (_shakeOnShootIntensity != 0) CameraManager.Instance.Shake(_shakeOnShootDuration, _shakeOnShootIntensity);
 
                 if (_lastShootBarrelNumber >= BarrelCount) _lastShootBarrelNumber = 0;
 

@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
         TouchController.Instance.HideControllers();
         GarageBoxManager.Instance.OnPlayerEndRaid();
-        WeaponsSwitcher.Instance.OnPlayerEndRaid();
+        //WeaponsSwitcher.Instance.OnPlayerEndRaid();
         CameraManager.Instance.OnPlayerEndRaid();
         RaidManager.Instance.OnPlayerEndRaid();
 

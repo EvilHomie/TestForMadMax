@@ -107,7 +107,7 @@ public class InventoryManager : MonoBehaviour
         else if (charName == Constants.WEAPONSCOUNT)
         {
             vehicleData.curWeaponsCount++;
-            InventoryEquipPanelManager.Instance.OnCheckWeaponsSlotsCount();
+            InventoryEquipPanelManager.Instance.CheckWeaponsSlotsCount();
         }
     }
 

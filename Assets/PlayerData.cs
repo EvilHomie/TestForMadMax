@@ -7,6 +7,9 @@ public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
 
+    float _vehicleHullHp;
+    float _vehicleShieldHp;
+
     Dictionary<ResourcesType, int> _availableResources = new();
     List<IItemData> _playerItemsData = new();
     Dictionary<int, string> _equipedItems = new();
@@ -27,5 +30,10 @@ public class PlayerData : MonoBehaviour
     public IItemData GetItemDataByName(string itemName)
     {
         return PlayerItemsData.Find(item => item.ItemName == itemName);
+    }
+
+    public void OnPlayerStartRaid()
+    {
+
     }
 }
