@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class EnemyWeapon
-{
-    public AudioClip shootSound;
-    public AudioClip hitSound;
-    public Transform transform;
-    public float fireRate;
-    public FirePointManager weaponParticlesManager;
-}
+//[Serializable]
+//public class EnemyWeapon
+//{
+//    public AudioClip shootSound;
+//    public AudioClip hitSound;
+//    public Transform transform;
+//    public float fireRate;
+//    public FirePointManager weaponParticlesManager;
+//}
 
 [Serializable]
 public struct DropedResource

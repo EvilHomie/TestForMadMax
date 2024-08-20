@@ -13,7 +13,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
     Coroutine _runAwayCoroutine;
     Coroutine _translateToPlayerCoroutine;
 
-    public void StartTranslateToPlayer()
+    public void StartTranslateToGameZone()
     {
         _startZPos = transform.position.z;
         float translateDuration = Random.Range(GameConfig.Instance.MinTranslateDuration, GameConfig.Instance.MaxTranslateDuration);

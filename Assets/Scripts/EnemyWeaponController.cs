@@ -29,19 +29,19 @@ public class EnemyWeaponController : MonoBehaviour
         _weaponsDestroyed = false;
         foreach (var weapon in _weapons)
         {
-            StartCoroutine(PlayShootEffects(weapon));
+            //StartCoroutine(PlayShootEffects(weapon));
         }
     }
 
-    IEnumerator PlayShootEffects(EnemyWeapon weapon)
-    {
-        while (!_weaponsDestroyed) 
-        {
-            //weapon.weaponParticlesManager.Emit(1);
-            _audioSource.PlayOneShot(weapon.shootSound);
-            yield return new WaitForSeconds(1 / weapon.fireRate);
-        }
-    }
+    //IEnumerator PlayShootEffects(EnemyWeapon weapon)
+    //{
+    //    while (!_weaponsDestroyed) 
+    //    {
+    //        //weapon.weaponParticlesManager.Emit(1);
+    //        _audioSource.PlayOneShot(weapon.shootSound);
+    //        yield return new WaitForSeconds(1 / weapon.fireRate);
+    //    }
+    //}
 
     public void StopShooting()
     {

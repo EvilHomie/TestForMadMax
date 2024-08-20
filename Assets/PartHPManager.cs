@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PartHPManager : MonoBehaviour, IDamageable
 {
-    [SerializeField] EnumVehiclePart _vehiclePart;
-    [SerializeField] float _HP = 100;
+    [SerializeField] protected EnumVehiclePart _vehiclePart;
+    [SerializeField] float _hullHP = 100;
+    [SerializeField] float _shieldHP = 100;
 
     AudioSource _vehicleAudioSource;
     Renderer _renderer;
@@ -26,11 +27,11 @@ public class PartHPManager : MonoBehaviour, IDamageable
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
-        _HP -= hullDmgValue;
+        _hullHP -= hullDmgValue;
         _vehicleAudioSource.PlayOneShot(hitSound);
         _hitVisualCoroutine ??= StartCoroutine(HitEffect());
 
-        if (_HP <= 0)
+        if (_hullHP <= 0)
         {
             if (_vehiclePart == EnumVehiclePart.Other)
             {

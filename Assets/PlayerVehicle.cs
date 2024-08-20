@@ -28,7 +28,7 @@ public class PlayerVehicle : MonoBehaviour, IItem
     }
     public void OnMove()
     {
-        _vehicleEffectsController.OnMove();
+        _vehicleEffectsController.PlayMoveEffects();
     }
 
     public void ChangeEngineAudioPitch(float newSpeed)

@@ -6,7 +6,7 @@ public class VehicleEffectsController : MonoBehaviour
     [SerializeField] ParticleSystem[] _wheelsDustPS;
     float _lastMoveSpeed = 0;
 
-    public void OnMove()
+    public void PlayMoveEffects()
     {
         TrackSpeed();
         RotateWheels();
