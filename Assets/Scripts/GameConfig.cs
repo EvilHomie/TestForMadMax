@@ -34,13 +34,14 @@ public class GameConfig : MonoBehaviour
     [SerializeField] float _maxDelayForRun = 4f;
     [SerializeField] float _minRunSpeed = 0.3f;
     [SerializeField] float _maxRunSpeed = 0.5f;
+    [SerializeField] float _lockOnPlayerDuration = 2f;
 
     [Header("PlayerWeapon")]
     [SerializeField] float _maxYRotateAngle;
     [SerializeField] float _maxXRotateAngle;
 
     [Header("PhysicData")]
-    [SerializeField] float _touchRoadImpulseMod = 25;
+    [SerializeField] float _touchRoadImpulse = 25;
 
     
 
@@ -71,12 +72,12 @@ public class GameConfig : MonoBehaviour
     public float MinRunSpeed => _minRunSpeed;
     public float MaxRunSpeed => _maxRunSpeed;
 
-
+    public float LockOnPlayerDuration => _lockOnPlayerDuration;
 
     public float MaxYRotateAngle => _maxYRotateAngle;
     public float MaxXRotateAngle => _maxXRotateAngle;
 
-    public float TouchRoadImpulseMod => _touchRoadImpulseMod;
+    public float TouchRoadImpulse => _touchRoadImpulse;
 
     void Awake()
     {

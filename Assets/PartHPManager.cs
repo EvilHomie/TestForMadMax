@@ -6,30 +6,34 @@ public class PartHPManager : MonoBehaviour, IDamageable
     [SerializeField] protected EnumVehiclePart _vehiclePart;
     [SerializeField] float _hullHP = 100;
     [SerializeField] float _shieldHP = 100;
-
-    AudioSource _vehicleAudioSource;
-    Renderer _renderer;
+    [SerializeField] Renderer _partRenderer;
     EnemyVehicleManager _enemyVehicleManager;
     Coroutine _hitVisualCoroutine;
     bool _isDead = false;
 
     private void Awake()
     {
-        _vehicleAudioSource = transform.root.GetComponent<AudioSource>();
         _enemyVehicleManager = transform.root.GetComponent<EnemyVehicleManager>();
-        _renderer = GetComponent<Renderer>();
     }
 
     private void Start()
     {
-        _renderer.material.DisableKeyword("_EMISSION");
+        _partRenderer.material.DisableKeyword("_EMISSION");
     }   
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
+        _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
+
+        if (_shieldHP > 0)
+        {
+            _shieldHP -= shieldDmgValue;
+            _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.blue));
+            return;
+        }
+
         _hullHP -= hullDmgValue;
-        _vehicleAudioSource.PlayOneShot(hitSound);
-        _hitVisualCoroutine ??= StartCoroutine(HitEffect());
+        _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.red));
 
         if (_hullHP <= 0)
         {
@@ -44,17 +48,17 @@ public class PartHPManager : MonoBehaviour, IDamageable
             }
             else if (_vehiclePart == EnumVehiclePart.Weapon)
             {
-                _enemyVehicleManager.OnWeaponDestroy();
-                Destroy(gameObject);
+                _enemyVehicleManager.OnWeaponLossHP(gameObject);                
             }
         }
     }
 
-    IEnumerator HitEffect()
+    IEnumerator HitEffect(Color color)
     {
-        _renderer.material.EnableKeyword("_EMISSION");
+        _partRenderer.material.SetColor("_EmissionColor", color);
+        _partRenderer.material.EnableKeyword("_EMISSION");
         yield return new WaitForSeconds(GameConfig.Instance.HitVisualDuration);
-        _renderer.material.DisableKeyword("_EMISSION");
+        _partRenderer.material.DisableKeyword("_EMISSION");
         _hitVisualCoroutine = null;
     }
 }

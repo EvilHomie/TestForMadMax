@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90927a36ced042e469fbe8810d20c204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundSource: {fileID: 1214402701827846381}
   _particleSystems:
   - {fileID: 3797909436350584946}
   - {fileID: 5850842103406972081}
@@ -10166,7 +10165,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5000
+      scalar: 8000
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14819,7 +14818,7 @@ ParticleSystemRenderer:
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
-  m_FreeformStretching: 0
+  m_FreeformStretching: 1
   m_RotateWithStretchDirection: 1
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
@@ -19832,11 +19831,11 @@ MonoBehaviour:
   - {fileID: 1272160519433873267}
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
-  _shakeOnShootDuration: 0.1
   _weaponData: {fileID: 11400000, guid: d57e18271e7a4224e92dc3192e7cfb31, type: 2}
   _targetMarker: {fileID: 4646189005581052952}
   _observerPos: {x: 0, y: 25, z: -20}
   _shakeOnShootIntensity: 0.2
+  _shakeOnShootDuration: 0.1
 --- !u!1 &8496503144304956807
 GameObject:
   m_ObjectHideFlags: 0

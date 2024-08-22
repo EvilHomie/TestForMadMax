@@ -1,56 +1,61 @@
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.UIElements;
 
 public class EnemyVehicleManager : MonoBehaviour
 {
     EnemyVehicleMovementController _vehicleMovementController;
     VehicleEffectsController _vehicleEffectsController;
-    //EnemyWeaponController _enemyWeaponController;
-    //ResourcesInVehicle _resourcesInVehicle;
-    //AudioSource _vehicleAudioSource;
+    EnemyWeaponController _enemyWeaponController;
+    ResourcesInVehicle _resourcesInVehicle;
+    AudioSource _vehicleAudioSource;
 
     [SerializeField] ParticleSystem _blowParticleSystem;
     [SerializeField] AudioClip _blowAudioClip;
+    [SerializeField] int _reservedLineNumber;
+    [SerializeField] RotationConstraint _smokeRotationConstraint;
 
     float _lastMoveSpeed;
     bool _isDead = false;
 
-    float translateDuration;
+    ConstraintSource constraintSource;
+
+    public AudioSource VehicleAudioSource => _vehicleAudioSource;
+    public int ReservedLineNumber { set => _reservedLineNumber = value; }
 
     private void Awake()
     {
         _vehicleMovementController = GetComponent<EnemyVehicleMovementController>();
         _vehicleEffectsController = GetComponent<VehicleEffectsController>();
-        //_enemyWeaponController = GetComponent<EnemyWeaponController>();
-        //_vehicleAudioSource = GetComponent<AudioSource>();
-        //_resourcesInVehicle = GetComponent<ResourcesInVehicle>();
+        _enemyWeaponController = GetComponent<EnemyWeaponController>();
+        _vehicleAudioSource = GetComponent<AudioSource>();
+        _resourcesInVehicle = GetComponent<ResourcesInVehicle>();
     }
 
 
     private void Start()
     {
-        _vehicleMovementController.StartTranslateToGameZone();        
-        //_enemyWeaponController.StartShooting();
+        constraintSource.sourceTransform = RaidManager.Instance.transform;
+        constraintSource.weight = 1.0f;
+        _smokeRotationConstraint.AddSource(constraintSource);
+        _vehicleMovementController.StartMovementLogic(this);
     }
 
     void Update()
     {
         if (_isDead) return;
         _vehicleEffectsController.PlayMoveEffects();
-        _vehicleMovementController.MotionSimulation();
+    }
+
+    private void OnDestroy()
+    {
+        RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
+    }
 
 
-        //_vehicleEffectsController.RotateWheels();
-
-        //if (_isDead) return;
-
-        //_enemyWeaponController.RotateToPlayer();
-        //_vehicleMovementController.MotionSimulation();
-
-        //if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
-        //{
-        //    _vehicleEffectsController.UpdateVisualEffect();
-        //    _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
-        //}
+    public void OnReachGameZone()
+    {
+        _enemyWeaponController.StartShootLogic();
     }
 
     public void OnBodyDestoyed()
@@ -63,22 +68,24 @@ public class EnemyVehicleManager : MonoBehaviour
         OnDie();
     }
 
-    public void OnWeaponDestroy()
+    public void OnWeaponLossHP(GameObject weapon)
     {
-        //_enemyWeaponController.StopShooting();
-        //_vehicleMovementController.OnRunMovementLogic();
+        Destroy(weapon);
+        if (!_enemyWeaponController.CheckAvailableWeapons())
+        {
+            _vehicleMovementController.OnTryRunMovementLogic();
+        }
     }
 
     void OnDie()
     {
-        //_isDead = true;
-        //_enemyWeaponController.StopShooting();
-        //_vehicleMovementController.OnDieMovementLogic();
-        //_vehicleEffectsController.StopDustEmmiting();
-        //_blowParticleSystem.Play();
-        //_vehicleAudioSource.PlayOneShot(_blowAudioClip);
-        //_resourcesInVehicle.DropResources();
-    }
+        _isDead = true;
+        _vehicleEffectsController.StopDustEmmiting();
+        _vehicleMovementController.StartDieLogic();
+        _enemyWeaponController.StopShooting();
 
-    
+        _blowParticleSystem.Play();
+
+        _resourcesInVehicle.DropResources();
+    }
 }

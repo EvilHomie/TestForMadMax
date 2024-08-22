@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHPManager : PartHPManager
+public class PlayerHPManager : MonoBehaviour
 {
     public static PlayerHPManager Instance;
 
@@ -14,12 +12,20 @@ public class PlayerHPManager : PartHPManager
 
     public void OnPlayerStartRaid()
     {
-        _vehiclePart = EnumVehiclePart.Body;
     }
 
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
+
+        //Debug.Log($"{hullDmgValue}    {shieldDmgValue}");
+
+
+
+
+
+
+
         //_hullHP -= hullDmgValue;
         //_vehicleAudioSource.PlayOneShot(hitSound);
         //_hitVisualCoroutine ??= StartCoroutine(HitEffect());

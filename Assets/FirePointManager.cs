@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class FirePointManager : MonoBehaviour
 {
-    [SerializeField] AudioSource soundSource;
+    AudioSource soundSource;
     [SerializeField] ParticleSystem[] _particleSystems;
+
+    private void Awake()
+    {
+        soundSource = GetComponent<AudioSource>();
+    }
     public void OneShoot(AudioClip shootSound)
     {
         foreach (var particleSystem in _particleSystems)

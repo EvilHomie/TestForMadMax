@@ -1,51 +1,85 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWeaponController : MonoBehaviour
 {
-    [SerializeField] EnemyWeapon[] _weapons;
+    [SerializeField] List<EnemyWeapon> _weapons;
+    [SerializeField] float _accuracy;
 
-    AudioSource _audioSource;
+    bool _allWeaponsDestroyed = false;
 
-    bool _weaponsDestroyed = false;
+    Vector3 _targetPos = new(0, 100, 0);
 
-    private void Awake()
+    float _rotationSpeedMod = 2f; //необходим для корректировки скорости поворота, чтобы оружие успело повернутся до истечения времени на прицеливание   
+
+    IEnumerator LockOnPlayer()
     {
-        _audioSource = transform.root.GetComponent<AudioSource>();
-    }
+        float t = 0;
+        float lockDuration = GameConfig.Instance.LockOnPlayerDuration;
+        float rotationSpeed = Time.deltaTime * _rotationSpeedMod / lockDuration;
 
-    public void RotateToPlayer()
-    {
-        if (_weaponsDestroyed) return;
-
-        foreach (var weapon in _weapons)
+        while (t <= 1)
         {
-            weapon.transform.LookAt(Camera.main.transform.position);
+            t += Time.deltaTime / lockDuration;
+
+            foreach (var weapon in _weapons)
+            {
+                if (weapon == null) continue; 
+                Vector3 targetDirection = _targetPos - weapon.transform.position;
+                Vector3 newDirection = Vector3.RotateTowards(weapon.transform.forward, targetDirection, rotationSpeed, 0.0f);
+                weapon.transform.rotation = Quaternion.LookRotation(newDirection);
+            }
+            yield return null;
+        }
+
+        while (!_allWeaponsDestroyed)
+        {
+            foreach (var weapon in _weapons)
+            {
+                if (weapon == null) continue; 
+                weapon.transform.LookAt(_targetPos);
+            }
+            yield return null;
         }
     }
 
-    public void StartShooting()
+    public void StartShootLogic()
     {
-        _weaponsDestroyed = false;
-        foreach (var weapon in _weapons)
-        {
-            //StartCoroutine(PlayShootEffects(weapon));
-        }
+        _allWeaponsDestroyed = false;
+        StartCoroutine(LockOnPlayer());
+        StartCoroutine(StartShootWhithDelay());
     }
 
-    //IEnumerator PlayShootEffects(EnemyWeapon weapon)
-    //{
-    //    while (!_weaponsDestroyed) 
-    //    {
-    //        //weapon.weaponParticlesManager.Emit(1);
-    //        _audioSource.PlayOneShot(weapon.shootSound);
-    //        yield return new WaitForSeconds(1 / weapon.fireRate);
-    //    }
-    //}
+    IEnumerator StartShootWhithDelay()
+    {
+        yield return new WaitForSeconds(GameConfig.Instance.LockOnPlayerDuration);
+        foreach (var weapon in _weapons)
+        {
+            if (weapon == null) continue;
+            weapon.StartShooting(_accuracy);
+        }
+    }
 
     public void StopShooting()
     {
-        _weaponsDestroyed = true;
+        StopAllCoroutines();
+        foreach (var weapon in _weapons)
+        {
+            if (weapon == null) continue;
+            weapon.StopShooting();
+        }
+    }
+
+    public bool CheckAvailableWeapons()
+    {
+        if (_weapons.TrueForAll(weapon => weapon == null))
+        {
+            _allWeaponsDestroyed = true;
+            StopShooting();
+            return true;
+        }
+        else return false;
     }
 }
 

@@ -6,6 +6,7 @@ public class PlayerWeapon : WeaponLogic, IItem
     [SerializeField] GameObject _targetMarker;
     [SerializeField] Vector3 _observerPos;    
     [SerializeField] float _shakeOnShootIntensity = 0.2f;
+    [SerializeField] float _shakeOnShootDuration = 0.1f;
 
     protected override float CurHullDmg => _weaponData.hullDmgByLvl * _weaponData.hullDmgCurLvl;
     protected override float CurShieldDmg => _weaponData.shieldDmgByLvl * _weaponData.shieldDmgCurLvl;
@@ -17,21 +18,12 @@ public class PlayerWeapon : WeaponLogic, IItem
 
     public void StartShooting()
     {
-        _isShooting = true;
-        
-        if (_firePoints.Length == 1)
-        {
-            StartCoroutine(SingleBarreledShoot(_shakeOnShootIntensity));
-        }
-        else
-        {
-            StartCoroutine(MultyBarreledShoot(_firePoints.Length, _shakeOnShootIntensity));
-        }
+        ShootAsPlayer(_shakeOnShootDuration, _shakeOnShootIntensity, _weaponData.weaponType);
     }
 
     public void StopShooting()
     {
-        _isShooting = false;
+        OnStopShooting();
     }
 
     public object GetItemData()

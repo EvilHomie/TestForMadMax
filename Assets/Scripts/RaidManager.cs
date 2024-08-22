@@ -1,4 +1,8 @@
+
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +12,21 @@ public class RaidManager : MonoBehaviour
 
     [SerializeField] Image _speedSliderFillImage;
     [SerializeField] MeshRenderer _mainRoadRenderer;
+    [SerializeField] List<EnemySpawnLines> enemySpawnLines;
+    [SerializeField] List<int> reservedSpawnLinesNumbers;
+    [SerializeField] List<int> freeSpawnLinesNumbers;
+
+
+    List<EnemyVehicleManager> enemiesList = new();
+
+    bool allLinesReserved = false;
 
     float _playerMoveSpeed = 0f;
     public float PlayerMoveSpeed => _playerMoveSpeed;
 
     Coroutine _UpdateSpeedCoroutine;
+
+    bool _onRaid = false;
 
     private void Awake()
     {
@@ -46,15 +60,34 @@ public class RaidManager : MonoBehaviour
         }
     }
 
-    public void ChangeSpeedOnStartRaid(float startMoveDelay, float speed, float reachSpeedDuration)
+    public void OnPlayerStartRaid(float startMoveDelay, float speed, float reachSpeedDuration)
     {
+        _onRaid = true;
         StartCoroutine(StartLerpSpeed(startMoveDelay, speed, reachSpeedDuration));
+        InvokeRepeating(nameof(SpawnEnemy), 5, 5);
     }
     public void OnPlayerEndRaid()
     {
+        _onRaid = false;
         StopAllCoroutines();
+        CancelInvoke();
         _playerMoveSpeed = 0;
         _UpdateSpeedCoroutine = null;
+
+
+        reservedSpawnLinesNumbers.Clear();
+        freeSpawnLinesNumbers.Clear();
+
+        foreach (var line in enemySpawnLines)
+        {
+            freeSpawnLinesNumbers.Add(line.lineIndex);
+        }
+
+        foreach (var enemy in enemiesList)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemiesList.Clear();
     }
 
 
@@ -85,4 +118,44 @@ public class RaidManager : MonoBehaviour
         }
         _UpdateSpeedCoroutine = null;
     }
+
+    void SpawnEnemy()
+    {
+        if (freeSpawnLinesNumbers.Count == 0) return;
+        int randomLineIndex = UnityEngine.Random.Range(0, freeSpawnLinesNumbers.Count);
+        int freeLineNumber = freeSpawnLinesNumbers[randomLineIndex];
+
+        int randomEnemyIndex = UnityEngine.Random.Range(0, LevelConfig.Instance.EnemyList.Count);
+        EnemyVehicleManager enemyPF = LevelConfig.Instance.EnemyList[randomEnemyIndex];
+
+        int randomPosIndex = UnityEngine.Random.Range(0, enemySpawnLines[freeLineNumber].spawnPositions.Count);
+        Vector3 spwanPos = enemySpawnLines[freeLineNumber].spawnPositions[randomPosIndex];
+
+        EnemyVehicleManager enemy = Instantiate(enemyPF, spwanPos, enemyPF.transform.rotation);
+        enemiesList.Add(enemy);
+        enemy.ReservedLineNumber = freeLineNumber;
+
+        freeSpawnLinesNumbers.Remove(freeLineNumber);
+        reservedSpawnLinesNumbers.Add(freeLineNumber);
+
+        if (freeSpawnLinesNumbers.Count == 0)
+            allLinesReserved = true;
+
+        Debug.LogWarning($"ENEMY IS SPAWNED AT LINE {freeLineNumber}");
+    }
+
+    public void OnEnemyDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
+    {
+        if(!_onRaid) return;
+        enemiesList.Remove(enemy);
+        freeSpawnLinesNumbers.Add(reservedLineNumber);
+        reservedSpawnLinesNumbers.Remove(reservedLineNumber);
+    }
+}
+
+[Serializable]
+public struct EnemySpawnLines
+{
+    public int lineIndex;
+    public List<Vector3> spawnPositions;
 }

@@ -74,8 +74,9 @@ public class GameManager : MonoBehaviour
     }
 
     void OnStartRaid()
-    {
+    {        
         _playerOnRaid = true;
+        SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration);
         PlayerWeaponManager.Instance.OnPlayerStartRaid();
 
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
         GarageBoxManager.Instance.OnPlayerStartRaid(startMoveDelay);
         WeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
-        RaidManager.Instance.ChangeSpeedOnStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
+        RaidManager.Instance.OnPlayerStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
 
 
 
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
     void OnReturntToGarage()
     {
         _playerOnRaid = false;
+        SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();
 

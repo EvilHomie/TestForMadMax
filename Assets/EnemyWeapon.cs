@@ -10,22 +10,13 @@ public class EnemyWeapon : WeaponLogic
     protected override float CurShieldDmg => _shieldDmg;
     protected override float CurFireRate => _fireRate;
 
-    public void StartShooting()
+    public void StartShooting(float accuracy)
     {
-        _isShooting = true;
-
-        if (_firePoints.Length == 1)
-        {
-            StartCoroutine(SingleBarreledShoot());
-        }
-        else
-        {
-            StartCoroutine(MultyBarreledShoot(_firePoints.Length));
-        }
+        ShootAsBot(weaponType, accuracy);
     }
 
     public void StopShooting()
     {
-        _isShooting = false;
+        OnStopShooting();
     }
 }

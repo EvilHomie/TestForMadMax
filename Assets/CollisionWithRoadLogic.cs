@@ -19,6 +19,6 @@ public class CollisionWithRoadLogic : MonoBehaviour
         if (1 << collision.GetContact(0).thisCollider.gameObject.layer != _vehicleBodyLayer.value) return;
         _isDead = true;
         _enemyVehicleManager.OnBodyCollisionWithRoad();
-        _RB.AddForceAtPosition(GameConfig.Instance.TouchRoadImpulseMod * RaidManager.Instance.PlayerMoveSpeed * Vector3.up, collision.GetContact(0).point, ForceMode.VelocityChange);
+        _RB.AddForceAtPosition(GameConfig.Instance.TouchRoadImpulse * RaidManager.Instance.PlayerMoveSpeed * Vector3.up, collision.GetContact(0).point, ForceMode.VelocityChange);
     }
 }

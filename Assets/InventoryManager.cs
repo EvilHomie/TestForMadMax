@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -24,10 +23,6 @@ public class InventoryManager : MonoBehaviour
         else Instance = this;
     }
 
-    //public void OnLoad()
-    //{
-    //    OnChangeVehicle(PlayerData.Instance.GetLastVehicle());
-    //}
     private void Start()
     {
         _equipBtn.onClick.AddListener(OnTryEquipItem);
