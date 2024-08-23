@@ -1,21 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TouchController : MonoBehaviour
 {
     public static TouchController Instance;
 
-    [SerializeField] RectTransform _joystickArea;    
+    [SerializeField] RectTransform _joystickArea;
+    [SerializeField] Slider _speedSlider;
 
     CanvasGroup _canvasGroup;
     bool _isRotating = false;
     Vector2 _joystickPosition;
+    bool _controllerIsAcive = false;
 
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
         _canvasGroup = GetComponent<CanvasGroup>();
+        _speedSlider.onValueChanged.AddListener(OnChangeSpeed);
     }
 
     public Vector2 GetJoystickPosition
@@ -54,8 +58,9 @@ public class TouchController : MonoBehaviour
         }
     }
 
-    public void OnChangeSpeed(float sliderValue)
+    void OnChangeSpeed(float sliderValue)
     {
+        if(!_controllerIsAcive) return;
         RaidManager.Instance.ChangeSpeedWhileInRaid(sliderValue);
     }
 
@@ -65,10 +70,12 @@ public class TouchController : MonoBehaviour
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
+        _controllerIsAcive = false;
     }
 
     public void ShowControllers(float delay)
     {
+        _speedSlider.value = 0;
         StartCoroutine(FlickeringAppearance(delay));
     }
 
@@ -89,5 +96,6 @@ public class TouchController : MonoBehaviour
         _canvasGroup.alpha = 1;
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
+        _controllerIsAcive = true;
     }
 }

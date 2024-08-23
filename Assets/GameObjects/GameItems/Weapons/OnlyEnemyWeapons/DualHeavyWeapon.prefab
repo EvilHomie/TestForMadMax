@@ -66,10 +66,10 @@ MonoBehaviour:
   - {fileID: 3760593994438488222}
   - {fileID: 8202902023583139959}
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
-  _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
+  _hitSound: {fileID: 8300000, guid: 1b3e043d2acfb0c44824510fd2ebecdf, type: 3}
   weaponType: 1
   _hullDmg: 10
-  _shieldDmg: 50
+  _shieldDmg: 10
   _fireRate: 2
 --- !u!1 &366524221442394748
 GameObject:

@@ -17,11 +17,11 @@ MonoBehaviour:
   hullHPByLvl: 100
   hullHPCurLvl: 1
   hullHPMaxLvl: 4
-  shieldHPByLvl: 0
-  shieldHPCurLvl: 0
-  shieldHPMaxLvl: 0
-  shieldRegenRateByLvl: 0
-  shieldRegenCurtLvl: 0
-  shieldRegenMaxLvl: 0
+  shieldHPByLvl: 50
+  shieldHPCurLvl: 3
+  shieldHPMaxLvl: 5
+  shieldRegenRateByLvl: 2
+  shieldRegenCurtLvl: 1
+  shieldRegenMaxLvl: 10
   curWeaponsCount: 1
   maxWeaponsCount: 2

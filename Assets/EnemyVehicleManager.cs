@@ -11,6 +11,7 @@ public class EnemyVehicleManager : MonoBehaviour
     AudioSource _vehicleAudioSource;
 
     [SerializeField] ParticleSystem _blowParticleSystem;
+    [SerializeField] AudioSource _blowAudioSource;
     [SerializeField] AudioClip _blowAudioClip;
     [SerializeField] int _reservedLineNumber;
     [SerializeField] RotationConstraint _smokeRotationConstraint;
@@ -85,6 +86,7 @@ public class EnemyVehicleManager : MonoBehaviour
         _enemyWeaponController.StopShooting();
 
         _blowParticleSystem.Play();
+        _blowAudioSource.PlayOneShot(_blowAudioClip);
 
         _resourcesInVehicle.DropResources();
     }

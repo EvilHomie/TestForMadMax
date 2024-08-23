@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _garageBtn;
     [SerializeField] Button _openInventoryBtn;
@@ -17,7 +16,12 @@ public class GameManager : MonoBehaviour
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
 
-    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+    }
+
 
     void Start()
     {
@@ -35,6 +39,10 @@ public class GameManager : MonoBehaviour
         OnReturntToGarage();
         InventoryManager.Instance.OnCloseInventory();
         ToggleMenu();
+
+
+
+        ResourcesManager.Instance.AddResources(1000, 1000, 1000);
     }
 
     //“≈—“Œ¬¿ﬂ Œ¡À¿—“‹
@@ -85,6 +93,7 @@ public class GameManager : MonoBehaviour
         WeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
         RaidManager.Instance.OnPlayerStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
+        PlayerHPManager.Instance.OnPlayerStartRaid();
 
 
 
@@ -103,10 +112,10 @@ public class GameManager : MonoBehaviour
         //WeaponsSwitcher.Instance.OnPlayerEndRaid();
         CameraManager.Instance.OnPlayerEndRaid();
         RaidManager.Instance.OnPlayerEndRaid();
+        PlayerHPManager.Instance.OnPlayerEndRaid();
 
 
 
-        
         SwitchMenuElements();
     }
 
@@ -126,6 +135,11 @@ public class GameManager : MonoBehaviour
         _garageBtn.gameObject.SetActive(_playerOnRaid);
         _openInventoryBtn.gameObject.SetActive(!_playerOnRaid);
         _changeLevelsBtn.gameObject.SetActive(!_playerOnRaid);
+    }
+
+    public void OnPlayerVehicleDestroyed()
+    {
+        OnReturntToGarage();
     }
 }
 
