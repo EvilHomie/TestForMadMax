@@ -19,6 +19,8 @@ public class PartHPManager : MonoBehaviour, IDamageable
     private void Start()
     {
         _partRenderer.material.DisableKeyword("_EMISSION");
+        _hullHP *= LevelConfig.Instance.EnemyHPMod;
+        _shieldHP *= LevelConfig.Instance.EnemyHPMod;
     }   
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)

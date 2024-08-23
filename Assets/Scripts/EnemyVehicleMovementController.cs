@@ -71,7 +71,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
     IEnumerator LerpSlideOffset()
     {
         float startOffset = _currentOffset;
-        float newOffset = Random.Range(-GameConfig.Instance.SlideOffsetXValue, GameConfig.Instance.SlideOffsetXValue);
+        float newOffset = Random.Range(-GameConfig.Instance.SlideOffsetXValue * LevelConfig.Instance.EnemySlideDistanceMod, GameConfig.Instance.SlideOffsetXValue * LevelConfig.Instance.EnemySlideDistanceMod);
 
         float t = 0;
         while (t <= 1)
