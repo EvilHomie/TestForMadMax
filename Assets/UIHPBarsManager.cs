@@ -16,7 +16,6 @@ public class UIHPBarsManager : MonoBehaviour
 
     public void UpdateHPBars(float HPValue, float shieldValue)
     {
-        Debug.Log($"{HPValue}    {shieldValue}");
         _HullHPSlider.value = HPValue;
         _ShieldHPSlider.value = shieldValue;
     }
