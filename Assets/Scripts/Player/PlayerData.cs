@@ -7,12 +7,11 @@ public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
 
-    float _vehicleHullHp;
-    float _vehicleShieldHp;
-
     Dictionary<ResourcesType, int> _availableResources = new();
     List<IItemData> _playerItemsData = new();
     Dictionary<int, string> _equipedItems = new();
+    string _lastSelectedLevelName;
+    List<string> _unlockedLevelNames = new();
 
     public List<IItemData> PlayerItemsData => _playerItemsData;
     public Dictionary<ResourcesType, int> AvailableResources { get => _availableResources; set => _availableResources = value; }
@@ -20,6 +19,9 @@ public class PlayerData : MonoBehaviour
     // под индексом 0 имя транспорта, остальное = имена оружий
     public Dictionary<int, string> EquipedItems { get => _equipedItems; set => _equipedItems = value; }
 
+    public string LastSelectedLevelName { get => _lastSelectedLevelName; set => _lastSelectedLevelName = value; }
+
+    public List<string> UnlockedLevelsNames { get => _unlockedLevelNames; set => _unlockedLevelNames = value; }
 
     void Awake()
     {

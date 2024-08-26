@@ -6,9 +6,9 @@ public class EnemyWeapon : WeaponLogic
     [SerializeField] float _hullDmg;
     [SerializeField] float _shieldDmg;
     [SerializeField] float _fireRate;
-    protected override float CurHullDmg => _hullDmg * LevelConfig.Instance.EnemyDmgMod;
-    protected override float CurShieldDmg => _shieldDmg * LevelConfig.Instance.EnemyDmgMod;
-    protected override float CurFireRate => _fireRate * LevelConfig.Instance.EnemyFireRateMod;
+    protected override float CurHullDmg => _hullDmg * LevelManager.Instance.EnemyDmgMod;
+    protected override float CurShieldDmg => _shieldDmg * LevelManager.Instance.EnemyDmgMod;
+    protected override float CurFireRate => _fireRate;
 
     public void StartShooting(float accuracy)
     {

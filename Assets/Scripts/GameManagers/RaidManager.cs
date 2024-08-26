@@ -63,7 +63,8 @@ public class RaidManager : MonoBehaviour
     public void OnPlayerStartRaid(float startMoveDelay, float speed, float reachSpeedDuration)
     {
         _onRaid = true;
-        StartCoroutine(StartLerpSpeed(startMoveDelay, speed, reachSpeedDuration));
+        _speedSliderFillImage.fillAmount = 0;
+        _UpdateSpeedCoroutine = StartCoroutine(StartLerpSpeed(startMoveDelay, speed, reachSpeedDuration));
         InvokeRepeating(nameof(SpawnEnemy), 5, 5);
     }
     public void OnPlayerEndRaid()
@@ -125,8 +126,8 @@ public class RaidManager : MonoBehaviour
         int randomLineIndex = UnityEngine.Random.Range(0, freeSpawnLinesNumbers.Count);
         int freeLineNumber = freeSpawnLinesNumbers[randomLineIndex];
 
-        int randomEnemyIndex = UnityEngine.Random.Range(0, LevelConfig.Instance.EnemyList.Count);
-        EnemyVehicleManager enemyPF = LevelConfig.Instance.EnemyList[randomEnemyIndex];
+        int randomEnemyIndex = UnityEngine.Random.Range(0, LevelManager.Instance.EnemyList.Count);
+        EnemyVehicleManager enemyPF = LevelManager.Instance.EnemyList[randomEnemyIndex];
 
         int randomPosIndex = UnityEngine.Random.Range(0, enemySpawnLines[freeLineNumber].spawnPositions.Count);
         Vector3 spwanPos = enemySpawnLines[freeLineNumber].spawnPositions[randomPosIndex];

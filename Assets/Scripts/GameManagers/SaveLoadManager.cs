@@ -64,6 +64,12 @@ public class SaveLoadManager : MonoBehaviour
         string savedEquipedItems = JsonConvert.SerializeObject(PlayerData.Instance.EquipedItems);
         PlayerPrefs.SetString("SavedEquipedItems", savedEquipedItems);
 
+        string lastselectedLevelName = PlayerData.Instance.LastSelectedLevelName;
+        PlayerPrefs.SetString("LastselectedLevelName", lastselectedLevelName);
+
+        string unlockedLevelsNames = JsonConvert.SerializeObject(PlayerData.Instance.UnlockedLevelsNames);
+        PlayerPrefs.SetString("UnlockedLevelsNames", unlockedLevelsNames);
+
         Debug.LogWarning("DATA SAVED");
     }
 
@@ -80,6 +86,9 @@ public class SaveLoadManager : MonoBehaviour
                 {0, "Simple Truck" },
                 {1, "Simple Cannon" }
             };
+
+            PlayerData.Instance.LastSelectedLevelName = "1-1";
+            PlayerData.Instance.UnlockedLevelsNames.Add("1-1");
 
             Debug.LogWarning("LOADED DEFFAULT ITEMS");
             return;
@@ -108,5 +117,11 @@ public class SaveLoadManager : MonoBehaviour
 
         PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int,string>>(PlayerPrefs.GetString("SavedEquipedItems"));
         Debug.LogWarning("EquipedItems LOADED");
+
+        PlayerData.Instance.LastSelectedLevelName = PlayerPrefs.GetString("LastselectedLevelName");
+
+        PlayerData.Instance.UnlockedLevelsNames = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("UnlockedLevelsNames"));
+
+        Debug.LogWarning("LevelsData LOADED");
     }
 }

@@ -1,6 +1,16 @@
 using UnityEngine;
 using UnityEngine.Animations;
 
+
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(EnemyVehicleMovementController))]
+[RequireComponent(typeof(EnemyWeaponController))]
+[RequireComponent(typeof(CollisionWithRoadLogic))]
+[RequireComponent(typeof(PartHPManager))]
+[RequireComponent(typeof(VehicleVisualEffectsLogic))]
+[RequireComponent(typeof(ResourcesInVehicle))]
 public class EnemyVehicleManager : MonoBehaviour
 {
     EnemyVehicleMovementController _vehicleMovementController;

@@ -5230,8 +5230,7 @@ MonoBehaviour:
   _vehiclePart: 1
   _hullHP: 10
   _shieldHP: 10
-  _partRenderer: {fileID: 24068273642183193, guid: 2ae3758def0922b4a9b828d4ad748085,
-    type: 3}
+  _partRenderer: {fileID: 1290564894806883896}
 --- !u!114 &1617800044370608168
 MonoBehaviour:
   m_ObjectHideFlags: 0

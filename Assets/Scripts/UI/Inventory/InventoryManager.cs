@@ -11,6 +11,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Transform _mainInventoryContainer;
     [SerializeField] Button _equipBtn;
     [SerializeField] Button _unlockBtn;
+    [SerializeField] AudioSource _inventoryAS;
+    [SerializeField] AudioClip _upgradeSound;
+    [SerializeField] AudioClip _equipSound;
 
     [SerializeField] CanvasGroup _vehicleSlotCG;
 
@@ -80,6 +83,7 @@ public class InventoryManager : MonoBehaviour
         {
             UpgradeVehicle(VData, charName);
         }
+        _inventoryAS.PlayOneShot(_upgradeSound);
 
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(_selectedItem);
@@ -128,6 +132,7 @@ public class InventoryManager : MonoBehaviour
 
     public void OnSelectedItemEquiped(IItemData newItem = null, IItemData previousItem = null)
     {
+        _inventoryAS.PlayOneShot(_equipSound);
         _equipBtn.gameObject.SetActive(false);
 
         if(newItem != null && previousItem != null)
@@ -140,5 +145,7 @@ public class InventoryManager : MonoBehaviour
         if (newItem != null) RemoveItemFromInventory(newItem);
         if (previousItem != null) ADDItemToInventory(previousItem);
     }
+
+   
 
 }

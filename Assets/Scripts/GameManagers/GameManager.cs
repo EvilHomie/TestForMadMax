@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button _closeUpgradesBtn;
     [SerializeField] Button _settingsBtn;
 
-    float _showControllerDelay = 13f; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
+    float _showControllerDelay = 6; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
 
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
         SaveLoadManager.Instance.LoadSaveData();
         UIResourcesManager.Instance.UpdateCounters();
+        LevelManager.Instance.Init();
 
         OnReturntToGarage();
         InventoryManager.Instance.OnCloseInventory();
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     void OnOpenLevels()
     {
-
+        LevelManager.Instance.SelectLevelsWindow.SetActive(true);
     }
 
     void OnStartRaid()
