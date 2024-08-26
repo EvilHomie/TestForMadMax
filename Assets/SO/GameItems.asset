@@ -21,4 +21,3 @@ MonoBehaviour:
     type: 3}
   _playerVehicles:
   - {fileID: 4091442796374768174, guid: 8adc2b9fa90db854f8cfab06c6b863fc, type: 3}
-  - {fileID: 4091442796374768174, guid: d7ad4420de8ba1d479029d3994902bd2, type: 3}
