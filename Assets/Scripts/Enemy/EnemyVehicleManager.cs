@@ -80,8 +80,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     public void OnWeaponLossHP(GameObject weapon)
     {
-        Destroy(weapon);
-        if (!_enemyWeaponController.CheckAvailableWeapons())
+        if (!_enemyWeaponController.CheckAvailableWeapons(weapon))
         {
             _vehicleMovementController.OnTryRunMovementLogic();
         }

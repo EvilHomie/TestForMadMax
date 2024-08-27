@@ -71,20 +71,13 @@ public class EnemyWeaponController : MonoBehaviour
         }
     }
 
-    public bool CheckAvailableWeapons()
+    public bool CheckAvailableWeapons(GameObject destroyedWeapon)
     {
-        Debug.LogWarning("CHECK W DESTROED");
-
-        foreach (var weapon in _weapons)
-        {
-            Debug.Log(weapon.gameObject.name);
-        }
-
-
+        _weapons.Remove(_weapons.Find(weapon => weapon.gameObject == destroyedWeapon));
+        Destroy(destroyedWeapon);
 
         if (_weapons.TrueForAll(weapon => weapon.gameObject == null))
         {
-            Debug.LogWarning("ALL W DESTROED");
             _allWeaponsDestroyed = true;
             StopShooting();
             return false;

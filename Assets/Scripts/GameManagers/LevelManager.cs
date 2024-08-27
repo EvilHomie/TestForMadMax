@@ -70,6 +70,8 @@ public class LevelManager : MonoBehaviour
     public void UnlockNextLevel()
     {
         int nextLevelIndex = UILevelInfos.IndexOf(lastSelectedLevel) + 1;
+        Debug.Log(nextLevelIndex);
+        if(nextLevelIndex >= UILevelInfos.Count) return;
         UILevelInfo nextLevelInfo = UILevelInfos[nextLevelIndex];
 
         if (PlayerData.Instance.UnlockedLevelsNames.Contains(nextLevelInfo.LevelName)) return;
@@ -77,7 +79,7 @@ public class LevelManager : MonoBehaviour
         nextLevelInfo.UnlockLevel();
         PlayerData.Instance.UnlockedLevelsNames.Add(nextLevelInfo.LevelName);
         PlayerData.Instance.LastSelectedLevelName = nextLevelInfo.LevelName;
-        SetData(lastSelectedLevel);
+        SetData(nextLevelInfo);
     }
 
     

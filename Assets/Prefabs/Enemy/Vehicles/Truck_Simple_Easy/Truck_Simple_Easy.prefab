@@ -117,7 +117,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3.9447494, y: 2.7749515, z: 4.005325}
   m_Center: {x: 0.00000015258789, y: -0.063577116, z: 2.8355854}
@@ -138,7 +138,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3.9447494, y: 2.7749515, z: 4.5643024}
   m_Center: {x: 0.00000015258789, y: -0.063577116, z: -2.624115}
@@ -159,7 +159,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3.9447494, y: 1.0333854, z: 0.83547133}
   m_Center: {x: 0.00000015258789, y: -0.063577116, z: 0.17}
@@ -2054,6 +2054,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heavy_Cannon_Dual
       objectReference: {fileID: 0}
+    - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2334,6 +2339,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heavy_Cannon_Dual (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2517,6 +2527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Bullbar_v6 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677358578749724797, guid: cfe718d53d42c7d46986665e135bde8c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6683072098015914405, guid: cfe718d53d42c7d46986665e135bde8c,
         type: 3}

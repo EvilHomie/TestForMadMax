@@ -141,6 +141,7 @@ public class RaidManager : MonoBehaviour
 
     public void OnEnemyDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
     {
+        if(!Application.isPlaying) return;
         if (!_onRaid) return;
         _enemiesList.Remove(enemy);
         _freeSpawnLinesNumbers.Add(reservedLineNumber);
@@ -187,7 +188,7 @@ public class RaidManager : MonoBehaviour
 
         _freeSpawnLinesNumbers.Remove(freeLineNumber);
         _reservedSpawnLinesNumbers.Add(freeLineNumber);
-        Debug.LogWarning($"SIMPLE ENEMY IS SPAWNED AT LINE {freeLineNumber}");
+        //Debug.LogWarning($"SIMPLE ENEMY IS SPAWNED AT LINE {freeLineNumber}");
     }
 
     void SpawnBoss()
@@ -207,7 +208,7 @@ public class RaidManager : MonoBehaviour
         _reservedSpawnLinesNumbers.Add(freeLineNumber);
 
         _bossIsSpawned = true;
-        Debug.LogWarning($"BOSS IS SPAWNED AT LINE {freeLineNumber}");
+        //Debug.LogWarning($"BOSS IS SPAWNED AT LINE {freeLineNumber}");
     }
 }
 

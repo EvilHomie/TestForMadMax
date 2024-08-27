@@ -10689,7 +10689,7 @@ MonoBehaviour:
   _unlockStatusText: {fileID: 66962361}
   enemyList:
   - {fileID: 1833269742749277533, guid: a150327a06eac6240a89083f2c24384c, type: 3}
-  _enemyCount: 9
+  _enemyCount: 3
   _enemySlideDistanceMod: 0.8
   _enemyDmgMod: 1.3
   _enemyHPMod: 1.3
@@ -14222,11 +14222,12 @@ MonoBehaviour:
   - {fileID: 1833269742749277533, guid: a150327a06eac6240a89083f2c24384c, type: 3}
   - {fileID: 7442833293695422729, guid: 3c371ce0d347e59448d461501392df73, type: 3}
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
-  _enemyCount: 15
+  _enemyCount: 5
   _enemySlideDistanceMod: 1
   _enemyDmgMod: 1.5
   _enemyHPMod: 1.5
-  _bossEnemyVehicle: {fileID: 0}
+  _bossEnemyVehicle: {fileID: 7209694932953186992, guid: ad856d5a7c488ce4aa1b552607ab2fa4,
+    type: 3}
 --- !u!1 &318407052
 GameObject:
   m_ObjectHideFlags: 0
@@ -27544,7 +27545,7 @@ MonoBehaviour:
   _unlockStatusText: {fileID: 1200160204}
   enemyList:
   - {fileID: 7442833293695422729, guid: 3c371ce0d347e59448d461501392df73, type: 3}
-  _enemyCount: 7
+  _enemyCount: 3
   _enemySlideDistanceMod: 0.7
   _enemyDmgMod: 1.2
   _enemyHPMod: 1.2
@@ -30507,12 +30508,11 @@ MonoBehaviour:
   _unlockStatusText: {fileID: 240991123}
   enemyList:
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
-  _enemyCount: 2
+  _enemyCount: 3
   _enemySlideDistanceMod: 0.6
   _enemyDmgMod: 1.1
   _enemyHPMod: 1.1
-  _bossEnemyVehicle: {fileID: 7209694932953186992, guid: ad856d5a7c488ce4aa1b552607ab2fa4,
-    type: 3}
+  _bossEnemyVehicle: {fileID: 0}
 --- !u!1 &808002608
 GameObject:
   m_ObjectHideFlags: 0
@@ -37136,7 +37136,7 @@ MonoBehaviour:
   _unlockStatusText: {fileID: 873210079}
   enemyList:
   - {fileID: 4893374953841114777, guid: 0fc68f3319a22874fb49d0839553789f, type: 3}
-  _enemyCount: 11
+  _enemyCount: 3
   _enemySlideDistanceMod: 0.9
   _enemyDmgMod: 1.4
   _enemyHPMod: 1.4
@@ -60505,7 +60505,6 @@ GameObject:
   - component: {fileID: 1475699806}
   - component: {fileID: 1475699805}
   - component: {fileID: 1475699804}
-  - component: {fileID: 1475699803}
   m_Layer: 0
   m_Name: Plane (1)
   m_TagString: Untagged
@@ -60513,28 +60512,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1475699803
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475699802}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1475699804
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68625,7 +68602,6 @@ GameObject:
   - component: {fileID: 1664500711}
   - component: {fileID: 1664500710}
   - component: {fileID: 1664500709}
-  - component: {fileID: 1664500708}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -68633,28 +68609,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1664500708
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1664500707}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1664500709
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83752,7 +83706,6 @@ GameObject:
   - component: {fileID: 2064876176}
   - component: {fileID: 2064876179}
   - component: {fileID: 2064876178}
-  - component: {fileID: 2064876177}
   m_Layer: 0
   m_Name: Plane (2)
   m_TagString: Untagged
@@ -83775,28 +83728,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 508035576}
   m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
---- !u!64 &2064876177
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064876175}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2064876178
 MeshRenderer:
   m_ObjectHideFlags: 0
