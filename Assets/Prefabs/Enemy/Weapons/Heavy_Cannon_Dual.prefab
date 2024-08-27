@@ -29591,7 +29591,7 @@ GameObject:
   - component: {fileID: 2964363159993380708}
   - component: {fileID: 2334360030160522715}
   - component: {fileID: 6728879495442733198}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Heavy_Cannon_Dual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

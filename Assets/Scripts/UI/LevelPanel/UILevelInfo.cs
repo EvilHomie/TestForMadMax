@@ -20,6 +20,8 @@ public class UILevelInfo : MonoBehaviour
     [SerializeField] float _enemyDmgMod = 1;
     [SerializeField] float _enemyHPMod = 1;
 
+    [SerializeField] EnemyVehicleManager _bossEnemyVehicle;
+
     public List<EnemyVehicleManager> EnemyList => enemyList;
     public int EnemyCount => _enemyCount;
     public float EnemySlideDistanceMod => _enemySlideDistanceMod;
@@ -29,6 +31,8 @@ public class UILevelInfo : MonoBehaviour
     public string LevelName => _levelName;
 
     public Image LevelImage => _levelImage;
+
+    public EnemyVehicleManager BossEnemyVehicle => _bossEnemyVehicle;
 
     public void Select()
     {

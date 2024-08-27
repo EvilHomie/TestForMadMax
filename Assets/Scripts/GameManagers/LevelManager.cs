@@ -9,25 +9,13 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Transform _levelsContainer;
     [SerializeField] GameObject _selectLevelsWindow;
 
-    [SerializeField] List<EnemyVehicleManager> _enemyList;
-    [SerializeField] int _enemyCount = 1;
-    [SerializeField] float _enemySlideDistanceMod = 1;
-    [SerializeField] float _enemyDmgMod = 1;
-    [SerializeField] float _enemyHPMod = 1;
-
     [Header("If TrySelect LockedLevel")]
     [SerializeField] float _shakeDuration = 0.5f;
     [SerializeField] float _shakeIntensity = 5f;
 
     List<UILevelInfo> UILevelInfos = new();
-
     UILevelInfo lastSelectedLevel;
 
-    public List<EnemyVehicleManager> EnemyList => _enemyList;
-    public int EnemyCount => _enemyCount;
-    public float EnemySlideDistanceMod => _enemySlideDistanceMod;
-    public float EnemyDmgMod => _enemyDmgMod;
-    public float EnemyHPMod => _enemyHPMod;
     public GameObject SelectLevelsWindow => _selectLevelsWindow;
 
     private void Awake()
@@ -65,12 +53,6 @@ public class LevelManager : MonoBehaviour
             StartCoroutine(UILevelInfo.Shake(_shakeDuration, _shakeIntensity));
             return;
         }
-
-        _enemyList = UILevelInfo.EnemyList;
-        _enemyCount = UILevelInfo.EnemyCount;
-        _enemySlideDistanceMod = UILevelInfo.EnemySlideDistanceMod;
-        _enemyDmgMod = UILevelInfo.EnemyDmgMod;
-        _enemyHPMod = UILevelInfo.EnemyHPMod;
 
         lastSelectedLevel.Deselect();
         lastSelectedLevel = UILevelInfo;

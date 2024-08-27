@@ -10693,6 +10693,7 @@ MonoBehaviour:
   _enemySlideDistanceMod: 0.8
   _enemyDmgMod: 1.3
   _enemyHPMod: 1.3
+  _bossEnemyVehicle: {fileID: 0}
 --- !u!1 &205110097
 GameObject:
   m_ObjectHideFlags: 0
@@ -14225,6 +14226,7 @@ MonoBehaviour:
   _enemySlideDistanceMod: 1
   _enemyDmgMod: 1.5
   _enemyHPMod: 1.5
+  _bossEnemyVehicle: {fileID: 0}
 --- !u!1 &318407052
 GameObject:
   m_ObjectHideFlags: 0
@@ -14850,7 +14852,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1095254402}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.83116883
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -27546,6 +27548,7 @@ MonoBehaviour:
   _enemySlideDistanceMod: 0.7
   _enemyDmgMod: 1.2
   _enemyHPMod: 1.2
+  _bossEnemyVehicle: {fileID: 0}
 --- !u!1 &736652263
 GameObject:
   m_ObjectHideFlags: 0
@@ -30504,10 +30507,12 @@ MonoBehaviour:
   _unlockStatusText: {fileID: 240991123}
   enemyList:
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
-  _enemyCount: 5
+  _enemyCount: 2
   _enemySlideDistanceMod: 0.6
   _enemyDmgMod: 1.1
   _enemyHPMod: 1.1
+  _bossEnemyVehicle: {fileID: 7209694932953186992, guid: ad856d5a7c488ce4aa1b552607ab2fa4,
+    type: 3}
 --- !u!1 &808002608
 GameObject:
   m_ObjectHideFlags: 0
@@ -37135,6 +37140,7 @@ MonoBehaviour:
   _enemySlideDistanceMod: 0.9
   _enemyDmgMod: 1.4
   _enemyHPMod: 1.4
+  _bossEnemyVehicle: {fileID: 0}
 --- !u!1 &988737215
 GameObject:
   m_ObjectHideFlags: 0
@@ -73297,16 +73303,16 @@ MonoBehaviour:
   enemySpawnLines:
   - lineIndex: 0
     spawnPositions:
-    - {x: -9500, y: 150, z: 600}
-    - {x: 9500, y: 150, z: 600}
+    - {x: -9500, y: 200, z: 600}
+    - {x: 9500, y: 200, z: 600}
   - lineIndex: 1
     spawnPositions:
-    - {x: -9500, y: 150, z: 900}
-    - {x: 9500, y: 150, z: 900}
+    - {x: -9500, y: 200, z: 900}
+    - {x: 9500, y: 200, z: 900}
   - lineIndex: 2
     spawnPositions:
-    - {x: -9500, y: 150, z: 1200}
-    - {x: 9500, y: 150, z: 1200}
+    - {x: -9500, y: 200, z: 1200}
+    - {x: 9500, y: 200, z: 1200}
   _reservedSpawnLinesNumbers: 
   _freeSpawnLinesNumbers: 
 --- !u!114 &1770712498
@@ -73400,11 +73406,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelsContainer: {fileID: 1529594032}
   _selectLevelsWindow: {fileID: 1137359477}
-  _enemyList: []
-  _enemyCount: 1
-  _enemySlideDistanceMod: 1
-  _enemyDmgMod: 1
-  _enemyHPMod: 1
   _shakeDuration: 0.5
   _shakeIntensity: 5
 --- !u!1 &1771841919

@@ -24,8 +24,12 @@ public class RaidManager : MonoBehaviour
     float _playerMoveSpeed = 0f;
     Coroutine _UpdateSpeedCoroutine;
     bool _onRaid = false;
-    int _spawnedEnemyCount = 0;
-    int _killedEnemyCount = 0;
+    int _spawnedSimpleEnemyCount = 0;
+    int _killedSimpleEnemyCount = 0;
+    bool _bossIsKilled = false;
+    bool _bossIsSpawned = false;
+
+
     public float PlayerMoveSpeed => _playerMoveSpeed;
 
 
@@ -63,10 +67,12 @@ public class RaidManager : MonoBehaviour
 
     public void OnPlayerStartRaid(float startMoveDelay, float speed, float reachSpeedDuration)
     {
+        CancelInvoke();
         _onRaid = true;
-        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
-        _spawnedEnemyCount = 0;
-        _killedEnemyCount = 0;
+        _bossIsSpawned = false;
+        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();       
+        _spawnedSimpleEnemyCount = 0;
+        _killedSimpleEnemyCount = 0;
         _speedSliderFillImage.fillAmount = 0;
         _UpdateSpeedCoroutine = StartCoroutine(StartLerpSpeed(startMoveDelay, speed, reachSpeedDuration));
         InvokeRepeating(nameof(SpawnEnemy), 5, 5);
@@ -127,44 +133,81 @@ public class RaidManager : MonoBehaviour
     void SpawnEnemy()
     {
         if (_freeSpawnLinesNumbers.Count == 0) return;
-        if(_spawnedEnemyCount >= _selectedLevelInfo.EnemyCount) return;
+        if (_spawnedSimpleEnemyCount < _selectedLevelInfo.EnemyCount)
+        {
+            SpawnSimpleEnemy();
+        }        
+    }
 
+    public void OnEnemyDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
+    {
+        if (!_onRaid) return;
+        _enemiesList.Remove(enemy);
+        _freeSpawnLinesNumbers.Add(reservedLineNumber);
+        _reservedSpawnLinesNumbers.Remove(reservedLineNumber);
+
+        _killedSimpleEnemyCount++;
+
+        if(_bossIsSpawned)
+        {
+            LevelManager.Instance.UnlockNextLevel();
+            GameManager.Instance.OnPlayerKillAllEnemy();
+            return;
+        }
+
+        if (_killedSimpleEnemyCount >= _selectedLevelInfo.EnemyCount)
+        {
+            if (_selectedLevelInfo.BossEnemyVehicle == null)
+            {
+                LevelManager.Instance.UnlockNextLevel();
+                GameManager.Instance.OnPlayerKillAllEnemy();
+            }
+            else
+            {
+                SpawnBoss();
+            }
+        }
+    }
+
+    void SpawnSimpleEnemy()
+    {
         int randomLineIndex = UnityEngine.Random.Range(0, _freeSpawnLinesNumbers.Count);
         int freeLineNumber = _freeSpawnLinesNumbers[randomLineIndex];
-
-        int randomEnemyIndex = UnityEngine.Random.Range(0, LevelManager.Instance.EnemyList.Count);
-        EnemyVehicleManager enemyPF = LevelManager.Instance.EnemyList[randomEnemyIndex];
 
         int randomPosIndex = UnityEngine.Random.Range(0, enemySpawnLines[freeLineNumber].spawnPositions.Count);
         Vector3 spwanPos = enemySpawnLines[freeLineNumber].spawnPositions[randomPosIndex];
 
+        int randomEnemyIndex = UnityEngine.Random.Range(0, _selectedLevelInfo.EnemyList.Count);
+        EnemyVehicleManager enemyPF = _selectedLevelInfo.EnemyList[randomEnemyIndex];
+
         EnemyVehicleManager enemy = Instantiate(enemyPF, spwanPos, enemyPF.transform.rotation);
         _enemiesList.Add(enemy);
-        _spawnedEnemyCount ++;
+        _spawnedSimpleEnemyCount++;
+        enemy.ReservedLineNumber = freeLineNumber;
+
+        _freeSpawnLinesNumbers.Remove(freeLineNumber);
+        _reservedSpawnLinesNumbers.Add(freeLineNumber);
+        Debug.LogWarning($"SIMPLE ENEMY IS SPAWNED AT LINE {freeLineNumber}");
+    }
+
+    void SpawnBoss()
+    {
+        int randomLineIndex = UnityEngine.Random.Range(0, _freeSpawnLinesNumbers.Count);
+        int freeLineNumber = _freeSpawnLinesNumbers[randomLineIndex];
+
+        int randomPosIndex = UnityEngine.Random.Range(0, enemySpawnLines[freeLineNumber].spawnPositions.Count);
+        Vector3 spwanPos = enemySpawnLines[freeLineNumber].spawnPositions[randomPosIndex];
+
+        EnemyVehicleManager enemy = Instantiate(_selectedLevelInfo.BossEnemyVehicle, spwanPos, _selectedLevelInfo.BossEnemyVehicle.transform.rotation);
+
+        _enemiesList.Add(enemy);
         enemy.ReservedLineNumber = freeLineNumber;
 
         _freeSpawnLinesNumbers.Remove(freeLineNumber);
         _reservedSpawnLinesNumbers.Add(freeLineNumber);
 
-        //if (freeSpawnLinesNumbers.Count == 0)
-        //    allLinesReserved = true;
-
-        Debug.LogWarning($"ENEMY IS SPAWNED AT LINE {freeLineNumber}");
-    }
-
-    public void OnEnemyDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
-    {
-        if(!_onRaid) return;
-        _enemiesList.Remove(enemy);
-        _freeSpawnLinesNumbers.Add(reservedLineNumber);
-        _reservedSpawnLinesNumbers.Remove(reservedLineNumber);
-
-        _killedEnemyCount++;
-        if (_killedEnemyCount >= _selectedLevelInfo.EnemyCount)
-        {
-            LevelManager.Instance.UnlockNextLevel();
-            GameManager.Instance.OnPlayerKillAllEnemy();
-        }
+        _bossIsSpawned = true;
+        Debug.LogWarning($"BOSS IS SPAWNED AT LINE {freeLineNumber}");
     }
 }
 
