@@ -18,6 +18,8 @@ public static class Constants
     public const string WEAPONSCOUNT = "Weapons Count";
     public const string UNIT = "Unit";
     public const string FROM = "From";
+    public const string UNLOCKED = "Unlocked";
+    public const string LOCKED = "Locked";
 
     //public static readonly Color SCRAPMETALCOLOR = Color.gray;
     //public static readonly Color WiresCOLOR = new(0, 0.5843138f, 0.7764707f, 1);

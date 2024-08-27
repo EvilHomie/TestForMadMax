@@ -1,12 +1,18 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UILevelInfo : MonoBehaviour
 {
+    [SerializeField] ScrollRect _scrollRect;     
+
     [SerializeField] Button _selectBtn;
+    [SerializeField] Image _levelImage;
     [SerializeField] Image _isSelectedImage;
     [SerializeField] string _levelName;
+    [SerializeField] TextMeshProUGUI _unlockStatusText;
 
     [SerializeField] List<EnemyVehicleManager> enemyList;
     [SerializeField] int _enemyCount = 1;
@@ -22,6 +28,8 @@ public class UILevelInfo : MonoBehaviour
     public Button SelectBtn => _selectBtn;
     public string LevelName => _levelName;
 
+    public Image LevelImage => _levelImage;
+
     public void Select()
     {
         _isSelectedImage.gameObject.SetActive(true);
@@ -30,5 +38,32 @@ public class UILevelInfo : MonoBehaviour
     public void Deselect()
     {
         _isSelectedImage.gameObject.SetActive(false);
+    }
+
+    public void LockLevel()
+    {
+        _unlockStatusText.text = Constants.LOCKED;
+        _unlockStatusText.color = Color.red;
+    }
+
+    public void UnlockLevel()
+    {
+        _unlockStatusText.text = Constants.UNLOCKED;
+        _unlockStatusText.color = Color.green;
+    }
+
+    public IEnumerator Shake(float duration, float shakeIntensity)
+    {
+        _scrollRect.vertical = false;
+        Vector3 defPos = transform.position;
+        while (duration > 0)
+        {
+            duration -= Time.deltaTime;
+            Vector3 randomOffset = Random.insideUnitSphere * shakeIntensity;
+            transform.position = defPos + randomOffset;
+            yield return null;
+        }
+        transform.position = defPos;
+        _scrollRect.vertical = true;
     }
 }

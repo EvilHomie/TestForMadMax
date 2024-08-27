@@ -71,6 +71,7 @@ public class SaveLoadManager : MonoBehaviour
         PlayerPrefs.SetString("UnlockedLevelsNames", unlockedLevelsNames);
 
         Debug.LogWarning("DATA SAVED");
+        Debug.Log(unlockedLevelsNames);
     }
 
     public void LoadSaveData()

@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
         _changeLevelsBtn.gameObject.SetActive(false);
         _settingsIsopened = false;
         InventoryManager.Instance.OnCloseInventory();
+        LevelManager.Instance.SelectLevelsWindow.SetActive(false);
     }
 
     void SwitchMenuElements()
@@ -140,6 +141,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void OnPlayerVehicleDestroyed()
+    {
+        OnReturntToGarage();
+    }
+
+    public void OnPlayerKillAllEnemy()
     {
         OnReturntToGarage();
     }

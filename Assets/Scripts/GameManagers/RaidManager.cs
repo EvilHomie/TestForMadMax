@@ -13,20 +13,21 @@ public class RaidManager : MonoBehaviour
     [SerializeField] Image _speedSliderFillImage;
     [SerializeField] MeshRenderer _mainRoadRenderer;
     [SerializeField] List<EnemySpawnLines> enemySpawnLines;
-    [SerializeField] List<int> reservedSpawnLinesNumbers;
-    [SerializeField] List<int> freeSpawnLinesNumbers;
+    [SerializeField] List<int> _reservedSpawnLinesNumbers;
+    [SerializeField] List<int> _freeSpawnLinesNumbers;
 
 
-    List<EnemyVehicleManager> enemiesList = new();
+    List<EnemyVehicleManager> _enemiesList = new();
+    UILevelInfo _selectedLevelInfo;
 
     bool allLinesReserved = false;
-
     float _playerMoveSpeed = 0f;
+    Coroutine _UpdateSpeedCoroutine;
+    bool _onRaid = false;
+    int _spawnedEnemyCount = 0;
+    int _killedEnemyCount = 0;
     public float PlayerMoveSpeed => _playerMoveSpeed;
 
-    Coroutine _UpdateSpeedCoroutine;
-
-    bool _onRaid = false;
 
     private void Awake()
     {
@@ -63,6 +64,9 @@ public class RaidManager : MonoBehaviour
     public void OnPlayerStartRaid(float startMoveDelay, float speed, float reachSpeedDuration)
     {
         _onRaid = true;
+        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
+        _spawnedEnemyCount = 0;
+        _killedEnemyCount = 0;
         _speedSliderFillImage.fillAmount = 0;
         _UpdateSpeedCoroutine = StartCoroutine(StartLerpSpeed(startMoveDelay, speed, reachSpeedDuration));
         InvokeRepeating(nameof(SpawnEnemy), 5, 5);
@@ -76,19 +80,19 @@ public class RaidManager : MonoBehaviour
         _UpdateSpeedCoroutine = null;
 
 
-        reservedSpawnLinesNumbers.Clear();
-        freeSpawnLinesNumbers.Clear();
+        _reservedSpawnLinesNumbers.Clear();
+        _freeSpawnLinesNumbers.Clear();
 
         foreach (var line in enemySpawnLines)
         {
-            freeSpawnLinesNumbers.Add(line.lineIndex);
+            _freeSpawnLinesNumbers.Add(line.lineIndex);
         }
 
-        foreach (var enemy in enemiesList)
+        foreach (var enemy in _enemiesList)
         {
             Destroy(enemy.gameObject);
         }
-        enemiesList.Clear();
+        _enemiesList.Clear();
     }
 
 
@@ -122,9 +126,11 @@ public class RaidManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if (freeSpawnLinesNumbers.Count == 0) return;
-        int randomLineIndex = UnityEngine.Random.Range(0, freeSpawnLinesNumbers.Count);
-        int freeLineNumber = freeSpawnLinesNumbers[randomLineIndex];
+        if (_freeSpawnLinesNumbers.Count == 0) return;
+        if(_spawnedEnemyCount >= _selectedLevelInfo.EnemyCount) return;
+
+        int randomLineIndex = UnityEngine.Random.Range(0, _freeSpawnLinesNumbers.Count);
+        int freeLineNumber = _freeSpawnLinesNumbers[randomLineIndex];
 
         int randomEnemyIndex = UnityEngine.Random.Range(0, LevelManager.Instance.EnemyList.Count);
         EnemyVehicleManager enemyPF = LevelManager.Instance.EnemyList[randomEnemyIndex];
@@ -133,14 +139,15 @@ public class RaidManager : MonoBehaviour
         Vector3 spwanPos = enemySpawnLines[freeLineNumber].spawnPositions[randomPosIndex];
 
         EnemyVehicleManager enemy = Instantiate(enemyPF, spwanPos, enemyPF.transform.rotation);
-        enemiesList.Add(enemy);
+        _enemiesList.Add(enemy);
+        _spawnedEnemyCount ++;
         enemy.ReservedLineNumber = freeLineNumber;
 
-        freeSpawnLinesNumbers.Remove(freeLineNumber);
-        reservedSpawnLinesNumbers.Add(freeLineNumber);
+        _freeSpawnLinesNumbers.Remove(freeLineNumber);
+        _reservedSpawnLinesNumbers.Add(freeLineNumber);
 
-        if (freeSpawnLinesNumbers.Count == 0)
-            allLinesReserved = true;
+        //if (freeSpawnLinesNumbers.Count == 0)
+        //    allLinesReserved = true;
 
         Debug.LogWarning($"ENEMY IS SPAWNED AT LINE {freeLineNumber}");
     }
@@ -148,9 +155,16 @@ public class RaidManager : MonoBehaviour
     public void OnEnemyDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
     {
         if(!_onRaid) return;
-        enemiesList.Remove(enemy);
-        freeSpawnLinesNumbers.Add(reservedLineNumber);
-        reservedSpawnLinesNumbers.Remove(reservedLineNumber);
+        _enemiesList.Remove(enemy);
+        _freeSpawnLinesNumbers.Add(reservedLineNumber);
+        _reservedSpawnLinesNumbers.Remove(reservedLineNumber);
+
+        _killedEnemyCount++;
+        if (_killedEnemyCount >= _selectedLevelInfo.EnemyCount)
+        {
+            LevelManager.Instance.UnlockNextLevel();
+            GameManager.Instance.OnPlayerKillAllEnemy();
+        }
     }
 }
 
