@@ -5284,7 +5284,6 @@ GameObject:
   - component: {fileID: 3213119344692006990}
   - component: {fileID: 5580090259197330592}
   - component: {fileID: 2651140808585020851}
-  - component: {fileID: 3407566145804708886}
   m_Layer: 0
   m_Name: ShootParticles
   m_TagString: Untagged
@@ -10141,19 +10140,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3407566145804708886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4560847193902653295}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce2a86394e858c419a5d614b1036533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 2
 --- !u!1 &4782167129518307194
 GameObject:
   m_ObjectHideFlags: 0
@@ -15047,7 +15033,6 @@ GameObject:
   - component: {fileID: 4448676152079488177}
   - component: {fileID: 3785310008399678853}
   - component: {fileID: 8428584340271864959}
-  - component: {fileID: 9030941043491978189}
   m_Layer: 0
   m_Name: ShootParticles
   m_TagString: Untagged
@@ -19904,19 +19889,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &9030941043491978189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836670923111478226}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce2a86394e858c419a5d614b1036533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 2
 --- !u!1 &6188179177849433759
 GameObject:
   m_ObjectHideFlags: 0

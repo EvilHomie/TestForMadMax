@@ -14827,7 +14827,6 @@ GameObject:
   - component: {fileID: 168202755734816419}
   - component: {fileID: 1062768481944537260}
   - component: {fileID: 1449782238839029424}
-  - component: {fileID: 3343221410765102381}
   m_Layer: 0
   m_Name: ShootParticles
   m_TagString: Untagged
@@ -19684,19 +19683,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3343221410765102381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6288941586429264625}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce2a86394e858c419a5d614b1036533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 2
 --- !u!1 &6447981313923679297
 GameObject:
   m_ObjectHideFlags: 0
