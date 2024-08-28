@@ -12,6 +12,8 @@ public class InventoryEquipPanelManager : MonoBehaviour
     public InventoryItem EquipedVehicleSlot => _equipedVehicleSlot;
     public List<WeaponEquipSlot> EquipeWeaponsSlots => _equipeWeaponsSlots;
 
+    bool _equipLogicIsActive;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -35,7 +37,6 @@ public class InventoryEquipPanelManager : MonoBehaviour
         VehicleData vehicleData = (VehicleData)PlayerData.Instance.GetItemDataByName(PlayerData.Instance.EquipedItems[0]);
         _equipedVehicleSlot.SetitemData(vehicleData);
 
-        Debug.Log(vehicleData);
         for (int i = 0; i < vehicleData.curWeaponsCount; i++)
         {
             _equipeWeaponsSlots[i].ActiveStatus = true;
@@ -52,6 +53,8 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
     public void EnableWeaponEquipOption(IItemData newWeapon)
     {
+        if(_equipLogicIsActive) return;
+        _equipLogicIsActive = true;
         _equipedVehicleSlot.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _equipPanelRT.localScale = Vector3.one * 2;
         foreach (var weaponSlot in _equipeWeaponsSlots)
@@ -80,6 +83,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
             weaponSlot.SelectBtn.gameObject.SetActive(false);
             weaponSlot.SelectBtn.onClick.RemoveAllListeners();
         }
+        _equipLogicIsActive = false;
     }
 
     void OnEquipWeapon(WeaponEquipSlot slot, IItemData newWeapon)
@@ -110,5 +114,10 @@ public class InventoryEquipPanelManager : MonoBehaviour
                 PlayerData.Instance.EquipedItems.Remove(weaponSlot.SlotIndex);
             }
         }
+    }
+
+    public void OnSelectItem()
+    {
+        DisableWeaponEquipOption();
     }
 }

@@ -33,7 +33,7 @@ public static class TextConstants
     public static string INVENTORY = "Inventory";
     public static string RAID = "Raid";
     public static string GARAGE = "Garage";
-
+    public static string UNLOCKCOST = "UnlockCost";
 
 
     public static void SetLanguage(Language language)
@@ -72,6 +72,7 @@ public static class TextConstants
             INVENTORY = "Инвентарь";
             RAID = "Набег";
             GARAGE = "Гараж";
+            UNLOCKCOST = "Стоимость Открытия";
         }
     }
 }

@@ -33,6 +33,10 @@ public class InventoryUpgradePanelManager : MonoBehaviour
         {
             ShowVehicleUpgradeInfo(VData);
         }
+        else if (itemData is WeaponSchemeData WSData)
+        {
+            ShowWeaponSchemeUpgradeInfo(WSData.weaponData);
+        }
     }    
 
     void ShowWeaponUpgradeInfo(WeaponData data)
@@ -107,5 +111,14 @@ public class InventoryUpgradePanelManager : MonoBehaviour
             upgradeRows[3].SetData(TextConstants.WEAPONSCOUNT, data.curWeaponsCount, data.maxWeaponsCount, 1, lvlCost.ResCost);
         }
         else upgradeRows[3].OnMaxLvlReached(TextConstants.WEAPONSCOUNT, data.curWeaponsCount, data.maxWeaponsCount);
+    }
+
+    void ShowWeaponSchemeUpgradeInfo(WeaponData data)
+    {
+        ShowWeaponUpgradeInfo(data);
+        foreach (var row in upgradeRows)
+        {
+            row.DisableBuyUpgradeOption();
+        }
     }
 }

@@ -20,7 +20,7 @@ public class PlayerVehicleManager : MonoBehaviour
         if (_playerVehicle != null)
         {
             VehicleData existVehicleData = (VehicleData)_playerVehicle.GetItemData();
-            if (PlayerData.Instance.EquipedItems[0] == existVehicleData.vehicleNameEN)
+            if (PlayerData.Instance.EquipedItems[0] == existVehicleData.deffVehicleName)
             {
                 return;
             }

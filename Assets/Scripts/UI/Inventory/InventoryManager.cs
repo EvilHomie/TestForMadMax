@@ -9,7 +9,9 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
 
     [SerializeField] InventoryItem _inventoryItemPF;
+    [SerializeField] InventoryItem _schemeItemPF;
     [SerializeField] Transform _mainInventoryContainer;
+    [SerializeField] Transform _schemesContainer;
     [SerializeField] Button _equipBtn;
     [SerializeField] Button _unlockBtn;
     [SerializeField] AudioSource _inventoryAS;
@@ -37,7 +39,7 @@ public class InventoryManager : MonoBehaviour
         _equipBtn.onClick.AddListener(OnTryEquipItem);
         _equipBtn.gameObject.SetActive(false);
         _unlockBtn.gameObject.SetActive(false); // временно... пока нет логики с чертежами
-        gameObject.SetActive(false);
+        OnCloseInventory();
     }
 
     public void OnOpenInventory()
@@ -69,7 +71,18 @@ public class InventoryManager : MonoBehaviour
         _selectedItem = itemData;
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(itemData);
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(itemData);
-        _equipBtn.gameObject.SetActive(!PlayerData.Instance.EquipedItems.ContainsValue(itemData.DeffItemName));
+        InventoryEquipPanelManager.Instance.OnSelectItem();
+
+        if (_selectedItem is WeaponSchemeData)
+        {
+            _equipBtn.gameObject.SetActive(false);
+            _unlockBtn.gameObject.SetActive(true);
+        }
+        else
+        {
+            _unlockBtn.gameObject.SetActive(false);
+            _equipBtn.gameObject.SetActive(!PlayerData.Instance.EquipedItems.ContainsValue(itemData.DeffItemName));
+        }
     }
 
     public void OnBuyUpgrade(string charName, List<ResCost> upgradeCost)
@@ -120,13 +133,22 @@ public class InventoryManager : MonoBehaviour
 
     void OnTryEquipItem()
     {
-        if (_selectedItem is WeaponData) InventoryEquipPanelManager.Instance.EnableWeaponEquipOption(_selectedItem);      
+        if (_selectedItem is WeaponData) InventoryEquipPanelManager.Instance.EnableWeaponEquipOption(_selectedItem);
         else if (_selectedItem is VehicleData) InventoryEquipPanelManager.Instance.OnEquipNewVehicle(_selectedItem);
     }
 
     void ADDItemToInventory(IItemData item)
     {
-        InventoryItem InventoryItem = Instantiate(_inventoryItemPF, _mainInventoryContainer);
+        InventoryItem InventoryItem;
+
+        if (item is WeaponSchemeData)
+        {
+            InventoryItem = Instantiate(_schemeItemPF, _schemesContainer);
+        }
+        else
+        {
+            InventoryItem = Instantiate(_inventoryItemPF, _mainInventoryContainer);
+        }
         _inventoryItems.Add(InventoryItem);
         InventoryItem.SetitemData(item);
     }
@@ -142,7 +164,7 @@ public class InventoryManager : MonoBehaviour
         _inventoryAS.PlayOneShot(_equipSound);
         _equipBtn.gameObject.SetActive(false);
 
-        if(newItem != null && previousItem != null)
+        if (newItem != null && previousItem != null)
         {
             InventoryItem inventoryItem = _inventoryItems.Find(invItem => invItem.GetitemData() == newItem);
             inventoryItem.SetitemData(previousItem);
@@ -153,6 +175,6 @@ public class InventoryManager : MonoBehaviour
         if (previousItem != null) ADDItemToInventory(previousItem);
     }
 
-   
+
 
 }

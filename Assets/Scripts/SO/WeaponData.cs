@@ -1,8 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WeaponData", menuName = "ScriptableObjects/Weapon")]
+[CreateAssetMenu(fileName = "WeaponData", menuName = "ScriptableObjects/WeaponData")]
 public class WeaponData : ScriptableObject, IItemData
 {
+    public string deffWeaponName;
     public string weaponNameEN;
     public string weaponNameRU;
     public WeaponType weaponType;
@@ -37,5 +38,5 @@ public class WeaponData : ScriptableObject, IItemData
         }
     }
 
-    public string DeffItemName => weaponNameEN;
+    public string DeffItemName => deffWeaponName;
 }

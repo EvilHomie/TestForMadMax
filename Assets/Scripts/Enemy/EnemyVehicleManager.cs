@@ -59,6 +59,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (!Application.isPlaying) return;
         RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
     }
 

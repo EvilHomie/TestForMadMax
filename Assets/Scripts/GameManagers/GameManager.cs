@@ -52,11 +52,17 @@ public class GameManager : MonoBehaviour
         UIResourcesManager.Instance.UpdateCounters();
         AddListenersOnBtns();
 
+        _playerOnRaid = false;
+        PlayerVehicleManager.Instance.OnPlayerEndRaid();
+        PlayerWeaponManager.Instance.OnPlayerEndRaid();
 
+        UIJoystickTouchController.Instance.HideControllers();
+        GarageBoxManager.Instance.OnPlayerEndRaid();
+        CameraManager.Instance.OnPlayerEndRaid();
+        RaidManager.Instance.OnPlayerEndRaid();
+        PlayerHPManager.Instance.OnPlayerEndRaid();
 
-
-
-        OnReturntToGarage();
+        SwitchMenuElements();
 
         ToggleMenu();
 

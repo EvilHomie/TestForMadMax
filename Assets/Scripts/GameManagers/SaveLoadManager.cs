@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
-    string[] _deffaultItemsNames = new string[] { "Simple Cannon", "Dual Cannon", "Simple Truck", "TEST Truck", "Energy Dual Cannon", "Energy Simple Cannon" };
+    string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Dual_Cannon", "Simple_Truck", "Energy_Dual_Cannon", "Energy_Simple_Cannon", "Dual_Cannon_Scheme" };
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -21,12 +21,21 @@ public class SaveLoadManager : MonoBehaviour
             PlayerWeapon weapon = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == itemName);
             if (weapon == null) continue;
             PlayerData.Instance.PlayerItemsData.Add(Instantiate((WeaponData)weapon.GetItemData()));
+            SystemDebuger.Log($"ADD {weapon.name} AS DEFFAULT ITEM");
         }
         foreach (var itemName in ItemsNames)
         {
             PlayerVehicle playerVehicle = GameAssets.Instance.GameItems.PlayerVehicles.Find(weapon => weapon.name == itemName);
             if (playerVehicle == null) continue;
             PlayerData.Instance.PlayerItemsData.Add(Instantiate((VehicleData)playerVehicle.GetItemData()));
+            SystemDebuger.Log($"ADD {playerVehicle.name} AS DEFFAULT ITEM");
+        }
+        foreach (var itemName in ItemsNames)
+        {
+            WeaponSchemeData weaponSchemeData = GameAssets.Instance.GameItems.WeaponSchemeData.Find(scheme => scheme.name == itemName);
+            if (weaponSchemeData == null) continue;
+            PlayerData.Instance.PlayerItemsData.Add(Instantiate(weaponSchemeData));
+            SystemDebuger.Log($"ADD {weaponSchemeData.name} AS DEFFAULT ITEM");
         }
     }
 
@@ -34,15 +43,18 @@ public class SaveLoadManager : MonoBehaviour
     {
         List<VehicleData> vehiclesData = new();
         List<WeaponData> weaponsData = new();
+        List<WeaponSchemeData> weaponSchemeData = new();
 
         foreach (var item in PlayerData.Instance.PlayerItemsData)
         {
             if (item is WeaponData WData) weaponsData.Add(WData);
             else if (item is VehicleData VData) vehiclesData.Add(VData);
+            else if (item is WeaponSchemeData WSData) weaponSchemeData.Add(WSData);
         }
 
         List<string> weaponsDataAsStrings = new();
         List<string> vehiclesDataAsStrings = new();
+        List<string> weaponsSchemeDataAsStrings = new();
 
         foreach (var item in weaponsData)
         {
@@ -57,6 +69,14 @@ public class SaveLoadManager : MonoBehaviour
             vehiclesDataAsStrings.Add(stringData);
         }
         PlayerPrefs.SetString("SavedVehiclesData", JsonConvert.SerializeObject(vehiclesDataAsStrings, Formatting.Indented));
+
+        foreach (var item in weaponSchemeData)
+        {
+            string stringData = JsonConvert.SerializeObject(item, Formatting.Indented);
+            weaponsSchemeDataAsStrings.Add(stringData);
+        }
+        PlayerPrefs.SetString("SavedWeaponSchemeData", JsonConvert.SerializeObject(weaponsSchemeDataAsStrings, Formatting.Indented));
+
 
         string savedResources = JsonConvert.SerializeObject(PlayerData.Instance.AvailableResources);
         PlayerPrefs.SetString("SavedResourcesData", savedResources);
@@ -83,8 +103,8 @@ public class SaveLoadManager : MonoBehaviour
 
             PlayerData.Instance.EquipedItems = new Dictionary<int, string>()
             {
-                {0, "Simple Truck" },
-                {1, "Simple Cannon" }
+                {0, "Simple_Truck" },
+                {1, "Simple_Cannon" }
             };
 
             PlayerData.Instance.LastSelectedLevelName = "1-1";
@@ -111,6 +131,26 @@ public class SaveLoadManager : MonoBehaviour
             PlayerData.Instance.PlayerItemsData.Add(vehicleData);
         }
         SystemDebuger.Log("VEHICLES LOADED");
+
+
+
+        List<string> weaponsSchemeDataAsStrings = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedWeaponSchemeData"));
+        foreach (var weaponsSchemeStringData in weaponsSchemeDataAsStrings)
+        {
+            WeaponSchemeData weaponSchemeData = ScriptableObject.CreateInstance<WeaponSchemeData>();
+            JsonUtility.FromJsonOverwrite(weaponsSchemeStringData, weaponSchemeData);
+            PlayerData.Instance.PlayerItemsData.Add(weaponSchemeData);
+        }
+        SystemDebuger.Log("WEAPON SCHEMES LOADED");
+
+
+
+
+
+
+
+
+
 
         PlayerData.Instance.AvailableResources = JsonConvert.DeserializeObject<Dictionary<ResourcesType, int>>(PlayerPrefs.GetString("SavedResourcesData"));
         SystemDebuger.Log("RESOURCES LOADED");

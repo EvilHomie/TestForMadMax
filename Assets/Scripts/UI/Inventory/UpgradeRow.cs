@@ -92,5 +92,10 @@ public class UpgradeRow : MonoBehaviour
         InventoryManager.Instance.OnBuyUpgrade(_charName.text, _upgradeCost);
     }
 
+    public void DisableBuyUpgradeOption()
+    {
+        _upgradeBtn.gameObject.SetActive(false);
+        _maxLvlText.gameObject.SetActive(false);
+    }
 
 }

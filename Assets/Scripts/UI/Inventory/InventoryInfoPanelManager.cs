@@ -44,11 +44,18 @@ public class InventoryInfoPanelManager : MonoBehaviour
 
         if (itemData is WeaponData WData)
         {
+            _characteristicsText.text = TextConstants.CHARACTERISTICS;
             ShowWeaponInfo(WData);
         }
         else if (itemData is VehicleData VData)
         {
+            _characteristicsText.text = TextConstants.CHARACTERISTICS;
             ShowVehicleInfo(VData);
+        }
+        else if (itemData is WeaponSchemeData WSData)
+        {
+            _characteristicsText.text = TextConstants.UNLOCKCOST;
+            ShowUnlockInfo(WSData);
         }
     }
 
@@ -69,5 +76,13 @@ public class InventoryInfoPanelManager : MonoBehaviour
         characteristicRows[1].SetData(TextConstants.SHIELDHP, $"{data.shieldHPByLvl * data.shieldHPCurLvl} {TextConstants.UNIT}");
         characteristicRows[2].SetData(TextConstants.SHIELREGENRATE, $"{data.shieldRegenRateByLvl * data.shieldRegenCurtLvl} {TextConstants.UNIT}{TextConstants.INSECOND}");
         characteristicRows[3].SetData(TextConstants.WEAPONSCOUNT, $"{data.curWeaponsCount} {TextConstants.FROM} {data.maxWeaponsCount}");
+    }
+
+    void ShowUnlockInfo(WeaponSchemeData data)
+    {
+        foreach (var characteristicRow in characteristicRows)
+        {
+            characteristicRow.gameObject.SetActive(false);
+        }
     }
 }

@@ -34,3 +34,9 @@ public enum MenuNavigation
     EnterUpgrades,
     ExitUpgrades
 }
+
+public enum SchemeType
+{
+    Weapon,
+    Vehicle
+}

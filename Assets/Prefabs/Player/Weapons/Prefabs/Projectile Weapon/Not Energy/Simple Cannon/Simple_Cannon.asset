@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 976fea576407abd4cb4df198f4930a31, type: 3}
-  m_Name: Simple Cannon
+  m_Name: Simple_Cannon
   m_EditorClassIdentifier: 
+  deffWeaponName: Simple_Cannon
   weaponNameEN: Simple Cannon
   weaponNameRU: "\u041F\u0440\u043E\u0441\u0442\u0430\u044F \u041F\u0443\u0448\u043A\u0430"
   weaponType: 0

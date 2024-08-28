@@ -51,7 +51,7 @@ public class PlayerWeaponManager : MonoBehaviour
         else if (point.childCount == 1)
         {
             WeaponData existWeaponData = (WeaponData)_weapons[weaponIndex].GetItemData();
-            if (PlayerData.Instance.EquipedItems[weaponIndex] == existWeaponData.weaponNameEN) return;
+            if (PlayerData.Instance.EquipedItems[weaponIndex] == existWeaponData.deffWeaponName) return;
             foreach (Transform t in point) Destroy(t.gameObject);
             CreateWeaponInstance(weaponIndex, point);
         }

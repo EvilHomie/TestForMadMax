@@ -15,6 +15,15 @@ public struct DropedResource
 }
 
 [Serializable]
+public struct UnlockCost
+{
+    [SerializeField] ResourcesType _type;
+    [SerializeField] int _amount;
+    public ResourcesType ResourcesType => _type;
+    public int Amount => _amount;
+}
+
+[Serializable]
 public struct UpgradeCost
 {
     [SerializeField] Raritie _raritieType;

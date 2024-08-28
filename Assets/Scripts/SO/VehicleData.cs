@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "VehicleData", menuName = "ScriptableObjects/VehicleData")]
 public class VehicleData : ScriptableObject, IItemData
 {
+    public string deffVehicleName;
     public string vehicleNameEN;
     public string vehicleNameRU;
     public Raritie vehicleRaritie;
@@ -35,5 +36,5 @@ public class VehicleData : ScriptableObject, IItemData
         }
     }
 
-    public string DeffItemName => vehicleNameEN;
+    public string DeffItemName => deffVehicleName;
 }
