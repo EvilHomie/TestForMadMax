@@ -11,15 +11,23 @@ public class InventoryInfoPanelManager : MonoBehaviour
     [SerializeField] Image _itemImage;
     [SerializeField] List<CharacteristicRow> characteristicRows;
 
+    [SerializeField] TextMeshProUGUI _equipText;
+    [SerializeField] TextMeshProUGUI _unlockText;
+    [SerializeField] TextMeshProUGUI _characteristicsText;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
 
-    private void Start()
+    public void Init()
     {
-        _itemNameText.text = Constants.ITEMNAME;
+        _itemNameText.text = TextConstants.ITEMNAME;
+        _equipText.text = TextConstants.EQUIP;
+        _unlockText.text = TextConstants.UNLOCK;
+        _characteristicsText.text = TextConstants.CHARACTERISTICS;
+
         _itemImage.gameObject.SetActive(false);
         foreach (var characteristicRow in characteristicRows)
         {
@@ -46,20 +54,20 @@ public class InventoryInfoPanelManager : MonoBehaviour
 
     void ShowWeaponInfo(WeaponData data)
     {
-        characteristicRows[0].SetData(Constants.HULLDMG, $"{data.hullDmgByLvl * data.hullDmgCurLvl} {Constants.PERHIT}");
-        characteristicRows[1].SetData(Constants.SHIELDDMG, $"{data.shieldDmgByLvl * data.shieldDmgCurLvl} {Constants.PERHIT}");
-        characteristicRows[2].SetData(Constants.ROTATIONSPEED, $"{data.rotationSpeedByLvl * data.rotationSpeedCurLvl} {Constants.DGSINSECOND}");
+        characteristicRows[0].SetData(TextConstants.HULLDMG, $"{data.hullDmgByLvl * data.hullDmgCurLvl} {TextConstants.PERHIT}");
+        characteristicRows[1].SetData(TextConstants.SHIELDDMG, $"{data.shieldDmgByLvl * data.shieldDmgCurLvl} {TextConstants.PERHIT}");
+        characteristicRows[2].SetData(TextConstants.ROTATIONSPEED, $"{data.rotationSpeedByLvl * data.rotationSpeedCurLvl} {TextConstants.DGSINSECOND}");
 
         if (data.weaponType != WeaponType.Beam)
-            characteristicRows[3].SetData(Constants.FIRERATE, $"{data.fireRateByLvl * data.fireRateCurtLvl} {Constants.INSECOND}");
+            characteristicRows[3].SetData(TextConstants.FIRERATE, $"{data.fireRateByLvl * data.fireRateCurtLvl} {TextConstants.INSECOND}");
         else characteristicRows[3].gameObject.SetActive(false);
     }
 
     void ShowVehicleInfo(VehicleData data)
     {
-        characteristicRows[0].SetData(Constants.HULLHP, $"{data.hullHPByLvl * data.hullHPCurLvl} {Constants.UNIT}");
-        characteristicRows[1].SetData(Constants.SHIELDHP, $"{data.shieldHPByLvl * data.shieldHPCurLvl} {Constants.UNIT}");
-        characteristicRows[2].SetData(Constants.SHIELREGENRATE, $"{data.shieldRegenRateByLvl * data.shieldRegenCurtLvl} {Constants.UNIT}{Constants.INSECOND}");
-        characteristicRows[3].SetData(Constants.WEAPONSCOUNT, $"{data.curWeaponsCount} {Constants.FROM} {data.maxWeaponsCount}");
+        characteristicRows[0].SetData(TextConstants.HULLHP, $"{data.hullHPByLvl * data.hullHPCurLvl} {TextConstants.UNIT}");
+        characteristicRows[1].SetData(TextConstants.SHIELDHP, $"{data.shieldHPByLvl * data.shieldHPCurLvl} {TextConstants.UNIT}");
+        characteristicRows[2].SetData(TextConstants.SHIELREGENRATE, $"{data.shieldRegenRateByLvl * data.shieldRegenCurtLvl} {TextConstants.UNIT}{TextConstants.INSECOND}");
+        characteristicRows[3].SetData(TextConstants.WEAPONSCOUNT, $"{data.curWeaponsCount} {TextConstants.FROM} {data.maxWeaponsCount}");
     }
 }

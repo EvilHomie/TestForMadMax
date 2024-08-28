@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,9 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] CanvasGroup _vehicleSlotCG;
 
+    [SerializeField] TextMeshProUGUI _newSchemesText;
+    [SerializeField] TextMeshProUGUI _InventoryText;
+
     List<InventoryItem> _inventoryItems = new();
     IItemData _selectedItem;
 
@@ -26,8 +30,10 @@ public class InventoryManager : MonoBehaviour
         else Instance = this;
     }
 
-    private void Start()
+    public void Init()
     {
+        _newSchemesText.text = TextConstants.NEWSCHEMES;
+        _InventoryText.text = TextConstants.INVENTORY;
         _equipBtn.onClick.AddListener(OnTryEquipItem);
         _equipBtn.gameObject.SetActive(false);
         _unlockBtn.gameObject.SetActive(false); // временно... пока нет логики с чертежами
@@ -92,18 +98,18 @@ public class InventoryManager : MonoBehaviour
 
     void UpgradeWeapon(WeaponData weaponData, string charName)
     {
-        if (charName == Constants.HULLDMG) weaponData.hullDmgCurLvl++;
-        else if (charName == Constants.SHIELDDMG) weaponData.shieldDmgCurLvl++;
-        else if (charName == Constants.ROTATIONSPEED) weaponData.rotationSpeedCurLvl++;
-        else if (charName == Constants.FIRERATE) weaponData.fireRateCurtLvl++;
+        if (charName == TextConstants.HULLDMG) weaponData.hullDmgCurLvl++;
+        else if (charName == TextConstants.SHIELDDMG) weaponData.shieldDmgCurLvl++;
+        else if (charName == TextConstants.ROTATIONSPEED) weaponData.rotationSpeedCurLvl++;
+        else if (charName == TextConstants.FIRERATE) weaponData.fireRateCurtLvl++;
     }
 
     void UpgradeVehicle(VehicleData vehicleData, string charName)
     {
-        if (charName == Constants.HULLHP) vehicleData.hullHPCurLvl++;
-        else if (charName == Constants.SHIELDHP) vehicleData.shieldHPCurLvl++;
-        else if (charName == Constants.SHIELREGENRATE) vehicleData.shieldRegenCurtLvl++;
-        else if (charName == Constants.WEAPONSCOUNT)
+        if (charName == TextConstants.HULLHP) vehicleData.hullHPCurLvl++;
+        else if (charName == TextConstants.SHIELDHP) vehicleData.shieldHPCurLvl++;
+        else if (charName == TextConstants.SHIELREGENRATE) vehicleData.shieldRegenCurtLvl++;
+        else if (charName == TextConstants.WEAPONSCOUNT)
         {
             vehicleData.curWeaponsCount++;
             InventoryEquipPanelManager.Instance.CheckWeaponsSlotsCount();

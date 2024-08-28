@@ -20,6 +20,7 @@ public class UILevelInfo : MonoBehaviour
     [SerializeField] float _enemyDmgMod = 1;
     [SerializeField] float _enemyHPMod = 1;
 
+    [Header("OPTIONAL")]
     [SerializeField] EnemyVehicleManager _bossEnemyVehicle;
 
     public List<EnemyVehicleManager> EnemyList => enemyList;
@@ -46,13 +47,13 @@ public class UILevelInfo : MonoBehaviour
 
     public void LockLevel()
     {
-        _unlockStatusText.text = Constants.LOCKED;
+        _unlockStatusText.text = TextConstants.LOCKED;
         _unlockStatusText.color = Color.red;
     }
 
     public void UnlockLevel()
     {
-        _unlockStatusText.text = Constants.UNLOCKED;
+        _unlockStatusText.text = TextConstants.UNLOCKED;
         _unlockStatusText.color = Color.green;
     }
 

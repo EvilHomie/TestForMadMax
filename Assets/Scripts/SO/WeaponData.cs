@@ -7,22 +7,22 @@ public class WeaponData : ScriptableObject, IItemData
     public WeaponType weaponType;
     public Raritie weaponRaritie;
 
-    [Header(Constants.HULLDMG)]
+    [Header("HULLDMG")]
     public float hullDmgByLvl;
     public int hullDmgCurLvl;
     public int hullDmgMaxLvl;
 
-    [Header(Constants.SHIELDDMG)]
+    [Header("SHIELDDMG")]
     public float shieldDmgByLvl;
     public int shieldDmgCurLvl;
     public int shieldDmgMaxLvl;
 
-    [Header(Constants.FIRERATE)]
+    [Header("FIRERATE")]
     public float fireRateByLvl;
     public int fireRateCurtLvl;
     public int fireRateMaxLvl;
 
-    [Header(Constants.ROTATIONSPEED)]
+    [Header("ROTATIONSPEED")]
     public float rotationSpeedByLvl;
     public int rotationSpeedCurLvl;
     public int rotationSpeedMaxLvl;

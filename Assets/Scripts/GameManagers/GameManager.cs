@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button _closeUpgradesBtn;
     [SerializeField] Button _settingsBtn;
 
+
+    [SerializeField] TextMeshProUGUI _startRaidBtnText;
+    [SerializeField] TextMeshProUGUI _garageBtnText;
+    [SerializeField] TextMeshProUGUI _openInventoryBtnText;
+
+
     float _showControllerDelay = 6; // зависит от звука запуска двигател€, а точнее времени набора стартовой скорости
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
@@ -19,21 +26,29 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
-        Application.targetFrameRate = 1000;
+        else Instance = this;        
     }
-
 
     void Start()
     {
-        _playerOnRaid = false;
-        _settingsBtn.onClick.AddListener(ToggleMenu);
-        _startRaidBtn.onClick.AddListener(OnStartRaid);
-        _garageBtn.onClick.AddListener(OnReturntToGarage);
-        _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
-        _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
-        _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
+        TextConstants.SetLanguage(Language.ru);
+        Init();
+    }
 
+
+    void Init()
+    {
+        Application.targetFrameRate = 1000;
+        _startRaidBtnText.text = TextConstants.RAID;
+        _garageBtnText.text= TextConstants.GARAGE;
+        _openInventoryBtnText.text = TextConstants.INVENTORY;
+
+        InventoryInfoPanelManager.Instance.Init();
+        InventoryManager.Instance.Init();
+        InventoryUpgradePanelManager.Instance.Init();
+        AddListenersOnBtns();
+
+        _playerOnRaid = false;
         SaveLoadManager.Instance.LoadSaveData();
         UIResourcesManager.Instance.UpdateCounters();
         LevelManager.Instance.Init();
@@ -42,10 +57,21 @@ public class GameManager : MonoBehaviour
         InventoryManager.Instance.OnCloseInventory();
         ToggleMenu();
 
-
-
         UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
     }
+
+    void AddListenersOnBtns()
+    {
+        _settingsBtn.onClick.AddListener(ToggleMenu);
+        _startRaidBtn.onClick.AddListener(OnStartRaid);
+        _garageBtn.onClick.AddListener(OnReturntToGarage);
+        _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
+        _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
+        _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
+    }
+
+
+    
 
     //“≈—“ќ¬јя ќЅЋј—“№
     private void Update()

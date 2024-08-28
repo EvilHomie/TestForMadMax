@@ -8,17 +8,29 @@ public class UpgradeRow : MonoBehaviour
     [SerializeField] TextMeshProUGUI _charName;
     [SerializeField] List<Image> _lvlIcons;
     [SerializeField] List<UpgradeCostRow> _costRows;
-    [SerializeField] TextMeshProUGUI _upEffectText;
+    [SerializeField] TextMeshProUGUI _upEffectValueText;
     [SerializeField] Button _upgradeBtn;
     [SerializeField] TextMeshProUGUI _maxLvlText;
+
+    [SerializeField] TextMeshProUGUI _levelText;
+    [SerializeField] TextMeshProUGUI _upEffectText;
+    [SerializeField] TextMeshProUGUI _costText;
+    [SerializeField] TextMeshProUGUI _upgradeText;
 
     List<ResCost> _upgradeCost;
     Color _notAvailableColir = new Color(0.128f, 0.128f, 0.128f, 1);
 
 
-    private void Awake()
+   
+    public void Init()
     {
+        _levelText.text = TextConstants.LEVEL;
+        _upEffectText.text = TextConstants.UPEFFECT;
+        _costText.text = TextConstants.COST;
+        _upgradeText.text = TextConstants.UPGRADE;
+        _maxLvlText.text = TextConstants.MAXLEVEL;
         _upgradeBtn.onClick.AddListener(OnBuyUpgrade);
+        gameObject.SetActive(false);
     }
 
     public void SetData(string charName, int currentLvl, int maxLvl, float upgradeEffect, List<ResCost> resCosts)
@@ -27,7 +39,7 @@ public class UpgradeRow : MonoBehaviour
         _upgradeBtn.gameObject.SetActive(true);
         _charName.text = charName;
         _upgradeCost = resCosts;
-        _upEffectText.text = $"+ {upgradeEffect}";
+        _upEffectValueText.text = $"+ {upgradeEffect}";
         _maxLvlText.gameObject.SetActive(false);
 
         ShowLvl(currentLvl, maxLvl);
@@ -39,7 +51,7 @@ public class UpgradeRow : MonoBehaviour
     {
         gameObject.SetActive(true);
         _upgradeBtn.gameObject.SetActive(false);
-        _upEffectText.text = string.Empty;
+        _upEffectValueText.text = string.Empty;
         _maxLvlText.gameObject.SetActive(true);
         _charName.text = charName;
         foreach (var row in _costRows)

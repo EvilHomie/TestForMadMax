@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] Transform _levelsContainer;
     [SerializeField] GameObject _selectLevelsWindow;
+    [SerializeField] TextMeshProUGUI _headText;
 
     [Header("If TrySelect LockedLevel")]
     [SerializeField] float _shakeDuration = 0.5f;
@@ -26,6 +28,7 @@ public class LevelManager : MonoBehaviour
 
     public void Init()
     {
+        _headText.text = TextConstants.LEVELS;
         foreach (Transform levelInfo in _levelsContainer)
         {
             UILevelInfo info = levelInfo.GetComponent<UILevelInfo>();
