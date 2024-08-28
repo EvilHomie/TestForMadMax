@@ -16,7 +16,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
             return;
         }
         _itemImage.gameObject.SetActive(true);
-        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(_item.ItemName);
+        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(_item.DeffItemName);
     }
 
     public IItemData GetitemData()

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976fea576407abd4cb4df198f4930a31, type: 3}
   m_Name: Simple Cannon
   m_EditorClassIdentifier: 
-  weaponName: Simple Cannon
+  weaponNameEN: Simple Cannon
+  weaponNameRU: "\u041F\u0440\u043E\u0441\u0442\u0430\u044F \u041F\u0443\u0448\u043A\u0430"
   weaponType: 0
   weaponRaritie: 0
   hullDmgByLvl: 1

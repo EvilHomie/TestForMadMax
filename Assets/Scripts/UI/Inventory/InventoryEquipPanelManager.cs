@@ -35,7 +35,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
         VehicleData vehicleData = (VehicleData)PlayerData.Instance.GetItemDataByName(PlayerData.Instance.EquipedItems[0]);
         _equipedVehicleSlot.SetitemData(vehicleData);
 
-
+        Debug.Log(vehicleData);
         for (int i = 0; i < vehicleData.curWeaponsCount; i++)
         {
             _equipeWeaponsSlots[i].ActiveStatus = true;
@@ -63,7 +63,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
     public void OnEquipNewVehicle(IItemData newVehicle)
     {
-        PlayerData.Instance.EquipedItems[0] = newVehicle.ItemName;
+        PlayerData.Instance.EquipedItems[0] = newVehicle.DeffItemName;
         IItemData previousItem = _equipedVehicleSlot.GetitemData();
 
         InventoryManager.Instance.OnSelectedItemEquiped(newVehicle, previousItem);
@@ -84,7 +84,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
     void OnEquipWeapon(WeaponEquipSlot slot, IItemData newWeapon)
     {
-        PlayerData.Instance.EquipedItems[slot.SlotIndex] = newWeapon.ItemName;
+        PlayerData.Instance.EquipedItems[slot.SlotIndex] = newWeapon.DeffItemName;
         IItemData previousItem = slot.InventoryItem.GetitemData();
 
         slot.InventoryItem.SetitemData(newWeapon);

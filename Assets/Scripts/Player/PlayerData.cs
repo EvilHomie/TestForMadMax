@@ -31,7 +31,7 @@ public class PlayerData : MonoBehaviour
 
     public IItemData GetItemDataByName(string itemName)
     {
-        return PlayerItemsData.Find(item => item.ItemName == itemName);
+        return PlayerItemsData.Find(item => item.DeffItemName == itemName);
     }
 
     public void OnPlayerStartRaid()

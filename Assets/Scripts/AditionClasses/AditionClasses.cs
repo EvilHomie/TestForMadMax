@@ -60,7 +60,8 @@ public struct ResSprite
 
 public interface IItemData
 {
-    public string ItemName { get; }
+    public string DeffItemName { get; }
+    public string TranslatedItemName { get; }
 }
 
 public interface IItem

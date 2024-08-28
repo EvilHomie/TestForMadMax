@@ -1,8 +1,6 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,13 +18,11 @@ public class RaidManager : MonoBehaviour
     List<EnemyVehicleManager> _enemiesList = new();
     UILevelInfo _selectedLevelInfo;
 
-    bool allLinesReserved = false;
     float _playerMoveSpeed = 0f;
     Coroutine _UpdateSpeedCoroutine;
     bool _onRaid = false;
     int _spawnedSimpleEnemyCount = 0;
     int _killedSimpleEnemyCount = 0;
-    bool _bossIsKilled = false;
     bool _bossIsSpawned = false;
 
 

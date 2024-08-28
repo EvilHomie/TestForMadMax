@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        TextConstants.SetLanguage(Language.ru);
+        TextConstants.SetLanguage(GameConfig.Instance.Language);
         Init();
     }
 
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         Application.targetFrameRate = 1000;
+        SaveLoadManager.Instance.LoadSaveData();
+
         _startRaidBtnText.text = TextConstants.RAID;
         _garageBtnText.text= TextConstants.GARAGE;
         _openInventoryBtnText.text = TextConstants.INVENTORY;
@@ -46,15 +48,16 @@ public class GameManager : MonoBehaviour
         InventoryInfoPanelManager.Instance.Init();
         InventoryManager.Instance.Init();
         InventoryUpgradePanelManager.Instance.Init();
+        LevelManager.Instance.Init();
+        UIResourcesManager.Instance.UpdateCounters();
         AddListenersOnBtns();
 
-        _playerOnRaid = false;
-        SaveLoadManager.Instance.LoadSaveData();
-        UIResourcesManager.Instance.UpdateCounters();
-        LevelManager.Instance.Init();
+
+
+
 
         OnReturntToGarage();
-        InventoryManager.Instance.OnCloseInventory();
+
         ToggleMenu();
 
         UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
@@ -141,8 +144,6 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.OnPlayerEndRaid();
         RaidManager.Instance.OnPlayerEndRaid();
         PlayerHPManager.Instance.OnPlayerEndRaid();
-
-
 
         SwitchMenuElements();
     }

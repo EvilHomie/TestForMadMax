@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameConfig : MonoBehaviour
@@ -6,6 +5,7 @@ public class GameConfig : MonoBehaviour
     public static GameConfig Instance;
 
     [SerializeField] bool _isTesting = false;
+    [SerializeField] Language _language;
 
     [Header("RAID")]
     [SerializeField] float _minPlayerSpeed = 5f;
@@ -43,7 +43,8 @@ public class GameConfig : MonoBehaviour
     [Header("PhysicData")]
     [SerializeField] float _touchRoadImpulse = 25;
 
-    
+    public bool IsTesting => _isTesting;
+    public Language Language => _language;
 
     public float MinPlayerSpeed => _minPlayerSpeed;
     public float MaxPlayerSpeed => _maxPlayerSpeed;
@@ -83,7 +84,6 @@ public class GameConfig : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-        Application.targetFrameRate = 1000;
     }
 
     private void Update()

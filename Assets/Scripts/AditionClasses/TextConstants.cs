@@ -1,5 +1,6 @@
 public static class TextConstants
 {
+    public static Language Language;
     public static string HULLDMG = "Hull Damage";
     public static string SHIELDDMG = "Shield Damage";
     public static string ROTATIONSPEED = "Rotation Speed";
@@ -37,6 +38,7 @@ public static class TextConstants
 
     public static void SetLanguage(Language language)
     {
+        Language = language;
         if (language == Language.en) return;
         else if (language == Language.ru)
         {
@@ -63,9 +65,9 @@ public static class TextConstants
             UPGRADES = "Улучшения";
             LEVEL = "Уровень";
             UPEFFECT = "Эффект";
-            COST = " Стоимость";
-            UPGRADE = " Улучшить";
-            MAXLEVEL = " Макс Уровень";
+            COST = "Стоимость";
+            UPGRADE = "Улучшить";
+            MAXLEVEL = "Макс Уровень";
             NEWSCHEMES = "Новые Схемы";
             INVENTORY = "Инвентарь";
             RAID = "Набег";

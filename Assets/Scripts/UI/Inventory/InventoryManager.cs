@@ -37,6 +37,7 @@ public class InventoryManager : MonoBehaviour
         _equipBtn.onClick.AddListener(OnTryEquipItem);
         _equipBtn.gameObject.SetActive(false);
         _unlockBtn.gameObject.SetActive(false); // временно... пока нет логики с чертежами
+        gameObject.SetActive(false);
     }
 
     public void OnOpenInventory()
@@ -50,7 +51,7 @@ public class InventoryManager : MonoBehaviour
         _inventoryItems.Clear();
         foreach (var item in PlayerData.Instance.PlayerItemsData)
         {
-            if (PlayerData.Instance.EquipedItems.ContainsValue(item.ItemName)) continue;
+            if (PlayerData.Instance.EquipedItems.ContainsValue(item.DeffItemName)) continue;
             ADDItemToInventory(item);
         }
 
@@ -68,7 +69,7 @@ public class InventoryManager : MonoBehaviour
         _selectedItem = itemData;
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(itemData);
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(itemData);
-        _equipBtn.gameObject.SetActive(!PlayerData.Instance.EquipedItems.ContainsValue(itemData.ItemName));
+        _equipBtn.gameObject.SetActive(!PlayerData.Instance.EquipedItems.ContainsValue(itemData.DeffItemName));
     }
 
     public void OnBuyUpgrade(string charName, List<ResCost> upgradeCost)

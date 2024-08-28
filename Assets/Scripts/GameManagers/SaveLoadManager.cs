@@ -70,8 +70,7 @@ public class SaveLoadManager : MonoBehaviour
         string unlockedLevelsNames = JsonConvert.SerializeObject(PlayerData.Instance.UnlockedLevelsNames);
         PlayerPrefs.SetString("UnlockedLevelsNames", unlockedLevelsNames);
 
-        Debug.LogWarning("DATA SAVED");
-        Debug.Log(unlockedLevelsNames);
+        SystemDebuger.Log("DATA SAVED");
     }
 
     public void LoadSaveData()
@@ -91,7 +90,7 @@ public class SaveLoadManager : MonoBehaviour
             PlayerData.Instance.LastSelectedLevelName = "1-1";
             PlayerData.Instance.UnlockedLevelsNames.Add("1-1");
 
-            Debug.LogWarning("LOADED DEFFAULT ITEMS");
+            SystemDebuger.Log("LOADED DEFFAULT ITEMS");
             return;
         }
 
@@ -102,7 +101,7 @@ public class SaveLoadManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(weaponStringData, weaponData);
             PlayerData.Instance.PlayerItemsData.Add(weaponData);
         }
-        Debug.LogWarning("WEAPONS LOADED");
+        SystemDebuger.Log("WEAPONS LOADED");
 
         List<string> vehiclesDataAsStrings = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedVehiclesData"));
         foreach (var vehicleStringData in vehiclesDataAsStrings)
@@ -111,18 +110,18 @@ public class SaveLoadManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(vehicleStringData, vehicleData);
             PlayerData.Instance.PlayerItemsData.Add(vehicleData);
         }
-        Debug.LogWarning("VEHICLES LOADED");
+        SystemDebuger.Log("VEHICLES LOADED");
 
         PlayerData.Instance.AvailableResources = JsonConvert.DeserializeObject<Dictionary<ResourcesType, int>>(PlayerPrefs.GetString("SavedResourcesData"));
-        Debug.LogWarning("RESOURCES LOADED");
+        SystemDebuger.Log("RESOURCES LOADED");
 
         PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int,string>>(PlayerPrefs.GetString("SavedEquipedItems"));
-        Debug.LogWarning("EquipedItems LOADED");
+        SystemDebuger.Log("EquipedItems LOADED");
 
         PlayerData.Instance.LastSelectedLevelName = PlayerPrefs.GetString("LastselectedLevelName");
 
         PlayerData.Instance.UnlockedLevelsNames = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("UnlockedLevelsNames"));
 
-        Debug.LogWarning("LevelsData LOADED");
+        SystemDebuger.Log("LevelsData LOADED");
     }
 }

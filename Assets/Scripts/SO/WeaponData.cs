@@ -3,7 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaponData", menuName = "ScriptableObjects/Weapon")]
 public class WeaponData : ScriptableObject, IItemData
 {
-    public string weaponName;
+    public string weaponNameEN;
+    public string weaponNameRU;
     public WeaponType weaponType;
     public Raritie weaponRaritie;
 
@@ -27,5 +28,14 @@ public class WeaponData : ScriptableObject, IItemData
     public int rotationSpeedCurLvl;
     public int rotationSpeedMaxLvl;
 
-    public string ItemName => weaponName;
+    public string TranslatedItemName
+    {
+        get
+        {
+            if (TextConstants.Language == Language.ru) return weaponNameRU;
+            else return weaponNameEN;
+        }
+    }
+
+    public string DeffItemName => weaponNameEN;
 }

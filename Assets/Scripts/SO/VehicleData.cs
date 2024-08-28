@@ -3,7 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "VehicleData", menuName = "ScriptableObjects/VehicleData")]
 public class VehicleData : ScriptableObject, IItemData
 {
-    public string vehicleName;
+    public string vehicleNameEN;
+    public string vehicleNameRU;
     public Raritie vehicleRaritie;
 
     [Header("HULLHP")]
@@ -25,5 +26,14 @@ public class VehicleData : ScriptableObject, IItemData
     public int curWeaponsCount;
     public int maxWeaponsCount;
 
-    public string ItemName => vehicleName;
+    public string TranslatedItemName
+    {
+        get
+        {
+            if (TextConstants.Language == Language.ru) return vehicleNameRU;
+            else return vehicleNameEN;
+        }
+    }
+
+    public string DeffItemName => vehicleNameEN;
 }

@@ -39,8 +39,8 @@ public class InventoryInfoPanelManager : MonoBehaviour
     public void UpdateInfoPanel(IItemData itemData)
     {
         _itemImage.gameObject.SetActive(true);
-        _itemNameText.text = itemData.ItemName;
-        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(itemData.ItemName);
+        _itemNameText.text = itemData.TranslatedItemName;
+        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(itemData.DeffItemName);
 
         if (itemData is WeaponData WData)
         {
