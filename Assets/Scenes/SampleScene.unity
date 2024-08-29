@@ -2278,7 +2278,7 @@ MonoBehaviour:
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
   - {fileID: 7442833293695422729, guid: c4f0deac3a6170242aeb69ef4296243f, type: 3}
   - {fileID: 83433948710527792, guid: 30d2d05b936431942a310e1ccce574f0, type: 3}
-  _enemyCount: 15
+  _enemyCount: 10
   _enemySlideDistanceMod: 1
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -4539,7 +4539,7 @@ MonoBehaviour:
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
   - {fileID: 7442833293695422729, guid: c4f0deac3a6170242aeb69ef4296243f, type: 3}
   - {fileID: 83433948710527792, guid: 30d2d05b936431942a310e1ccce574f0, type: 3}
-  _enemyCount: 13
+  _enemyCount: 6
   _enemySlideDistanceMod: 0.8
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -10138,7 +10138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -11856,7 +11856,7 @@ MonoBehaviour:
   - {fileID: 1833269742749277533, guid: a150327a06eac6240a89083f2c24384c, type: 3}
   - {fileID: 7442833293695422729, guid: 3c371ce0d347e59448d461501392df73, type: 3}
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
-  _enemyCount: 6
+  _enemyCount: 4
   _enemySlideDistanceMod: 0.3
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -12555,7 +12555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000024795532}
+  m_AnchoredPosition: {x: 0, y: -0.000009536743}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &216232779
@@ -14601,7 +14601,7 @@ MonoBehaviour:
   - {fileID: 1833269742749277533, guid: 02f4a7e717f84b24ba50f067f4de244a, type: 3}
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
   - {fileID: 7442833293695422729, guid: c4f0deac3a6170242aeb69ef4296243f, type: 3}
-  _enemyCount: 11
+  _enemyCount: 6
   _enemySlideDistanceMod: 0.6
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -15538,7 +15538,7 @@ MonoBehaviour:
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
   - {fileID: 1833269742749277533, guid: 02f4a7e717f84b24ba50f067f4de244a, type: 3}
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
-  _enemyCount: 10
+  _enemyCount: 6
   _enemySlideDistanceMod: 0.5
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -23461,7 +23461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -23678,7 +23678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -30692,7 +30692,7 @@ MonoBehaviour:
   - {fileID: 1833269742749277533, guid: a150327a06eac6240a89083f2c24384c, type: 3}
   - {fileID: 7442833293695422729, guid: 3c371ce0d347e59448d461501392df73, type: 3}
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
-  _enemyCount: 4
+  _enemyCount: 3
   _enemySlideDistanceMod: 0.2
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -34697,7 +34697,7 @@ MonoBehaviour:
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
   - {fileID: 7442833293695422729, guid: c4f0deac3a6170242aeb69ef4296243f, type: 3}
   - {fileID: 83433948710527792, guid: 30d2d05b936431942a310e1ccce574f0, type: 3}
-  _enemyCount: 12
+  _enemyCount: 6
   _enemySlideDistanceMod: 0.7
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -42242,7 +42242,7 @@ MonoBehaviour:
   - {fileID: 7442833293695422729, guid: 3c371ce0d347e59448d461501392df73, type: 3}
   - {fileID: 83433948710527792, guid: 28edc40579176df4facbd1b28cb9197e, type: 3}
   - {fileID: 1833269742749277533, guid: 02f4a7e717f84b24ba50f067f4de244a, type: 3}
-  _enemyCount: 8
+  _enemyCount: 5
   _enemySlideDistanceMod: 0.4
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -52603,7 +52603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -52888,7 +52888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -53228,7 +53228,7 @@ MonoBehaviour:
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
   - {fileID: 7442833293695422729, guid: c4f0deac3a6170242aeb69ef4296243f, type: 3}
   - {fileID: 83433948710527792, guid: 30d2d05b936431942a310e1ccce574f0, type: 3}
-  _enemyCount: 14
+  _enemyCount: 6
   _enemySlideDistanceMod: 0.9
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -54149,7 +54149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -58647,7 +58647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -60298,7 +60298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -72995,7 +72995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -95728,7 +95728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

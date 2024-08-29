@@ -20,9 +20,9 @@ MonoBehaviour:
   hullDmgByLvl: 1
   hullDmgCurLvl: 2
   hullDmgMaxLvl: 5
-  shieldDmgByLvl: 5
+  shieldDmgByLvl: 1
   shieldDmgCurLvl: 1
-  shieldDmgMaxLvl: 1
+  shieldDmgMaxLvl: 6
   fireRateByLvl: 0.5
   fireRateCurtLvl: 3
   fireRateMaxLvl: 6

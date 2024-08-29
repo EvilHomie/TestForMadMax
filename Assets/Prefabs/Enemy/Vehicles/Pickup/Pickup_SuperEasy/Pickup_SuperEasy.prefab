@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 10
+  _hullHP: 15
   _shieldHP: 0
   _partRenderer: {fileID: 23693113562078008}
 --- !u!135 &1343595504916057312
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 10
+  _hullHP: 15
   _shieldHP: 0
   _partRenderer: {fileID: 23592070905484132}
 --- !u!135 &8657292912052815647
@@ -751,7 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 10
+  _hullHP: 15
   _shieldHP: 0
   _partRenderer: {fileID: 23921798606841974}
 --- !u!135 &4193199884847895806
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 10
+  _hullHP: 15
   _shieldHP: 0
   _partRenderer: {fileID: 23188396684527658}
 --- !u!135 &8554236728998487837

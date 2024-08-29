@@ -67,12 +67,14 @@ public class PlayerHPManager : MonoBehaviour
             if (difference > 0)
             {
                 _playerShieldHP = 0;
-                _playerHullHP -= hullDmgValue - difference;
+                _playerHullHP -= hullDmgValue + difference;
+                Debug.Log($"HULLD DMG  {hullDmgValue + difference}");
             }
         }
         else
         {
             _playerHullHP -= hullDmgValue;
+            Debug.Log($"HULLD DMG  {hullDmgValue}");
         }
 
 

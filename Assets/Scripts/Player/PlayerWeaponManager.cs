@@ -137,10 +137,10 @@ public class PlayerWeaponManager : MonoBehaviour
         curWeaponRotationY += movementVector.x * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
         curWeaponRotationX += movementVector.y * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
 
-        float targetPosYClamped = Mathf.Clamp(curWeaponRotationY, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
-        float targetPosXClamped = Mathf.Clamp(curWeaponRotationX, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
+        curWeaponRotationY = Mathf.Clamp(curWeaponRotationY, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        curWeaponRotationX = Mathf.Clamp(curWeaponRotationX, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
 
-        Quaternion newRotation = Quaternion.Euler(-targetPosXClamped, targetPosYClamped, 0);
+        Quaternion newRotation = Quaternion.Euler(-curWeaponRotationX, curWeaponRotationY, 0);
 
         _weaponPoints[_selectedWeaponIndex].rotation = newRotation;
         Camera.main.transform.rotation = newRotation;
@@ -153,17 +153,10 @@ public class PlayerWeaponManager : MonoBehaviour
         curWeaponRotationY += Input.GetAxis("Horizontal") * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
         curWeaponRotationX += Input.GetAxis("Vertical") * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
 
-        if (curWeaponRotationY < -GameConfig.Instance.MaxYRotateAngle) curWeaponRotationY = -GameConfig.Instance.MaxYRotateAngle;
-        if (curWeaponRotationY > GameConfig.Instance.MaxYRotateAngle) curWeaponRotationY = GameConfig.Instance.MaxYRotateAngle;
-
-        if (curWeaponRotationX < -GameConfig.Instance.MaxXRotateAngle) curWeaponRotationX = -GameConfig.Instance.MaxXRotateAngle;
-        if (curWeaponRotationX > GameConfig.Instance.MaxXRotateAngle) curWeaponRotationX = GameConfig.Instance.MaxXRotateAngle;
-
-        //float targetPosYClamped = Mathf.Clamp(targetPosY, -45, 45); // Clamp вызывает ступор при достижении краёв.
-        //float targetPosXClamped = Mathf.Clamp(targetPosX, -30, 0); // Clamp вызывает ступор при достижении краёв.
+        curWeaponRotationY = Mathf.Clamp(curWeaponRotationY, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        curWeaponRotationX = Mathf.Clamp(curWeaponRotationX, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
 
         Quaternion newRotation = Quaternion.Euler(-curWeaponRotationX, curWeaponRotationY, 0);
-
 
         _weaponPoints[_selectedWeaponIndex].rotation = newRotation;
         Camera.main.transform.rotation = newRotation;
