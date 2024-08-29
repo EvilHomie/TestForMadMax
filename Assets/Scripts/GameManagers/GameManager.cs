@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
         InventoryManager.Instance.Init();
         InventoryUpgradePanelManager.Instance.Init();
         LevelManager.Instance.Init();
-        UIResourcesManager.Instance.UpdateCounters();
+        UIResourcesManager.Instance.Init();
+        UINewSchemeManager.Instance.Init();
         AddListenersOnBtns();
 
         _playerOnRaid = false;
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         ToggleMenu();
 
-        UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
+        //UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
     }
 
     void AddListenersOnBtns()

@@ -13,7 +13,8 @@ public class RaidManager : MonoBehaviour
     [SerializeField] List<EnemySpawnLines> enemySpawnLines;
     [SerializeField] List<int> _reservedSpawnLinesNumbers;
     [SerializeField] List<int> _freeSpawnLinesNumbers;
-
+    [SerializeField] int _spawnNewEnemyDelay;
+    [SerializeField] int _spawnNewEnemyRepitRate;
 
     List<EnemyVehicleManager> _enemiesList = new();
     UILevelInfo _selectedLevelInfo;
@@ -70,8 +71,8 @@ public class RaidManager : MonoBehaviour
         _spawnedSimpleEnemyCount = 0;
         _killedSimpleEnemyCount = 0;
         _speedSliderFillImage.fillAmount = 0;
-        _UpdateSpeedCoroutine = StartCoroutine(StartLerpSpeed(startMoveDelay, speed, reachSpeedDuration));
-        InvokeRepeating(nameof(SpawnEnemy), 5, 5);
+        _UpdateSpeedCoroutine = StartCoroutine(StartLerpSpeed(startMoveDelay, 10, reachSpeedDuration));    //отключил логику управления скорости хардкод в цифре 10
+        InvokeRepeating(nameof(SpawnEnemy), _spawnNewEnemyDelay, _spawnNewEnemyRepitRate);
     }
     public void OnPlayerEndRaid()
     {

@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vehiclePart: 0
   _hullHP: 10
-  _shieldHP: 10
+  _shieldHP: 0
   _partRenderer: {fileID: 5908134811393580534}
 --- !u!136 &3594555910275425401
 CapsuleCollider:

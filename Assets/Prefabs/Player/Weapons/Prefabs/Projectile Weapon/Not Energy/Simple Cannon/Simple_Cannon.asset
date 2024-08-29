@@ -18,14 +18,14 @@ MonoBehaviour:
   weaponType: 0
   weaponRaritie: 0
   hullDmgByLvl: 1
-  hullDmgCurLvl: 1
-  hullDmgMaxLvl: 4
+  hullDmgCurLvl: 2
+  hullDmgMaxLvl: 5
   shieldDmgByLvl: 5
   shieldDmgCurLvl: 1
   shieldDmgMaxLvl: 1
   fireRateByLvl: 0.5
-  fireRateCurtLvl: 2
-  fireRateMaxLvl: 5
+  fireRateCurtLvl: 3
+  fireRateMaxLvl: 6
   rotationSpeedByLvl: 20
   rotationSpeedCurLvl: 2
   rotationSpeedMaxLvl: 5

@@ -8,7 +8,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
     IItemData _item;
 
     public void SetitemData(IItemData item)
-    {        
+    {
         _item = item;
         if (item == null)
         {
@@ -16,7 +16,15 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
             return;
         }
         _itemImage.gameObject.SetActive(true);
-        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(_item.DeffItemName);
+        if (item is WeaponSchemeData)
+        {
+            string weaponName = item.DeffItemName.Replace("_Scheme","");
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName);
+        }
+        else
+        {
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(_item.DeffItemName);
+        }
     }
 
     public IItemData GetitemData()
@@ -26,7 +34,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_item == null) return; 
+        if (_item == null) return;
         InventoryManager.Instance.OnSelectInventoryItem(_item);
     }
 }

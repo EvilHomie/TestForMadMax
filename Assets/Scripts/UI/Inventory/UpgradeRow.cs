@@ -18,7 +18,7 @@ public class UpgradeRow : MonoBehaviour
     [SerializeField] TextMeshProUGUI _upgradeText;
 
     List<ResCost> _upgradeCost;
-    Color _notAvailableColir = new Color(0.128f, 0.128f, 0.128f, 1);
+    Color _notAvailableColir = new(0.128f, 0.128f, 0.128f, 1);
 
 
    

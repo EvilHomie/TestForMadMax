@@ -10,6 +10,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _itemNameText;
     [SerializeField] Image _itemImage;
     [SerializeField] List<CharacteristicRow> characteristicRows;
+    [SerializeField] UnlockCostPresentation _unlockCostPresentation;
 
     [SerializeField] TextMeshProUGUI _equipText;
     [SerializeField] TextMeshProUGUI _unlockText;
@@ -27,6 +28,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
         _equipText.text = TextConstants.EQUIP;
         _unlockText.text = TextConstants.UNLOCK;
         _characteristicsText.text = TextConstants.CHARACTERISTICS;
+        _unlockCostPresentation.gameObject.SetActive(false);
 
         _itemImage.gameObject.SetActive(false);
         foreach (var characteristicRow in characteristicRows)
@@ -40,20 +42,24 @@ public class InventoryInfoPanelManager : MonoBehaviour
     {
         _itemImage.gameObject.SetActive(true);
         _itemNameText.text = itemData.TranslatedItemName;
-        _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(itemData.DeffItemName);
+        
 
         if (itemData is WeaponData WData)
         {
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(itemData.DeffItemName);
             _characteristicsText.text = TextConstants.CHARACTERISTICS;
             ShowWeaponInfo(WData);
         }
         else if (itemData is VehicleData VData)
         {
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(itemData.DeffItemName);
             _characteristicsText.text = TextConstants.CHARACTERISTICS;
             ShowVehicleInfo(VData);
         }
         else if (itemData is WeaponSchemeData WSData)
         {
+            string weaponName = WSData.DeffItemName.Replace("_Scheme", "");
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName);
             _characteristicsText.text = TextConstants.UNLOCKCOST;
             ShowUnlockInfo(WSData);
         }
@@ -61,6 +67,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
 
     void ShowWeaponInfo(WeaponData data)
     {
+        _unlockCostPresentation.gameObject.SetActive(false);
         characteristicRows[0].SetData(TextConstants.HULLDMG, $"{data.hullDmgByLvl * data.hullDmgCurLvl} {TextConstants.PERHIT}");
         characteristicRows[1].SetData(TextConstants.SHIELDDMG, $"{data.shieldDmgByLvl * data.shieldDmgCurLvl} {TextConstants.PERHIT}");
         characteristicRows[2].SetData(TextConstants.ROTATIONSPEED, $"{data.rotationSpeedByLvl * data.rotationSpeedCurLvl} {TextConstants.DGSINSECOND}");
@@ -72,6 +79,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
 
     void ShowVehicleInfo(VehicleData data)
     {
+        _unlockCostPresentation.gameObject.SetActive(false);
         characteristicRows[0].SetData(TextConstants.HULLHP, $"{data.hullHPByLvl * data.hullHPCurLvl} {TextConstants.UNIT}");
         characteristicRows[1].SetData(TextConstants.SHIELDHP, $"{data.shieldHPByLvl * data.shieldHPCurLvl} {TextConstants.UNIT}");
         characteristicRows[2].SetData(TextConstants.SHIELREGENRATE, $"{data.shieldRegenRateByLvl * data.shieldRegenCurtLvl} {TextConstants.UNIT}{TextConstants.INSECOND}");
@@ -84,5 +92,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
         {
             characteristicRow.gameObject.SetActive(false);
         }
+        _unlockCostPresentation.gameObject.SetActive(true);
+        _unlockCostPresentation.SetData(data.scrapMetalAmountForUnlock, data.wiresAmountForUnlock, data.copperAmountForUnlock);
     }
 }

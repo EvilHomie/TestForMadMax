@@ -15,6 +15,10 @@ MonoBehaviour:
   _upgradeCosts:
   - _raritieType: 0
     _lvlCosts:
+    - _lvlNumber: 1
+      _resCosts:
+      - _resourcesType: 2
+        _amount: 10
     - _lvlNumber: 2
       _resCosts:
       - _resourcesType: 2

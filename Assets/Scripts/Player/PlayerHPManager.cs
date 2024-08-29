@@ -61,11 +61,21 @@ public class PlayerHPManager : MonoBehaviour
         _hitAudioSource.PlayOneShot(hitSound);
         if (_playerShieldHP > 0)
         {
+            float difference = shieldDmgValue - _playerShieldHP;
             _playerShieldHP -= shieldDmgValue;
-            return;
+
+            if (difference > 0)
+            {
+                _playerShieldHP = 0;
+                _playerHullHP -= hullDmgValue - difference;
+            }
+        }
+        else
+        {
+            _playerHullHP -= hullDmgValue;
         }
 
-        _playerHullHP -= hullDmgValue;
+
 
         if (_playerHullHP <= 0)
         {

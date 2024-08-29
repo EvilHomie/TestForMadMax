@@ -8,6 +8,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
     [SerializeField] RectTransform _equipPanelRT;
     [SerializeField] InventoryItem _equipedVehicleSlot;
     [SerializeField] List<WeaponEquipSlot> _equipeWeaponsSlots;
+    [SerializeField] GameObject _dimmingPanel;
     public RectTransform EquipPanelRT => _equipPanelRT;
     public InventoryItem EquipedVehicleSlot => _equipedVehicleSlot;
     public List<WeaponEquipSlot> EquipeWeaponsSlots => _equipeWeaponsSlots;
@@ -55,6 +56,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
     {
         if(_equipLogicIsActive) return;
         _equipLogicIsActive = true;
+        _dimmingPanel.SetActive(true);
         _equipedVehicleSlot.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _equipPanelRT.localScale = Vector3.one * 2;
         foreach (var weaponSlot in _equipeWeaponsSlots)
@@ -84,6 +86,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
             weaponSlot.SelectBtn.onClick.RemoveAllListeners();
         }
         _equipLogicIsActive = false;
+        _dimmingPanel.SetActive(false);
     }
 
     void OnEquipWeapon(WeaponEquipSlot slot, IItemData newWeapon)

@@ -4,10 +4,11 @@ using UnityEngine;
 public class WeaponSchemeData : ScriptableObject, IItemData
 {
     public WeaponData weaponData;
-    public float copperAmountForUnlock;
-    public float wiresAmountForUnlock;
-    public float scrapMetalAmountForUnlock;
+    public int copperAmountForUnlock;
+    public int wiresAmountForUnlock;
+    public int scrapMetalAmountForUnlock;
 
+    public int dropChanceIfDuplicate;
     public string TranslatedItemName
     {
         get
@@ -17,5 +18,5 @@ public class WeaponSchemeData : ScriptableObject, IItemData
         }
     }
 
-    public string DeffItemName => weaponData.deffWeaponName;
+    public string DeffItemName => $"{weaponData.deffWeaponName}_Scheme";
 }

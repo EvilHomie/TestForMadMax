@@ -34,6 +34,7 @@ public static class TextConstants
     public static string RAID = "Raid";
     public static string GARAGE = "Garage";
     public static string UNLOCKCOST = "UnlockCost";
+    public static string NEWSCHEME = "New SCHEME";
 
 
     public static void SetLanguage(Language language)
@@ -47,7 +48,7 @@ public static class TextConstants
             ROTATIONSPEED = "Скорость Поворота";
             FIRERATE = "Скорость Стрельбы";
             PERHIT = "Каждое Попадание";
-            DGSINSECOND = "Градус/секунду";
+            DGSINSECOND = "Градусов/секунду";
             INSECOND = "/секунду";
             ITEMNAME = "Имя предмета";
             HULLHP = "ХП Корпуса";
@@ -69,10 +70,11 @@ public static class TextConstants
             UPGRADE = "Улучшить";
             MAXLEVEL = "Макс Уровень";
             NEWSCHEMES = "Новые Схемы";
-            INVENTORY = "Инвентарь";
+            INVENTORY = "Склад";
             RAID = "Набег";
             GARAGE = "Гараж";
             UNLOCKCOST = "Стоимость Открытия";
+            NEWSCHEME = "Новая Схема";
         }
     }
 }

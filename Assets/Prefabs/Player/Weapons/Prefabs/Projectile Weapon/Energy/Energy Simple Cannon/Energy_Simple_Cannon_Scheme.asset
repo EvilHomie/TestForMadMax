@@ -16,3 +16,4 @@ MonoBehaviour:
   copperAmountForUnlock: 100
   wiresAmountForUnlock: 100
   scrapMetalAmountForUnlock: 100
+  dropChanceIfDuplicate: 5

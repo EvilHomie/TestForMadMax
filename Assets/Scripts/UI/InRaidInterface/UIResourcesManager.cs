@@ -25,7 +25,7 @@ public class UIResourcesManager : MonoBehaviour
         else Instance = this;
     }
 
-    private void Start()
+    public void Init()
     {
         _deffPos = transform.position;
         UpdateCounters();
@@ -111,7 +111,7 @@ public class UIResourcesManager : MonoBehaviour
         AnimateAddTexts(copperAmount, wiresAmount, scrapMetalAmount);
     }
 
-    public bool SpendResources(int scrapMetalAmount, int wiresAmount, int copperAmount)
+    public bool TrySpendResources(int scrapMetalAmount, int wiresAmount, int copperAmount)
     {
         if (!CheckResources(scrapMetalAmount, wiresAmount, copperAmount))
         {

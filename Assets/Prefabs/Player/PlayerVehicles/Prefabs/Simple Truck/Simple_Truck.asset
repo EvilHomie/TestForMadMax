@@ -18,12 +18,12 @@ MonoBehaviour:
   vehicleRaritie: 0
   hullHPByLvl: 100
   hullHPCurLvl: 1
-  hullHPMaxLvl: 4
+  hullHPMaxLvl: 5
   shieldHPByLvl: 50
-  shieldHPCurLvl: 3
-  shieldHPMaxLvl: 5
-  shieldRegenRateByLvl: 2
-  shieldRegenCurtLvl: 1
-  shieldRegenMaxLvl: 10
+  shieldHPCurLvl: 1
+  shieldHPMaxLvl: 3
+  shieldRegenRateByLvl: 1
+  shieldRegenCurtLvl: 0
+  shieldRegenMaxLvl: 4
   curWeaponsCount: 1
   maxWeaponsCount: 2

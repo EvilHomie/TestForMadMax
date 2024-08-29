@@ -24,6 +24,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _InventoryText;
 
     List<InventoryItem> _inventoryItems = new();
+    //List<InventoryItem> _inventorySchemes = new();
     IItemData _selectedItem;
 
     private void Awake()
@@ -38,6 +39,8 @@ public class InventoryManager : MonoBehaviour
         _InventoryText.text = TextConstants.INVENTORY;
         _equipBtn.onClick.AddListener(OnTryEquipItem);
         _equipBtn.gameObject.SetActive(false);
+
+        _unlockBtn.onClick.AddListener(OnTryUnlock);
         _unlockBtn.gameObject.SetActive(false); // временно... пока нет логики с чертежами
         OnCloseInventory();
     }
@@ -46,6 +49,11 @@ public class InventoryManager : MonoBehaviour
     {
         gameObject.SetActive(true);
         foreach (Transform child in _mainInventoryContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in _schemesContainer)
         {
             Destroy(child.gameObject);
         }
@@ -91,7 +99,7 @@ public class InventoryManager : MonoBehaviour
         int wiresAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Wires).Amount;
         int copperAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Сopper).Amount;
 
-        bool enoughResources = UIResourcesManager.Instance.SpendResources(scrapMetalAmount, wiresAmount, copperAmount);
+        bool enoughResources = UIResourcesManager.Instance.TrySpendResources(scrapMetalAmount, wiresAmount, copperAmount);
 
         if (!enoughResources) return;
 
@@ -129,7 +137,6 @@ public class InventoryManager : MonoBehaviour
             InventoryEquipPanelManager.Instance.CheckWeaponsSlotsCount();
         }
     }
-
 
     void OnTryEquipItem()
     {
@@ -173,6 +180,32 @@ public class InventoryManager : MonoBehaviour
 
         if (newItem != null) RemoveItemFromInventory(newItem);
         if (previousItem != null) ADDItemToInventory(previousItem);
+    }
+
+    void OnTryUnlock()
+    {
+        //bool enoughResources = false;
+        //IItemData newItem;
+        if (_selectedItem is WeaponSchemeData WSData)
+        {
+            bool enoughResources = UIResourcesManager.Instance.TrySpendResources(WSData.scrapMetalAmountForUnlock, WSData.wiresAmountForUnlock, WSData.copperAmountForUnlock);
+            if (!enoughResources) return;
+            IItemData newItem = WSData.weaponData;
+            UnlockScheme(WSData, newItem);
+            InventoryInfoPanelManager.Instance.UpdateInfoPanel(newItem);
+            InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(newItem);
+        }
+    }
+
+    void UnlockScheme(IItemData scheme, IItemData newItem)
+    {
+        _equipBtn.gameObject.SetActive(true);
+        _unlockBtn.gameObject.SetActive(false);
+        _selectedItem = newItem;
+        PlayerData.Instance.PlayerItemsData.Remove(scheme);
+        PlayerData.Instance.PlayerItemsData.Add(newItem);
+        RemoveItemFromInventory(scheme);
+        ADDItemToInventory(newItem);
     }
 
 

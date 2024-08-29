@@ -17,6 +17,7 @@ public class EnemyVehicleManager : MonoBehaviour
     VehicleVisualEffectsLogic _vehicleEffectsController;
     EnemyWeaponController _enemyWeaponController;
     ResourcesInVehicle _resourcesInVehicle;
+    SchemesInVehicle _schemesInVehicle;
     AudioSource _vehicleAudioSource;
 
     [SerializeField] ParticleSystem _blowParticleSystem;
@@ -40,6 +41,7 @@ public class EnemyVehicleManager : MonoBehaviour
         _enemyWeaponController = GetComponent<EnemyWeaponController>();
         _vehicleAudioSource = GetComponent<AudioSource>();
         _resourcesInVehicle = GetComponent<ResourcesInVehicle>();
+        _schemesInVehicle = GetComponent<SchemesInVehicle>();
     }
 
 
@@ -98,5 +100,9 @@ public class EnemyVehicleManager : MonoBehaviour
         _blowAudioSource.PlayOneShot(_blowAudioClip);
 
         _resourcesInVehicle.DropResources();
+        if (_schemesInVehicle != null)
+        {
+            _schemesInVehicle.DropScheme();
+        }
     }
 }

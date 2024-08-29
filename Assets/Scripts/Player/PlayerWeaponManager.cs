@@ -102,7 +102,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void OnPlayerEndRaid()
     {
-
+        _weapons[_selectedWeaponIndex].StopShooting();
     }
 
     public void ChangeWeapon(int selectedSlotIndex)
