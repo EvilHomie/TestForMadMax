@@ -17,4 +17,18 @@ public class SchemesInVehicle : MonoBehaviour
             PlayerData.Instance.PlayerItemsData.Add(_scheme);
         }
     }
+
+    //bool CheckAlreadyGeted()
+    //{
+    //    IItemData itemData = PlayerData.Instance.GetItemDataByName(_scheme.DeffItemName);
+    //    if (itemData != null)
+    //    {
+
+    //        return true;
+    //    }
+    //    else
+    //    {
+
+    //    }
+    //}
 }

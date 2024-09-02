@@ -31,6 +31,8 @@ public class EnemyVehicleManager : MonoBehaviour
 
     ConstraintSource constraintSource;
 
+    PartHPManager _bodyPartHPManager;
+
     public AudioSource VehicleAudioSource => _vehicleAudioSource;
     public int ReservedLineNumber { set => _reservedLineNumber = value; }
 
@@ -42,6 +44,7 @@ public class EnemyVehicleManager : MonoBehaviour
         _vehicleAudioSource = GetComponent<AudioSource>();
         _resourcesInVehicle = GetComponent<ResourcesInVehicle>();
         _schemesInVehicle = GetComponent<SchemesInVehicle>();
+        _bodyPartHPManager = GetComponent<PartHPManager>();
     }
 
 
@@ -62,7 +65,12 @@ public class EnemyVehicleManager : MonoBehaviour
     private void OnDestroy()
     {
         if (!Application.isPlaying) return;
+
         RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
+        if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
+        {
+            UIEnemyHpPanel.Instance.DisableHPBars();
+        }
     }
 
 
@@ -89,6 +97,11 @@ public class EnemyVehicleManager : MonoBehaviour
         }
     }
 
+    public void OnExplosivePartLooseHP()
+    {
+        
+    }
+
     void OnDie()
     {
         _isDead = true;
@@ -104,5 +117,15 @@ public class EnemyVehicleManager : MonoBehaviour
         {
             _schemesInVehicle.DropScheme();
         }
+
+        if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
+        {
+            UIEnemyHpPanel.Instance.DisableHPBars();
+        }
+    }
+
+    public void OnHitPart(float hullHPRelativeValue, float shieldHPRelativeValue)
+    {
+        UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, this);
     }
 }

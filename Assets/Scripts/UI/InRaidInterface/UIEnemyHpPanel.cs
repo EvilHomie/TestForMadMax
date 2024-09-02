@@ -1,0 +1,53 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIEnemyHpPanel : MonoBehaviour
+{
+    public static UIEnemyHpPanel Instance;
+
+    [SerializeField] Slider _HullHPSlider;
+    [SerializeField] Slider _ShieldHPSlider;
+
+
+    EnemyVehicleManager _lastEnemyVehicleManager;
+
+    public EnemyVehicleManager LastEnemyVehicleManager => _lastEnemyVehicleManager;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+    }
+    public void OnPlayerStartRaid()
+    {
+        DisableHPBars();
+    }
+    public void OnPlayerEndRaid()
+    {
+        DisableHPBars();
+    }
+
+    public void UpdateHPBars(float HPValue, float shieldValue, EnemyVehicleManager enemyVehicleManager)
+    {
+        _HullHPSlider.gameObject.SetActive(true);
+        _ShieldHPSlider.gameObject.SetActive(shieldValue > 0);
+
+        _HullHPSlider.value = HPValue;
+        _ShieldHPSlider.value = shieldValue;
+
+        if (HPValue <= 0)
+        {
+            DisableHPBars();
+            return;
+        }
+
+        if (_lastEnemyVehicleManager != enemyVehicleManager)
+            _lastEnemyVehicleManager = enemyVehicleManager;
+    }
+
+    public void DisableHPBars()
+    {
+        _HullHPSlider.gameObject.SetActive(false);
+        _ShieldHPSlider.gameObject.SetActive(false);
+    }
+}

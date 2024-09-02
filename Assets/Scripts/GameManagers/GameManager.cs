@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.OnPlayerEndRaid();
         RaidManager.Instance.OnPlayerEndRaid();
         PlayerHPManager.Instance.OnPlayerEndRaid();
+        UIEnemyHpPanel.Instance.OnPlayerEndRaid();
 
         SwitchMenuElements();
 
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.OnPlayerStartRaid();
         RaidManager.Instance.OnPlayerStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
         PlayerHPManager.Instance.OnPlayerStartRaid();
+        UIEnemyHpPanel.Instance.OnPlayerStartRaid();
 
 
 
@@ -151,6 +153,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.OnPlayerEndRaid();
         RaidManager.Instance.OnPlayerEndRaid();
         PlayerHPManager.Instance.OnPlayerEndRaid();
+        UIEnemyHpPanel.Instance.OnPlayerEndRaid();
 
         SwitchMenuElements();
     }

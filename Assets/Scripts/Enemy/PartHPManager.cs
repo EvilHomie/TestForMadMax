@@ -3,55 +3,57 @@ using UnityEngine;
 
 public class PartHPManager : MonoBehaviour, IDamageable
 {
-    [SerializeField] protected EnumVehiclePart _vehiclePart;
+    [SerializeField] EnumVehiclePart _vehiclePart;
     [SerializeField] float _hullHP = 100;
     [SerializeField] float _shieldHP = 100;
     [SerializeField] Renderer _partRenderer;
-    EnemyVehicleManager _enemyVehicleManager;
+
+
+
+    protected EnemyVehicleManager _enemyVehicleManager;
     Coroutine _hitVisualCoroutine;
-    bool _isDead = false;
+    bool _partIsDestroyed = false;
+
+    float _maxHullHp;
+    float _maxShieldHp;
 
     private void Awake()
     {
         _enemyVehicleManager = transform.root.GetComponent<EnemyVehicleManager>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         _partRenderer.material.DisableKeyword("_EMISSION");
         _hullHP *= LevelManager.Instance.GetSelectedLevelinfo().EnemyHPMod;
         _shieldHP *= LevelManager.Instance.GetSelectedLevelinfo().EnemyHPMod;
-    }   
+
+        _maxHullHp = _hullHP;
+        _maxShieldHp = _shieldHP;
+    }
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
         _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
+        if (_partIsDestroyed) return;
 
         if (_shieldHP > 0)
         {
             _shieldHP -= shieldDmgValue;
             _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.blue));
+            OnHitPart();
             return;
         }
 
         _hullHP -= hullDmgValue;
         _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.red));
 
+        OnHitPart();
+
         if (_hullHP <= 0)
         {
-            if (_vehiclePart == EnumVehiclePart.Other)
-            {
-                Destroy(gameObject);
-            }
-            else if (_vehiclePart == EnumVehiclePart.Body && !_isDead)
-            {
-                _isDead = true;
-                _enemyVehicleManager.OnBodyDestoyed();                
-            }
-            else if (_vehiclePart == EnumVehiclePart.Weapon)
-            {
-                _enemyVehicleManager.OnWeaponLossHP(gameObject);                
-            }
+            _partIsDestroyed = true;
+            OnPartDestroyLogic();
         }
     }
 
@@ -62,5 +64,28 @@ public class PartHPManager : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(GameConfig.Instance.HitVisualDuration);
         _partRenderer.material.DisableKeyword("_EMISSION");
         _hitVisualCoroutine = null;
+    }
+
+    protected virtual void OnPartDestroyLogic()
+    {
+        if (_vehiclePart == EnumVehiclePart.Other)
+        {
+            Destroy(gameObject);
+        }
+        else if (_vehiclePart == EnumVehiclePart.Body)
+        {
+            _enemyVehicleManager.OnBodyDestoyed();
+        }
+        else if (_vehiclePart == EnumVehiclePart.Weapon)
+        {
+            _enemyVehicleManager.OnWeaponLossHP(gameObject);
+        }
+    }
+
+    void OnHitPart()
+    {
+        if (_vehiclePart != EnumVehiclePart.Body) return;
+        float shieldHPValue = _maxShieldHp == 0 ? 0 : _shieldHP / _maxShieldHp;
+        _enemyVehicleManager.OnHitPart(_hullHP / _maxHullHp, shieldHPValue);
     }
 }

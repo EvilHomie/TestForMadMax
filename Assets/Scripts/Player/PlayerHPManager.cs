@@ -51,7 +51,7 @@ public class PlayerHPManager : MonoBehaviour
         }
 
         float shieldHPValue = _maxShieldHp == 0 ? 0 : _playerShieldHP / _maxShieldHp;
-        UIPlayerHpManager.Instance.UpdateHPBars(_playerHullHP / _maxHullHp, shieldHPValue);
+        UIPlayerHpPanel.Instance.UpdateHPBars(_playerHullHP / _maxHullHp, shieldHPValue);
     }
 
 

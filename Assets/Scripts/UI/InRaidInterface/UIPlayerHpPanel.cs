@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPlayerHpManager : MonoBehaviour
+public class UIPlayerHpPanel : MonoBehaviour
 {
-    public static UIPlayerHpManager Instance;
+    public static UIPlayerHpPanel Instance;
 
     [SerializeField] Slider _HullHPSlider;
     [SerializeField] Slider _ShieldHPSlider;
