@@ -8,14 +8,12 @@ public class PartHPManager : MonoBehaviour, IDamageable
     [SerializeField] float _shieldHP = 100;
     [SerializeField] Renderer _partRenderer;
 
-
-
     protected EnemyVehicleManager _enemyVehicleManager;
     Coroutine _hitVisualCoroutine;
     bool _partIsDestroyed = false;
 
-    float _maxHullHp;
-    float _maxShieldHp;
+    protected float _maxHullHp;
+    protected float _maxShieldHp;
 
     private void Awake()
     {
@@ -34,21 +32,21 @@ public class PartHPManager : MonoBehaviour, IDamageable
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
-        _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
+        if(hitSound != null) _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
         if (_partIsDestroyed) return;
 
         if (_shieldHP > 0)
         {
             _shieldHP -= shieldDmgValue;
             _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.blue));
-            OnHitPart();
+            _enemyVehicleManager.OnHitPart();
             return;
         }
 
         _hullHP -= hullDmgValue;
         _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.red));
 
-        OnHitPart();
+        _enemyVehicleManager.OnHitPart();
 
         if (_hullHP <= 0)
         {
@@ -72,6 +70,10 @@ public class PartHPManager : MonoBehaviour, IDamageable
         {
             Destroy(gameObject);
         }
+        else if (_vehiclePart == EnumVehiclePart.Wheel)
+        {
+            Destroy(gameObject);
+        }
         else if (_vehiclePart == EnumVehiclePart.Body)
         {
             _enemyVehicleManager.OnBodyDestoyed();
@@ -82,10 +84,14 @@ public class PartHPManager : MonoBehaviour, IDamageable
         }
     }
 
-    void OnHitPart()
+    public void ExplosionDamage()
     {
-        if (_vehiclePart != EnumVehiclePart.Body) return;
-        float shieldHPValue = _maxShieldHp == 0 ? 0 : _shieldHP / _maxShieldHp;
-        _enemyVehicleManager.OnHitPart(_hullHP / _maxHullHp, shieldHPValue);
+        OnHit(_maxHullHp/5, _maxShieldHp/5, null);
+    }
+
+    public void GetBodyHPRelativeValues(out float hullHPRelativeValue,out float shieldHPRelativeValue)
+    {
+        hullHPRelativeValue = _hullHP / _maxHullHp;
+        shieldHPRelativeValue = _maxShieldHp == 0 ? 0 : _shieldHP / _maxShieldHp;
     }
 }

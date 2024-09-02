@@ -2278,7 +2278,7 @@ MonoBehaviour:
   - {fileID: 4893374953841114777, guid: 50ed514eddc47d247b5335cb08785523, type: 3}
   - {fileID: 7442833293695422729, guid: c4f0deac3a6170242aeb69ef4296243f, type: 3}
   - {fileID: 83433948710527792, guid: 30d2d05b936431942a310e1ccce574f0, type: 3}
-  _enemyCount: 10
+  _enemyCount: 6
   _enemySlideDistanceMod: 1
   _enemyDmgMod: 1
   _enemyHPMod: 1
@@ -16431,7 +16431,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1095254403}
   m_HandleRect: {fileID: 1095254402}
   m_Direction: 2
-  m_Value: 0.9999466
+  m_Value: 0.9999896
   m_Size: 0.5347222
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -20089,7 +20089,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1804446773}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.97175103
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -72060,7 +72060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.03579998}
+  m_AnchoredPosition: {x: 0, y: 0.0069761276}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1529594033

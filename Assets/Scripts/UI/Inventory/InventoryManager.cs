@@ -190,7 +190,9 @@ public class InventoryManager : MonoBehaviour
         {
             bool enoughResources = UIResourcesManager.Instance.TrySpendResources(WSData.scrapMetalAmountForUnlock, WSData.wiresAmountForUnlock, WSData.copperAmountForUnlock);
             if (!enoughResources) return;
-            IItemData newItem = WSData.weaponData;
+
+            WeaponData newItem = Instantiate(WSData.weaponData);
+
             UnlockScheme(WSData, newItem);
             InventoryInfoPanelManager.Instance.UpdateInfoPanel(newItem);
             InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(newItem);

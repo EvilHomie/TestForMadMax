@@ -22,5 +22,7 @@ public class ExplosivePartManager : PartHPManager
         _blowParticleSystem.Play();
         _blowAudioSource.PlayOneShot(_blowAudioClip);
         gameObject.SetActive(false);
+
+        _enemyVehicleManager.OnExplosivePartLooseHP();
     }
 }

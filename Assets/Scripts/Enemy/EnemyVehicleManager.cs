@@ -99,7 +99,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     public void OnExplosivePartLooseHP()
     {
-        
+        _bodyPartHPManager.ExplosionDamage();
     }
 
     void OnDie()
@@ -124,8 +124,9 @@ public class EnemyVehicleManager : MonoBehaviour
         }
     }
 
-    public void OnHitPart(float hullHPRelativeValue, float shieldHPRelativeValue)
+    public void OnHitPart()
     {
+        _bodyPartHPManager.GetBodyHPRelativeValues(out float hullHPRelativeValue, out float shieldHPRelativeValue);
         UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, this);
     }
 }
