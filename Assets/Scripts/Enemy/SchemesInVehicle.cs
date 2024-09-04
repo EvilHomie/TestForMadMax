@@ -6,29 +6,24 @@ public class SchemesInVehicle : MonoBehaviour
 
     public void DropScheme()
     {
-        if (PlayerData.Instance.PlayerItemsData.Exists(scheme => scheme.DeffItemName == _scheme.DeffItemName))
+        if (CheckExistingItem())
         {
             return;
         }
-        else
-        {
-            Debug.LogWarning($"{_scheme.DeffItemName} ADDDDEEEEDDD");
-            UINewSchemeManager.Instance.OnAddNewScheme();
-            PlayerData.Instance.PlayerItemsData.Add(_scheme);
-        }
+        UINewSchemeManager.Instance.OnAddNewScheme();
+        PlayerData.Instance.PlayerItemsData.Add(_scheme);
     }
 
-    //bool CheckAlreadyGeted()
-    //{
-    //    IItemData itemData = PlayerData.Instance.GetItemDataByName(_scheme.DeffItemName);
-    //    if (itemData != null)
-    //    {
+    bool CheckExistingItem()
+    {
+        IItemData itemData = PlayerData.Instance.GetItemDataByName(_scheme.DeffItemName);
 
-    //        return true;
-    //    }
-    //    else
-    //    {
-
-    //    }
-    //}
+        if (itemData != null) return true;
+        else
+        {
+            itemData = PlayerData.Instance.GetItemDataByName(_scheme.weaponData.DeffItemName);
+            if (itemData != null) return true;
+            else return false;
+        }
+    }
 }

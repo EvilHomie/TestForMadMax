@@ -731,13 +731,10 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 5
+    _amount: 3
   - _type: 1
     _dropChance: 60
-    _amount: 5
-  - _type: 0
-    _dropChance: 40
-    _amount: 5
+    _amount: 2
 --- !u!114 &1833269742749277533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,12 +1392,12 @@ PrefabInstance:
     - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
         type: 3}
       propertyPath: _hullDmg
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
         type: 3}
       propertyPath: _shieldDmg
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2916078227168733567, guid: d255044c796adec409fa9551816c914b,
         type: 3}

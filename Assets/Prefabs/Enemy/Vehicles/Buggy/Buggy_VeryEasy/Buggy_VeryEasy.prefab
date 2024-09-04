@@ -742,8 +742,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 2
-  _hullHP: 60
-  _shieldHP: 10
+  _hullHP: 100
+  _shieldHP: 50
   _partRenderer: {fileID: 4363611382284511331}
 --- !u!114 &2565792108696686348
 MonoBehaviour:
@@ -785,10 +785,10 @@ MonoBehaviour:
     _amount: 5
   - _type: 1
     _dropChance: 60
-    _amount: 5
+    _amount: 4
   - _type: 0
     _dropChance: 40
-    _amount: 5
+    _amount: 3
 --- !u!1 &8316656820613526983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,7 +1091,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullDmg
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -1101,7 +1101,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldDmg
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}

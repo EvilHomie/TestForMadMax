@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 7209694932953186992}
   - component: {fileID: 3860330436788466665}
   m_Layer: 10
-  m_Name: Truck_SuperEasy
+  m_Name: Truck_VeryEasy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d3f02c673ee735243be58628499375a5, type: 2}
+  - {fileID: 2100000, guid: 8bd33786e282add4ea91d149cf4dcd5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -370,8 +370,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 2
-  _hullHP: 150
-  _shieldHP: 0
+  _hullHP: 300
+  _shieldHP: 150
   _partRenderer: {fileID: 23949014680748850}
 --- !u!114 &6382601656781524584
 MonoBehaviour:
@@ -414,13 +414,13 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 10
+    _amount: 20
   - _type: 1
     _dropChance: 60
-    _amount: 10
+    _amount: 20
   - _type: 0
     _dropChance: 40
-    _amount: 10
+    _amount: 20
 --- !u!114 &7209694932953186992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c91bd2ea59e8348826ad174e051e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scheme: {fileID: 11400000, guid: 95d6977253f7cc44abab2bbc9ea5f457, type: 2}
+  _scheme: {fileID: 11400000, guid: 6f99f161d485f0b458b920ea7f4fd38f, type: 2}
 --- !u!1 &1122937966344188
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,8 +570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23963454856638654}
 --- !u!1 &1217674667613548
 GameObject:
@@ -692,8 +692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23454560161501900}
 --- !u!1 &1298105520930428
 GameObject:
@@ -814,8 +814,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23538288855225914}
 --- !u!1 &1473934374986100
 GameObject:
@@ -936,8 +936,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23493163550416002}
 --- !u!1 &1483528468864314
 GameObject:
@@ -1058,8 +1058,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23949346867858296}
 --- !u!1 &1647456031340326
 GameObject:
@@ -1180,8 +1180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23345953058612414}
 --- !u!1 &1847942104195814
 GameObject:
@@ -1302,8 +1302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23957891774346204}
 --- !u!1 &1940881246099546
 GameObject:
@@ -1424,8 +1424,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 30
-  _shieldHP: 0
+  _hullHP: 60
+  _shieldHP: 30
   _partRenderer: {fileID: 23135199194522920}
 --- !u!1 &178980897217812589
 GameObject:
@@ -1760,7 +1760,7 @@ PrefabInstance:
     - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: _hullHP
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
@@ -1924,7 +1924,7 @@ PrefabInstance:
     - target: {fileID: 4695050631370315437, guid: 7b05f7877a06ca245bdc93ca1ef9a727,
         type: 3}
       propertyPath: _hullHP
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8327679405533253273, guid: 7b05f7877a06ca245bdc93ca1ef9a727,
         type: 3}
@@ -2003,7 +2003,7 @@ PrefabInstance:
     - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: _hullHP
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
@@ -2152,7 +2152,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullDmg
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2162,17 +2162,17 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldDmg
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullHP
-      value: 60
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldHP
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2313,7 +2313,7 @@ PrefabInstance:
     - target: {fileID: 4695050631370315437, guid: 7b05f7877a06ca245bdc93ca1ef9a727,
         type: 3}
       propertyPath: _hullHP
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8327679405533253273, guid: 7b05f7877a06ca245bdc93ca1ef9a727,
         type: 3}
@@ -2442,7 +2442,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullDmg
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2452,17 +2452,17 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldDmg
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullHP
-      value: 60
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldHP
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2656,7 +2656,7 @@ PrefabInstance:
     - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: _hullHP
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
@@ -3077,7 +3077,7 @@ PrefabInstance:
     - target: {fileID: 4695050631370315437, guid: 7b05f7877a06ca245bdc93ca1ef9a727,
         type: 3}
       propertyPath: _hullHP
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8327679405533253273, guid: 7b05f7877a06ca245bdc93ca1ef9a727,
         type: 3}

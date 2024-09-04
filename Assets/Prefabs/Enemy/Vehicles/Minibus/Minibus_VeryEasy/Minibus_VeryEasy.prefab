@@ -5443,8 +5443,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 2
-  _hullHP: 100
-  _shieldHP: 20
+  _hullHP: 150
+  _shieldHP: 75
   _partRenderer: {fileID: 8672706606957738211}
 --- !u!114 &5241711853960031540
 MonoBehaviour:
@@ -5486,10 +5486,10 @@ MonoBehaviour:
     _amount: 5
   - _type: 1
     _dropChance: 60
-    _amount: 5
+    _amount: 4
   - _type: 0
     _dropChance: 40
-    _amount: 5
+    _amount: 3
 --- !u!1 &3292127621470689425
 GameObject:
   m_ObjectHideFlags: 0
@@ -20792,20 +20792,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5187643854936838284, guid: 2ae3758def0922b4a9b828d4ad748085,
+        type: 3}
+      propertyPath: _hullHP
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _hullDmg
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _fireRate
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _shieldDmg
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9011403678162496428, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
@@ -20852,6 +20857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _shieldHP
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
+        type: 3}
+      propertyPath: _hullHP
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
@@ -21211,20 +21221,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5187643854936838284, guid: 2ae3758def0922b4a9b828d4ad748085,
+        type: 3}
+      propertyPath: _hullHP
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _hullDmg
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _fireRate
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _shieldDmg
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9011403678162496428, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}

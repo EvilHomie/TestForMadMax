@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 0
-  _hullHP: 10
+  _hullHP: 50
   _shieldHP: 0
   _partRenderer: {fileID: 6700786959905706535}
 --- !u!65 &4323363660326863347

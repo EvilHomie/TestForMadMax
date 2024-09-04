@@ -16,14 +16,14 @@ MonoBehaviour:
   vehicleNameEN: Simple Truck
   vehicleNameRU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u0413\u0440\u0443\u0437\u043E\u0432\u0438\u043A"
   vehicleRaritie: 0
-  hullHPByLvl: 100
+  hullHPByLvl: 50
   hullHPCurLvl: 1
   hullHPMaxLvl: 5
-  shieldHPByLvl: 50
-  shieldHPCurLvl: 1
-  shieldHPMaxLvl: 3
+  shieldHPByLvl: 25
+  shieldHPCurLvl: 0
+  shieldHPMaxLvl: 2
   shieldRegenRateByLvl: 1
   shieldRegenCurtLvl: 0
-  shieldRegenMaxLvl: 4
+  shieldRegenMaxLvl: 3
   curWeaponsCount: 1
   maxWeaponsCount: 2

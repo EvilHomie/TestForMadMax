@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
-    string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Dual_Cannon_Scheme" };
+    string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Dual_Cannon_Scheme", "Energy_Simple_Cannon_Scheme" };
     string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon", "Dual_Cannon", "Simple_Truck", "Energy_Dual_Cannon", "Energy_Simple_Cannon", "Dual_Cannon_Scheme" };
     void Awake()
     {

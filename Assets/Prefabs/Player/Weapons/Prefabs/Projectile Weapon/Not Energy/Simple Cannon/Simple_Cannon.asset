@@ -17,15 +17,15 @@ MonoBehaviour:
   weaponNameRU: "\u041F\u0440\u043E\u0441\u0442\u0430\u044F \u041F\u0443\u0448\u043A\u0430"
   weaponType: 0
   weaponRaritie: 0
-  hullDmgByLvl: 1
+  hullDmgByLvl: 2
   hullDmgCurLvl: 2
   hullDmgMaxLvl: 5
   shieldDmgByLvl: 1
-  shieldDmgCurLvl: 1
+  shieldDmgCurLvl: 3
   shieldDmgMaxLvl: 6
   fireRateByLvl: 0.5
-  fireRateCurtLvl: 3
+  fireRateCurtLvl: 2
   fireRateMaxLvl: 6
-  rotationSpeedByLvl: 20
+  rotationSpeedByLvl: 15
   rotationSpeedCurLvl: 2
-  rotationSpeedMaxLvl: 5
+  rotationSpeedMaxLvl: 6

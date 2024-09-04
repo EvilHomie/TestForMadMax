@@ -691,8 +691,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vehiclePart: 2
-  _hullHP: 60
-  _shieldHP: 10
+  _hullHP: 100
+  _shieldHP: 50
   _partRenderer: {fileID: 23361262811875312}
 --- !u!114 &4581301982338165750
 MonoBehaviour:
@@ -734,10 +734,10 @@ MonoBehaviour:
     _amount: 5
   - _type: 1
     _dropChance: 60
-    _amount: 5
+    _amount: 4
   - _type: 0
     _dropChance: 40
-    _amount: 5
+    _amount: 3
 --- !u!114 &1833269742749277533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,7 +1395,7 @@ PrefabInstance:
     - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
         type: 3}
       propertyPath: _hullDmg
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
         type: 3}
@@ -1405,12 +1405,17 @@ PrefabInstance:
     - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
         type: 3}
       propertyPath: _shieldDmg
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2916078227168733567, guid: d255044c796adec409fa9551816c914b,
         type: 3}
       propertyPath: m_Name
       value: Light_Cannon_Dual
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060933799747518606, guid: d255044c796adec409fa9551816c914b,
+        type: 3}
+      propertyPath: _hullHP
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7537319152935062148, guid: d255044c796adec409fa9551816c914b,
         type: 3}

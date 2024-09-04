@@ -18,10 +18,10 @@ MonoBehaviour:
     \u041F\u0443\u0448\u043A\u0430"
   weaponType: 1
   weaponRaritie: 0
-  hullDmgByLvl: 2
+  hullDmgByLvl: 1
   hullDmgCurLvl: 1
-  hullDmgMaxLvl: 8
-  shieldDmgByLvl: 5
+  hullDmgMaxLvl: 7
+  shieldDmgByLvl: 2
   shieldDmgCurLvl: 1
   shieldDmgMaxLvl: 8
   fireRateByLvl: 1
@@ -29,4 +29,4 @@ MonoBehaviour:
   fireRateMaxLvl: 10
   rotationSpeedByLvl: 15
   rotationSpeedCurLvl: 1
-  rotationSpeedMaxLvl: 7
+  rotationSpeedMaxLvl: 8

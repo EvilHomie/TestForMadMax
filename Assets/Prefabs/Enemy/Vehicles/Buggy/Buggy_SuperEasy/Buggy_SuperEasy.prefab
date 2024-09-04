@@ -782,13 +782,10 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 5
+    _amount: 3
   - _type: 1
     _dropChance: 60
-    _amount: 5
-  - _type: 0
-    _dropChance: 40
-    _amount: 5
+    _amount: 2
 --- !u!1 &8316656820613526983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,12 +1088,17 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullDmg
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldDmg
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
+        type: 3}
+      propertyPath: _hullHP
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -1300,6 +1302,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3078412360603654506}
     m_Modifications:
+    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
+        type: 3}
+      propertyPath: _hullHP
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
