@@ -16,10 +16,9 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
             return;
         }
         _itemImage.gameObject.SetActive(true);
-        if (item is WeaponSchemeData)
+        if (item is SchemeData schemeData)
         {
-            string weaponName = item.DeffItemName.Replace("_Scheme","");
-            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName);
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(schemeData.ItemNameInScheme);
         }
         else
         {

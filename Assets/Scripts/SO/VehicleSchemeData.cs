@@ -1,12 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WeaponSchemeData", menuName = "ScriptableObjects/WeaponSchemeData")]
-public class VehicleSchemeData : ScriptableObject, IItemData
+[CreateAssetMenu(fileName = "VehicleSchemeData", menuName = "ScriptableObjects/VehicleSchemeData")]
+public class VehicleSchemeData : SchemeData, IItemData
 {
     public VehicleData vehicleData;
-    public int copperAmountForUnlock;
-    public int wiresAmountForUnlock;
-    public int scrapMetalAmountForUnlock;
 
     public int dropChanceIfDuplicate;
     public string TranslatedItemName
@@ -19,4 +16,7 @@ public class VehicleSchemeData : ScriptableObject, IItemData
     }
 
     public string DeffItemName => $"{vehicleData.deffVehicleName}_Scheme";
+
+    public override string SchemeName => DeffItemName;
+    public override string ItemNameInScheme => vehicleData.deffVehicleName;
 }

@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SchemeData : MonoBehaviour
+public class SchemeData : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int copperAmountForUnlock;
+    public int wiresAmountForUnlock;
+    public int scrapMetalAmountForUnlock;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public virtual string SchemeName { get; }
+    public virtual string ItemNameInScheme { get; }
 }

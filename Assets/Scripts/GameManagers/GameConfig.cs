@@ -4,7 +4,7 @@ public class GameConfig : MonoBehaviour
 {
     public static GameConfig Instance;
 
-    [SerializeField] bool _isTesting = false;
+    [SerializeField] bool _isTesting = true;
     [SerializeField] Language _language;
 
     [Header("RAID")]

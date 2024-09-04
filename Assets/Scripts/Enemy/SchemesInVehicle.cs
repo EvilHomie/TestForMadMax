@@ -2,27 +2,35 @@ using UnityEngine;
 
 public class SchemesInVehicle : MonoBehaviour
 {
-    [SerializeField] WeaponSchemeData _scheme;
+    [SerializeField] SchemeData _scheme;
 
     public void DropScheme()
     {
         if (CheckExistingItem())
-        {
+        {            
             return;
         }
         UINewSchemeManager.Instance.OnAddNewScheme();
-        PlayerData.Instance.PlayerItemsData.Add(_scheme);
+        PlayerData.Instance.PlayerItemsData.Add((IItemData)_scheme);
     }
 
     bool CheckExistingItem()
     {
-        IItemData itemData = PlayerData.Instance.GetItemDataByName(_scheme.DeffItemName);
+        IItemData itemData = PlayerData.Instance.GetItemDataByName(_scheme.SchemeName);
 
-        if (itemData != null) return true;
+        if (itemData != null)
+        {
+            Debug.LogWarning("EXIST as Scheme");
+            return true;
+        }
         else
         {
-            itemData = PlayerData.Instance.GetItemDataByName(_scheme.weaponData.DeffItemName);
-            if (itemData != null) return true;
+            itemData = PlayerData.Instance.GetItemDataByName(_scheme.ItemNameInScheme);
+            if (itemData != null)
+            {
+                Debug.LogWarning("EXIST as Item");
+                return true;
+            }
             else return false;
         }
     }

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce97a6d9e765f7d489aae23f19c0eb16, type: 3}
-  m_Name: Simple_Truck
+  m_Name: Advanced_Truck
   m_EditorClassIdentifier: 
-  deffVehicleName: Simple_Truck
-  vehicleNameEN: Simple Truck
-  vehicleNameRU: "\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u0413\u0440\u0443\u0437\u043E\u0432\u0438\u043A"
+  deffVehicleName: Advanced_Truck
+  vehicleNameEN: Advanced Truck
+  vehicleNameRU: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u043D\u044B\u0439 \u0413\u0440\u0443\u0437\u043E\u0432\u0438\u043A"
   vehicleRaritie: 0
-  hullHPByLvl: 50
+  hullHPByLvl: 75
   hullHPCurLvl: 1
-  hullHPMaxLvl: 5
-  shieldHPByLvl: 25
-  shieldHPCurLvl: 0
-  shieldHPMaxLvl: 2
+  hullHPMaxLvl: 4
+  shieldHPByLvl: 40
+  shieldHPCurLvl: 1
+  shieldHPMaxLvl: 4
   shieldRegenRateByLvl: 1
   shieldRegenCurtLvl: 0
-  shieldRegenMaxLvl: 3
+  shieldRegenMaxLvl: 6
   curWeaponsCount: 1
-  maxWeaponsCount: 1
+  maxWeaponsCount: 2

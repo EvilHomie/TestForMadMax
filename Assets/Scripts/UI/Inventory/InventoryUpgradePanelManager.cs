@@ -37,6 +37,10 @@ public class InventoryUpgradePanelManager : MonoBehaviour
         {
             ShowWeaponSchemeUpgradeInfo(WSData.weaponData);
         }
+        else if (itemData is VehicleSchemeData VSData)
+        {
+            ShowVehicleSchemeUpgradeInfo(VSData.vehicleData);
+        }
     }    
 
     void ShowWeaponUpgradeInfo(WeaponData data)
@@ -116,6 +120,15 @@ public class InventoryUpgradePanelManager : MonoBehaviour
     void ShowWeaponSchemeUpgradeInfo(WeaponData data)
     {
         ShowWeaponUpgradeInfo(data);
+        foreach (var row in upgradeRows)
+        {
+            row.DisableBuyUpgradeOption();
+        }
+    }
+
+    void ShowVehicleSchemeUpgradeInfo(VehicleData data)
+    {
+        ShowVehicleUpgradeInfo(data);
         foreach (var row in upgradeRows)
         {
             row.DisableBuyUpgradeOption();

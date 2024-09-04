@@ -87,6 +87,7 @@ public class EnemyVehicleManager : MonoBehaviour
     public void OnBodyCollisionWithRoad()
     {
         OnDie();
+        _vehicleEffectsController.StopDustEmmiting();
     }
 
     public void OnWeaponLossHP(GameObject weapon)
@@ -105,7 +106,7 @@ public class EnemyVehicleManager : MonoBehaviour
     void OnDie()
     {
         _isDead = true;
-        _vehicleEffectsController.StopDustEmmiting();
+        
         _vehicleMovementController.StartDieLogic();
         _enemyWeaponController.StopShooting();
 

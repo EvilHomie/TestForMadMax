@@ -7,13 +7,13 @@ public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
 
-    Dictionary<ResourcesType, int> _availableResources = new();
-    List<IItemData> _playerItemsData = new();
-    Dictionary<int, string> _equipedItems = new();
+    Dictionary<ResourcesType, int> _availableResources;
+    List<IItemData> _playerItemsData;
+    Dictionary<int, string> _equipedItems;
     string _lastSelectedLevelName;
-    List<string> _unlockedLevelNames = new();
+    List<string> _unlockedLevelNames;
 
-    public List<IItemData> PlayerItemsData => _playerItemsData;
+    public List<IItemData> PlayerItemsData { get => _playerItemsData; set => _playerItemsData = value; }
     public Dictionary<ResourcesType, int> AvailableResources { get => _availableResources; set => _availableResources = value; }
 
     // под индексом 0 имя транспорта, остальное = имена оружий

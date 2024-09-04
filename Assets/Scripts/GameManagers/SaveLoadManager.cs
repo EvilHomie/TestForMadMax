@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
-    string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Dual_Cannon_Scheme", "Energy_Simple_Cannon_Scheme" };
+    string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Energy_Simple_Cannon_Scheme", "Advanced_Truck_Scheme" };
     string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon", "Dual_Cannon", "Simple_Truck", "Energy_Dual_Cannon", "Energy_Simple_Cannon", "Dual_Cannon_Scheme" };
     void Awake()
     {
@@ -15,7 +15,8 @@ public class SaveLoadManager : MonoBehaviour
 
     void ResetProgress(string[] ItemsNames)
     {
-        PlayerData.Instance.PlayerItemsData.Clear();
+        PlayerPrefs.DeleteAll();
+        PlayerData.Instance.PlayerItemsData = new();
         UIResourcesManager.Instance.RemoveAllResources();
         foreach (var itemName in ItemsNames)
         {
@@ -33,24 +34,43 @@ public class SaveLoadManager : MonoBehaviour
         }
         foreach (var itemName in ItemsNames)
         {
-            WeaponSchemeData weaponSchemeData = GameAssets.Instance.GameItems.WeaponSchemeData.Find(scheme => scheme.name == itemName);
-            if (weaponSchemeData == null) continue;
-            PlayerData.Instance.PlayerItemsData.Add(Instantiate(weaponSchemeData));
-            CustomLogDebuger.Log($"ADD {weaponSchemeData.name} AS DEFFAULT ITEM");
+            SchemeData schemeData = GameAssets.Instance.GameItems.SchemeData.Find(scheme => scheme.SchemeName == itemName);
+            if (schemeData == null) continue;
+            PlayerData.Instance.PlayerItemsData.Add((IItemData)schemeData);
+            CustomLogDebuger.Log($"ADD {schemeData.name} AS DEFFAULT ITEM");
         }
+
+
+
+       
+
+       
+
+        PlayerData.Instance.EquipedItems = new Dictionary<int, string>()
+            {
+                {0, "Simple_Truck" },
+                {1, "Simple_Cannon" }
+            };
+
+        PlayerData.Instance.LastSelectedLevelName = "1-1";
+        PlayerData.Instance.UnlockedLevelsNames = new() { "1-1" };
+
+        CustomLogDebuger.Log("LOADED DEFFAULT ITEMS");
+
+
     }
 
     public void SaveData()
     {
         List<VehicleData> vehiclesData = new();
         List<WeaponData> weaponsData = new();
-        List<string> weaponsSchemesNames = new();
+        List<string> schemesNames = new();
 
         foreach (var item in PlayerData.Instance.PlayerItemsData)
         {
             if (item is WeaponData WData) weaponsData.Add(WData);
             else if (item is VehicleData VData) vehiclesData.Add(VData);
-            else if (item is WeaponSchemeData WSData) weaponsSchemesNames.Add(WSData.DeffItemName);
+            else if (item is SchemeData WSData) schemesNames.Add(WSData.SchemeName);
         }
 
         List<string> weaponsDataAsStrings = new();
@@ -69,8 +89,8 @@ public class SaveLoadManager : MonoBehaviour
             vehiclesDataAsStrings.Add(stringData);
         }
         PlayerPrefs.SetString("SavedVehiclesData", JsonConvert.SerializeObject(vehiclesDataAsStrings, Formatting.Indented));
-       
-        PlayerPrefs.SetString("SavedWeaponSchemeNames", JsonConvert.SerializeObject(weaponsSchemesNames, Formatting.Indented));
+
+        PlayerPrefs.SetString("SavedschemeNames", JsonConvert.SerializeObject(schemesNames, Formatting.Indented));
 
         string savedResources = JsonConvert.SerializeObject(PlayerData.Instance.AvailableResources);
         PlayerPrefs.SetString("SavedResourcesData", savedResources);
@@ -91,26 +111,17 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("SavedWeaponsData") || !PlayerPrefs.HasKey("SavedVehiclesData") || !PlayerPrefs.HasKey("SavedResourcesData") || !PlayerPrefs.HasKey("SavedEquipedItems"))
         {
-            PlayerData.Instance.AvailableResources = new();
             ResetProgress(_deffaultItemsNames);
-            PlayerPrefs.DeleteAll();
-
-            PlayerData.Instance.EquipedItems = new Dictionary<int, string>()
-            {
-                {0, "Simple_Truck" },
-                {1, "Simple_Cannon" }
-            };
-
-            PlayerData.Instance.LastSelectedLevelName = "1-1";
-            PlayerData.Instance.UnlockedLevelsNames.Add("1-1");
-
-            CustomLogDebuger.Log("LOADED DEFFAULT ITEMS");
             return;
         }
 
+        PlayerData.Instance.PlayerItemsData = new();
+
+
+
         List<string> weaponsDataAsStrings = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedWeaponsData"));
         foreach (var weaponStringData in weaponsDataAsStrings)
-        {
+        {            
             WeaponData weaponData = ScriptableObject.CreateInstance<WeaponData>();
             JsonUtility.FromJsonOverwrite(weaponStringData, weaponData);
             PlayerData.Instance.PlayerItemsData.Add(weaponData);
@@ -128,11 +139,11 @@ public class SaveLoadManager : MonoBehaviour
 
 
 
-        List<string> weaponsSchemeNames = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedWeaponSchemeNames"));
-        foreach (var weaponsSchemeName in weaponsSchemeNames)
+        List<string> schemeNames = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedschemeNames"));
+        foreach (var schemeName in schemeNames)
         {
-            WeaponSchemeData weaponSD = GameAssets.Instance.GameItems.WeaponSchemeData.Find(scheme => scheme.DeffItemName == weaponsSchemeName);
-            PlayerData.Instance.PlayerItemsData.Add(weaponSD);
+            SchemeData schemeData = GameAssets.Instance.GameItems.SchemeData.Find(scheme => scheme.SchemeName == schemeName);
+            PlayerData.Instance.PlayerItemsData.Add((IItemData)schemeData);
         }
         CustomLogDebuger.Log("WEAPON SCHEMES LOADED");
 
@@ -148,7 +159,7 @@ public class SaveLoadManager : MonoBehaviour
         PlayerData.Instance.AvailableResources = JsonConvert.DeserializeObject<Dictionary<ResourcesType, int>>(PlayerPrefs.GetString("SavedResourcesData"));
         CustomLogDebuger.Log("RESOURCES LOADED");
 
-        PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int,string>>(PlayerPrefs.GetString("SavedEquipedItems"));
+        PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int, string>>(PlayerPrefs.GetString("SavedEquipedItems"));
         CustomLogDebuger.Log("EquipedItems LOADED");
 
         PlayerData.Instance.LastSelectedLevelName = PlayerPrefs.GetString("LastselectedLevelName");

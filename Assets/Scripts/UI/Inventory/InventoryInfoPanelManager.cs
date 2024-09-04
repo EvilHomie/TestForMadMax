@@ -56,12 +56,11 @@ public class InventoryInfoPanelManager : MonoBehaviour
             _characteristicsText.text = TextConstants.CHARACTERISTICS;
             ShowVehicleInfo(VData);
         }
-        else if (itemData is WeaponSchemeData WSData)
+        else if (itemData is SchemeData SData)
         {
-            string weaponName = WSData.DeffItemName.Replace("_Scheme", "");
-            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName);
+            _itemImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(SData.ItemNameInScheme);
             _characteristicsText.text = TextConstants.UNLOCKCOST;
-            ShowUnlockInfo(WSData);
+            ShowUnlockInfo(SData);
         }
     }
 
@@ -86,7 +85,7 @@ public class InventoryInfoPanelManager : MonoBehaviour
         characteristicRows[3].SetData(TextConstants.WEAPONSCOUNT, $"{data.curWeaponsCount} {TextConstants.FROM} {data.maxWeaponsCount}");
     }
 
-    void ShowUnlockInfo(WeaponSchemeData data)
+    void ShowUnlockInfo(SchemeData data)
     {
         foreach (var characteristicRow in characteristicRows)
         {

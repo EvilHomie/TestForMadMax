@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -77,7 +78,12 @@ public class UIResourcesManager : MonoBehaviour
 
     public void RemoveAllResources()
     {
-        PlayerData.Instance.AvailableResources.Clear();
+        PlayerData.Instance.AvailableResources = new Dictionary<ResourcesType, int>()
+            {
+                { ResourcesType.ScrapMetal,0},
+                { ResourcesType.Wires,0},
+                { ResourcesType.Ñopper,0}
+            };
         UpdateCounters();
     }
 

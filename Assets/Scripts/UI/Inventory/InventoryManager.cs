@@ -81,7 +81,7 @@ public class InventoryManager : MonoBehaviour
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(itemData);
         InventoryEquipPanelManager.Instance.OnSelectItem();
 
-        if (_selectedItem is WeaponSchemeData)
+        if (_selectedItem is SchemeData)
         {
             _equipBtn.gameObject.SetActive(false);
             _unlockBtn.gameObject.SetActive(true);
@@ -148,7 +148,7 @@ public class InventoryManager : MonoBehaviour
     {
         InventoryItem InventoryItem;
 
-        if (item is WeaponSchemeData)
+        if (item is SchemeData)
         {
             InventoryItem = Instantiate(_schemeItemPF, _schemesContainer);
         }
@@ -186,14 +186,22 @@ public class InventoryManager : MonoBehaviour
     {
         //bool enoughResources = false;
         //IItemData newItem;
-        if (_selectedItem is WeaponSchemeData WSData)
+        if (_selectedItem is SchemeData SData)
         {
-            bool enoughResources = UIResourcesManager.Instance.TrySpendResources(WSData.scrapMetalAmountForUnlock, WSData.wiresAmountForUnlock, WSData.copperAmountForUnlock);
+            bool enoughResources = UIResourcesManager.Instance.TrySpendResources(SData.scrapMetalAmountForUnlock, SData.wiresAmountForUnlock, SData.copperAmountForUnlock);
             if (!enoughResources) return;
 
-            WeaponData newItem = Instantiate(WSData.weaponData);
+            IItemData newItem = null;
+            if (SData is WeaponSchemeData WSData)
+            {
+                newItem = Instantiate(WSData.weaponData);
+            }
+            else if (SData is VehicleSchemeData VSData)
+            {
+                newItem = Instantiate(VSData.vehicleData);
+            }
 
-            UnlockScheme(WSData, newItem);
+            UnlockScheme((IItemData)SData, newItem);
             InventoryInfoPanelManager.Instance.UpdateInfoPanel(newItem);
             InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(newItem);
         }
@@ -209,7 +217,4 @@ public class InventoryManager : MonoBehaviour
         RemoveItemFromInventory(scheme);
         ADDItemToInventory(newItem);
     }
-
-
-
 }
