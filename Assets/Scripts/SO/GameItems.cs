@@ -9,11 +9,11 @@ public class GameItems : ScriptableObject
     [SerializeField] SpriteAtlas _itemsSpritesAtlas;
 
     [SerializeField] List<PlayerVehicle> _playerVehicles;
-    [SerializeField] List<SchemeData> _weaponSchemeData;
+    [SerializeField] List<SchemeData> _SchemeData;
 
     public List<PlayerWeapon> Weapons => _weapons;
     public List<PlayerVehicle> PlayerVehicles => _playerVehicles;
-    public List<SchemeData> SchemeData => _weaponSchemeData;
+    public List<SchemeData> SchemeData => _SchemeData;
 
     public SpriteAtlas ItemsSpritesAtlas => _itemsSpritesAtlas;
 }

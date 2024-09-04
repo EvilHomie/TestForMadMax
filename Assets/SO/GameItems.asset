@@ -22,7 +22,7 @@ MonoBehaviour:
   _playerVehicles:
   - {fileID: 4091442796374768174, guid: 8adc2b9fa90db854f8cfab06c6b863fc, type: 3}
   - {fileID: 4091442796374768174, guid: 29bd34ed40344f142828a577078d256c, type: 3}
-  _weaponSchemeData:
+  _SchemeData:
   - {fileID: 11400000, guid: 6f99f161d485f0b458b920ea7f4fd38f, type: 2}
   - {fileID: 11400000, guid: 4a398722107d31340956841cb388095b, type: 2}
   - {fileID: 11400000, guid: 95d6977253f7cc44abab2bbc9ea5f457, type: 2}

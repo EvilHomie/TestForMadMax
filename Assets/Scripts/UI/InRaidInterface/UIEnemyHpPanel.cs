@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class UIEnemyHpPanel : MonoBehaviour
 
     [SerializeField] Slider _HullHPSlider;
     [SerializeField] Slider _ShieldHPSlider;
+
+    Coroutine _hideCoroutine;
 
 
     EnemyVehicleManager _lastEnemyVehicleManager;
@@ -43,11 +46,23 @@ public class UIEnemyHpPanel : MonoBehaviour
 
         if (_lastEnemyVehicleManager != enemyVehicleManager)
             _lastEnemyVehicleManager = enemyVehicleManager;
+
+        if (_hideCoroutine == null)
+        {
+            _hideCoroutine = StartCoroutine(HidePanelAfterDelay());
+        }
     }
 
     public void DisableHPBars()
     {
         _HullHPSlider.gameObject.SetActive(false);
         _ShieldHPSlider.gameObject.SetActive(false);
+    }
+
+    IEnumerator HidePanelAfterDelay()
+    {
+        yield return new WaitForSeconds(5);
+        DisableHPBars();
+        _hideCoroutine = null;
     }
 }

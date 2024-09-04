@@ -11,7 +11,7 @@ public class EnemyWeaponController : MonoBehaviour
 
     Vector3 _targetPos = new(0, 100, 0);
 
-    float _rotationSpeedMod = 2f; //необходим для корректировки скорости поворота, чтобы оружие успело повернутся до истечения времени на прицеливание   
+    float _rotationSpeedMod = 3f; //необходим для корректировки скорости поворота, чтобы оружие успело повернутся до истечения времени на прицеливание   
 
     IEnumerator LockOnPlayer()
     {
