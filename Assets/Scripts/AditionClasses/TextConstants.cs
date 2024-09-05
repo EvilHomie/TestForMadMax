@@ -123,6 +123,7 @@ public static class TextConstants
             HEADLIGHTS = "Фар";
             EXPLOSIVEPARTS = "Взрывчатых частей";
             TIP = "Совет";
+            NEXTTIP = "Далее";
 
         }
 
