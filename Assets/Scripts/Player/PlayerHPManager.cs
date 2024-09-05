@@ -68,13 +68,11 @@ public class PlayerHPManager : MonoBehaviour
             {
                 _playerShieldHP = 0;
                 _playerHullHP -= hullDmgValue + difference;
-                Debug.Log($"HULLD DMG  {hullDmgValue + difference}");
             }
         }
         else
         {
             _playerHullHP -= hullDmgValue;
-            Debug.Log($"HULLD DMG  {hullDmgValue}");
         }
 
 
