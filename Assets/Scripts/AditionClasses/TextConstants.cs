@@ -35,8 +35,31 @@ public static class TextConstants
     public static string GARAGE = "Garage";
     public static string UNLOCKCOST = "UnlockCost";
     public static string NEWSCHEME = "New SCHEME";
+    public static string[] TIPSCOLLECTION =
+        {
+        "Don't forget to upgrade your equipment in the inventory tab.",
+        "You can get new schemas from enemies. Unlocking them requires resources.",
+        "destroying the explosive part will cause significant damage to the hull.",
+        "An escaping enemy will not bring you resources. Enemies run away if they have lost all their guns.",
+        "wheels have less strength than the body. Caterpillar is much stronger than wheels.",
+        "Blue flickering indicates that the shield is taking damage. While red indicates damage to the body.",
+        "Keep in mind that weapons have two types of damage. Shield Damage and Hull Damage.",
+        "You can replay levels to collect additional resources. Automatic level change will be disabled."
+        };
 
-
+    public static string LEVELSTATISTIC = "Level Statistic";
+    public static string RESOURCESCOLLECTED = "Resources Collected";
+    public static string DAMAGERECEIVED = "DAMAGERECEIVED";
+    public static string TOHULL = "TO HULL";
+    public static string TOSHIELD = "TO SHIELD";
+    public static string DAMAGEDONE = "DAMAGE DONE";
+    public static string ELEMENTSDESTROYED = "ELEMENTS DESTROYED";
+    public static string WHEELS = "WHEELS";
+    public static string BODIES = "BODIES";
+    public static string HEADLIGHTS = "HEADLIGHTS";
+    public static string EXPLOSIVEPARTS = "EXPLOSIVE PARTS";
+    public static string TIP = "TIP";
+    public static string NEXTTIP = "NEXTTIP";
     public static void SetLanguage(Language language)
     {
         Language = language;
@@ -75,7 +98,34 @@ public static class TextConstants
             GARAGE = "Гараж";
             UNLOCKCOST = "Стоимость Открытия";
             NEWSCHEME = "Новая Схема";
+
+            string[] tipscollectionRu =
+            { "Не забывайте улучшать свое снаряжение во вкладке склад.",
+              "Новые схемы можно получить из врагов. Для открытия требуются ресурсы.",
+              "разрушение взрывоопасной части нанесёт корпусу значительные повреждения.",
+              "Убегающий враг не принесет вам ресурсов. Враги убегают, если потеряли всё своё оружие.",
+              "колеса имеют меньшую прочность, чем кузов. Гусеница гораздо прочнее колес.",
+              "Синее мерцание указывает на то, что урон наносится щиту. А красное указывает на повреждение корпуса.",
+              "Имейте в виду, что оружие имеет два типа урона. Урон щитам и урон корпусу.",
+              "Вы можете перепройти уровни для сбора дополнительных ресурсов. Автосмена уровней будет отключена."
+            };
+            TIPSCOLLECTION = tipscollectionRu;
+
+            LEVELSTATISTIC = "Статистика по уровню";
+            RESOURCESCOLLECTED = "Собранно ресурсов";
+            DAMAGERECEIVED = "Получено урона";
+            TOHULL = "Корпусу";
+            TOSHIELD = "Щиту";
+            DAMAGEDONE = "Нанесено урона";
+            ELEMENTSDESTROYED = "Уничтожено Элементов";
+            WHEELS = "Колес";
+            BODIES = "Корпусов";
+            HEADLIGHTS = "Фар";
+            EXPLOSIVEPARTS = "Взрывчатых частей";
+            TIP = "Совет";
+
         }
+
     }
 }
 
