@@ -55,6 +55,7 @@ public static class TextConstants
     public static string DAMAGEDONE = "DAMAGE DONE";
     public static string ELEMENTSDESTROYED = "ELEMENTS DESTROYED";
     public static string WHEELS = "WHEELS";
+    public static string CATERPILLARS = "Caterpillars";
     public static string BODIES = "BODIES";
     public static string HEADLIGHTS = "HEADLIGHTS";
     public static string EXPLOSIVEPARTS = "EXPLOSIVE PARTS";
@@ -119,6 +120,7 @@ public static class TextConstants
             DAMAGEDONE = "Нанесено урона";
             ELEMENTSDESTROYED = "Уничтожено Элементов";
             WHEELS = "Колес";
+            CATERPILLARS = "Гусениц";
             BODIES = "Корпусов";
             HEADLIGHTS = "Фар";
             EXPLOSIVEPARTS = "Взрывчатых частей";

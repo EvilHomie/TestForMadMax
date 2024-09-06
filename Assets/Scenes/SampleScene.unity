@@ -2109,6 +2109,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbaff00d8bbc744a8e6c9918cdcf40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelSttisticText: {fileID: 367748876}
+  _resourcesCollectedText: {fileID: 1373837241}
+  _damageReceivedText: {fileID: 859446446}
+  _damageDoneText: {fileID: 389517544}
+  _toHullText:
+  - {fileID: 1495871886}
+  - {fileID: 580499407}
+  _toShieldText:
+  - {fileID: 1558193577}
+  - {fileID: 1435474402}
+  _elementDestroyedText: {fileID: 648653261}
+  _wheelsCaterpillarsText: {fileID: 400218282}
+  _bodiesText: {fileID: 126000194}
+  _headLightsText: {fileID: 635025274}
+  _explosivePartsText: {fileID: 837932483}
+  _tipText: {fileID: 432516515}
+  _previousText: {fileID: 276189335}
+  _nextTipText: {fileID: 1044542643}
+  _tipBodyText: {fileID: 377881829}
 --- !u!1 &26231347
 GameObject:
   m_ObjectHideFlags: 0
@@ -15754,7 +15773,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0.00005340576}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &216232779
@@ -18044,7 +18063,7 @@ GameObject:
   - component: {fileID: 276189336}
   - component: {fileID: 276189335}
   m_Layer: 5
-  m_Name: NextTipText
+  m_Name: PreviousText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22976,7 +22995,7 @@ GameObject:
   - component: {fileID: 377881830}
   - component: {fileID: 377881829}
   m_Layer: 5
-  m_Name: TipText
+  m_Name: TipBodyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23800,7 +23819,7 @@ GameObject:
   - component: {fileID: 400218283}
   - component: {fileID: 400218282}
   m_Layer: 5
-  m_Name: WheelsText
+  m_Name: WheelsCaterpillarsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23845,7 +23864,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Wheels
+  m_text: Wheels/Caterpillars
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 06d40a08d20f4a2468a1ea8c6e1611c2, type: 2}
   m_sharedMaterial: {fileID: 6695412497641276595, guid: 06d40a08d20f4a2468a1ea8c6e1611c2,
@@ -25390,7 +25409,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1804446773}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.971667
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -50195,7 +50214,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 8
   m_fontSizeMax: 17.82
-  m_fontStyle: 16
+  m_fontStyle: 20
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -51652,8 +51671,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 75
-    m_Right: 75
+    m_Left: 50
+    m_Right: 50
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
@@ -77445,7 +77464,7 @@ GameObject:
   - component: {fileID: 1386901694}
   - component: {fileID: 1386901695}
   m_Layer: 5
-  m_Name: Wheels
+  m_Name: WheelsCaterpillars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
