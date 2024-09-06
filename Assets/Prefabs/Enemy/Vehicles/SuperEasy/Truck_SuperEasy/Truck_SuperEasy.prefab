@@ -569,7 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23963454856638654}
@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23454560161501900}
@@ -813,7 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23538288855225914}
@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23493163550416002}
@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23949346867858296}
@@ -1179,7 +1179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23345953058612414}
@@ -1301,7 +1301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23957891774346204}
@@ -1423,7 +1423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 40
   _shieldHP: 0
   _partRenderer: {fileID: 23135199194522920}

@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 13
   _shieldHP: 0
   _partRenderer: {fileID: 23019035910664700}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 13
   _shieldHP: 0
   _partRenderer: {fileID: 23164971613293224}
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 13
   _shieldHP: 0
   _partRenderer: {fileID: 23972369854689696}
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 3
   _hullHP: 13
   _shieldHP: 0
   _partRenderer: {fileID: 23398552467741980}

@@ -51,10 +51,16 @@ public class UIEnemyHpPanel : MonoBehaviour
         {
             _hideCoroutine = StartCoroutine(HidePanelAfterDelay());
         }
+        else
+        {
+            StopCoroutine(_hideCoroutine);
+            _hideCoroutine = StartCoroutine(HidePanelAfterDelay());
+        }
     }
 
     public void DisableHPBars()
     {
+        if (!Application.isPlaying) return;
         _HullHPSlider.gameObject.SetActive(false);
         _ShieldHPSlider.gameObject.SetActive(false);
     }

@@ -115,6 +115,7 @@ public class UIResourcesManager : MonoBehaviour
 
         UpdateCounters();
         AnimateAddTexts(copperAmount, wiresAmount, scrapMetalAmount);
+        UILevelStatistic.Instance.OnCollectResources(scrapMetalAmount, wiresAmount, copperAmount);
     }
 
     public bool TrySpendResources(int scrapMetalAmount, int wiresAmount, int copperAmount)

@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.Init();
         UIResourcesManager.Instance.Init();
         UINewSchemeManager.Instance.Init();
+        UILevelStatistic.Instance.Init();
         AddListenersOnBtns();
 
         _playerOnRaid = false;
@@ -134,7 +135,7 @@ public class GameManager : MonoBehaviour
         RaidManager.Instance.OnPlayerStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
         PlayerHPManager.Instance.OnPlayerStartRaid();
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
-
+        UILevelStatistic.Instance.OnPlayerStartRaid();
 
 
         DisableMenuElements();
@@ -179,11 +180,13 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerVehicleDestroyed()
     {
+        UILevelStatistic.Instance.ShowStatistic();
         OnReturntToGarage();
     }
 
     public void OnPlayerKillAllEnemy()
     {
+        UILevelStatistic.Instance.ShowStatistic();
         OnReturntToGarage();
     }
 }

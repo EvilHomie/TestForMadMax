@@ -4,7 +4,8 @@ public enum EnumVehiclePart
     Weapon,
     Body,
     Wheel,
-    Explosive
+    ExplosivePart,
+    HeadLight
 }
 
 public enum ResourcesType

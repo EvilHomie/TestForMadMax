@@ -34,7 +34,7 @@ public class EnemyVehicleManager : MonoBehaviour
     PartHPManager _bodyPartHPManager;
 
     public AudioSource VehicleAudioSource => _vehicleAudioSource;
-    public int ReservedLineNumber { set => _reservedLineNumber = value; }
+    public int ReservedLineNumber { get => _reservedLineNumber; set => _reservedLineNumber = value; }
 
     private void Awake()
     {
@@ -66,7 +66,7 @@ public class EnemyVehicleManager : MonoBehaviour
     {
         if (!Application.isPlaying) return;
 
-        RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
+        
         if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
         {
             UIEnemyHpPanel.Instance.DisableHPBars();
@@ -123,6 +123,8 @@ public class EnemyVehicleManager : MonoBehaviour
         {
             UIEnemyHpPanel.Instance.DisableHPBars();
         }
+
+        //RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
     }
 
     public void OnHitPart()

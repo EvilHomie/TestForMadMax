@@ -38,12 +38,14 @@ public class PartHPManager : MonoBehaviour, IDamageable
         if (_shieldHP > 0)
         {
             _shieldHP -= shieldDmgValue;
+            UILevelStatistic.Instance.OnDamageDone(0, shieldDmgValue);
             _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.blue));
             _enemyVehicleManager.OnHitPart();
             return;
         }
 
         _hullHP -= hullDmgValue;
+        UILevelStatistic.Instance.OnDamageDone(hullDmgValue, 0);
         _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.red));
 
         _enemyVehicleManager.OnHitPart();
@@ -66,6 +68,10 @@ public class PartHPManager : MonoBehaviour, IDamageable
 
     protected virtual void OnPartDestroyLogic()
     {
+        UILevelStatistic.Instance.OnPartDestroyed(_vehiclePart);
+
+
+
         if (_vehiclePart == EnumVehiclePart.Other)
         {
             Destroy(gameObject);

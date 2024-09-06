@@ -57,10 +57,11 @@ public static class TextConstants
     public static string WHEELS = "WHEELS";
     public static string CATERPILLARS = "Caterpillars";
     public static string BODIES = "BODIES";
-    public static string HEADLIGHTS = "HEADLIGHTS";
+    public static string OTHERS = "OTHERS";
     public static string EXPLOSIVEPARTS = "EXPLOSIVE PARTS";
     public static string TIP = "TIP";
     public static string NEXTTIP = "NEXTTIP";
+    public static string PREVIOUS = "PREVIOUS";
     public static void SetLanguage(Language language)
     {
         Language = language;
@@ -122,10 +123,11 @@ public static class TextConstants
             WHEELS = "Колес";
             CATERPILLARS = "Гусениц";
             BODIES = "Корпусов";
-            HEADLIGHTS = "Фар";
+            OTHERS = "Других";
             EXPLOSIVEPARTS = "Взрывчатых частей";
             TIP = "Совет";
             NEXTTIP = "Далее";
+            PREVIOUS = "Назад";
 
         }
 

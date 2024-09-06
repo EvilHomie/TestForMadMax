@@ -19,6 +19,7 @@ public class ExplosivePartManager : PartHPManager
 
     protected override void OnPartDestroyLogic()
     {
+        UILevelStatistic.Instance.OnPartDestroyed(EnumVehiclePart.ExplosivePart);
         _blowParticleSystem.Play();
         _blowAudioSource.PlayOneShot(_blowAudioClip);
         gameObject.SetActive(false);
