@@ -73,7 +73,6 @@ public class LevelManager : MonoBehaviour
     public void UnlockNextLevel()
     {
         int nextLevelIndex = UILevelInfos.IndexOf(lastSelectedLevel) + 1;
-        Debug.Log(nextLevelIndex);
         if(nextLevelIndex >= UILevelInfos.Count) return;
         UILevelInfo nextLevelInfo = UILevelInfos[nextLevelIndex];
 

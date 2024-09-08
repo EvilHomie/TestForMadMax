@@ -97,7 +97,7 @@ public class WeaponLogic : MonoBehaviour
     IEnumerator SingleBarreledShootAsBot(float accuracy = 0)
     {
         yield return new WaitForSeconds(Random.Range(0, 0.5f));
-        while (_isShooting)
+        while (_isShooting && !PlayerHPManager.Instance.IsDead)
         {
             if (Time.time >= _nextTimeTofire)
             {
@@ -120,7 +120,7 @@ public class WeaponLogic : MonoBehaviour
     IEnumerator MultyBarreledShootAsBot(float barrelCount, float accuracy = 0)
     {
         yield return new WaitForSeconds(Random.Range(0, 0.5f));
-        while (_isShooting)
+        while (_isShooting && !PlayerHPManager.Instance.IsDead)
         {
             if (Time.time >= _nextTimeTofire)
             {

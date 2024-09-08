@@ -17,6 +17,9 @@ public class PlayerHPManager : MonoBehaviour
     float _maxShieldHp;
 
     bool _onRaid = false;
+    bool _isDead = false;
+
+    public bool IsDead => _isDead;
 
     private void Awake()
     {
@@ -33,6 +36,7 @@ public class PlayerHPManager : MonoBehaviour
         _maxShieldHp = _playerShieldHP;
         _maxHullHp = _playerHullHP;
         _onRaid = true;
+        _isDead = false;
         _musicAudioSource.Play();
     }
 
@@ -57,6 +61,7 @@ public class PlayerHPManager : MonoBehaviour
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
+        if (_isDead) return;
         CameraManager.Instance.Shake(0.1f, _onHitShakeIntensity);
         _hitAudioSource.PlayOneShot(hitSound);
         if (_playerShieldHP > 0)
@@ -82,12 +87,13 @@ public class PlayerHPManager : MonoBehaviour
 
         if (_playerHullHP <= 0)
         {
+            _isDead = true;
             OnPlayerVehicleDestroyed();
         }
     }
 
     void OnPlayerVehicleDestroyed()
     {
-        GameManager.Instance.OnPlayerVehicleDestroyed();
+        FinishLevelManager.Instance.OnFinishLevel();
     }
 }

@@ -149,7 +149,7 @@ public class RaidManager : MonoBehaviour
         if(_bossIsSpawned)
         {
             LevelManager.Instance.UnlockNextLevel();
-            GameManager.Instance.OnPlayerKillAllEnemy();
+            FinishLevelManager.Instance.OnFinishLevel();
             return;
         }
 
@@ -158,7 +158,7 @@ public class RaidManager : MonoBehaviour
             if (_selectedLevelInfo.BossEnemyVehicle == null)
             {
                 LevelManager.Instance.UnlockNextLevel();
-                GameManager.Instance.OnPlayerKillAllEnemy();
+                FinishLevelManager.Instance.OnFinishLevel();
             }
             else
             {

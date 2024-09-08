@@ -85,7 +85,7 @@ public class UILevelStatistic : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
-        ResetCounters();
+        ResetCounters();        
     }
 
     void ResetCounters()
@@ -165,6 +165,7 @@ public class UILevelStatistic : MonoBehaviour
 
     void ShowNewTip()
     {
+        Debug.LogWarning("NEWTIP");
         _lastTipIndex++;
         if (_lastTipIndex >= TextConstants.TIPSCOLLECTION.Length - 1)
         {
@@ -186,5 +187,6 @@ public class UILevelStatistic : MonoBehaviour
     void CloseStatistic()
     {
         gameObject.SetActive(false);
+        FinishLevelManager.Instance.HideBlackOutImage();
     }
 }

@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         _settingsBtn.onClick.AddListener(ToggleMenu);
         _startRaidBtn.onClick.AddListener(OnStartRaid);
-        _garageBtn.onClick.AddListener(OnReturntToGarage);
+        _garageBtn.onClick.AddListener(OnReturnToGarage);
         _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
         _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
         DisableMenuElements();
     }
 
-    void OnReturntToGarage()
+    public void OnReturnToGarage()
     {
         _playerOnRaid = false;
         SaveLoadManager.Instance.SaveData();
@@ -176,18 +176,6 @@ public class GameManager : MonoBehaviour
         _garageBtn.gameObject.SetActive(_playerOnRaid);
         _openInventoryBtn.gameObject.SetActive(!_playerOnRaid);
         _changeLevelsBtn.gameObject.SetActive(!_playerOnRaid);
-    }
-
-    public void OnPlayerVehicleDestroyed()
-    {
-        UILevelStatistic.Instance.ShowStatistic();
-        OnReturntToGarage();
-    }
-
-    public void OnPlayerKillAllEnemy()
-    {
-        UILevelStatistic.Instance.ShowStatistic();
-        OnReturntToGarage();
     }
 }
 
