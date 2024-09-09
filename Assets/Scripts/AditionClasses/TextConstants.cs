@@ -1,3 +1,5 @@
+using YG;
+
 public static class TextConstants
 {
     public static Language Language;
@@ -62,12 +64,17 @@ public static class TextConstants
     public static string TIP = "TIP";
     public static string NEXTTIP = "NEXTTIP";
     public static string PREVIOUS = "PREVIOUS";
-    public static void SetLanguage(Language language)
+    public static void SetLanguage()
     {
-        Language = language;
-        if (language == Language.en) return;
-        else if (language == Language.ru)
+         string language = YandexGame.EnvironmentData.language;
+        if (language == "en")
         {
+            Language = Language.en;
+            return;
+        }
+        else if (language == "ru")
+        {
+            Language = Language.ru;
             HULLDMG = "Урон Копусу";
             SHIELDDMG = "Урон Щитам";
             ROTATIONSPEED = "Скорость Поворота";

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class FinishLevelManager : MonoBehaviour
 {
@@ -41,9 +42,17 @@ public class FinishLevelManager : MonoBehaviour
         GameManager.Instance.OnReturnToGarage();
     }
 
-    public void HideBlackOutImage()
+    public void OnCloseLevelStatisic()
     {
         _blackoutImage.gameObject.SetActive(false);
+        YandexGame.FullscreenShow();
     }
-    
+
+
+    public void OnFullscreenAdClose()
+    {
+
+    }
+
+
 }

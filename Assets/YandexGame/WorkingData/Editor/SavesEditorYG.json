@@ -1,0 +1,20 @@
+{
+  "idSave": 2,
+  "isFirstSession": false,
+  "language": "ru",
+  "promptDone": false,
+  "money": 1,
+  "newPlayerName": "Hello!",
+  "openLevels": [
+    false,
+    true,
+    false
+  ],
+  "SavedWeaponsData": "[\r\n  \"{\\r\\n  \\\"deffWeaponName\\\": \\\"Simple_Cannon\\\",\\r\\n  \\\"weaponNameEN\\\": \\\"Simple Cannon\\\",\\r\\n  \\\"weaponNameRU\\\": \\\"Простая Пушка\\\",\\r\\n  \\\"weaponType\\\": 0,\\r\\n  \\\"weaponRaritie\\\": 0,\\r\\n  \\\"hullDmgByLvl\\\": 2.0,\\r\\n  \\\"hullDmgCurLvl\\\": 2,\\r\\n  \\\"hullDmgMaxLvl\\\": 5,\\r\\n  \\\"shieldDmgByLvl\\\": 1.0,\\r\\n  \\\"shieldDmgCurLvl\\\": 2,\\r\\n  \\\"shieldDmgMaxLvl\\\": 6,\\r\\n  \\\"fireRateByLvl\\\": 0.5,\\r\\n  \\\"fireRateCurtLvl\\\": 4,\\r\\n  \\\"fireRateMaxLvl\\\": 6,\\r\\n  \\\"rotationSpeedByLvl\\\": 15.0,\\r\\n  \\\"rotationSpeedCurLvl\\\": 2,\\r\\n  \\\"rotationSpeedMaxLvl\\\": 6,\\r\\n  \\\"TranslatedItemName\\\": \\\"Simple Cannon\\\",\\r\\n  \\\"DeffItemName\\\": \\\"Simple_Cannon\\\",\\r\\n  \\\"name\\\": \\\"Simple_Cannon(Clone)\\\",\\r\\n  \\\"hideFlags\\\": 0\\r\\n}\"\r\n]",
+  "SavedVehiclesData": "[\r\n  \"{\\r\\n  \\\"deffVehicleName\\\": \\\"Simple_Truck\\\",\\r\\n  \\\"vehicleNameEN\\\": \\\"Simple Truck\\\",\\r\\n  \\\"vehicleNameRU\\\": \\\"Простой Грузовик\\\",\\r\\n  \\\"vehicleRaritie\\\": 0,\\r\\n  \\\"hullHPByLvl\\\": 50.0,\\r\\n  \\\"hullHPCurLvl\\\": 1,\\r\\n  \\\"hullHPMaxLvl\\\": 5,\\r\\n  \\\"shieldHPByLvl\\\": 25.0,\\r\\n  \\\"shieldHPCurLvl\\\": 0,\\r\\n  \\\"shieldHPMaxLvl\\\": 2,\\r\\n  \\\"shieldRegenRateByLvl\\\": 1.0,\\r\\n  \\\"shieldRegenCurtLvl\\\": 0,\\r\\n  \\\"shieldRegenMaxLvl\\\": 3,\\r\\n  \\\"curWeaponsCount\\\": 1,\\r\\n  \\\"maxWeaponsCount\\\": 1,\\r\\n  \\\"TranslatedItemName\\\": \\\"Simple Truck\\\",\\r\\n  \\\"DeffItemName\\\": \\\"Simple_Truck\\\",\\r\\n  \\\"name\\\": \\\"Simple_Truck(Clone)\\\",\\r\\n  \\\"hideFlags\\\": 0\\r\\n}\"\r\n]",
+  "SavedSchemeNames": "[\r\n  \"Energy_Simple_Cannon_Scheme\",\r\n  \"Advanced_Truck_Scheme\"\r\n]",
+  "SavedResourcesData": "{\"ScrapMetal\":0,\"Wires\":0,\"Сopper\":0}",
+  "SavedEquipedItems": "{\"0\":\"Simple_Truck\",\"1\":\"Simple_Cannon\"}",
+  "LastselectedLevelName": "1-1",
+  "UnlockedLevelsNames": "[\"1-1\"]"
+}

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _openInventoryBtnText;
 
 
+
     float _showControllerDelay = 6; // зависит от звука запуска двигател€, а точнее времени набора стартовой скорости
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
@@ -26,12 +28,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;        
+        else Instance = this;
+        
     }
 
     void Start()
     {
-        TextConstants.SetLanguage(GameConfig.Instance.Language);
         Init();
     }
 
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         Application.targetFrameRate = 1000;
+        TextConstants.SetLanguage();
         SaveLoadManager.Instance.LoadSaveData();
 
         _startRaidBtnText.text = TextConstants.RAID;
@@ -83,7 +86,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    
+
 
     //“≈—“ќ¬јя ќЅЋј—“№
     private void Update()
@@ -99,8 +102,11 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            PlayerPrefs.DeleteAll();
-            Debug.LogWarning("SAVE CLEAR");
+            YandexGame.ResetSaveProgress();
+            YandexGame.SaveProgress();
+
+            //PlayerPrefs.DeleteAll();
+            //Debug.LogWarning("SAVE CLEAR");
         }
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -139,6 +145,7 @@ public class GameManager : MonoBehaviour
 
 
         DisableMenuElements();
+        YandexGame.GameplayStart();
     }
 
     public void OnReturnToGarage()
@@ -157,6 +164,7 @@ public class GameManager : MonoBehaviour
         UIEnemyHpPanel.Instance.OnPlayerEndRaid();
 
         SwitchMenuElements();
+        YandexGame.GameplayStop();
     }
 
     void DisableMenuElements()
