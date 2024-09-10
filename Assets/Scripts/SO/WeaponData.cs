@@ -39,4 +39,25 @@ public class WeaponData : ScriptableObject, IItemData
     }
 
     public string DeffItemName => deffWeaponName;
+
+    public void SetData(WeaponDataForSave weaponData)
+    {
+        deffWeaponName = weaponData.deffWeaponName;
+        weaponNameEN = weaponData.weaponNameEN;
+        weaponNameRU = weaponData.weaponNameRU;
+        weaponType = weaponData.weaponType;
+        weaponRaritie = weaponData.weaponRaritie;
+        hullDmgByLvl = weaponData.hullDmgByLvl;
+        hullDmgCurLvl = weaponData.hullDmgCurLvl;
+        hullDmgMaxLvl = weaponData.hullDmgMaxLvl;
+        shieldDmgByLvl = weaponData.shieldDmgByLvl;
+        shieldDmgCurLvl = weaponData.shieldDmgCurLvl;
+        shieldDmgMaxLvl = weaponData.shieldDmgMaxLvl;
+        fireRateByLvl = weaponData.fireRateByLvl;
+        fireRateCurtLvl = weaponData.fireRateCurtLvl;
+        fireRateMaxLvl = weaponData.fireRateMaxLvl;
+        rotationSpeedByLvl = weaponData.rotationSpeedByLvl;
+        rotationSpeedCurLvl = weaponData.rotationSpeedCurLvl;
+        rotationSpeedMaxLvl = weaponData.rotationSpeedMaxLvl;
+    }
 }

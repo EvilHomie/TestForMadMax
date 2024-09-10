@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
@@ -16,7 +15,6 @@ public class SaveLoadManager : MonoBehaviour
 
     void ResetProgress(string[] ItemsNames)
     {
-        PlayerPrefs.DeleteAll();
         PlayerData.Instance.PlayerItemsData = new();
         UIResourcesManager.Instance.RemoveAllResources();
         foreach (var itemName in ItemsNames)
@@ -47,14 +45,14 @@ public class SaveLoadManager : MonoBehaviour
         PlayerData.Instance.LastSelectedLevelName = "1-1";
         PlayerData.Instance.UnlockedLevelsNames = new() { "1-1" };
 
-
+        SaveData();
 
     }
 
     public void SaveData()
     {
-        List<VehicleData> vehiclesData = new();
         List<WeaponData> weaponsData = new();
+        List<VehicleData> vehiclesData = new();
         List<string> schemesNames = new();
 
         foreach (var item in PlayerData.Instance.PlayerItemsData)
@@ -64,92 +62,169 @@ public class SaveLoadManager : MonoBehaviour
             else if (item is SchemeData WSData) schemesNames.Add(WSData.SchemeName);
         }
 
-        List<string> weaponsDataAsStrings = new();
-        List<string> vehiclesDataAsStrings = new();
-
+        List<WeaponDataForSave> weaponDataForSaves = new();
         foreach (var item in weaponsData)
         {
-            string stringData = JsonConvert.SerializeObject(item, Formatting.Indented);
-            weaponsDataAsStrings.Add(stringData);
+            WeaponDataForSave dataForSave = new(item);
+            weaponDataForSaves.Add(dataForSave);
         }
-        YandexGame.savesData.SavedWeaponsData = JsonConvert.SerializeObject(weaponsDataAsStrings, Formatting.Indented);
+        YandexGame.savesData.weaponsData = weaponDataForSaves;
 
+        List<VehicleDataForSave> vehicleDataForSaves = new();
         foreach (var item in vehiclesData)
         {
-            string stringData = JsonConvert.SerializeObject(item, Formatting.Indented);
-            vehiclesDataAsStrings.Add(stringData);
+            VehicleDataForSave dataForSave = new(item);
+            vehicleDataForSaves.Add(dataForSave);
         }
-        YandexGame.savesData.SavedVehiclesData = JsonConvert.SerializeObject(vehiclesDataAsStrings, Formatting.Indented);
+        YandexGame.savesData.vehiclesData = vehicleDataForSaves;
 
-        YandexGame.savesData.SavedSchemeNames = JsonConvert.SerializeObject(schemesNames, Formatting.Indented);
+        YandexGame.savesData.schemesNames = schemesNames;
 
-        string savedResources = JsonConvert.SerializeObject(PlayerData.Instance.AvailableResources);
-        YandexGame.savesData.SavedResourcesData = savedResources;
+        YandexGame.savesData.availableResources = PlayerData.Instance.AvailableResources;
 
-        string savedEquipedItems = JsonConvert.SerializeObject(PlayerData.Instance.EquipedItems);
-        YandexGame.savesData.SavedEquipedItems = savedEquipedItems;
+        YandexGame.savesData.equipedItems = PlayerData.Instance.EquipedItems;
 
-        string lastselectedLevelName = PlayerData.Instance.LastSelectedLevelName;
-        YandexGame.savesData.LastselectedLevelName = lastselectedLevelName;
+        YandexGame.savesData.lastSelectedLevelName = PlayerData.Instance.LastSelectedLevelName;
 
-        string unlockedLevelsNames = JsonConvert.SerializeObject(PlayerData.Instance.UnlockedLevelsNames);
-        YandexGame.savesData.UnlockedLevelsNames = unlockedLevelsNames;
+        YandexGame.savesData.unlockedLevelsNames = PlayerData.Instance.UnlockedLevelsNames;
 
+        YandexGame.savesData.savesNotClear = true;
         YandexGame.SaveProgress();
     }
 
     public void LoadSaveData()
     {
-        if (
-            YandexGame.savesData.SavedWeaponsData == null ||
-            YandexGame.savesData.SavedVehiclesData == null ||
-            YandexGame.savesData.SavedSchemeNames == null ||
-            YandexGame.savesData.SavedResourcesData == null ||
-            YandexGame.savesData.SavedEquipedItems == null ||
-            YandexGame.savesData.LastselectedLevelName == null ||
-            YandexGame.savesData.UnlockedLevelsNames == null
-            )
+        if (!YandexGame.savesData.savesNotClear)
         {
             ResetProgress(_deffaultItemsNames);
             return;
         }
-
         PlayerData.Instance.PlayerItemsData = new();
 
-
-
-        List<string> weaponsDataAsStrings = JsonConvert.DeserializeObject<List<string>>(YandexGame.savesData.SavedWeaponsData);
-        foreach (var weaponStringData in weaponsDataAsStrings)
+        foreach (var weaponData in YandexGame.savesData.weaponsData)
         {
-            WeaponData weaponData = ScriptableObject.CreateInstance<WeaponData>();
-            JsonUtility.FromJsonOverwrite(weaponStringData, weaponData);
-            PlayerData.Instance.PlayerItemsData.Add(weaponData);
+            WeaponData newWeaponData = ScriptableObject.CreateInstance<WeaponData>();
+            newWeaponData.SetData(weaponData);
+            PlayerData.Instance.PlayerItemsData.Add(newWeaponData);
         }
 
-        List<string> vehiclesDataAsStrings = JsonConvert.DeserializeObject<List<string>>(YandexGame.savesData.SavedVehiclesData);
-        foreach (var vehicleStringData in vehiclesDataAsStrings)
+        foreach (var vehicleData in YandexGame.savesData.vehiclesData)
         {
-            VehicleData vehicleData = ScriptableObject.CreateInstance<VehicleData>();
-            JsonUtility.FromJsonOverwrite(vehicleStringData, vehicleData);
-            PlayerData.Instance.PlayerItemsData.Add(vehicleData);
+            VehicleData newVehicleData = ScriptableObject.CreateInstance<VehicleData>();
+            newVehicleData.SetData(vehicleData);
+            PlayerData.Instance.PlayerItemsData.Add(newVehicleData);
         }
 
-
-
-        List<string> schemeNames = JsonConvert.DeserializeObject<List<string>>(YandexGame.savesData.SavedSchemeNames);
-        foreach (var schemeName in schemeNames)
+        foreach (var schemeName in YandexGame.savesData.schemesNames)
         {
             SchemeData schemeData = GameAssets.Instance.GameItems.SchemeData.Find(scheme => scheme.SchemeName == schemeName);
             PlayerData.Instance.PlayerItemsData.Add((IItemData)schemeData);
         }
 
-        PlayerData.Instance.AvailableResources = JsonConvert.DeserializeObject<Dictionary<ResourcesType, int>>(YandexGame.savesData.SavedResourcesData);
+        PlayerData.Instance.AvailableResources = YandexGame.savesData.availableResources;
 
-        PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int, string>>(YandexGame.savesData.SavedEquipedItems);
+        PlayerData.Instance.EquipedItems = YandexGame.savesData.equipedItems;
 
-        PlayerData.Instance.LastSelectedLevelName = YandexGame.savesData.LastselectedLevelName;
+        PlayerData.Instance.LastSelectedLevelName = YandexGame.savesData.lastSelectedLevelName;
 
-        PlayerData.Instance.UnlockedLevelsNames = JsonConvert.DeserializeObject<List<string>>(YandexGame.savesData.UnlockedLevelsNames);
+        PlayerData.Instance.UnlockedLevelsNames = YandexGame.savesData.unlockedLevelsNames;
+    }
+}
+
+
+public class WeaponDataForSave
+{
+    public string deffWeaponName;
+    public string weaponNameEN;
+    public string weaponNameRU;
+    public WeaponType weaponType;
+    public Raritie weaponRaritie;
+
+    public float hullDmgByLvl;
+    public int hullDmgCurLvl;
+    public int hullDmgMaxLvl;
+
+    public float shieldDmgByLvl;
+    public int shieldDmgCurLvl;
+    public int shieldDmgMaxLvl;
+
+    public float fireRateByLvl;
+    public int fireRateCurtLvl;
+    public int fireRateMaxLvl;
+
+    public float rotationSpeedByLvl;
+    public int rotationSpeedCurLvl;
+    public int rotationSpeedMaxLvl;
+
+    public WeaponDataForSave()
+    {
+
+    }
+    public WeaponDataForSave(WeaponData weaponData)
+    {
+        deffWeaponName = weaponData.deffWeaponName;
+        weaponNameEN = weaponData.weaponNameEN;
+        weaponNameRU = weaponData.weaponNameRU;
+        weaponType = weaponData.weaponType;
+        weaponRaritie = weaponData.weaponRaritie;
+        hullDmgByLvl = weaponData.hullDmgByLvl;
+        hullDmgCurLvl = weaponData.hullDmgCurLvl;
+        hullDmgMaxLvl = weaponData.hullDmgMaxLvl;
+        shieldDmgByLvl = weaponData.shieldDmgByLvl;
+        shieldDmgCurLvl = weaponData.shieldDmgCurLvl;
+        shieldDmgMaxLvl = weaponData.shieldDmgMaxLvl;
+        fireRateByLvl = weaponData.fireRateByLvl;
+        fireRateCurtLvl = weaponData.fireRateCurtLvl;
+        fireRateMaxLvl = weaponData.fireRateMaxLvl;
+        rotationSpeedByLvl = weaponData.rotationSpeedByLvl;
+        rotationSpeedCurLvl = weaponData.rotationSpeedCurLvl;
+        rotationSpeedMaxLvl = weaponData.rotationSpeedMaxLvl;
+    }
+}
+
+public class VehicleDataForSave
+{
+    public string deffVehicleName;
+    public string vehicleNameEN;
+    public string vehicleNameRU;
+    public Raritie vehicleRaritie;
+
+    public float hullHPByLvl;
+    public int hullHPCurLvl;
+    public int hullHPMaxLvl;
+
+    public float shieldHPByLvl;
+    public int shieldHPCurLvl;
+    public int shieldHPMaxLvl;
+
+    public float shieldRegenRateByLvl;
+    public int shieldRegenCurtLvl;
+    public int shieldRegenMaxLvl;
+
+    public int curWeaponsCount;
+    public int maxWeaponsCount;
+
+    public VehicleDataForSave()
+    {
+
+    }
+    public VehicleDataForSave(VehicleData vehicleData)
+    {
+        deffVehicleName = vehicleData.deffVehicleName;
+        vehicleNameEN = vehicleData.vehicleNameEN;
+        vehicleNameRU = vehicleData.vehicleNameRU;
+        vehicleRaritie = vehicleData.vehicleRaritie;
+        hullHPByLvl = vehicleData.hullHPByLvl;
+        hullHPCurLvl = vehicleData.hullHPCurLvl;
+        hullHPMaxLvl = vehicleData.hullHPMaxLvl;
+        shieldHPByLvl = vehicleData.shieldHPByLvl;
+        shieldHPCurLvl = vehicleData.shieldHPCurLvl;
+        shieldHPMaxLvl = vehicleData.shieldHPMaxLvl;
+        shieldRegenRateByLvl = vehicleData.shieldRegenRateByLvl;
+        shieldRegenCurtLvl = vehicleData.shieldRegenCurtLvl;
+        shieldRegenMaxLvl = vehicleData.shieldRegenMaxLvl;
+        curWeaponsCount = vehicleData.curWeaponsCount;
+        maxWeaponsCount = vehicleData.maxWeaponsCount;
     }
 }
 

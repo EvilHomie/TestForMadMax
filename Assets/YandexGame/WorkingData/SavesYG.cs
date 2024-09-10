@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace YG
 {
     [System.Serializable]
@@ -18,13 +20,14 @@ namespace YG
 
         // Ваши сохранения
 
-        public string SavedWeaponsData = null;
-        public string SavedVehiclesData = null;
-        public string SavedSchemeNames = null;
-        public string SavedResourcesData = null;
-        public string SavedEquipedItems = null;
-        public string LastselectedLevelName = null;
-        public string UnlockedLevelsNames = null;
+        public bool savesNotClear = false;
+        public List<WeaponDataForSave> weaponsData = new();
+        public List<VehicleDataForSave> vehiclesData = new();
+        public List<string> schemesNames = new();
+        public Dictionary<ResourcesType, int> availableResources = new();
+        public Dictionary<int, string> equipedItems = new();
+        public string lastSelectedLevelName = null;
+        public List<string> unlockedLevelsNames = new();
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
@@ -34,7 +37,7 @@ namespace YG
         {
             // Допустим, задать значения по умолчанию для отдельных элементов массива
 
-            openLevels[1] = true;
+            //openLevels[1] = true;
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-  "idSave": 2,
+  "idSave": 51,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -10,11 +10,62 @@
     true,
     false
   ],
-  "SavedWeaponsData": "[\r\n  \"{\\r\\n  \\\"deffWeaponName\\\": \\\"Simple_Cannon\\\",\\r\\n  \\\"weaponNameEN\\\": \\\"Simple Cannon\\\",\\r\\n  \\\"weaponNameRU\\\": \\\"Простая Пушка\\\",\\r\\n  \\\"weaponType\\\": 0,\\r\\n  \\\"weaponRaritie\\\": 0,\\r\\n  \\\"hullDmgByLvl\\\": 2.0,\\r\\n  \\\"hullDmgCurLvl\\\": 2,\\r\\n  \\\"hullDmgMaxLvl\\\": 5,\\r\\n  \\\"shieldDmgByLvl\\\": 1.0,\\r\\n  \\\"shieldDmgCurLvl\\\": 2,\\r\\n  \\\"shieldDmgMaxLvl\\\": 6,\\r\\n  \\\"fireRateByLvl\\\": 0.5,\\r\\n  \\\"fireRateCurtLvl\\\": 4,\\r\\n  \\\"fireRateMaxLvl\\\": 6,\\r\\n  \\\"rotationSpeedByLvl\\\": 15.0,\\r\\n  \\\"rotationSpeedCurLvl\\\": 2,\\r\\n  \\\"rotationSpeedMaxLvl\\\": 6,\\r\\n  \\\"TranslatedItemName\\\": \\\"Simple Cannon\\\",\\r\\n  \\\"DeffItemName\\\": \\\"Simple_Cannon\\\",\\r\\n  \\\"name\\\": \\\"Simple_Cannon(Clone)\\\",\\r\\n  \\\"hideFlags\\\": 0\\r\\n}\"\r\n]",
-  "SavedVehiclesData": "[\r\n  \"{\\r\\n  \\\"deffVehicleName\\\": \\\"Simple_Truck\\\",\\r\\n  \\\"vehicleNameEN\\\": \\\"Simple Truck\\\",\\r\\n  \\\"vehicleNameRU\\\": \\\"Простой Грузовик\\\",\\r\\n  \\\"vehicleRaritie\\\": 0,\\r\\n  \\\"hullHPByLvl\\\": 50.0,\\r\\n  \\\"hullHPCurLvl\\\": 1,\\r\\n  \\\"hullHPMaxLvl\\\": 5,\\r\\n  \\\"shieldHPByLvl\\\": 25.0,\\r\\n  \\\"shieldHPCurLvl\\\": 0,\\r\\n  \\\"shieldHPMaxLvl\\\": 2,\\r\\n  \\\"shieldRegenRateByLvl\\\": 1.0,\\r\\n  \\\"shieldRegenCurtLvl\\\": 0,\\r\\n  \\\"shieldRegenMaxLvl\\\": 3,\\r\\n  \\\"curWeaponsCount\\\": 1,\\r\\n  \\\"maxWeaponsCount\\\": 1,\\r\\n  \\\"TranslatedItemName\\\": \\\"Simple Truck\\\",\\r\\n  \\\"DeffItemName\\\": \\\"Simple_Truck\\\",\\r\\n  \\\"name\\\": \\\"Simple_Truck(Clone)\\\",\\r\\n  \\\"hideFlags\\\": 0\\r\\n}\"\r\n]",
-  "SavedSchemeNames": "[\r\n  \"Energy_Simple_Cannon_Scheme\",\r\n  \"Advanced_Truck_Scheme\"\r\n]",
-  "SavedResourcesData": "{\"ScrapMetal\":0,\"Wires\":0,\"Сopper\":0}",
-  "SavedEquipedItems": "{\"0\":\"Simple_Truck\",\"1\":\"Simple_Cannon\"}",
-  "LastselectedLevelName": "1-1",
-  "UnlockedLevelsNames": "[\"1-1\"]"
+  "savesNotClear": true,
+  "weaponsData": [
+    {
+      "deffWeaponName": "Simple_Cannon",
+      "weaponNameEN": "Simple Cannon",
+      "weaponNameRU": "Простая Пушка",
+      "weaponType": 0,
+      "weaponRaritie": 0,
+      "hullDmgByLvl": 2.0,
+      "hullDmgCurLvl": 2,
+      "hullDmgMaxLvl": 5,
+      "shieldDmgByLvl": 1.0,
+      "shieldDmgCurLvl": 2,
+      "shieldDmgMaxLvl": 6,
+      "fireRateByLvl": 0.5,
+      "fireRateCurtLvl": 4,
+      "fireRateMaxLvl": 6,
+      "rotationSpeedByLvl": 15.0,
+      "rotationSpeedCurLvl": 2,
+      "rotationSpeedMaxLvl": 6
+    }
+  ],
+  "vehiclesData": [
+    {
+      "deffVehicleName": "Simple_Truck",
+      "vehicleNameEN": "Simple Truck",
+      "vehicleNameRU": "Простой Грузовик",
+      "vehicleRaritie": 0,
+      "hullHPByLvl": 50.0,
+      "hullHPCurLvl": 1,
+      "hullHPMaxLvl": 5,
+      "shieldHPByLvl": 25.0,
+      "shieldHPCurLvl": 0,
+      "shieldHPMaxLvl": 2,
+      "shieldRegenRateByLvl": 1.0,
+      "shieldRegenCurtLvl": 0,
+      "shieldRegenMaxLvl": 3,
+      "curWeaponsCount": 1,
+      "maxWeaponsCount": 1
+    }
+  ],
+  "schemesNames": [
+    "Energy_Simple_Cannon_Scheme",
+    "Advanced_Truck_Scheme"
+  ],
+  "availableResources": {
+    "ScrapMetal": 0,
+    "Wires": 0,
+    "Сopper": 0
+  },
+  "equipedItems": {
+    "0": "Simple_Truck",
+    "1": "Simple_Cannon"
+  },
+  "lastSelectedLevelName": "1-1",
+  "unlockedLevelsNames": [
+    "1-1"
+  ]
 }

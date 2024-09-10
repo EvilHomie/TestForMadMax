@@ -32,14 +32,19 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void OnEnable() => YandexGame.GetDataEvent += Init;
+    private void OnDisable() => YandexGame.GetDataEvent -= Init;
+
     void Start()
     {
-        Init();
+        YandexGame.GameReadyAPI();
+        //Init();
     }
 
 
     void Init()
     {
+        Canvas.ForceUpdateCanvases();
         Application.targetFrameRate = 1000;
         TextConstants.SetLanguage();
         SaveLoadManager.Instance.LoadSaveData();
@@ -91,15 +96,15 @@ public class GameManager : MonoBehaviour
     //“≈—“Œ¬¿ﬂ Œ¡À¿—“‹
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SaveLoadManager.Instance.SaveData();
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    SaveLoadManager.Instance.SaveData();
 
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SaveLoadManager.Instance.LoadSaveData();
-        }
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    SaveLoadManager.Instance.LoadSaveData();
+        //}
         if (Input.GetKeyDown(KeyCode.C))
         {
             YandexGame.ResetSaveProgress();
