@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class PlayerWeaponManager : MonoBehaviour
     float curWeaponRotationY = 0;
     float curWeaponRotationX = 0;
 
+    bool _playerIsDead = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -21,6 +24,7 @@ public class PlayerWeaponManager : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if (_playerIsDead) return;
         RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
         RotateWeaponAndCameraByWASD();
     }
@@ -73,6 +77,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
+        _playerIsDead = false;
         UpdateWeaponsData();
         _selectedWeaponIndex = 1;
         foreach (var weapon in _weapons)
@@ -122,6 +127,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void StartShoot()
     {
+        if(_playerIsDead) return;
         _weapons[_selectedWeaponIndex].StartShooting();
     }
 
@@ -160,5 +166,24 @@ public class PlayerWeaponManager : MonoBehaviour
 
         _weaponPoints[_selectedWeaponIndex].rotation = newRotation;
         Camera.main.transform.rotation = newRotation;
+    }
+
+    public void OnPlayerDie()
+    {
+        _playerIsDead = true;
+        StopShoot();
+        StartCoroutine(RotateWeaponOnDie());
+    }
+
+    IEnumerator RotateWeaponOnDie()
+    {
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / GameConfig.Instance.TimeForChangeSpeed;
+            RotateWeaponAndCameraByJoystick(Vector2.down);
+            yield return null;
+        }
     }
 }

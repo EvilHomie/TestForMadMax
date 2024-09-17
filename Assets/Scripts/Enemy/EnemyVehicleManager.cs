@@ -134,4 +134,9 @@ public class EnemyVehicleManager : MonoBehaviour
         _bodyPartHPManager.GetBodyHPRelativeValues(out float hullHPRelativeValue, out float shieldHPRelativeValue);
         UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, this);
     }
+    public void OnPlayerDie()
+    {
+        if (_isDead) return;
+        _vehicleMovementController.OnPlayerDie();
+    }
 }

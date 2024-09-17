@@ -67,7 +67,7 @@ public class RaidManager : MonoBehaviour
         CancelInvoke();
         _onRaid = true;
         //_bossIsSpawned = false;
-        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();       
+        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
         _spawnedSimpleEnemyCount = 0;
         _killedSimpleEnemyCount = 0;
         _speedSliderFillImage.fillAmount = 0;
@@ -133,12 +133,12 @@ public class RaidManager : MonoBehaviour
         if (_spawnedSimpleEnemyCount < _selectedLevelInfo.EnemyCount)
         {
             SpawnSimpleEnemy();
-        }        
+        }
     }
 
     public void OnEnemyObjectDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
     {
-        if(!Application.isPlaying) return;
+        if (!Application.isPlaying) return;
         if (!_onRaid) return;
         _enemiesList.Remove(enemy);
         _freeSpawnLinesNumbers.Add(reservedLineNumber);
@@ -158,7 +158,7 @@ public class RaidManager : MonoBehaviour
             if (_selectedLevelInfo.BossEnemyVehicle != null)
             {
                 SpawnBoss();
-            }           
+            }
         }
     }
     public void OnPlayerKillEnemy()
@@ -169,7 +169,7 @@ public class RaidManager : MonoBehaviour
         if (_killedSimpleEnemyCount >= _selectedLevelInfo.EnemyCount + bossCount)
         {
             LevelManager.Instance.UnlockNextLevel();
-            FinishLevelManager.Instance.OnFinishLevel();
+            FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
         }
     }
 
@@ -212,6 +212,30 @@ public class RaidManager : MonoBehaviour
 
         //_bossIsSpawned = true;
         //Debug.LogWarning($"BOSS IS SPAWNED AT LINE {freeLineNumber}");
+    }
+
+    public void OnPLayerDie()
+    {
+        StartCoroutine(ChangeSpeedOnDie());
+        foreach (var enemy in _enemiesList)
+        {
+            enemy.OnPlayerDie();
+        }
+    }
+
+    IEnumerator ChangeSpeedOnDie()
+    {
+        float t = 0;
+        float mod;
+        float lastSpeed = _playerMoveSpeed;
+
+        while (_playerMoveSpeed > 0)
+        {
+            t += Time.deltaTime / GameConfig.Instance.TimeForChangeSpeed;
+            mod = Mathf.Lerp(1, 0, t);
+            _playerMoveSpeed = lastSpeed * mod;
+            yield return null;
+        }
     }
 }
 

@@ -29,13 +29,13 @@ public class AudioManager : MonoBehaviour
     {
         if (_soundIsOn)
         {
-            DisableMasterSound();
             _soundIsOn = false;
+            DisableMasterSound();
         }
         else
         {
-            EnableMasterSound();
             _soundIsOn = true;
+            EnableMasterSound();
         }
     }
 
@@ -47,6 +47,7 @@ public class AudioManager : MonoBehaviour
 
     public void EnableMasterSound()
     {
+        if (!_soundIsOn) return;
         _toggleSoundButton.image.sprite = _soundsFullIcon;
         _audioMixer.SetFloat("MasterSound", 0f);
     }

@@ -1,5 +1,5 @@
 {
-  "idSave": 210,
+  "idSave": 262,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -56,8 +56,8 @@
     "Advanced_Truck_Scheme"
   ],
   "availableResources": {
-    "ScrapMetal": 0,
-    "Wires": 0,
+    "ScrapMetal": 23,
+    "Wires": 10,
     "Сopper": 0
   },
   "equipedItems": {
@@ -66,6 +66,7 @@
   },
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
-    "1-1"
+    "1-1",
+    "1-2"
   ]
 }

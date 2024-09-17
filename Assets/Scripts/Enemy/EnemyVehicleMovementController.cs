@@ -102,7 +102,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
         while (transform.position.x > -GameConfig.Instance.XOffsetForDestroyObject)
         {
-            t += Time.deltaTime/2;
+            t += Time.deltaTime/ GameConfig.Instance.TimeForChangeSpeed;
             mod = Mathf.Lerp(0,1,t);
 
             transform.Translate(mod * GameConfig.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left, Space.World);
@@ -133,5 +133,27 @@ public class EnemyVehicleMovementController : MonoBehaviour
         }
         RaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
         Destroy(gameObject);
+    }
+
+    public void OnPlayerDie()
+    {
+        if (_translateToGameZoneCoroutine != null) StopCoroutine(_translateToGameZoneCoroutine);
+        if (_slidingCoroutine != null) StopCoroutine(_slidingCoroutine);
+        StartCoroutine(OnPlayerDieTranslation());
+    }
+
+    IEnumerator OnPlayerDieTranslation()
+    {
+        float t = 0;
+        float mod;
+
+        while (transform.position.x < GameConfig.Instance.XOffsetForDestroyObject)
+        {
+            t += Time.deltaTime / 2;
+            mod = Mathf.Lerp(0, 1, t);
+
+            transform.Translate(mod * GameConfig.Instance.SpeedMod * GameConfig.Instance.OnPlayerDieSpeedMod * Time.deltaTime * Vector3.right, Space.World);
+            yield return null;
+        }
     }
 }

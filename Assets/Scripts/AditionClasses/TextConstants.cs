@@ -64,9 +64,12 @@ public static class TextConstants
     public static string TIP = "TIP";
     public static string NEXTTIP = "NEXTTIP";
     public static string PREVIOUS = "PREVIOUS";
+    public static string RAIDDONE = "RAID DONE";
+    public static string RAIDFAILED = "RAID FAILED";
+
     public static void SetLanguage()
     {
-         string language = YandexGame.EnvironmentData.language;
+        string language = YandexGame.EnvironmentData.language;
         if (language == "en")
         {
             Language = Language.en;
@@ -135,6 +138,8 @@ public static class TextConstants
             TIP = "Совет";
             NEXTTIP = "Далее";
             PREVIOUS = "Назад";
+            RAIDDONE = "Пройдено";
+            RAIDFAILED = "Неудачно";
 
         }
 

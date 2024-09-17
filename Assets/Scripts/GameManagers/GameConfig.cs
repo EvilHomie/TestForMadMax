@@ -35,6 +35,7 @@ public class GameConfig : MonoBehaviour
     [SerializeField] float _minRunSpeed = 0.3f;
     [SerializeField] float _maxRunSpeed = 0.5f;
     [SerializeField] float _lockOnPlayerDuration = 2f;
+    [SerializeField] float _onPlayerDieSpeedMod = 2f;
 
     [Header("PlayerWeapon")]
     [SerializeField] float _maxYRotateAngle;
@@ -74,7 +75,7 @@ public class GameConfig : MonoBehaviour
     public float MaxRunSpeed => _maxRunSpeed;
 
     public float LockOnPlayerDuration => _lockOnPlayerDuration;
-
+    public float OnPlayerDieSpeedMod => _onPlayerDieSpeedMod;
     public float MaxYRotateAngle => _maxYRotateAngle;
     public float MaxXRotateAngle => _maxXRotateAngle;
 
