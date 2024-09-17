@@ -12,6 +12,8 @@ public class PlayerHPManager : MonoBehaviour
     [SerializeField] float _onHitShakeIntensity;
     [SerializeField] AudioSource _musicAudioSource;
     [SerializeField] AudioSource _hitAudioSource;
+    [SerializeField] ParticleSystem _explosionPS;
+    [SerializeField] AudioClip _onDieExplosionSound;
 
     float _maxHullHp;
     float _maxShieldHp;
@@ -94,6 +96,8 @@ public class PlayerHPManager : MonoBehaviour
 
     void OnPlayerVehicleDestroyed()
     {
+        _explosionPS.Play();
+        _hitAudioSource.PlayOneShot(_onDieExplosionSound);
         FinishLevelManager.Instance.OnFinishLevel();
     }
 }

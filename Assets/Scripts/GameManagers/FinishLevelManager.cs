@@ -9,6 +9,9 @@ public class FinishLevelManager : MonoBehaviour
 
     [SerializeField] Image _blackoutImage;
     [SerializeField] float _blackoutDuration;
+    [SerializeField] float _blackoutDelay = 2;
+    [SerializeField] ViewingAdsYG _viewingAdsYG;
+
 
     private void Awake()
     {
@@ -18,16 +21,18 @@ public class FinishLevelManager : MonoBehaviour
     private void Start()
     {
         _blackoutImage.gameObject.SetActive(false);
+        _viewingAdsYG.customEvents.CloseAd.AddListener(OnAdClose);
+        _viewingAdsYG.customEvents.OpenAd.AddListener(OnAdOpen);
     }
 
     public void OnFinishLevel()
     {
-        StartCoroutine(OnLevelClearLogic());        
-        
+        StartCoroutine(OnLevelClearLogic());
     }
 
     IEnumerator OnLevelClearLogic()
     {
+        yield return new WaitForSeconds(_blackoutDelay);
         float t = 0;
         _blackoutImage.gameObject.SetActive(true);
         while (t <= 1)
@@ -44,15 +49,17 @@ public class FinishLevelManager : MonoBehaviour
 
     public void OnCloseLevelStatisic()
     {
-        _blackoutImage.gameObject.SetActive(false);
+        _blackoutImage.gameObject.SetActive(false);        
         YandexGame.FullscreenShow();
     }
 
-
-    public void OnFullscreenAdClose()
+    void OnAdClose()
     {
-
+        AudioManager.Instance.EnableMasterSound();
     }
-
+    void OnAdOpen()
+    {
+        AudioManager.Instance.DisableMasterSound();
+    }
 
 }

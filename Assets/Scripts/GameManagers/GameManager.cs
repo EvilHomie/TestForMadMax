@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-        
+
     }
 
     private void OnEnable() => YandexGame.GetDataEvent += Init;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         SaveLoadManager.Instance.LoadSaveData();
 
         _startRaidBtnText.text = TextConstants.RAID;
-        _garageBtnText.text= TextConstants.GARAGE;
+        _garageBtnText.text = TextConstants.GARAGE;
         _openInventoryBtnText.text = TextConstants.INVENTORY;
 
         InventoryInfoPanelManager.Instance.Init();
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         SwitchMenuElements();
 
         ToggleMenu();
+        _settingsBtn.gameObject.SetActive(false);
 
         //UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
     }
@@ -123,8 +124,18 @@ public class GameManager : MonoBehaviour
     void ToggleMenu()
     {
         _settingsIsopened = !_settingsIsopened;
-        if (_settingsIsopened) SwitchMenuElements();       
-        else DisableMenuElements();
+        if (_settingsIsopened)
+        {
+            SwitchMenuElements();
+            //Time.timeScale = 0;
+            //AudioListener.pause = true;
+        }
+        else
+        {
+            DisableMenuElements();
+            //Time.timeScale = 1;
+            //AudioListener.pause = false;
+        }
     }
 
     void OnOpenLevels()
@@ -133,8 +144,9 @@ public class GameManager : MonoBehaviour
     }
 
     void OnStartRaid()
-    {        
+    {
         _playerOnRaid = true;
+        _settingsBtn.gameObject.SetActive(true);
         SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration);
         PlayerWeaponManager.Instance.OnPlayerStartRaid();
@@ -156,6 +168,7 @@ public class GameManager : MonoBehaviour
     public void OnReturnToGarage()
     {
         _playerOnRaid = false;
+        _settingsBtn.gameObject.SetActive(false);
         SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();

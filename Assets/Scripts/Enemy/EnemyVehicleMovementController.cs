@@ -108,7 +108,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
             transform.Translate(mod * GameConfig.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left, Space.World);
             yield return null;
         }
-        RaidManager.Instance.OnEnemyDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
+        RaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
         Destroy(gameObject);
     }
 
@@ -131,7 +131,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
             transform.Translate(GameConfig.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * runSpeedMod * Time.deltaTime * Vector3.right, Space.World);
             yield return null;
         }
-        RaidManager.Instance.OnEnemyDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
+        RaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
         Destroy(gameObject);
     }
 }

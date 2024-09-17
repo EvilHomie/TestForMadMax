@@ -24,7 +24,7 @@ public class RaidManager : MonoBehaviour
     bool _onRaid = false;
     int _spawnedSimpleEnemyCount = 0;
     int _killedSimpleEnemyCount = 0;
-    bool _bossIsSpawned = false;
+    //bool _bossIsSpawned = false;
 
 
     public float PlayerMoveSpeed => _playerMoveSpeed;
@@ -66,7 +66,7 @@ public class RaidManager : MonoBehaviour
     {
         CancelInvoke();
         _onRaid = true;
-        _bossIsSpawned = false;
+        //_bossIsSpawned = false;
         _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();       
         _spawnedSimpleEnemyCount = 0;
         _killedSimpleEnemyCount = 0;
@@ -136,7 +136,7 @@ public class RaidManager : MonoBehaviour
         }        
     }
 
-    public void OnEnemyDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
+    public void OnEnemyObjectDestroyed(EnemyVehicleManager enemy, int reservedLineNumber)
     {
         if(!Application.isPlaying) return;
         if (!_onRaid) return;
@@ -144,26 +144,32 @@ public class RaidManager : MonoBehaviour
         _freeSpawnLinesNumbers.Add(reservedLineNumber);
         _reservedSpawnLinesNumbers.Remove(reservedLineNumber);
 
-        _killedSimpleEnemyCount++;
+        //_killedSimpleEnemyCount++;
 
-        if(_bossIsSpawned)
-        {
-            LevelManager.Instance.UnlockNextLevel();
-            FinishLevelManager.Instance.OnFinishLevel();
-            return;
-        }
+        //if(_bossIsSpawned)
+        //{
+        //    LevelManager.Instance.UnlockNextLevel();
+        //    FinishLevelManager.Instance.OnFinishLevel();
+        //    return;
+        //}        
 
         if (_killedSimpleEnemyCount >= _selectedLevelInfo.EnemyCount)
         {
-            if (_selectedLevelInfo.BossEnemyVehicle == null)
-            {
-                LevelManager.Instance.UnlockNextLevel();
-                FinishLevelManager.Instance.OnFinishLevel();
-            }
-            else
+            if (_selectedLevelInfo.BossEnemyVehicle != null)
             {
                 SpawnBoss();
-            }
+            }           
+        }
+    }
+    public void OnPlayerKillEnemy()
+    {
+        _killedSimpleEnemyCount++;
+
+        int bossCount = _selectedLevelInfo.BossEnemyVehicle == null ? 0 : 1;
+        if (_killedSimpleEnemyCount >= _selectedLevelInfo.EnemyCount + bossCount)
+        {
+            LevelManager.Instance.UnlockNextLevel();
+            FinishLevelManager.Instance.OnFinishLevel();
         }
     }
 
@@ -204,7 +210,7 @@ public class RaidManager : MonoBehaviour
         _freeSpawnLinesNumbers.Remove(freeLineNumber);
         _reservedSpawnLinesNumbers.Add(freeLineNumber);
 
-        _bossIsSpawned = true;
+        //_bossIsSpawned = true;
         //Debug.LogWarning($"BOSS IS SPAWNED AT LINE {freeLineNumber}");
     }
 }

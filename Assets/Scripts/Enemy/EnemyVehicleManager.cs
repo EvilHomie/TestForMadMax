@@ -105,6 +105,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     void OnDie()
     {
+        if(_isDead) return;
         _isDead = true;
         
         _vehicleMovementController.StartDieLogic();
@@ -125,6 +126,7 @@ public class EnemyVehicleManager : MonoBehaviour
         }
 
         //RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
+        RaidManager.Instance.OnPlayerKillEnemy();
     }
 
     public void OnHitPart()
