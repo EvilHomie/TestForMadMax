@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -27,16 +26,34 @@ public class TestingLogic : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.Y))
         //    Time.timeScale -= 1;
+
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    SaveLoadManager.Instance.SaveData();
+
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    SaveLoadManager.Instance.LoadSaveData();
+        //}
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            YandexGame.ResetSaveProgress();
+            YandexGame.SaveProgress();
+
+            //PlayerPrefs.DeleteAll();
+            //Debug.LogWarning("SAVE CLEAR");
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
+        }
     }
     private void ResetProgress()
     {
         YandexGame.ResetSaveProgress();
         YandexGame.SaveProgress();
-#if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
-#else
-            Application.Quit();
-#endif
     }
 }
 

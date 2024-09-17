@@ -77,8 +77,6 @@ public class GameManager : MonoBehaviour
 
         ToggleMenu();
         _settingsBtn.gameObject.SetActive(false);
-
-        //UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
     }
 
     void AddListenersOnBtns()
@@ -89,37 +87,7 @@ public class GameManager : MonoBehaviour
         _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
         _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
-    }
-
-
-
-
-    //“≈—“Œ¬¿ﬂ Œ¡À¿—“‹
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.J))
-        //{
-        //    SaveLoadManager.Instance.SaveData();
-
-        //}
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    SaveLoadManager.Instance.LoadSaveData();
-        //}
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            YandexGame.ResetSaveProgress();
-            YandexGame.SaveProgress();
-
-            //PlayerPrefs.DeleteAll();
-            //Debug.LogWarning("SAVE CLEAR");
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
-        }
-    }
+    }   
 
     void ToggleMenu()
     {
