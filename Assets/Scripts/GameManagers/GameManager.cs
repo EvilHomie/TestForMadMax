@@ -66,7 +66,8 @@ public class GameManager : MonoBehaviour
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();
 
-        UIJoystickTouchController.Instance.HideControllers();
+        UIJoystickTouchController.Instance.Init();
+        UIWeaponsSwitcher.Instance.Init();
         GarageBoxManager.Instance.OnPlayerEndRaid();
         CameraManager.Instance.OnPlayerEndRaid();
         RaidManager.Instance.OnPlayerEndRaid();
@@ -141,7 +142,7 @@ public class GameManager : MonoBehaviour
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();
 
-        UIJoystickTouchController.Instance.HideControllers();
+        UIJoystickTouchController.Instance.HideInRaidInterface();
         GarageBoxManager.Instance.OnPlayerEndRaid();
         //WeaponsSwitcher.Instance.OnPlayerEndRaid();
         CameraManager.Instance.OnPlayerEndRaid();

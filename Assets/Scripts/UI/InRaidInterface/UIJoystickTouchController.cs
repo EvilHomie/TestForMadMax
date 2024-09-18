@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class UIJoystickTouchController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class UIJoystickTouchController : MonoBehaviour
 
     [SerializeField] RectTransform _joystickArea;
     [SerializeField] Slider _speedSlider;
+    [SerializeField] GameObject _joystick;
+    [SerializeField] GameObject _shootBtn;
 
     CanvasGroup _canvasGroup;
     bool _isRotating = false;
@@ -17,9 +20,34 @@ public class UIJoystickTouchController : MonoBehaviour
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
+        else Instance = this;        
+    }
+
+    public void Init()
+    {
         _canvasGroup = GetComponent<CanvasGroup>();
         _speedSlider.onValueChanged.AddListener(OnChangeSpeed);
+        HideInRaidInterface();
+
+        if (YandexGame.EnvironmentData.isDesktop)
+        {
+            _joystick.SetActive(false);
+            _shootBtn.SetActive(false);
+        }
+    }
+    private void Update()
+    {
+        if (!_controllerIsAcive) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlayerWeaponManager.Instance.StartShoot();
+        }
+        if (Input.GetMouseButtonUp(0)) 
+        {
+            PlayerWeaponManager.Instance.StopShoot();
+        }
+
     }
 
     public Vector2 GetJoystickPosition
@@ -64,7 +92,7 @@ public class UIJoystickTouchController : MonoBehaviour
         RaidManager.Instance.ChangeSpeedWhileInRaid(sliderValue);
     }
 
-    public void HideControllers()
+    public void HideInRaidInterface()
     {
         StopAllCoroutines();
         _canvasGroup.alpha = 0;

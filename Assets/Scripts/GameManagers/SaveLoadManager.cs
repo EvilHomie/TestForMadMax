@@ -6,7 +6,7 @@ public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
     string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Energy_Simple_Cannon_Scheme", "Advanced_Truck_Scheme" };
-    string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon", "Dual_Cannon", "Simple_Truck", "Energy_Dual_Cannon", "Energy_Simple_Cannon", "Dual_Cannon_Scheme" };
+    string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Energy_Simple_Cannon", "Advanced_Truck", "Dual_Cannon", "Energy_Dual_Cannon" };
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -47,6 +47,13 @@ public class SaveLoadManager : MonoBehaviour
 
         SaveData();
 
+    }
+
+    void UnlockAllData()
+    {
+        ResetProgress(_TESTdeffaultItemsNames);
+        UIResourcesManager.Instance.AddResources(3000, 3000, 3000); 
+        PlayerData.Instance.UnlockedLevelsNames = new() { "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9", "2-10" };
     }
 
     public void SaveData()
@@ -94,6 +101,12 @@ public class SaveLoadManager : MonoBehaviour
 
     public void LoadSaveData()
     {
+        if (GameConfig.Instance.IsTesting)
+        {
+            UnlockAllData();
+            return;
+        }
+
         if (!YandexGame.savesData.savesNotClear)
         {
             ResetProgress(_deffaultItemsNames);

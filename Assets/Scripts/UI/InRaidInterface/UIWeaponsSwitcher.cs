@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class UIWeaponsSwitcher : MonoBehaviour
 {
@@ -13,18 +14,44 @@ public class UIWeaponsSwitcher : MonoBehaviour
 
     int _lastSelectedWeaponIndex = 1;
 
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    private void Start()
+    public void Init()
     {
+        if (YandexGame.EnvironmentData.isDesktop) return;
+
         foreach (var uiSlot in _inRaidWeaponsSlots)
         {
             uiSlot.selectBtn.onClick.AddListener(delegate { OnSelectWeapon(uiSlot.slotIndex); });
         }
     }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            OnSelectWeapon(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            PlayerData.Instance.EquipedItems.TryGetValue(2, out string weaponName);
+            if (weaponName != null)
+            {
+                OnSelectWeapon(2);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            PlayerData.Instance.EquipedItems.TryGetValue(3, out string weaponName);
+            if (weaponName != null)
+            {
+                OnSelectWeapon(3);
+            }
+        }
+    }
+
 
     public void OnPlayerStartRaid()
     {
@@ -35,7 +62,7 @@ public class UIWeaponsSwitcher : MonoBehaviour
             {
                 uiSlot.selectBtn.gameObject.SetActive(true);
                 uiSlot.weaponImage.sprite = GameAssets.Instance.GameItems.ItemsSpritesAtlas.GetSprite(weaponName);
-                if(uiSlot.slotIndex == 1) uiSlot.selectBtn.image.sprite = _weaponBGSelected;
+                if (uiSlot.slotIndex == 1) uiSlot.selectBtn.image.sprite = _weaponBGSelected;
                 else uiSlot.selectBtn.image.sprite = _weaponBGNotSelected;
             }
             else uiSlot.selectBtn.gameObject.SetActive(false);
@@ -48,6 +75,7 @@ public class UIWeaponsSwitcher : MonoBehaviour
     public void OnSelectWeapon(int weaponIndex)
     {
         if (_lastSelectedWeaponIndex == weaponIndex) return;
+        PlayerWeaponManager.Instance.StopShoot();
 
         InRaidWeaponSlot newSlot = _inRaidWeaponsSlots.Find(slot => slot.slotIndex == weaponIndex);
         newSlot.selectBtn.image.sprite = _weaponBGSelected;

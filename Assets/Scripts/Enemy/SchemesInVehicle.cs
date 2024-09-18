@@ -20,7 +20,7 @@ public class SchemesInVehicle : MonoBehaviour
 
         if (itemData != null)
         {
-            Debug.LogWarning("EXIST as Scheme");
+            //Debug.LogWarning("EXIST as Scheme");
             return true;
         }
         else
@@ -28,7 +28,7 @@ public class SchemesInVehicle : MonoBehaviour
             itemData = PlayerData.Instance.GetItemDataByName(_scheme.ItemNameInScheme);
             if (itemData != null)
             {
-                Debug.LogWarning("EXIST as Item");
+                //Debug.LogWarning("EXIST as Item");
                 return true;
             }
             else return false;

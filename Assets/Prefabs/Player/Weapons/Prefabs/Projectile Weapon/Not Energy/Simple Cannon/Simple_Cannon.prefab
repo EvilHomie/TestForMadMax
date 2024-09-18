@@ -286,6 +286,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePoint_NotEnergy
       objectReference: {fileID: 0}
+    - target: {fileID: 9124183723855145253, guid: a54c8cffe4a5e054f917831f1df12bc3,
+        type: 3}
+      propertyPath: m_FreeformStretching
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

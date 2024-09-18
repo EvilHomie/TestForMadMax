@@ -24,7 +24,7 @@ public class RaidManager : MonoBehaviour
     bool _onRaid = false;
     int _spawnedSimpleEnemyCount = 0;
     int _killedSimpleEnemyCount = 0;
-    //bool _bossIsSpawned = false;
+    bool _bossIsSpawned = false;
 
 
     public float PlayerMoveSpeed => _playerMoveSpeed;
@@ -66,7 +66,7 @@ public class RaidManager : MonoBehaviour
     {
         CancelInvoke();
         _onRaid = true;
-        //_bossIsSpawned = false;
+        _bossIsSpawned = false;
         _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
         _spawnedSimpleEnemyCount = 0;
         _killedSimpleEnemyCount = 0;
@@ -146,12 +146,10 @@ public class RaidManager : MonoBehaviour
 
         //_killedSimpleEnemyCount++;
 
-        //if(_bossIsSpawned)
-        //{
-        //    LevelManager.Instance.UnlockNextLevel();
-        //    FinishLevelManager.Instance.OnFinishLevel();
-        //    return;
-        //}        
+        if (_bossIsSpawned || _reservedSpawnLinesNumbers.Count > 0)
+        {
+            return;
+        }
 
         if (_killedSimpleEnemyCount >= _selectedLevelInfo.EnemyCount)
         {
@@ -175,6 +173,7 @@ public class RaidManager : MonoBehaviour
 
     void SpawnSimpleEnemy()
     {
+        //UnityEngine.Random.InitState();
         int randomLineIndex = UnityEngine.Random.Range(0, _freeSpawnLinesNumbers.Count);
         int freeLineNumber = _freeSpawnLinesNumbers[randomLineIndex];
 
@@ -210,7 +209,7 @@ public class RaidManager : MonoBehaviour
         _freeSpawnLinesNumbers.Remove(freeLineNumber);
         _reservedSpawnLinesNumbers.Add(freeLineNumber);
 
-        //_bossIsSpawned = true;
+        _bossIsSpawned = true;
         //Debug.LogWarning($"BOSS IS SPAWNED AT LINE {freeLineNumber}");
     }
 
