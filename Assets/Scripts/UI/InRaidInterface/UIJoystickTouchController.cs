@@ -16,6 +16,7 @@ public class UIJoystickTouchController : MonoBehaviour
     bool _isRotating = false;
     Vector2 _joystickPosition;
     bool _controllerIsAcive = false;
+    bool _PCVersion = false;
 
     void Awake()
     {
@@ -31,12 +32,14 @@ public class UIJoystickTouchController : MonoBehaviour
 
         if (YandexGame.EnvironmentData.isDesktop)
         {
+            _PCVersion = true;
             _joystick.SetActive(false);
             _shootBtn.SetActive(false);
         }
     }
     private void Update()
     {
+        if(!_PCVersion) return;
         if (!_controllerIsAcive) return;
 
         if (Input.GetMouseButtonDown(0))
