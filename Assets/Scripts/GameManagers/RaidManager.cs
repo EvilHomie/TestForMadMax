@@ -167,9 +167,9 @@ public class RaidManager : MonoBehaviour
         int bossCount = _selectedLevelInfo.BossEnemyVehicle == null ? 0 : 1;
         if (_killedSimpleEnemyCount >= _selectedLevelInfo.EnemyCount + bossCount)
         {
+            MetricaSender.SendLevelStatus(_selectedLevelInfo, LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
             FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
-            MetricaSender.SendLevelStatus(_selectedLevelInfo, LevelStatus.Done);
         }
     }
 

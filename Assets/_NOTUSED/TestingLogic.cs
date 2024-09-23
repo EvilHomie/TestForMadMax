@@ -42,49 +42,49 @@ public class TestingLogic : MonoBehaviour
         //{
         //    SaveLoadManager.Instance.LoadSaveData();
         //}
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            YandexGame.ResetSaveProgress();
-            YandexGame.SaveProgress();
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    YandexGame.ResetSaveProgress();
+        //    YandexGame.SaveProgress();
 
-            //PlayerPrefs.DeleteAll();
-            //Debug.LogWarning("SAVE CLEAR");
-        }
+        //    //PlayerPrefs.DeleteAll();
+        //    //Debug.LogWarning("SAVE CLEAR");
+        //}
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
-        }
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            TrigerSend("B");
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            TrigerSend("N");
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            TrigerSend("M");
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Send("ZZZ");
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    TrigerSend("B");
+        //}
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    TrigerSend("N");
+        //}
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    TrigerSend("M");
+        //}
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    Send("ZZZ");
+        //}
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            Send("lvl1");
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Send("lvl2");
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Send("lvl3");
-        }
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    Send("lvl1");
+        //}
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    Send("lvl2");
+        //}
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    Send("lvl3");
+        //}
 
     }
     private void ResetProgress()

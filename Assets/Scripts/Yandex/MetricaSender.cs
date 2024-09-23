@@ -1,4 +1,4 @@
-using UnityEngine;
+using System.Collections.Generic;
 using YG;
 
 public class MetricaSender
@@ -9,9 +9,22 @@ public class MetricaSender
 
     public static void SendLevelStatus(UILevelInfo levelInfo, LevelStatus status)
     {
-        string goalKey = $"{levelInfo.LevelName}{status}";
-        YandexMetrica.Send(goalKey);
+        string goalKey = $"{levelInfo.LevelName}_{status}";
+        var eventParams = new Dictionary<string, string>
+        {
+             { "LevelsPassing", goalKey }
+        };
+        YandexMetrica.Send("LevelsPassing", eventParams);
     }
+
+    //public void TrigerSend(string name)
+    //{
+    //    var eventParams = new Dictionary<string, string>
+    //    {
+    //         { "triggers", name }
+    //    };
+    //    YandexMetrica.Send("triggers", eventParams);
+    //}
 
 }
 
