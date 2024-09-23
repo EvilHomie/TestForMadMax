@@ -73,6 +73,7 @@ public class RaidManager : MonoBehaviour
         _speedSliderFillImage.fillAmount = 0;
         _UpdateSpeedCoroutine = StartCoroutine(StartLerpSpeed(startMoveDelay, 10, reachSpeedDuration));    //отключил логику управления скорости хардкод в цифре 10
         InvokeRepeating(nameof(SpawnEnemy), _spawnNewEnemyDelay, _spawnNewEnemyRepitRate);
+        MetricaSender.SendLevelStatus(_selectedLevelInfo, LevelStatus.Start);
     }
     public void OnPlayerEndRaid()
     {
@@ -168,6 +169,7 @@ public class RaidManager : MonoBehaviour
         {
             LevelManager.Instance.UnlockNextLevel();
             FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
+            MetricaSender.SendLevelStatus(_selectedLevelInfo, LevelStatus.Done);
         }
     }
 
@@ -220,6 +222,7 @@ public class RaidManager : MonoBehaviour
         {
             enemy.OnPlayerDie();
         }
+        MetricaSender.SendLevelStatus(_selectedLevelInfo, LevelStatus.Failed);
     }
 
     IEnumerator ChangeSpeedOnDie()

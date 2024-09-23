@@ -33,8 +33,21 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         _weaponPoints = PlayerVehicleManager.Instance.PlayerVehicle.WeaponPoints.ToDictionary(slot => slot.Index, slot => slot.Transform);
 
+        for (int weaponIndex = 1; weaponIndex <= _weapons.Count; weaponIndex++)
+        {
+            if (!PlayerData.Instance.EquipedItems.ContainsKey(weaponIndex))
+            {
+                _weapons.Remove(weaponIndex);
+            }
+            //Debug.LogWarning(weaponIndex);
+            //Debug.LogWarning(_weapons[weaponIndex]);
+            //Debug.LogWarning(PlayerData.Instance.EquipedItems[weaponIndex]);
+        }
+
+        
         for (int weaponIndex = 1; weaponIndex < PlayerData.Instance.EquipedItems.Count; weaponIndex++)
         {
+            //Debug.LogWarning(weaponIndex);
             ChangeWeaponOnPoint(weaponIndex);
         }
     }
@@ -55,7 +68,7 @@ public class PlayerWeaponManager : MonoBehaviour
         else if (point.childCount == 1)
         {
             WeaponData existWeaponData = (WeaponData)_weapons[weaponIndex].GetItemData();
-            if (PlayerData.Instance.EquipedItems[weaponIndex] == existWeaponData.deffWeaponName) return;
+            if (PlayerData.Instance.EquipedItems[weaponIndex].Equals(existWeaponData.deffWeaponName)) return;
             foreach (Transform t in point) Destroy(t.gameObject);
             CreateWeaponInstance(weaponIndex, point);
         }
@@ -82,8 +95,20 @@ public class PlayerWeaponManager : MonoBehaviour
         _selectedWeaponIndex = 1;
         foreach (var weapon in _weapons)
         {
+            //if (weapon.Value == null)
+            //{
+            //    _weapons.Remove(weapon.Key);
+            //    continue;
+            //}
+
+
+            //Debug.LogWarning(weapon.Key);
+            //Debug.LogWarning(weapon.Value);
+
             if (weapon.Key != _selectedWeaponIndex)
+            {                
                 weapon.Value.TargetMarker.SetActive(false);
+            }
             else
                 weapon.Value.TargetMarker.SetActive(true);
         }

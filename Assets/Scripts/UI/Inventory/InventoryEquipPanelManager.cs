@@ -45,7 +45,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
         for (int i = 1; i < PlayerData.Instance.EquipedItems.Count; i++)
         {
-            IItemData weaponData = PlayerData.Instance.GetItemDataByName(PlayerData.Instance.EquipedItems[i]);            
+            IItemData weaponData = PlayerData.Instance.GetItemDataByName(PlayerData.Instance.EquipedItems[i]);
 
             WeaponEquipSlot wSlot = _equipeWeaponsSlots.Find(slot => slot.SlotIndex == i);
             wSlot.InventoryItem.SetitemData(weaponData);
@@ -54,7 +54,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
     public void EnableWeaponEquipOption(IItemData newWeapon)
     {
-        if(_equipLogicIsActive) return;
+        if (_equipLogicIsActive) return;
         _equipLogicIsActive = true;
         _dimmingPanel.SetActive(true);
         _equipedVehicleSlot.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -96,7 +96,7 @@ public class InventoryEquipPanelManager : MonoBehaviour
 
         slot.InventoryItem.SetitemData(newWeapon);
         InventoryManager.Instance.OnSelectedItemEquiped(newWeapon, previousItem);
-        DisableWeaponEquipOption();  
+        DisableWeaponEquipOption();
     }
 
     public void CheckWeaponsSlotsCount()
@@ -104,10 +104,10 @@ public class InventoryEquipPanelManager : MonoBehaviour
         VehicleData currentVehicle = (VehicleData)_equipedVehicleSlot.GetitemData();
         int newSlotsCount = currentVehicle.curWeaponsCount;
 
-        foreach (var weaponSlot in EquipeWeaponsSlots)
+        foreach (var weaponSlot in _equipeWeaponsSlots)
         {
-            if(weaponSlot.SlotIndex <= newSlotsCount) 
-            weaponSlot.ActiveStatus = true;
+            if (weaponSlot.SlotIndex <= newSlotsCount)
+                weaponSlot.ActiveStatus = true;
             else
             {
                 IItemData previousItem = weaponSlot.InventoryItem.GetitemData();
@@ -115,8 +115,15 @@ public class InventoryEquipPanelManager : MonoBehaviour
                 weaponSlot.InventoryItem.SetitemData(null);
                 weaponSlot.ActiveStatus = false;
                 PlayerData.Instance.EquipedItems.Remove(weaponSlot.SlotIndex);
-            }
+
+                
+            }           
         }
+        //foreach (var slot in PlayerData.Instance.EquipedItems)
+        //{
+        //    Debug.LogWarning(slot.Key);
+        //    Debug.LogWarning(slot.Value);
+        //}
     }
 
     public void OnSelectItem()
