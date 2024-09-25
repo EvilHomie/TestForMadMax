@@ -66,6 +66,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         InventoryEquipPanelManager.Instance.ResetData();
+        MetricaSender.SendInventoryData("Open Inventory");
     }
     public void OnCloseInventory()
     {
@@ -115,6 +116,7 @@ public class InventoryManager : MonoBehaviour
 
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(_selectedItem);
+        MetricaSender.SendInventoryData("Buy Upgrade");
     }
 
 

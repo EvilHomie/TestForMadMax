@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    float _showControllerDelay = 6; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
+    float _showControllerDelay = 3; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
     bool _playerOnRaid = false;
     bool _settingsIsopened = false;
 

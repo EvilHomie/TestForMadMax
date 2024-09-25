@@ -16,6 +16,9 @@ public class PlayerWeaponManager : MonoBehaviour
     float curWeaponRotationX = 0;
 
     bool _playerIsDead = false;
+    bool _playerOnRaid = false;
+    bool _isFirstLevel = false;
+    bool _firstTouchStatus = false;
 
     private void Awake()
     {
@@ -90,6 +93,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
+        _playerOnRaid = true;
         _playerIsDead = false;
         UpdateWeaponsData();
         _selectedWeaponIndex = 1;
@@ -127,11 +131,21 @@ public class PlayerWeaponManager : MonoBehaviour
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
         curWeaponRotationX = 0;
         curWeaponRotationY = 0;
+
+        if (LevelManager.Instance.GetSelectedLevelinfo().LevelName == "1-1")
+        {
+            _isFirstLevel = true;
+        }
+        else
+        {
+            _isFirstLevel = false;
+        }
     }
 
 
     public void OnPlayerEndRaid()
     {
+        _playerOnRaid = false;
         _weapons[_selectedWeaponIndex].StopShooting();
     }
 
@@ -179,7 +193,14 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void RotateWeaponAndCameraByWASD()
     {
+        if(!_playerOnRaid) return;
         if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0) return;
+
+        if (_isFirstLevel && !_firstTouchStatus)
+        {
+            _firstTouchStatus = true;
+            MetricaSender.SendFirstControllerTouch();
+        }
 
         curWeaponRotationY += Input.GetAxis("Horizontal") * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;
         curWeaponRotationX += Input.GetAxis("Vertical") * Time.deltaTime * _weapons[_selectedWeaponIndex].RotationSpeed;

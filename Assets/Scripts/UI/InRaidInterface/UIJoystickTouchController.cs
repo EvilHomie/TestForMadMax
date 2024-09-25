@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -12,6 +13,8 @@ public class UIJoystickTouchController : MonoBehaviour
     [SerializeField] GameObject _joystick;
     [SerializeField] GameObject _shootBtn;
 
+    [SerializeField] GameObject[] _navigationKeys;
+
     CanvasGroup _canvasGroup;
     bool _isRotating = false;
     Vector2 _joystickPosition;
@@ -21,7 +24,7 @@ public class UIJoystickTouchController : MonoBehaviour
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;        
+        else Instance = this;
     }
 
     public void Init()
@@ -33,20 +36,36 @@ public class UIJoystickTouchController : MonoBehaviour
         if (YandexGame.EnvironmentData.isDesktop)
         {
             _PCVersion = true;
-            _joystick.SetActive(false);
-            _shootBtn.SetActive(false);
+            foreach (var key in _navigationKeys)
+            {
+                key.SetActive(true);
+            }
+
+            _joystick.transform.localScale = Vector3.one / 2f;
+            _shootBtn.transform.localScale = Vector3.one / 2f;
+
+
+            //_joystick.SetActive(false);
+            //_shootBtn.SetActive(false);
+        }
+        else
+        {
+            foreach (var key in _navigationKeys)
+            {
+                key.SetActive(false);
+            }
         }
     }
     private void Update()
     {
-        if(!_PCVersion) return;
+        if (!_PCVersion) return;
         if (!_controllerIsAcive) return;
 
         if (Input.GetMouseButtonDown(0))
         {
             PlayerWeaponManager.Instance.StartShoot();
         }
-        if (Input.GetMouseButtonUp(0)) 
+        if (Input.GetMouseButtonUp(0))
         {
             PlayerWeaponManager.Instance.StopShoot();
         }
@@ -91,7 +110,7 @@ public class UIJoystickTouchController : MonoBehaviour
 
     void OnChangeSpeed(float sliderValue)
     {
-        if(!_controllerIsAcive) return;
+        if (!_controllerIsAcive) return;
         RaidManager.Instance.ChangeSpeedWhileInRaid(sliderValue);
     }
 
@@ -117,7 +136,7 @@ public class UIJoystickTouchController : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
 
-        for (int i = 1; i <= flickCount; i++) 
+        for (int i = 1; i <= flickCount; i++)
         {
             _canvasGroup.alpha = 0;
             yield return new WaitForSeconds(flickDuration);
