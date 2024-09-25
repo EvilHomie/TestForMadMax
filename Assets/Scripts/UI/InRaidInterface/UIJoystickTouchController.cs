@@ -36,17 +36,17 @@ public class UIJoystickTouchController : MonoBehaviour
         if (YandexGame.EnvironmentData.isDesktop)
         {
             _PCVersion = true;
-            foreach (var key in _navigationKeys)
-            {
-                key.SetActive(true);
-            }
+            //foreach (var key in _navigationKeys)
+            //{
+            //    key.SetActive(true);
+            //}
 
-            _joystick.transform.localScale = Vector3.one / 2f;
-            _shootBtn.transform.localScale = Vector3.one / 2f;
+            //_joystick.transform.localScale = Vector3.one / 2f;
+            //_shootBtn.transform.localScale = Vector3.one / 2f;
 
 
-            //_joystick.SetActive(false);
-            //_shootBtn.SetActive(false);
+            _joystick.SetActive(false);
+            _shootBtn.SetActive(false);
         }
         else
         {

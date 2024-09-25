@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YG;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
     public static PlayerWeaponManager Instance;
+
+    [SerializeField] LayerMask _layerMask;
+    [SerializeField] float _mouseSensitivity = 5f;
+    Vector3 _currentRotation;
+
 
     Dictionary<int, Transform> _weaponPoints = new();
     Dictionary<int, PlayerWeapon> _weapons = new();
@@ -27,9 +33,16 @@ public class PlayerWeaponManager : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (_playerIsDead) return;
-        RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
-        RotateWeaponAndCameraByWASD();
+        if (_playerIsDead || !_playerOnRaid) return;
+        if (YandexGame.EnvironmentData.isDesktop)
+        {
+            RotateWeaponAndCameraByMouse();
+        }
+        else
+        {
+            RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
+        }
+        //RotateWeaponAndCameraByWASD();
     }
 
     public void UpdateWeaponsData()
@@ -47,7 +60,7 @@ public class PlayerWeaponManager : MonoBehaviour
             //Debug.LogWarning(PlayerData.Instance.EquipedItems[weaponIndex]);
         }
 
-        
+
         for (int weaponIndex = 1; weaponIndex < PlayerData.Instance.EquipedItems.Count; weaponIndex++)
         {
             //Debug.LogWarning(weaponIndex);
@@ -110,7 +123,7 @@ public class PlayerWeaponManager : MonoBehaviour
             //Debug.LogWarning(weapon.Value);
 
             if (weapon.Key != _selectedWeaponIndex)
-            {                
+            {
                 weapon.Value.TargetMarker.SetActive(false);
             }
             else
@@ -166,7 +179,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void StartShoot()
     {
-        if(_playerIsDead) return;
+        if (_playerIsDead) return;
         _weapons[_selectedWeaponIndex].StartShooting();
     }
 
@@ -193,7 +206,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void RotateWeaponAndCameraByWASD()
     {
-        if(!_playerOnRaid) return;
+        if (!_playerOnRaid) return;
         if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0) return;
 
         if (_isFirstLevel && !_firstTouchStatus)
@@ -212,6 +225,69 @@ public class PlayerWeaponManager : MonoBehaviour
 
         _weaponPoints[_selectedWeaponIndex].rotation = newRotation;
         Camera.main.transform.rotation = newRotation;
+    }
+
+    void RotateWeaponAndCameraByMouse()
+    {
+        Ray ray = new(Camera.main.transform.position, Camera.main.transform.forward);
+        Vector3 point = Vector3.zero;
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 10000, _layerMask))
+        {
+            point = hitInfo.point;
+            //cameraMarker.transform.localPosition = new Vector3(0,0, point.z);
+        }
+
+        Ray firePointRay = new(_weapons[_selectedWeaponIndex].transform.position, _weapons[_selectedWeaponIndex].transform.forward);
+
+        //Vector3 firePointRayPoint = Vector3.zero;
+
+        if (Physics.Raycast(firePointRay, out RaycastHit firePointhitInfo, 10000, _layerMask))
+        {
+            //firePointRayPoint = firePointhitInfo.point;
+            //weaponMarker.transform.position = firePointRayPoint;
+
+            Vector3 directionToPoint = firePointhitInfo.point - Camera.main.transform.position;
+
+            Debug.DrawRay(Camera.main.transform.position, directionToPoint * 1000, Color.blue);
+
+            //Vector3 pos = directionToPoint.normalized * 35;
+
+            //weaponMarker.transform.position = pos;
+
+
+
+            Vector3 dir = Vector3.Normalize(firePointhitInfo.point - Camera.main.transform.position);
+            Vector3 pos = Camera.main.transform.position + dir * 35;
+            _weapons[_selectedWeaponIndex].TargetMarker.transform.position = pos;
+
+        }
+
+
+        //Debug.LogWarning(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+        _currentRotation.x += Input.GetAxis("Mouse X") * _mouseSensitivity;
+        _currentRotation.y -= Input.GetAxis("Mouse Y") * _mouseSensitivity;
+        //currentRotation.x = Mathf.Repeat(currentRotation.x, 360);
+        _currentRotation.y = Mathf.Clamp(_currentRotation.y, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
+        _currentRotation.x = Mathf.Clamp(_currentRotation.x, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        Camera.main.transform.rotation = Quaternion.Euler(_currentRotation.y, _currentRotation.x, 0);
+
+        float RotationRadiansSpeed = _weapons[_selectedWeaponIndex].RotationSpeed * Mathf.Deg2Rad;
+
+        Vector3 targetDirectionBase = point - _weapons[_selectedWeaponIndex].transform.position;
+        Vector3 newDirectionForBase = Vector3.RotateTowards(_weapons[_selectedWeaponIndex].transform.forward, targetDirectionBase, RotationRadiansSpeed * Time.deltaTime, 0.0f);
+        Quaternion quaternion = Quaternion.LookRotation(newDirectionForBase);
+
+        Vector3 eulerAngles = quaternion.eulerAngles;
+
+        _weaponPoints[_selectedWeaponIndex].rotation = Quaternion.Euler(eulerAngles.x, eulerAngles.y, 0); ;
+        //cannonBase.transform.rotation = Quaternion.Euler(0, eulerAngles.y, 0);
+        //cannonTurret.transform.localRotation = Quaternion.Euler(eulerAngles.x, 0, 0);
+        //FirePoint.transform.rotation = quaternion;
+
+        Debug.DrawRay(_weaponPoints[_selectedWeaponIndex].transform.position, _weaponPoints[_selectedWeaponIndex].transform.forward * 1000, Color.green);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 1000, Color.red);
     }
 
     public void OnPlayerDie()
