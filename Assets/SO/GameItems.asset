@@ -13,19 +13,15 @@ MonoBehaviour:
   m_Name: GameItems
   m_EditorClassIdentifier: 
   _weapons:
-  - {fileID: 7069817358049926704, guid: 548f481084ebf5f49a00f93cdea22bdd, type: 3}
-  - {fileID: 257131958389177027, guid: dfdc7e17016d5424baeacd5e840ac1c4, type: 3}
-  - {fileID: 257131958389177027, guid: 2f16a2f8682f06940812b1c3173331fa, type: 3}
-  - {fileID: 7069817358049926704, guid: 1385276b2089d0c4c897596bce2f4e0f, type: 3}
+  - {fileID: -5013337906677554371, guid: 9c5bd48f331aaec44b4b77dd81bf55f8, type: 3}
+  - {fileID: -7435112072028318016, guid: 6e062b7a3c161484a83c174be286739e, type: 3}
   _itemsSpritesAtlas: {fileID: 100100200, guid: 8ba0462ead0b4d54596dae3a30bd14b9,
     type: 3}
   _playerVehicles:
   - {fileID: 4091442796374768174, guid: 8adc2b9fa90db854f8cfab06c6b863fc, type: 3}
   - {fileID: 4091442796374768174, guid: 29bd34ed40344f142828a577078d256c, type: 3}
   _SchemeData:
-  - {fileID: 11400000, guid: 6f99f161d485f0b458b920ea7f4fd38f, type: 2}
-  - {fileID: 11400000, guid: 4a398722107d31340956841cb388095b, type: 2}
-  - {fileID: 11400000, guid: 95d6977253f7cc44abab2bbc9ea5f457, type: 2}
-  - {fileID: 11400000, guid: e74e1fd4a5917c448864fef477f6aa35, type: 2}
   - {fileID: 11400000, guid: e74d9f432f746654aaa09f0214ac0ba9, type: 2}
   - {fileID: 11400000, guid: 8981695e2d38b8945a8f31bf9222e42b, type: 2}
+  - {fileID: 11400000, guid: c7fc99659d110d649ad3d4ab0486a756, type: 2}
+  - {fileID: 11400000, guid: 25e35f31b8b5f204581064656248db82, type: 2}

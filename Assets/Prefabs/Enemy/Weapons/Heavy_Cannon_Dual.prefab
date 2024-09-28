@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a192528ceebed4641ba0e0488d0f18e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firePoints:
+  _firePointManagers:
   - {fileID: 8749784419158962637}
   - {fileID: 5133541626934508949}
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
@@ -5,16 +6,26 @@ using YG;
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
-    string[] _deffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Energy_Simple_Cannon_Scheme", "Advanced_Truck_Scheme" };
-    string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon", "Simple_Truck", "Energy_Simple_Cannon", "Advanced_Truck", "Dual_Cannon", "Energy_Dual_Cannon" };
+    string[] _deffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Dual_Cannon_V_1", "Simple_Truck_V_1", "Advanced_Truck_V_1_Scheme" };
+    string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Simple_Truck_V_1", "Advanced_Truck_V_1" };
+
+    [SerializeField] bool resetProgressRequired = false;
+
+
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
 
+    //private void Start()
+    //{
+    //    CompareVersions();
+    //}
+
     void ResetProgress(string[] ItemsNames)
     {
+        Debug.LogWarning("RESETPROGRESS");
         PlayerData.Instance.PlayerItemsData = new();
         UIResourcesManager.Instance.RemoveAllResources();
         foreach (var itemName in ItemsNames)
@@ -38,8 +49,8 @@ public class SaveLoadManager : MonoBehaviour
 
         PlayerData.Instance.EquipedItems = new Dictionary<int, string>()
             {
-                {0, "Simple_Truck" },
-                {1, "Simple_Cannon" }
+                {0, "Simple_Truck_V_1" },
+                {1, "Simple_Cannon_V_1" }
             };
 
         PlayerData.Instance.LastSelectedLevelName = "1-1";
@@ -52,7 +63,7 @@ public class SaveLoadManager : MonoBehaviour
     void UnlockAllData()
     {
         ResetProgress(_TESTdeffaultItemsNames);
-        UIResourcesManager.Instance.AddResources(3000, 3000, 3000); 
+        UIResourcesManager.Instance.AddResources(3000, 3000, 3000);
         PlayerData.Instance.UnlockedLevelsNames = new() { "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9", "2-10" };
     }
 
@@ -95,23 +106,31 @@ public class SaveLoadManager : MonoBehaviour
 
         YandexGame.savesData.unlockedLevelsNames = PlayerData.Instance.UnlockedLevelsNames;
 
-        YandexGame.savesData.savesNotClear = true;
+        YandexGame.savesData.savesIsClear = false;
+        YandexGame.savesData.savedVerion = Application.version;
         YandexGame.SaveProgress();
     }
 
-    public void LoadSaveData()
+    public void CheckSaveData()
     {
-        if (GameConfig.Instance.IsTesting)
-        {
-            UnlockAllData();
-            return;
-        }
-
-        if (!YandexGame.savesData.savesNotClear)
+        if (YandexGame.savesData.savesIsClear || YandexGame.savesData.savedVerion == null)
         {
             ResetProgress(_deffaultItemsNames);
             return;
         }
+
+        if (CheckVersionsCompatibility())
+        {
+            LoadSaveData();
+        }
+        else
+        {
+            ResetProgress(_deffaultItemsNames);
+        }
+    }
+
+    public void LoadSaveData()
+    {
         PlayerData.Instance.PlayerItemsData = new();
 
         foreach (var weaponData in YandexGame.savesData.weaponsData)
@@ -135,12 +154,39 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         PlayerData.Instance.AvailableResources = YandexGame.savesData.availableResources;
-
         PlayerData.Instance.EquipedItems = YandexGame.savesData.equipedItems;
-
         PlayerData.Instance.LastSelectedLevelName = YandexGame.savesData.lastSelectedLevelName;
-
         PlayerData.Instance.UnlockedLevelsNames = YandexGame.savesData.unlockedLevelsNames;
+    }
+
+    bool CheckVersionsCompatibility()
+    {
+        if (resetProgressRequired)
+        {
+            string currentVersion = Application.version;
+            string savedVersion = YandexGame.savesData.savedVerion;
+
+            var version1 = new Version(currentVersion);
+            var version2 = new Version(savedVersion);
+
+            var result = version1.CompareTo(version2);
+            if (result > 0)
+            {
+                //Console.WriteLine("version1 is greater");
+                return false;
+            }
+            else if (result < 0)
+            {
+                //Console.WriteLine("version2 is greater");
+                return true;
+            }
+            else
+            {
+                //Console.WriteLine("versions are equal");
+                return true;
+            }
+        }
+        else return true;        
     }
 }
 

@@ -32,13 +32,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void OnEnable() => YandexGame.GetDataEvent += Init;
-    private void OnDisable() => YandexGame.GetDataEvent -= Init;
+    //private void OnEnable() => YandexGame.GetDataEvent += Init;
+    //private void OnDisable() => YandexGame.GetDataEvent -= Init;
 
     void Start()
     {
         YandexGame.GameReadyAPI();
-        //Init();
+        Init();
     }
 
 
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         Application.targetFrameRate = 1000;
         TextConstants.SetLanguage();
-        SaveLoadManager.Instance.LoadSaveData();
+        SaveLoadManager.Instance.CheckSaveData();
 
         _startRaidBtnText.text = TextConstants.RAID;
         _garageBtnText.text = TextConstants.GARAGE;
@@ -63,8 +63,8 @@ public class GameManager : MonoBehaviour
         AddListenersOnBtns();
 
         _playerOnRaid = false;
-        PlayerVehicleManager.Instance.OnPlayerEndRaid();
-        PlayerWeaponManager.Instance.OnPlayerEndRaid();
+        PlayerVehicleManager.Instance.Init();
+        PlayerWeaponManager.Instance.Init();
 
         UIJoystickTouchController.Instance.Init();
         UIWeaponsSwitcher.Instance.Init();
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         _openInventoryBtn.gameObject.SetActive(false);
         _changeLevelsBtn.gameObject.SetActive(false);
         _settingsIsopened = false;
-        InventoryManager.Instance.OnCloseInventory();
+        InventoryManager.Instance.gameObject.SetActive(false);
         LevelManager.Instance.SelectLevelsWindow.SetActive(false);
     }
 

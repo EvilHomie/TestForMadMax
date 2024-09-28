@@ -45,8 +45,8 @@ public class UIJoystickTouchController : MonoBehaviour
             //_shootBtn.transform.localScale = Vector3.one / 2f;
 
 
-            _joystick.SetActive(false);
-            _shootBtn.SetActive(false);
+            //_joystick.SetActive(false);
+            //_shootBtn.SetActive(false);
         }
         else
         {

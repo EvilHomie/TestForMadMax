@@ -20,7 +20,8 @@ namespace YG
 
         // Ваши сохранения
 
-        public bool savesNotClear = false;
+        public bool savesIsClear = true;
+        public string savedVerion = null;
         public List<WeaponDataForSave> weaponsData = new();
         public List<VehicleDataForSave> vehiclesData = new();
         public List<string> schemesNames = new();

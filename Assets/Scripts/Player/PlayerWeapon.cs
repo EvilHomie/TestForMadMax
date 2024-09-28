@@ -3,10 +3,13 @@ using UnityEngine;
 public class PlayerWeapon : WeaponLogic, IItem
 {
     [SerializeField] WeaponData _weaponData;    
-    [SerializeField] GameObject _targetMarker;
+    [SerializeField] LineRenderer _targetMarkerLine;
     [SerializeField] Vector3 _observerPos;    
     [SerializeField] float _shakeOnShootIntensity = 0.2f;
     [SerializeField] float _shakeOnShootDuration = 0.1f;
+
+    [SerializeField] Transform _baseTransform;
+    [SerializeField] Transform _turretTransform;
 
     protected override float CurHullDmg => _weaponData.hullDmgByLvl * _weaponData.hullDmgCurLvl;
     protected override float CurShieldDmg => _weaponData.shieldDmgByLvl * _weaponData.shieldDmgCurLvl;
@@ -14,7 +17,12 @@ public class PlayerWeapon : WeaponLogic, IItem
 
     public override float RotationSpeed => _weaponData.rotationSpeedByLvl * _weaponData.rotationSpeedCurLvl;
     public Vector3 ObserverPos => _observerPos;
-    public GameObject TargetMarker => _targetMarker;
+    public LineRenderer TargetMarkerLine => _targetMarkerLine;
+
+    public FirePointManager[] FirePointsManagers => _firePointManagers;
+
+    public Transform BaseTransform => _baseTransform;
+    public Transform TurretTransform => _turretTransform;
 
     public void StartShooting()
     {

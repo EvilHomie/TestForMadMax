@@ -42,19 +42,19 @@ public class TestingLogic : MonoBehaviour
         //{
         //    SaveLoadManager.Instance.LoadSaveData();
         //}
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    YandexGame.ResetSaveProgress();
-        //    YandexGame.SaveProgress();
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            YandexGame.ResetSaveProgress();
+            YandexGame.SaveProgress();
 
-        //    //PlayerPrefs.DeleteAll();
-        //    //Debug.LogWarning("SAVE CLEAR");
-        //}
+            //PlayerPrefs.DeleteAll();
+            Debug.LogWarning("SAVE CLEAR");
+        }
 
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
-        //}
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
+        }
 
         //if (Input.GetKeyDown(KeyCode.B))
         //{

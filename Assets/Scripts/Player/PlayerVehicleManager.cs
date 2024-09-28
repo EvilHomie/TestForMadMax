@@ -15,7 +15,12 @@ public class PlayerVehicleManager : MonoBehaviour
         else Instance = this;
     }
 
-    public void OnChangeVehicle()
+    public void Init()
+    {
+        OnCloseInventory();
+    }
+
+    public void OnCloseInventory()
     {
         if (_playerVehicle != null)
         {
@@ -68,7 +73,6 @@ public class PlayerVehicleManager : MonoBehaviour
 
     public void OnPlayerEndRaid()
     {
-        OnChangeVehicle();
         _engineIsStarted = false;
         _playerVehicle.StopVehicle();
     }

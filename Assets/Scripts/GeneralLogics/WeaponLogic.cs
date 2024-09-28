@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WeaponLogic : MonoBehaviour
 {
-    [SerializeField] protected FirePointManager[] _firePoints;
+    [SerializeField] protected FirePointManager[] _firePointManagers;
     [SerializeField] AudioClip _shootSound;
     [SerializeField] AudioClip _hitSound;
 
@@ -29,7 +29,7 @@ public class WeaponLogic : MonoBehaviour
         }
         else if (weaponType == WeaponType.MultyBarreled)
         {
-            StartCoroutine(MultyBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, _firePoints.Length));
+            StartCoroutine(MultyBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, _firePointManagers.Length));
         }
         else if (weaponType == WeaponType.Beam)
         {
@@ -46,7 +46,7 @@ public class WeaponLogic : MonoBehaviour
         }
         else if (weaponType == WeaponType.MultyBarreled)
         {
-            StartCoroutine(MultyBarreledShootAsBot(_firePoints.Length, accuracy));
+            StartCoroutine(MultyBarreledShootAsBot(_firePointManagers.Length, accuracy));
         }
         else if (weaponType == WeaponType.Beam)
         {
@@ -61,8 +61,8 @@ public class WeaponLogic : MonoBehaviour
             if (Time.time >= _nextTimeTofire)
             {
                 CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
-                _firePoints[0].OneShoot(_shootSound);
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
+                _firePointManagers[0].OneShoot(_shootSound);
+                if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
                 }
@@ -82,8 +82,8 @@ public class WeaponLogic : MonoBehaviour
 
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePoints[_lastShootBarrelNumber].OneShoot(_shootSound);
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
+                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound);
+                if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
                 }
@@ -101,7 +101,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
-                _firePoints[0].OneShoot(_shootSound);
+                _firePointManagers[0].OneShoot(_shootSound);
 
                 if (accuracy != 0)
                 {
@@ -126,7 +126,7 @@ public class WeaponLogic : MonoBehaviour
             {
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePoints[_lastShootBarrelNumber].OneShoot(_shootSound);
+                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound);
                 if (accuracy != 0)
                 {
                     bool randomDirection = Random.value <= accuracy / 100;

@@ -30,6 +30,7 @@ public class UIWeaponsSwitcher : MonoBehaviour
     }
     void Update()
     {
+        if (!YandexGame.EnvironmentData.isDesktop) return;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             OnSelectWeapon(1);

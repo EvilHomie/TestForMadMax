@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e796c816fb21d144b16e8f4857f5ca5, type: 3}
-  m_Name: Advanced_Truck_Scheme
+  m_Name: Simple_Truck_V_1_Scheme
   m_EditorClassIdentifier: 
-  copperAmountForUnlock: 150
-  wiresAmountForUnlock: 125
-  scrapMetalAmountForUnlock: 100
-  vehicleData: {fileID: 11400000, guid: 8664fe69a15391f458ec6670fc7fe59b, type: 2}
+  vehicleData: {fileID: 11400000, guid: f61e9c3c769d5d240912c42df94b7299, type: 2}
+  copperAmountForUnlock: 50
+  wiresAmountForUnlock: 50
+  scrapMetalAmountForUnlock: 50
   dropChanceIfDuplicate: 0

@@ -5,6 +5,7 @@ public class GameConfig : MonoBehaviour
     public static GameConfig Instance;
 
     [SerializeField] bool _isTesting = true;
+    [SerializeField] bool _enableDebug = true;
     [SerializeField] Language _language;
 
     [Header("RAID")]
@@ -45,6 +46,7 @@ public class GameConfig : MonoBehaviour
     [SerializeField] float _touchRoadImpulse = 25;
 
     public bool IsTesting => _isTesting;
+    public bool EnableDebug => _enableDebug;
     public Language Language => _language;
 
     public float MinPlayerSpeed => _minPlayerSpeed;

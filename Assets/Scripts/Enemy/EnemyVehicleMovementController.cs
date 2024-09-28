@@ -132,6 +132,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
             yield return null;
         }
         RaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
+        RaidManager.Instance.OnEnemyEscaped();
         Destroy(gameObject);
     }
 

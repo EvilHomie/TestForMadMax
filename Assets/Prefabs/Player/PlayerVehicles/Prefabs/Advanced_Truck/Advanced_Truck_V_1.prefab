@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 6769451929110171107}
   - component: {fileID: 4091442796374768174}
   m_Layer: 0
-  m_Name: Simple_Truck
+  m_Name: Advanced_Truck_V_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e8e204596715d47ad6ebeab1bedd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehicleData: {fileID: 11400000, guid: f61e9c3c769d5d240912c42df94b7299, type: 2}
+  _vehicleData: {fileID: 11400000, guid: 8664fe69a15391f458ec6670fc7fe59b, type: 2}
   _shakeIntensityOnStart: 0.5
   _shakeDelayOnStart: 0.5
   _shakeDurationOnStart: 0.8
@@ -5098,7 +5098,7 @@ GameObject:
   - component: {fileID: 3896670288299348331}
   - component: {fileID: 3919512660345406867}
   - component: {fileID: 3913479987532370281}
-  - component: {fileID: 1557290090580985790}
+  - component: {fileID: 1600305522663505008}
   m_Layer: 0
   m_Name: Truck_v2_3
   m_TagString: Untagged
@@ -5164,7 +5164,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8fec811bafcbdac4b994cff24c72b4ca, type: 2}
+  - {fileID: 2100000, guid: c28ba1c246d9e8b42a8e51114f6cee10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5186,7 +5186,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1557290090580985790
+--- !u!114 &1600305522663505008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

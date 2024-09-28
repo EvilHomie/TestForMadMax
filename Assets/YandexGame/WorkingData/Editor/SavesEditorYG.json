@@ -1,5 +1,5 @@
 {
-  "idSave": 482,
+  "idSave": 645,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -10,16 +10,17 @@
     false,
     false
   ],
-  "savesNotClear": true,
+  "savesIsClear": false,
+  "savedVerion": "0.0.2",
   "weaponsData": [
     {
-      "deffWeaponName": "Simple_Cannon",
+      "deffWeaponName": "Simple_Cannon_V_1",
       "weaponNameEN": "Simple Cannon",
       "weaponNameRU": "Простая Пушка",
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 2,
+      "hullDmgCurLvl": 5,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 1.0,
       "shieldDmgCurLvl": 2,
@@ -32,66 +33,28 @@
       "rotationSpeedMaxLvl": 6
     },
     {
-      "deffWeaponName": "Energy_Simple_Cannon",
-      "weaponNameEN": "Energy Simple Cannon",
-      "weaponNameRU": "Простая Энерго Пушка",
-      "weaponType": 0,
-      "weaponRaritie": 0,
-      "hullDmgByLvl": 1.0,
-      "hullDmgCurLvl": 1,
-      "hullDmgMaxLvl": 6,
-      "shieldDmgByLvl": 2.0,
-      "shieldDmgCurLvl": 1,
-      "shieldDmgMaxLvl": 5,
-      "fireRateByLvl": 0.5,
-      "fireRateCurtLvl": 1,
-      "fireRateMaxLvl": 6,
-      "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 1,
-      "rotationSpeedMaxLvl": 6
-    },
-    {
-      "deffWeaponName": "Dual_Cannon",
+      "deffWeaponName": "Dual_Cannon_V_1",
       "weaponNameEN": "Dual Cannon",
       "weaponNameRU": "Двойная Пушка",
       "weaponType": 1,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 8,
+      "hullDmgCurLvl": 4,
       "hullDmgMaxLvl": 8,
       "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 7,
+      "shieldDmgCurLvl": 1,
       "shieldDmgMaxLvl": 7,
       "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 8,
+      "fireRateCurtLvl": 4,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 6,
-      "rotationSpeedMaxLvl": 8
-    },
-    {
-      "deffWeaponName": "Energy_Dual_Cannon",
-      "weaponNameEN": "Energy Dual Cannon",
-      "weaponNameRU": "Двойная Энерго Пушка",
-      "weaponType": 1,
-      "weaponRaritie": 0,
-      "hullDmgByLvl": 1.0,
-      "hullDmgCurLvl": 1,
-      "hullDmgMaxLvl": 7,
-      "shieldDmgByLvl": 2.0,
-      "shieldDmgCurLvl": 1,
-      "shieldDmgMaxLvl": 8,
-      "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 1,
-      "fireRateMaxLvl": 10,
-      "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 1,
+      "rotationSpeedCurLvl": 3,
       "rotationSpeedMaxLvl": 8
     }
   ],
   "vehiclesData": [
     {
-      "deffVehicleName": "Simple_Truck",
+      "deffVehicleName": "Simple_Truck_V_1",
       "vehicleNameEN": "Simple Truck",
       "vehicleNameRU": "Простой Грузовик",
       "vehicleRaritie": 0,
@@ -99,63 +62,30 @@
       "hullHPCurLvl": 1,
       "hullHPMaxLvl": 5,
       "shieldHPByLvl": 25.0,
-      "shieldHPCurLvl": 0,
+      "shieldHPCurLvl": 2,
       "shieldHPMaxLvl": 2,
       "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 0,
+      "shieldRegenCurtLvl": 3,
       "shieldRegenMaxLvl": 3,
       "curWeaponsCount": 1,
       "maxWeaponsCount": 1
-    },
-    {
-      "deffVehicleName": "Advanced_Truck",
-      "vehicleNameEN": "Advanced Truck",
-      "vehicleNameRU": "Улучшенный Грузовик",
-      "vehicleRaritie": 0,
-      "hullHPByLvl": 75.0,
-      "hullHPCurLvl": 4,
-      "hullHPMaxLvl": 4,
-      "shieldHPByLvl": 40.0,
-      "shieldHPCurLvl": 4,
-      "shieldHPMaxLvl": 4,
-      "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 6,
-      "shieldRegenMaxLvl": 6,
-      "curWeaponsCount": 2,
-      "maxWeaponsCount": 2
     }
   ],
-  "schemesNames": [],
+  "schemesNames": [
+    "Advanced_Truck_V_1_Scheme"
+  ],
   "availableResources": {
-    "ScrapMetal": 2121,
-    "Wires": 2638,
-    "Сopper": 2765
+    "ScrapMetal": 835,
+    "Wires": 999,
+    "Сopper": 1000
   },
   "equipedItems": {
-    "0": "Simple_Truck",
-    "1": "Dual_Cannon"
+    "0": "Simple_Truck_V_1",
+    "1": "Simple_Cannon_V_1"
   },
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
     "1-1",
-    "1-2",
-    "1-3",
-    "1-4",
-    "1-5",
-    "1-6",
-    "1-7",
-    "1-8",
-    "1-9",
-    "1-10",
-    "2-1",
-    "2-2",
-    "2-3",
-    "2-4",
-    "2-5",
-    "2-6",
-    "2-7",
-    "2-8",
-    "2-9",
-    "2-10"
+    "1-2"
   ]
 }

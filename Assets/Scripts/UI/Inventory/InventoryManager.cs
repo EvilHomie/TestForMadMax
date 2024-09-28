@@ -41,8 +41,8 @@ public class InventoryManager : MonoBehaviour
         _equipBtn.gameObject.SetActive(false);
 
         _unlockBtn.onClick.AddListener(OnTryUnlock);
-        _unlockBtn.gameObject.SetActive(false); // временно... пока нет логики с чертежами
-        OnCloseInventory();
+        _unlockBtn.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void OnOpenInventory()
@@ -70,8 +70,8 @@ public class InventoryManager : MonoBehaviour
     }
     public void OnCloseInventory()
     {
-        PlayerVehicleManager.Instance.OnChangeVehicle();
-        PlayerWeaponManager.Instance.UpdateWeaponsData();
+        PlayerVehicleManager.Instance.OnCloseInventory();
+        PlayerWeaponManager.Instance.OnCloseInventory();
         gameObject.SetActive(false);
     }
 

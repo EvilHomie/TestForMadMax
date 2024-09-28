@@ -172,6 +172,10 @@ public class RaidManager : MonoBehaviour
             FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
         }
     }
+    public void OnEnemyEscaped()
+    {
+        OnPlayerKillEnemy();
+    }
 
     void SpawnSimpleEnemy()
     {
