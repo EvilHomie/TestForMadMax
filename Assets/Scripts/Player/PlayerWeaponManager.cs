@@ -27,7 +27,7 @@ public class PlayerWeaponManager : MonoBehaviour
     bool _firstTouchStatus = false;
 
 
-    Vector3 _lastCameraHitPoint;
+    
 
     private void Awake()
     {
@@ -58,16 +58,17 @@ public class PlayerWeaponManager : MonoBehaviour
 
         //RotateWeaponAndCameraByWASD();
 
-        foreach (var item in _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers)
-        {
-            Debug.DrawRay(item.transform.position, item.transform.forward * 100000, Color.green);
-            if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
-            {
-                Vector3 startPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position) / 2;
-                Debug.DrawRay(startPos, (_lastCameraHitPoint - startPos) * 100000, Color.black);
-            }
-        }
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100000, Color.red);
+        //foreach (var item in _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers)
+        //{
+        //    Debug.DrawRay(item.transform.position, item.transform.forward * 100000, Color.green);
+        //    if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
+        //    {
+
+        //        Vector3 startPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position) / 2;
+        //        Debug.DrawRay(startPos, (_lastCameraHitPoint - startPos) * 100000, Color.black);
+        //    }
+        //}
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100000, Color.red);
     }
 
     public void OnCloseInventory()
@@ -176,7 +177,7 @@ public class PlayerWeaponManager : MonoBehaviour
         Camera.main.transform.rotation = Quaternion.Euler(curWeaponRotationY, curWeaponRotationX,  0);        
 
         Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
-
+        Vector3 _lastCameraHitPoint;
         if (Physics.Raycast(cameraRay, out RaycastHit hitInfo, 100000, _layerMask))
         {
             _lastCameraHitPoint = hitInfo.point;
@@ -222,7 +223,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         Camera.main.transform.rotation = Quaternion.Euler(_currentCameraRotation.y, _currentCameraRotation.x, 0);
         Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
-
+        Vector3 _lastCameraHitPoint;
         if (Physics.Raycast(cameraRay, out RaycastHit hitInfo, 100000, _layerMask))
         {
             _lastCameraHitPoint = hitInfo.point;
@@ -231,16 +232,15 @@ public class PlayerWeaponManager : MonoBehaviour
 
         
         Vector3 weaponRayStartPos = Vector3.zero;
-        Vector3 weaponRayDirection = Vector3.zero;
+        Transform aimPoint = _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.transform.parent;
+        Vector3 weaponRayDirection = aimPoint.forward;
         if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 1)
         {
             weaponRayStartPos = _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.parent.position;
-            weaponRayDirection = _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.parent.forward;
         }
         else if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
         {
             weaponRayStartPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position) / 2;
-            weaponRayDirection = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.forward + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.forward) / 2;
         }
 
 
@@ -248,7 +248,6 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (Physics.Raycast(weaponRay, out RaycastHit firePointhitInfo, 100000, _layerMask))
         {
-            Transform aimPoint = _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.transform.parent;
             _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.SetPosition(0, aimPoint.position);
             _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.SetPosition(1, firePointhitInfo.point);
         }
@@ -256,7 +255,7 @@ public class PlayerWeaponManager : MonoBehaviour
         float RotationRadiansSpeed = _weaponsByIndex[_selectedWeaponIndex].RotationSpeed * Mathf.Deg2Rad;
 
         Vector3 targetDirection = _lastCameraHitPoint - weaponRayStartPos;
-        Vector3 newDirection = Vector3.RotateTowards(_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.forward, targetDirection, RotationRadiansSpeed * Time.deltaTime, 0.0f);
+        Vector3 newDirection = Vector3.RotateTowards(aimPoint.forward, targetDirection, RotationRadiansSpeed * Time.deltaTime, 0.0f);
         Quaternion quaternion = Quaternion.LookRotation(newDirection);
 
         Vector3 eulerAngles = quaternion.eulerAngles;
@@ -264,14 +263,23 @@ public class PlayerWeaponManager : MonoBehaviour
         curWeaponRotationX = eulerAngles.x;
         curWeaponRotationY = eulerAngles.y;
 
-        //if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
-        //{
-        //    foreach (var weaponBarrel in _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers)
-        //    {
-        //        weaponBarrel.transform.parent.LookAt(_lastCameraHitPoint);
-        //    }
-        //}
         RotateSelectedWeapon(curWeaponRotationX, curWeaponRotationY);
+
+        if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
+        {
+            foreach (var weaponBarrel in _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers)
+            {
+                Vector3 dir = firePointhitInfo.point - weaponBarrel.transform.parent.position;
+                Vector3 newDir = Vector3.RotateTowards(weaponBarrel.transform.parent.forward, dir, RotationRadiansSpeed * Time.deltaTime, 0.0f);
+                Quaternion quaternion1 = Quaternion.LookRotation(newDir);
+
+                Vector3 eulerAngles1 = quaternion1.eulerAngles;
+
+
+
+                weaponBarrel.transform.parent.rotation = Quaternion.Euler(eulerAngles1.x, eulerAngles1.y, 0);
+            }
+        }
     }
 
     void RotateSelectedWeapon(float x, float y)
