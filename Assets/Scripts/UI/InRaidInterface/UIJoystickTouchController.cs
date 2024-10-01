@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -12,8 +11,10 @@ public class UIJoystickTouchController : MonoBehaviour
     [SerializeField] Slider _speedSlider;
     [SerializeField] GameObject _joystick;
     [SerializeField] GameObject _shootBtn;
+    [SerializeField] Transform[] _weaponIcons;
 
     [SerializeField] GameObject[] _navigationKeys;
+    [SerializeField] GameObject _mouseIconForPC;
 
     CanvasGroup _canvasGroup;
     bool _isRotating = false;
@@ -30,7 +31,7 @@ public class UIJoystickTouchController : MonoBehaviour
     public void Init()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        _speedSlider.onValueChanged.AddListener(OnChangeSpeed);
+        //_speedSlider.onValueChanged.AddListener(OnChangeSpeed);
         HideInRaidInterface();
 
         if (YandexGame.EnvironmentData.isDesktop)
@@ -44,9 +45,14 @@ public class UIJoystickTouchController : MonoBehaviour
             //_joystick.transform.localScale = Vector3.one / 2f;
             //_shootBtn.transform.localScale = Vector3.one / 2f;
 
+            foreach (var icon in _weaponIcons)
+            {
+                icon.localScale = Vector3.one * 0.7f;
+            }
 
-            //_joystick.SetActive(false);
-            //_shootBtn.SetActive(false);
+
+            _joystick.SetActive(false);
+            _shootBtn.SetActive(false);
         }
         else
         {
@@ -54,6 +60,7 @@ public class UIJoystickTouchController : MonoBehaviour
             {
                 key.SetActive(false);
             }
+            _mouseIconForPC.SetActive(false);
         }
     }
     private void Update()
@@ -125,6 +132,16 @@ public class UIJoystickTouchController : MonoBehaviour
 
     public void ShowControllers(float delay)
     {
+        if (YandexGame.EnvironmentData.isDesktop)
+        {
+            if (LevelManager.Instance.GetSelectedLevelinfo().LevelName != "1-1")
+            {
+                _mouseIconForPC.SetActive(false);
+            }
+            else _mouseIconForPC.SetActive(true);
+        }
+
+
         _speedSlider.value = 0;
         StartCoroutine(FlickeringAppearance(delay));
     }

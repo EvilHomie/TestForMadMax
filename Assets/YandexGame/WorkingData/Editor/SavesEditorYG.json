@@ -1,5 +1,5 @@
 {
-  "idSave": 680,
+  "idSave": 3,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,7 +11,7 @@
     false
   ],
   "savesIsClear": false,
-  "savedVerion": "0.0.2",
+  "savedVerion": "0.0.22",
   "weaponsData": [
     {
       "deffWeaponName": "Simple_Cannon_V_1",
@@ -20,7 +20,7 @@
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 5,
+      "hullDmgCurLvl": 2,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 1.0,
       "shieldDmgCurLvl": 2,
@@ -39,16 +39,16 @@
       "weaponType": 1,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 4,
+      "hullDmgCurLvl": 1,
       "hullDmgMaxLvl": 8,
       "shieldDmgByLvl": 1.0,
       "shieldDmgCurLvl": 1,
       "shieldDmgMaxLvl": 7,
       "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 4,
+      "fireRateCurtLvl": 1,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 3,
+      "rotationSpeedCurLvl": 1,
       "rotationSpeedMaxLvl": 8
     }
   ],
@@ -62,30 +62,45 @@
       "hullHPCurLvl": 1,
       "hullHPMaxLvl": 5,
       "shieldHPByLvl": 25.0,
-      "shieldHPCurLvl": 2,
+      "shieldHPCurLvl": 0,
       "shieldHPMaxLvl": 2,
       "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 3,
+      "shieldRegenCurtLvl": 0,
       "shieldRegenMaxLvl": 3,
       "curWeaponsCount": 1,
       "maxWeaponsCount": 1
+    },
+    {
+      "deffVehicleName": "Advanced_Truck_V_1",
+      "vehicleNameEN": "Advanced Truck",
+      "vehicleNameRU": "Улучшенный Грузовик",
+      "vehicleRaritie": 0,
+      "hullHPByLvl": 75.0,
+      "hullHPCurLvl": 1,
+      "hullHPMaxLvl": 4,
+      "shieldHPByLvl": 40.0,
+      "shieldHPCurLvl": 1,
+      "shieldHPMaxLvl": 4,
+      "shieldRegenRateByLvl": 1.0,
+      "shieldRegenCurtLvl": 0,
+      "shieldRegenMaxLvl": 6,
+      "curWeaponsCount": 2,
+      "maxWeaponsCount": 2
     }
   ],
-  "schemesNames": [
-    "Advanced_Truck_V_1_Scheme"
-  ],
+  "schemesNames": [],
   "availableResources": {
-    "ScrapMetal": 839,
-    "Wires": 1001,
-    "Сopper": 1000
+    "Сopper": 550,
+    "Wires": 590,
+    "ScrapMetal": 630
   },
   "equipedItems": {
-    "0": "Simple_Truck_V_1",
-    "1": "Dual_Cannon_V_1"
+    "0": "Advanced_Truck_V_1",
+    "1": "Simple_Cannon_V_1",
+    "2": "Dual_Cannon_V_1"
   },
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
-    "1-1",
-    "1-2"
+    "1-1"
   ]
 }

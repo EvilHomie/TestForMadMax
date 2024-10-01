@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 using YG;
 
 public class PlayerWeaponManager : MonoBehaviour
@@ -10,24 +11,21 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] LayerMask _layerMask;
     [SerializeField] float _mouseSensitivity = 5f;
     [SerializeField] Transform[] _weaponPointsTransform;
+    [SerializeField] GameObject _targetMarkerForMobile;
+
     Vector3 _currentCameraRotation;
 
 
     //Dictionary<int, Transform> _weaponPoints = new();
     Dictionary<int, PlayerWeapon> _weaponsByIndex = new();
-    Dictionary<int, Vector2> _weaponsRotationData = new();
+    Dictionary<int, Vector2> _lastCameraRotationDataByWeaponIndex = new();
 
     int _selectedWeaponIndex = 1;
-    float curWeaponRotationY = 0;
-    float curWeaponRotationX = 0;
+    //float curWeaponRotationY = 0;
+    //float curWeaponRotationX = 0;
 
     bool _playerIsDead = false;
     bool _playerOnRaid = false;
-    bool _isFirstLevel = false;
-    bool _firstTouchStatus = false;
-
-
-    
 
     private void Awake()
     {
@@ -43,32 +41,16 @@ public class PlayerWeaponManager : MonoBehaviour
     private void LateUpdate()
     {
         if (_playerIsDead || !_playerOnRaid) return;
-        //if (YandexGame.EnvironmentData.isDesktop)
-        //{
-        //    RotateWeaponAndCameraByMouse();
-        //}
-        //else
-        //{
-        //    RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
-        //}
-
-        RotateWeaponAndCameraByMouse();
-        //RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
-
-
-        //RotateWeaponAndCameraByWASD();
-
-        //foreach (var item in _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers)
-        //{
-        //    Debug.DrawRay(item.transform.position, item.transform.forward * 100000, Color.green);
-        //    if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
-        //    {
-
-        //        Vector3 startPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position) / 2;
-        //        Debug.DrawRay(startPos, (_lastCameraHitPoint - startPos) * 100000, Color.black);
-        //    }
-        //}
-        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100000, Color.red);
+        if (YandexGame.EnvironmentData.isDesktop)
+        {
+            _targetMarkerForMobile.SetActive(false);
+            RotateWeaponAndCameraByMouse();
+        }
+        else
+        {
+            _targetMarkerForMobile.SetActive(true);
+            RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
+        }
     }
 
     public void OnCloseInventory()
@@ -88,8 +70,8 @@ public class PlayerWeaponManager : MonoBehaviour
             }
         }
         _weaponsByIndex.Clear();
-        _weaponsRotationData.Clear();
-        _selectedWeaponIndex = 1;        
+        _lastCameraRotationDataByWeaponIndex.Clear();
+        _selectedWeaponIndex = 1;
     }
 
     void CreateWeaponsOnPoints()
@@ -111,17 +93,18 @@ public class PlayerWeaponManager : MonoBehaviour
 
         PlayerWeapon newWeaponInstance = Instantiate(weaponPF, matchPoint);
         newWeaponInstance.SetItemData(wData);
-        newWeaponInstance.TargetMarkerLine.gameObject.SetActive(false);
+        newWeaponInstance.TargetMarker.SetActive(false);
         _weaponsByIndex[weaponIndex] = newWeaponInstance;
-        _weaponsRotationData[weaponIndex] = Vector2.zero;
-        CustomLogDebuger.Log("WC");
+        _lastCameraRotationDataByWeaponIndex[weaponIndex] = Vector2.zero;
+        //CustomLogDebuger.Log("WC");
     }
 
     public void OnPlayerStartRaid()
     {
         _playerOnRaid = true;
         _playerIsDead = false;
-        _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.gameObject.SetActive(true);
+        if (YandexGame.EnvironmentData.isDesktop)
+            _weaponsByIndex[_selectedWeaponIndex].TargetMarker.SetActive(true);
     }
 
 
@@ -136,20 +119,30 @@ public class PlayerWeaponManager : MonoBehaviour
         Vector3 newPos = _weaponPointsTransform[0].position + _weaponsByIndex[1].ObserverPos;
         CameraManager.Instance.ChangeInitPos(newPos);
         Camera.main.transform.position = newPos;
-        Camera.main.transform.rotation = Quaternion.Euler(0,0,0);
+        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void ChangeWeapon(int selectedSlotIndex)
     {
-        _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.gameObject.SetActive(false);
-        _weaponsRotationData[_selectedWeaponIndex] = new Vector2(curWeaponRotationX, curWeaponRotationY);
+        if (YandexGame.EnvironmentData.isDesktop)
+        {
+            _weaponsByIndex[_selectedWeaponIndex].TargetMarker.SetActive(false);
+            _weaponsByIndex[selectedSlotIndex].TargetMarker.SetActive(true);
+        }
 
-        _weaponsByIndex[selectedSlotIndex].TargetMarkerLine.gameObject.SetActive(true);
-        curWeaponRotationX = _weaponsRotationData[selectedSlotIndex].x;
-        curWeaponRotationY = _weaponsRotationData[selectedSlotIndex].y;
+        Vector3 newPos = _weaponPointsTransform[selectedSlotIndex - 1].position + _weaponsByIndex[selectedSlotIndex].ObserverPos;
 
-        CameraManager.Instance.ChangeInitPos(_weaponPointsTransform[selectedSlotIndex].position + _weaponsByIndex[selectedSlotIndex].ObserverPos);
-        Camera.main.transform.rotation = Quaternion.Euler(-curWeaponRotationX, curWeaponRotationY, 0);
+        CameraManager.Instance.ChangeInitPos(newPos);
+        Camera.main.transform.position = newPos;
+
+        if (!YandexGame.EnvironmentData.isDesktop)
+        {
+            _lastCameraRotationDataByWeaponIndex[_selectedWeaponIndex] = new(_currentCameraRotation.y, _currentCameraRotation.x);
+            Vector2 newRotation = _lastCameraRotationDataByWeaponIndex[selectedSlotIndex] == null ? Vector2.zero : _lastCameraRotationDataByWeaponIndex[selectedSlotIndex];
+            _currentCameraRotation.x = newRotation.y;
+            _currentCameraRotation.y = newRotation.x;
+            Camera.main.transform.rotation = Quaternion.Euler(newRotation.x, newRotation.y, 0);
+        }
 
         _selectedWeaponIndex = selectedSlotIndex;
     }
@@ -169,12 +162,13 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (movementVector == Vector2.zero) return;
 
-        curWeaponRotationX += movementVector.x * Time.deltaTime * _weaponsByIndex[_selectedWeaponIndex].RotationSpeed;
-        curWeaponRotationY -= movementVector.y * Time.deltaTime * _weaponsByIndex[_selectedWeaponIndex].RotationSpeed;
-        curWeaponRotationX = Mathf.Clamp(curWeaponRotationX, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
-        curWeaponRotationY = Mathf.Clamp(curWeaponRotationY, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
+        _currentCameraRotation.x += movementVector.x * Time.deltaTime * _weaponsByIndex[_selectedWeaponIndex].RotationSpeed;
+        _currentCameraRotation.y -= movementVector.y * Time.deltaTime * _weaponsByIndex[_selectedWeaponIndex].RotationSpeed;
+        _currentCameraRotation.x = Mathf.Clamp(_currentCameraRotation.x, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        _currentCameraRotation.y = Mathf.Clamp(_currentCameraRotation.y, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
 
-        Camera.main.transform.rotation = Quaternion.Euler(curWeaponRotationY, curWeaponRotationX,  0);        
+        Camera.main.transform.rotation = Quaternion.Euler(_currentCameraRotation.y, _currentCameraRotation.x, 0);
+        
 
         Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
         Vector3 _lastCameraHitPoint;
@@ -192,7 +186,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
         else if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
         {
-            startPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position)/2;
+            startPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position) / 2;
         }
 
         Vector3 targetDirection = _lastCameraHitPoint - startPos;
@@ -206,13 +200,12 @@ public class PlayerWeaponManager : MonoBehaviour
             {
                 weaponBarrel.transform.parent.LookAt(_lastCameraHitPoint);
             }
-
         }
 
         RotateSelectedWeapon(eulerAngles.x, eulerAngles.y);
     }
 
-   
+
 
     void RotateWeaponAndCameraByMouse()
     {
@@ -230,7 +223,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
         else return;
 
-        
+
         Vector3 weaponRayStartPos = Vector3.zero;
         Transform aimPoint = _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.transform.parent;
         Vector3 weaponRayDirection = aimPoint.forward;
@@ -248,8 +241,9 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (Physics.Raycast(weaponRay, out RaycastHit firePointhitInfo, 100000, _layerMask))
         {
-            _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.SetPosition(0, aimPoint.position);
-            _weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.SetPosition(1, firePointhitInfo.point);
+            Vector3 markerDir = Vector3.Normalize(firePointhitInfo.point - Camera.main.transform.position);
+            Vector3 pos = Camera.main.transform.position + markerDir * 200;
+            _weaponsByIndex[_selectedWeaponIndex].TargetMarker.transform.position = pos;
         }
 
         float RotationRadiansSpeed = _weaponsByIndex[_selectedWeaponIndex].RotationSpeed * Mathf.Deg2Rad;
@@ -260,10 +254,10 @@ public class PlayerWeaponManager : MonoBehaviour
 
         Vector3 eulerAngles = quaternion.eulerAngles;
 
-        curWeaponRotationX = eulerAngles.x;
-        curWeaponRotationY = eulerAngles.y;
+        //curWeaponRotationX = eulerAngles.x;
+        //curWeaponRotationY = eulerAngles.y;
 
-        RotateSelectedWeapon(curWeaponRotationX, curWeaponRotationY);
+        RotateSelectedWeapon(eulerAngles.x, eulerAngles.y);
 
         if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
         {
@@ -274,9 +268,6 @@ public class PlayerWeaponManager : MonoBehaviour
                 Quaternion quaternion1 = Quaternion.LookRotation(newDir);
 
                 Vector3 eulerAngles1 = quaternion1.eulerAngles;
-
-
-
                 weaponBarrel.transform.parent.rotation = Quaternion.Euler(eulerAngles1.x, eulerAngles1.y, 0);
             }
         }
@@ -332,7 +323,14 @@ public class PlayerWeaponManager : MonoBehaviour
         Camera.main.transform.rotation = newRotation;
     }
 
+            //_weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.SetPosition(0, aimPoint.position);
+            //_weaponsByIndex[_selectedWeaponIndex].TargetMarkerLine.SetPosition(1, firePointhitInfo.point);
+            ////_weaponsByIndex[_selectedWeaponIndex].TargetMarkerTEST.transform.position = firePointhitInfo.point;
 
+
+            //Vector3 directionToPoint = firePointhitInfo.point - Camera.main.transform.position;
+
+            //Debug.DrawRay(Camera.main.transform.position, directionToPoint * 100000, Color.yellow);
 
             //Vector3 directionToPoint = firePointhitInfo.point - Camera.main.transform.position;
 
@@ -451,4 +449,23 @@ public class PlayerWeaponManager : MonoBehaviour
         //    //Debug.LogWarning(weaponIndex);
         //    ChangeWeaponOnPoint(weaponIndex);
         //}
+
+
+//RotateWeaponAndCameraByMouse();
+        //RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
+
+
+        //RotateWeaponAndCameraByWASD();
+
+        //foreach (var item in _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers)
+        //{
+        //    Debug.DrawRay(item.transform.position, item.transform.forward * 100000, Color.green);
+        //    if (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers.Length == 2)
+        //    {
+
+        //        Vector3 startPos = (_weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[0].transform.position + _weaponsByIndex[_selectedWeaponIndex].FirePointsManagers[1].transform.position) / 2;
+        //        Debug.DrawRay(startPos, (_lastCameraHitPoint - startPos) * 100000, Color.black);
+        //    }
+        //}
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100000, Color.red);
 */

@@ -2058,12 +2058,12 @@ PrefabInstance:
     - target: {fileID: 5892922725827330228, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
         type: 3}
       propertyPath: _hullDmg
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5892922725827330228, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
         type: 3}
       propertyPath: _shieldDmg
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8225509727764590808, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
         type: 3}

@@ -4,6 +4,7 @@ public class PlayerWeapon : WeaponLogic, IItem
 {
     [SerializeField] WeaponData _weaponData;    
     [SerializeField] LineRenderer _targetMarkerLine;
+    [SerializeField] GameObject _targetMarker;
     [SerializeField] Vector3 _observerPos;    
     [SerializeField] float _shakeOnShootIntensity = 0.2f;
     [SerializeField] float _shakeOnShootDuration = 0.1f;
@@ -19,6 +20,7 @@ public class PlayerWeapon : WeaponLogic, IItem
     public Vector3 ObserverPos => _observerPos;
     public LineRenderer TargetMarkerLine => _targetMarkerLine;
 
+    public GameObject TargetMarker => _targetMarker;
     public FirePointManager[] FirePointsManagers => _firePointManagers;
 
     public Transform BaseTransform => _baseTransform;

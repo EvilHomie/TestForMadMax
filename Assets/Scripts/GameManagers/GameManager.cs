@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         YandexGame.GameReadyAPI();
+        //YandexGame.EnvironmentData.isDesktop = false;
         Init();
     }
 

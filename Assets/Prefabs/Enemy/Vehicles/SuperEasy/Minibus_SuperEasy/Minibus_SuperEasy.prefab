@@ -20798,17 +20798,17 @@ PrefabInstance:
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _hullDmg
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _fireRate
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _shieldDmg
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9011403678162496428, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
@@ -21227,17 +21227,17 @@ PrefabInstance:
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _hullDmg
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _fireRate
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: _shieldDmg
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9011403678162496428, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}

@@ -296,6 +296,7 @@ MonoBehaviour:
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
   _weaponData: {fileID: 11400000, guid: e1889a7089e25c24fb36ae1917fbfbfe, type: 2}
   _targetMarkerLine: {fileID: 8622078862687848516}
+  _targetMarker: {fileID: 128540130182193525}
   _observerPos: {x: 0, y: 120, z: -30}
   _shakeOnShootIntensity: 0.2
   _shakeOnShootDuration: 0.1
@@ -317,7 +318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5730251515630247939
 Transform:
   m_ObjectHideFlags: 0
@@ -537,7 +538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8165030438302953017
 Transform:
   m_ObjectHideFlags: 0
@@ -672,7 +673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1220576854859263331
 Transform:
   m_ObjectHideFlags: 0

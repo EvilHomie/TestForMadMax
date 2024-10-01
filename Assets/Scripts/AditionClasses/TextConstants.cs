@@ -106,7 +106,7 @@ public static class TextConstants
             MAXLEVEL = "Макс Уровень";
             NEWSCHEMES = "Новые Схемы";
             INVENTORY = "Склад";
-            RAID = "Рейд";
+            RAID = "В Рейд";
             GARAGE = "Гараж";
             UNLOCKCOST = "Стоимость Открытия";
             NEWSCHEME = "Новая Схема";

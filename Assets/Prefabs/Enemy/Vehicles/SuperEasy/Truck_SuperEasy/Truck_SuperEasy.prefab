@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c91bd2ea59e8348826ad174e051e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scheme: {fileID: 11400000, guid: 95d6977253f7cc44abab2bbc9ea5f457, type: 2}
+  _scheme: {fileID: 0}
 --- !u!1 &1122937966344188
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,7 +2153,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullDmg
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2163,7 +2163,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldDmg
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2443,7 +2443,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _hullDmg
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -2453,7 +2453,7 @@ PrefabInstance:
     - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: _shieldDmg
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}

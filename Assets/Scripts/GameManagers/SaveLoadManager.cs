@@ -6,7 +6,7 @@ using YG;
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
-    string[] _deffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Dual_Cannon_V_1", "Simple_Truck_V_1", "Advanced_Truck_V_1_Scheme" };
+    string[] _deffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Dual_Cannon_V_1_Scheme", "Simple_Truck_V_1", "Advanced_Truck_V_1_Scheme" };
     string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Simple_Truck_V_1", "Advanced_Truck_V_1" };
 
     [SerializeField] bool resetProgressRequired = false;
@@ -25,7 +25,6 @@ public class SaveLoadManager : MonoBehaviour
 
     void ResetProgress(string[] ItemsNames)
     {
-        Debug.LogWarning("RESETPROGRESS");
         PlayerData.Instance.PlayerItemsData = new();
         UIResourcesManager.Instance.RemoveAllResources();
         foreach (var itemName in ItemsNames)
@@ -55,7 +54,10 @@ public class SaveLoadManager : MonoBehaviour
 
         PlayerData.Instance.LastSelectedLevelName = "1-1";
         PlayerData.Instance.UnlockedLevelsNames = new() { "1-1" };
+        PlayerData.Instance.AvailableResources = new() { { ResourcesType.Ñopper, 0 }, { ResourcesType.Wires, 0 }, { ResourcesType.ScrapMetal, 0 } };
+        UIResourcesManager.Instance.AddResources(0, 15, 30);
 
+        YandexGame.savesData.idSave = 1;
         SaveData();
 
     }
@@ -113,7 +115,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void CheckSaveData()
     {
-        if (YandexGame.savesData.savesIsClear || YandexGame.savesData.savedVerion == null)
+        if (YandexGame.savesData.savesIsClear)
         {
             ResetProgress(_deffaultItemsNames);
             return;
@@ -163,6 +165,9 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (resetProgressRequired)
         {
+            if (YandexGame.savesData.savedVerion == null) return false;
+
+
             string currentVersion = Application.version;
             string savedVersion = YandexGame.savesData.savedVerion;
 

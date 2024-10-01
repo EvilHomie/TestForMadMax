@@ -121,10 +121,10 @@ public class EnemyVehicleMovementController : MonoBehaviour
         if (_translateToGameZoneCoroutine != null) StopCoroutine(_translateToGameZoneCoroutine);
         if (_slidingCoroutine != null) StopCoroutine(_slidingCoroutine);
 
-        float runSpeedMod = Random.Range(GameConfig.Instance.MinRunSpeed, GameConfig.Instance.MaxRunSpeed);
+        //float runSpeedMod = Random.Range(GameConfig.Instance.MinRunSpeed, GameConfig.Instance.MaxRunSpeed);
         bool randomDirection = Random.value < 0.5f;
 
-        runSpeedMod = randomDirection ? -runSpeedMod : runSpeedMod;
+        float runSpeedMod = randomDirection ? -0.7f: 0.7f;
 
         while (transform.position.x > -GameConfig.Instance.XOffsetForDestroyObject && transform.position.x < GameConfig.Instance.XOffsetForDestroyObject)
         {
