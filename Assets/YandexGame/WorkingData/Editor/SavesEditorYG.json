@@ -1,5 +1,5 @@
 {
-  "idSave": 3,
+  "idSave": 10,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -45,7 +45,7 @@
       "shieldDmgCurLvl": 1,
       "shieldDmgMaxLvl": 7,
       "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 1,
+      "fireRateCurtLvl": 10,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
       "rotationSpeedCurLvl": 1,
@@ -90,14 +90,14 @@
   ],
   "schemesNames": [],
   "availableResources": {
-    "Сopper": 550,
-    "Wires": 590,
-    "ScrapMetal": 630
+    "Сopper": 513,
+    "Wires": 505,
+    "ScrapMetal": 479
   },
   "equipedItems": {
     "0": "Advanced_Truck_V_1",
-    "1": "Simple_Cannon_V_1",
-    "2": "Dual_Cannon_V_1"
+    "1": "Dual_Cannon_V_1",
+    "2": "Simple_Cannon_V_1"
   },
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [

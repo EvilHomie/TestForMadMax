@@ -182,7 +182,6 @@ GameObject:
   - component: {fileID: 4000013053745136}
   - component: {fileID: 33000012798234764}
   - component: {fileID: 23000011206435812}
-  - component: {fileID: 95000013199790468}
   - component: {fileID: -5013337906677554371}
   m_Layer: 0
   m_Name: Simple_Cannon_V_1
@@ -257,27 +256,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &95000013199790468
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000013227101710}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 8b753cd7277b22448a827f90e6efe768, type: 3}
-  m_Controller: {fileID: 9100000, guid: c7c5cebb01b5ece47a63dd05e1b4ce25, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-5013337906677554371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,8 +276,8 @@ MonoBehaviour:
   _targetMarkerLine: {fileID: 8622078862687848516}
   _targetMarker: {fileID: 128540130182193525}
   _observerPos: {x: 0, y: 120, z: -30}
-  _shakeOnShootIntensity: 0.2
-  _shakeOnShootDuration: 0.1
+  _shakeOnShootIntensity: 0.5
+  _shakeOnShootDuration: 0.2
   _baseTransform: {fileID: 4000013053745136}
   _turretTransform: {fileID: 4000012307128758}
 --- !u!1 &128540130182193525

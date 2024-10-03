@@ -61,7 +61,7 @@ public class WeaponLogic : MonoBehaviour
             if (Time.time >= _nextTimeTofire)
             {
                 CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
-                _firePointManagers[0].OneShoot(_shootSound);
+                _firePointManagers[0].OneShoot(_shootSound, CurFireRate);
                 if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -82,7 +82,7 @@ public class WeaponLogic : MonoBehaviour
 
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound);
+                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound, CurFireRate);
                 if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -101,7 +101,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
-                _firePointManagers[0].OneShoot(_shootSound);
+                _firePointManagers[0].OneShoot(_shootSound, CurFireRate);
 
                 if (accuracy != 0)
                 {
@@ -126,7 +126,7 @@ public class WeaponLogic : MonoBehaviour
             {
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound);
+                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound, CurFireRate);
                 if (accuracy != 0)
                 {
                     bool randomDirection = Random.value <= accuracy / 100;

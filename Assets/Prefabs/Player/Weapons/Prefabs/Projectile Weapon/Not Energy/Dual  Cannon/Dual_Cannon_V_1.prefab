@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 33000014089371946}
   - component: {fileID: 23000010303888186}
   - component: {fileID: -7435112072028318016}
-  - component: {fileID: 582694176563241508}
   m_Layer: 0
   m_Name: Dual_Cannon_V_1
   m_TagString: Untagged
@@ -107,31 +106,10 @@ MonoBehaviour:
   _targetMarkerLine: {fileID: 8451650354066028844}
   _targetMarker: {fileID: 6006894663067229839}
   _observerPos: {x: 0, y: 135, z: -35}
-  _shakeOnShootIntensity: 0.2
-  _shakeOnShootDuration: 0.1
+  _shakeOnShootIntensity: 0.5
+  _shakeOnShootDuration: 0.2
   _baseTransform: {fileID: 4000013848247632}
   _turretTransform: {fileID: 4000013643732794}
---- !u!95 &582694176563241508
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000012105359850}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 95a1027eb1d58b647aced627e637172a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 391b526eedfe88d46acac2b5c474deac, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1000012389614952
 GameObject:
   m_ObjectHideFlags: 0
