@@ -28,6 +28,7 @@ public class RaidManager : MonoBehaviour
 
 
     public float PlayerMoveSpeed => _playerMoveSpeed;
+    public Transform MainRoadTransform => _mainRoadRenderer.transform;
 
 
     private void Awake()

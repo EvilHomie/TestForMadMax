@@ -1,5 +1,5 @@
 {
-  "idSave": 10,
+  "idSave": 30,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -48,7 +48,7 @@
       "fireRateCurtLvl": 10,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 1,
+      "rotationSpeedCurLvl": 8,
       "rotationSpeedMaxLvl": 8
     }
   ],
@@ -90,9 +90,9 @@
   ],
   "schemesNames": [],
   "availableResources": {
-    "Сopper": 513,
-    "Wires": 505,
-    "ScrapMetal": 479
+    "Сopper": 501,
+    "Wires": 466,
+    "ScrapMetal": 396
   },
   "equipedItems": {
     "0": "Advanced_Truck_V_1",
@@ -101,6 +101,7 @@
   },
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
-    "1-1"
+    "1-1",
+    "1-2"
   ]
 }

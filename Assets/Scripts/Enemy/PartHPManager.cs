@@ -32,7 +32,7 @@ public class PartHPManager : MonoBehaviour, IDamageable
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {
-        if(hitSound != null) _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
+        if (hitSound != null) _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
         if (_partIsDestroyed) return;
 
         if (_shieldHP > 0)
@@ -78,7 +78,12 @@ public class PartHPManager : MonoBehaviour, IDamageable
         }
         else if (_vehiclePart == EnumVehiclePart.Wheel)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            TryGetComponent(out WheelRimSparks wheelRimSparks);
+            if (wheelRimSparks != null)
+            {
+                wheelRimSparks.EnableSparks();
+            }
         }
         else if (_vehiclePart == EnumVehiclePart.Body)
         {
@@ -92,10 +97,10 @@ public class PartHPManager : MonoBehaviour, IDamageable
 
     public void ExplosionDamage()
     {
-        OnHit(_maxHullHp/5, _maxShieldHp/5, null);
+        OnHit(_maxHullHp / 5, _maxShieldHp / 5, null);
     }
 
-    public void GetBodyHPRelativeValues(out float hullHPRelativeValue,out float shieldHPRelativeValue)
+    public void GetBodyHPRelativeValues(out float hullHPRelativeValue, out float shieldHPRelativeValue)
     {
         hullHPRelativeValue = _hullHP / _maxHullHp;
         shieldHPRelativeValue = _maxShieldHp == 0 ? 0 : _shieldHP / _maxShieldHp;

@@ -35,7 +35,6 @@ public class FirePointManager : MonoBehaviour
         {
             t += Time.deltaTime * fireRate;
 
-            //float defZPos = transform.parent.localPosition.z;
             float zOffset = _animationCurve.Evaluate(t);
             Vector3 pos = transform.parent.localPosition;
             pos.z = _barrelDefPos.z + zOffset;
