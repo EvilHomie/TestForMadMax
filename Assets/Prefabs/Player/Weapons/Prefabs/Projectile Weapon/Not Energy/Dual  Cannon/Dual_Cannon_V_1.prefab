@@ -100,7 +100,7 @@ MonoBehaviour:
   _firePointManagers:
   - {fileID: 3855516377377082228}
   - {fileID: 1974102775647306289}
-  _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
+  _shootSound: {fileID: 8300000, guid: 276f18583375a3946a3fcb21f2ab2919, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
   _weaponData: {fileID: 11400000, guid: d392fc143a428104cb163ef3a6ff06a5, type: 2}
   _targetMarkerLine: {fileID: 8451650354066028844}

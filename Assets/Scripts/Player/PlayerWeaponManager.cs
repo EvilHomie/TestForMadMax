@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Timeline;
 using YG;
@@ -12,7 +13,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] float _mouseSensitivity = 5f;
     [SerializeField] Transform[] _weaponPointsTransform;
     [SerializeField] GameObject _targetMarkerForMobile;
-
+    [SerializeField] GameObject _mouseCursor;
     Vector3 _currentCameraRotation;
 
 
@@ -36,19 +37,27 @@ public class PlayerWeaponManager : MonoBehaviour
     public void Init()
     {
         OnCloseInventory();
-    }
-
-    private void LateUpdate()
-    {
-        if (_playerIsDead || !_playerOnRaid) return;
+        
         if (YandexGame.EnvironmentData.isDesktop)
         {
-            _targetMarkerForMobile.SetActive(false);
-            RotateWeaponAndCameraByMouse();
+            _targetMarkerForMobile.SetActive(false);            
         }
         else
         {
             _targetMarkerForMobile.SetActive(true);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        //Cursor.visible = false;
+        if (_playerIsDead || !_playerOnRaid) return;
+        if (YandexGame.EnvironmentData.isDesktop)
+        {
+            RotateWeaponAndCameraByMouse();
+        }
+        else
+        {
             RotateWeaponAndCameraByJoystick(UIJoystickTouchController.Instance.GetJoystickPosition);
         }
     }
@@ -205,23 +214,77 @@ public class PlayerWeaponManager : MonoBehaviour
         RotateSelectedWeapon(eulerAngles.x, eulerAngles.y);
     }
 
+    void CheckMouseDeadZone(out Vector2 pointOutOfDeadZoneMod)
+    {
+        float detectSquareSize = Screen.height / 8;
+        Vector2 screenCenter = new(Screen.width / 2, Screen.height / 2);
+        Vector2 mousePosOnScreen = Input.mousePosition;
+
+       
+        Vector2 mouseOffsetOfCenter = mousePosOnScreen - screenCenter;
+
+        bool inLimiterAreaByX = Mathf.Abs(mouseOffsetOfCenter.x) < detectSquareSize;
+        bool inLimiterAreaByY = Mathf.Abs(mouseOffsetOfCenter.y) < detectSquareSize;
+
+        if (inLimiterAreaByX && inLimiterAreaByY)
+        {
+            pointOutOfDeadZoneMod = Vector2.zero;
+        }
+        else
+        {
+            Vector2 zeroToOne = new(mousePosOnScreen.x / Screen.width, mousePosOnScreen.y / Screen.height);
+            Vector2 minusOneToOne;
+
+            minusOneToOne.x = ((1 - zeroToOne.x) - 0.5f) * -2f;
+            minusOneToOne.y = ((1 - zeroToOne.y) - 0.5f) * -2f;
+            pointOutOfDeadZoneMod = minusOneToOne;
+        }
+    }
+
+    void RotateCameraToMousePoint(Vector2 pointOutOfLimitArea)
+    {
+        _currentCameraRotation.y += pointOutOfLimitArea.x * _mouseSensitivity;
+        _currentCameraRotation.x -= pointOutOfLimitArea.y * _mouseSensitivity;
+        _currentCameraRotation.y = Mathf.Clamp(_currentCameraRotation.y, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        _currentCameraRotation.x = Mathf.Clamp(_currentCameraRotation.x, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
+        
+        Camera.main.transform.rotation = Quaternion.Euler(_currentCameraRotation);
+    }
+    void MouseCursorFollowMousePos()
+    {
+        Vector3 screenPoint = Input.mousePosition;
+        screenPoint.z = 10.0f;
+        _mouseCursor.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+    }
+
 
 
     void RotateWeaponAndCameraByMouse()
     {
-        _currentCameraRotation.x += Input.GetAxis("Mouse X") * _mouseSensitivity;
-        _currentCameraRotation.y -= Input.GetAxis("Mouse Y") * _mouseSensitivity;
-        _currentCameraRotation.y = Mathf.Clamp(_currentCameraRotation.y, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
-        _currentCameraRotation.x = Mathf.Clamp(_currentCameraRotation.x, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        MouseCursorFollowMousePos();
+        CheckMouseDeadZone(out Vector2 pointOutOfLimitdistanceMod);
 
-        Camera.main.transform.rotation = Quaternion.Euler(_currentCameraRotation.y, _currentCameraRotation.x, 0);
-        Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
-        Vector3 _lastCameraHitPoint;
+        if (pointOutOfLimitdistanceMod != Vector2.zero)
+        {
+            RotateCameraToMousePoint(pointOutOfLimitdistanceMod);
+        }
+
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 _lastMouseHitPoint;
         if (Physics.Raycast(cameraRay, out RaycastHit hitInfo, 100000, _layerMask))
         {
-            _lastCameraHitPoint = hitInfo.point;
+            _lastMouseHitPoint = hitInfo.point;
         }
         else return;
+
+
+        //Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
+        //Vector3 _lastMouseHitPoint;
+        //if (Physics.Raycast(cameraRay, out RaycastHit hitInfo, 100000, _layerMask))
+        //{
+        //    _lastMouseHitPoint = hitInfo.point;
+        //}
+        //else return;
 
 
         Vector3 weaponRayStartPos = Vector3.zero;
@@ -248,14 +311,14 @@ public class PlayerWeaponManager : MonoBehaviour
 
         float RotationRadiansSpeed = _weaponsByIndex[_selectedWeaponIndex].RotationSpeed * Mathf.Deg2Rad;
 
-        Vector3 targetDirection = _lastCameraHitPoint - weaponRayStartPos;
+        Vector3 targetDirection = _lastMouseHitPoint - weaponRayStartPos;
         Vector3 newDirection = Vector3.RotateTowards(aimPoint.forward, targetDirection, RotationRadiansSpeed * Time.deltaTime, 0.0f);
         Quaternion quaternion = Quaternion.LookRotation(newDirection);
 
         Vector3 eulerAngles = quaternion.eulerAngles;
 
-        //curWeaponRotationX = eulerAngles.x;
-        //curWeaponRotationY = eulerAngles.y;
+        //eulerAngles.y = Mathf.Clamp(eulerAngles.y, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
+        //eulerAngles.x = Mathf.Clamp(eulerAngles.x, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
 
         RotateSelectedWeapon(eulerAngles.x, eulerAngles.y);
 

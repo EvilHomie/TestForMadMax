@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [SerializeField] GameObject _UIButtons;
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _garageBtn;
     [SerializeField] Button _openInventoryBtn;
@@ -75,21 +76,27 @@ public class GameManager : MonoBehaviour
         PlayerHPManager.Instance.OnPlayerEndRaid();
         UIEnemyHpPanel.Instance.OnPlayerEndRaid();
 
-        SwitchMenuElements();
+        //SwitchMenuElements();
 
-        ToggleMenu();
+        //ToggleMenu();
+        SwitchUIButton(true);
         _settingsBtn.gameObject.SetActive(false);
     }
 
     void AddListenersOnBtns()
     {
-        _settingsBtn.onClick.AddListener(ToggleMenu);
+        //_settingsBtn.onClick.AddListener(ToggleMenu);
         _startRaidBtn.onClick.AddListener(OnStartRaid);
         _garageBtn.onClick.AddListener(OnReturnToGarage);
         _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
         _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
     }   
+
+    void SwitchUIButton(bool enableStatus)
+    {
+       _UIButtons.SetActive(enableStatus);
+    }
 
     void ToggleMenu()
     {
@@ -115,6 +122,7 @@ public class GameManager : MonoBehaviour
 
     void OnStartRaid()
     {
+        SwitchUIButton(false);
         _playerOnRaid = true;
         _settingsBtn.gameObject.SetActive(true);
         SaveLoadManager.Instance.SaveData();
@@ -131,12 +139,13 @@ public class GameManager : MonoBehaviour
         UILevelStatistic.Instance.OnPlayerStartRaid();
 
 
-        DisableMenuElements();
+        //DisableMenuElements();
         YandexGame.GameplayStart();
     }
 
     public void OnReturnToGarage()
     {
+        SwitchUIButton(true);
         _playerOnRaid = false;
         _settingsBtn.gameObject.SetActive(false);
         SaveLoadManager.Instance.SaveData();
@@ -151,7 +160,7 @@ public class GameManager : MonoBehaviour
         PlayerHPManager.Instance.OnPlayerEndRaid();
         UIEnemyHpPanel.Instance.OnPlayerEndRaid();
 
-        SwitchMenuElements();
+        //SwitchMenuElements();
         YandexGame.GameplayStop();
     }
 

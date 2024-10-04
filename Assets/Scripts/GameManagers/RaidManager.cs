@@ -65,6 +65,7 @@ public class RaidManager : MonoBehaviour
 
     public void OnPlayerStartRaid(float startMoveDelay, float speed, float reachSpeedDuration)
     {
+        Cursor.visible = false;
         CancelInvoke();
         _onRaid = true;
         _bossIsSpawned = false;
@@ -78,6 +79,7 @@ public class RaidManager : MonoBehaviour
     }
     public void OnPlayerEndRaid()
     {
+        Cursor.visible = true;
         _onRaid = false;
         StopAllCoroutines();
         CancelInvoke();

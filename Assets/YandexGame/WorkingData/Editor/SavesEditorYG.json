@@ -1,5 +1,5 @@
 {
-  "idSave": 30,
+  "idSave": 85,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -39,10 +39,10 @@
       "weaponType": 1,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 1,
+      "hullDmgCurLvl": 8,
       "hullDmgMaxLvl": 8,
       "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 1,
+      "shieldDmgCurLvl": 7,
       "shieldDmgMaxLvl": 7,
       "fireRateByLvl": 1.0,
       "fireRateCurtLvl": 10,
@@ -90,9 +90,9 @@
   ],
   "schemesNames": [],
   "availableResources": {
-    "Сopper": 501,
-    "Wires": 466,
-    "ScrapMetal": 396
+    "Сopper": 484,
+    "Wires": 427,
+    "ScrapMetal": 280
   },
   "equipedItems": {
     "0": "Advanced_Truck_V_1",

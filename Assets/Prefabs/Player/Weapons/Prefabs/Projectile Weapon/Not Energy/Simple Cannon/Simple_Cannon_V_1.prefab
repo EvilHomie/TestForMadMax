@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _firePointManagers:
   - {fileID: 3486497791495344273}
-  _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
+  _shootSound: {fileID: 8300000, guid: 276f18583375a3946a3fcb21f2ab2919, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
   _weaponData: {fileID: 11400000, guid: e1889a7089e25c24fb36ae1917fbfbfe, type: 2}
   _targetMarkerLine: {fileID: 8622078862687848516}
