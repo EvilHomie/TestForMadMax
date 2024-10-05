@@ -1,5 +1,5 @@
 {
-  "idSave": 85,
+  "idSave": 115,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -76,10 +76,10 @@
       "vehicleNameRU": "Улучшенный Грузовик",
       "vehicleRaritie": 0,
       "hullHPByLvl": 75.0,
-      "hullHPCurLvl": 1,
+      "hullHPCurLvl": 2,
       "hullHPMaxLvl": 4,
       "shieldHPByLvl": 40.0,
-      "shieldHPCurLvl": 1,
+      "shieldHPCurLvl": 2,
       "shieldHPMaxLvl": 4,
       "shieldRegenRateByLvl": 1.0,
       "shieldRegenCurtLvl": 0,
@@ -91,17 +91,23 @@
   "schemesNames": [],
   "availableResources": {
     "Сopper": 484,
-    "Wires": 427,
-    "ScrapMetal": 280
+    "Wires": 497,
+    "ScrapMetal": 348
   },
   "equipedItems": {
     "0": "Advanced_Truck_V_1",
     "1": "Dual_Cannon_V_1",
     "2": "Simple_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-1",
+  "lastSelectedLevelName": "1-8",
   "unlockedLevelsNames": [
     "1-1",
-    "1-2"
+    "1-2",
+    "1-3",
+    "1-4",
+    "1-5",
+    "1-6",
+    "1-7",
+    "1-8"
   ]
 }

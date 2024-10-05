@@ -8,12 +8,13 @@ public class TestingLogic : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _fpsCounter;
     [SerializeField] Button _reset;
-
+    [SerializeField] Button _ADD;
     int _fps = 0;
     string _strFPS;
     private void Awake()
     {
         _reset.onClick.AddListener(ResetProgress);
+        _ADD.onClick.AddListener(ADD);
     }
 
     private void Start()
@@ -91,6 +92,10 @@ public class TestingLogic : MonoBehaviour
     {
         YandexGame.ResetSaveProgress();
         YandexGame.SaveProgress();
+    }
+    void ADD()
+    {
+        UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
     }
 
 

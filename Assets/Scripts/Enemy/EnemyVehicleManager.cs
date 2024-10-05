@@ -28,7 +28,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     float _lastMoveSpeed;
     bool _isDead = false;
-
+    bool _isCollideWithRoad = false;
     ConstraintSource constraintSource;
 
     PartHPManager _bodyPartHPManager;
@@ -58,7 +58,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     void Update()
     {
-        if (_isDead) return;
+        if (_isCollideWithRoad) return;
         _vehicleEffectsController.PlayMoveEffects();
     }
 
@@ -86,6 +86,7 @@ public class EnemyVehicleManager : MonoBehaviour
 
     public void OnBodyCollisionWithRoad()
     {
+        _isCollideWithRoad = true;  
         OnDie();
         _vehicleEffectsController.StopDustEmmiting();
     }

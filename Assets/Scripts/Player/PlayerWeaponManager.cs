@@ -45,6 +45,7 @@ public class PlayerWeaponManager : MonoBehaviour
         else
         {
             _targetMarkerForMobile.SetActive(true);
+            _mouseCursor.transform.localPosition = new Vector3(0, 0, 7);
         }
     }
 
