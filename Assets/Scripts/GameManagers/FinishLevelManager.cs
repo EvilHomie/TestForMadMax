@@ -12,6 +12,7 @@ public class FinishLevelManager : MonoBehaviour
     [SerializeField] float _blackoutDuration;
     [SerializeField] float _blackoutDelay = 2;
     [SerializeField] ViewingAdsYG _viewingAdsYG;
+    [SerializeField] InfoYG _infoYG;
     [SerializeField] TextMeshProUGUI _levelStatusText;
 
 
@@ -51,11 +52,34 @@ public class FinishLevelManager : MonoBehaviour
         GameManager.Instance.OnReturnToGarage();
     }
 
-    public void OnCloseLevelStatisic()
+    public void OnCloseLevelStatisicAndReturnInGarage()
     {
         _blackoutImage.gameObject.SetActive(false);
         _levelStatusText.transform.parent.gameObject.SetActive(false);
         YandexGame.FullscreenShow();
+    }
+
+    public void OnCloseLevelStatisicAndStartNewRaid()
+    {
+        _blackoutImage.gameObject.SetActive(false);
+        _levelStatusText.transform.parent.gameObject.SetActive(false);
+
+        if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
+        {
+            _viewingAdsYG.customEvents.CloseAd.AddListener(StartNewRaidOnCloseAD);
+            YandexGame.FullscreenShow();
+        }
+        else
+        {
+            GameManager.Instance.OnStartRaid();
+        }
+    }
+
+    void StartNewRaidOnCloseAD()
+    {
+        GameManager.Instance.OnStartRaid();
+        //Debug.Log("NEW RAID AFTER AD");
+        _viewingAdsYG.customEvents.CloseAd.RemoveListener(StartNewRaidOnCloseAD);
     }
 
     void OnAdClose()

@@ -34,7 +34,10 @@ public class UILevelStatistic : MonoBehaviour
     //[SerializeField] TextMeshProUGUI _nextTipText;
     [SerializeField] Button _nextTipBtn;
     [SerializeField] Button _prevTipBtn;
-    [SerializeField] Button _closeStatisticBtn;
+    [SerializeField] Button _raidBtn;
+    [SerializeField] TextMeshProUGUI _raidBtnText;
+    [SerializeField] Button _garageBtn;
+    [SerializeField] TextMeshProUGUI _garageBtnText;
     [SerializeField] TextMeshProUGUI _tipBodyText;
 
     int _lastTipIndex;
@@ -71,6 +74,8 @@ public class UILevelStatistic : MonoBehaviour
         _othersText.text = TextConstants.OTHERS;
         _explosivePartsText.text = TextConstants.EXPLOSIVEPARTS;
         _tipText.text = TextConstants.TIP;
+        _raidBtnText.text = TextConstants.RAID;
+        _garageBtnText.text = TextConstants.GARAGE;
         //_previousText.text = TextConstants.PREVIOUS;
         //_nextTipText.text = TextConstants.NEXTTIP;
 
@@ -80,7 +85,8 @@ public class UILevelStatistic : MonoBehaviour
 
         _nextTipBtn.onClick.AddListener(ShowNewTip);
         _prevTipBtn.onClick.AddListener(ShowPreviousTip);
-        _closeStatisticBtn.onClick.AddListener(CloseStatistic);
+        _raidBtn.onClick.AddListener(StartNewRaid);
+        _garageBtn.onClick.AddListener(ShowGarage);
     }
 
     public void OnPlayerStartRaid()
@@ -183,9 +189,14 @@ public class UILevelStatistic : MonoBehaviour
         _tipBodyText.text = TextConstants.TIPSCOLLECTION[_lastTipIndex];
     }
 
-    void CloseStatistic()
+    void ShowGarage()
     {
         gameObject.SetActive(false);
-        FinishLevelManager.Instance.OnCloseLevelStatisic();
+        FinishLevelManager.Instance.OnCloseLevelStatisicAndReturnInGarage();
+    }
+    void StartNewRaid()
+    {
+        gameObject.SetActive(false);
+        FinishLevelManager.Instance.OnCloseLevelStatisicAndStartNewRaid();
     }
 }

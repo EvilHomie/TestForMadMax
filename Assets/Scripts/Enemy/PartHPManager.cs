@@ -78,12 +78,13 @@ public class PartHPManager : MonoBehaviour, IDamageable
         }
         else if (_vehiclePart == EnumVehiclePart.Wheel)
         {
-            gameObject.SetActive(false);
-            TryGetComponent(out WheelRimSparks wheelRimSparks);
-            if (wheelRimSparks != null)
-            {
-                wheelRimSparks.EnableSparks();
-            }
+            Destroy(gameObject);
+            //gameObject.SetActive(false);
+            //TryGetComponent(out WheelRimSparks wheelRimSparks);
+            //if (wheelRimSparks != null)
+            //{
+            //    wheelRimSparks.EnableSparks();
+            //}
         }
         else if (_vehiclePart == EnumVehiclePart.Body)
         {

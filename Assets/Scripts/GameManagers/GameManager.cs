@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.SelectLevelsWindow.SetActive(true);
     }
 
-    void OnStartRaid()
+    public void OnStartRaid()
     {
         SwitchUIButton(false);
         _playerOnRaid = true;

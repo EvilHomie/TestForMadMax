@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -191,6 +192,11 @@ public class RaidManager : MonoBehaviour
 
         int randomEnemyIndex = UnityEngine.Random.Range(0, _selectedLevelInfo.EnemyList.Count);
         EnemyVehicleManager enemyPF = _selectedLevelInfo.EnemyList[randomEnemyIndex];
+
+        if (GarageBoxManager.Instance.gameObject.activeSelf)
+        {
+            spwanPos.x = math.abs(spwanPos.x);
+        }
 
         EnemyVehicleManager enemy = Instantiate(enemyPF, spwanPos, enemyPF.transform.rotation);
         _enemiesList.Add(enemy);

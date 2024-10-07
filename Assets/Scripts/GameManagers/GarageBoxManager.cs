@@ -25,7 +25,7 @@ public class GarageBoxManager : MonoBehaviour
     IEnumerator MoveGarage(float startMoveDelay)
     {
         yield return new WaitForSeconds(startMoveDelay);
-        while (transform.position.x > -10000)
+        while (transform.position.x > -15000)
         {
             transform.position += 170 * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left;
             yield return null;
