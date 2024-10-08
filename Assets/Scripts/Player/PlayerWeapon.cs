@@ -11,6 +11,7 @@ public class PlayerWeapon : WeaponLogic, IItem
 
     [SerializeField] Transform _baseTransform;
     [SerializeField] Transform _turretTransform;
+    [SerializeField] ParticleSystem _hitFXEffect;
 
     protected override float CurHullDmg => _weaponData.hullDmgByLvl * _weaponData.hullDmgCurLvl;
     protected override float CurShieldDmg => _weaponData.shieldDmgByLvl * _weaponData.shieldDmgCurLvl;
@@ -28,7 +29,7 @@ public class PlayerWeapon : WeaponLogic, IItem
 
     public void StartShooting()
     {
-        ShootAsPlayer(_shakeOnShootDuration, _shakeOnShootIntensity, _weaponData.weaponType);
+        ShootAsPlayer(_shakeOnShootDuration, _shakeOnShootIntensity, _weaponData.weaponType, _hitFXEffect);
     }
 
     public void StopShooting()

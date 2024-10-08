@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5248445066935274488}
   - component: {fileID: 5892922725827330228}
   - component: {fileID: 8017333414587428364}
+  - component: {fileID: -1873306291988923891}
   m_Layer: 0
   m_Name: Light_Rifle
   m_TagString: Untagged
@@ -176,6 +177,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.19761811, y: 0.38145354, z: 0.91079456}
   m_Center: {x: -0.012898197, y: 0.41659072, z: -0.04460287}
+--- !u!114 &-1873306291988923891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8225509727764590808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 250
+  _detachTorqueValue: 15
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50
 --- !u!1001 &5888950795235910334
 PrefabInstance:
   m_ObjectHideFlags: 0

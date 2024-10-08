@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6700786959905706535}
   - component: {fileID: 5155534935927681912}
   - component: {fileID: 4323363660326863347}
+  - component: {fileID: -4235576628102883121}
   m_Layer: 0
   m_Name: 'Bullbar_v6 '
   m_TagString: Untagged
@@ -122,3 +123,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.728651, y: 0.63149464, z: 2.1003053}
   m_Center: {x: 0.0000030994415, y: 0.18315333, z: 0.00000011920929}
+--- !u!114 &-4235576628102883121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6677358578749724797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 400
+  _detachTorqueValue: 15
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4677857659423041375}
   - component: {fileID: 7189217549307253395}
   - component: {fileID: 6078812356978723357}
+  - component: {fileID: -7572794231077502560}
   m_Layer: 0
   m_Name: Headlight_v1_17
   m_TagString: Untagged
@@ -122,3 +123,20 @@ MonoBehaviour:
   _hullHP: 10
   _shieldHP: 0
   _partRenderer: {fileID: 4677857659423041375}
+--- !u!114 &-7572794231077502560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665416834264298733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 250
+  _detachTorqueValue: 15
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50

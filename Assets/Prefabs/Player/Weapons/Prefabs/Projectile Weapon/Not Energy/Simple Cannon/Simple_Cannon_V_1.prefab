@@ -280,6 +280,7 @@ MonoBehaviour:
   _shakeOnShootDuration: 0.2
   _baseTransform: {fileID: 4000013053745136}
   _turretTransform: {fileID: 4000012307128758}
+  _hitFXEffect: {fileID: 19800002, guid: 004eb7467516dcf46b65a78cf7cf12aa, type: 3}
 --- !u!1 &128540130182193525
 GameObject:
   m_ObjectHideFlags: 0

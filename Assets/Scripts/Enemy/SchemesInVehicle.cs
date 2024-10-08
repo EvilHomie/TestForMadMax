@@ -4,6 +4,8 @@ public class SchemesInVehicle : MonoBehaviour
 {
     [SerializeField] SchemeData _scheme;
 
+    public SchemeData scheme => _scheme;
+
     public void DropScheme()
     {
         if (CheckExistingItem())

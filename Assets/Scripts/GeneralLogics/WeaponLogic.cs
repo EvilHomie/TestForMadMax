@@ -20,16 +20,16 @@ public class WeaponLogic : MonoBehaviour
     public virtual float RotationSpeed { get; }
 
 
-    protected void ShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, WeaponType weaponType)
+    protected void ShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, WeaponType weaponType, ParticleSystem hitFXEffect)
     {
         _isShooting = true;
         if (weaponType == WeaponType.SingleBarreled)
         {
-            StartCoroutine(SingleBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity));
+            StartCoroutine(SingleBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, hitFXEffect));
         }
         else if (weaponType == WeaponType.MultyBarreled)
         {
-            StartCoroutine(MultyBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, _firePointManagers.Length));
+            StartCoroutine(MultyBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, _firePointManagers.Length, hitFXEffect));
         }
         else if (weaponType == WeaponType.Beam)
         {
@@ -54,7 +54,7 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    IEnumerator SingleBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity)
+    IEnumerator SingleBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, ParticleSystem hitFXEffect)
     {
         while (_isShooting)
         {
@@ -65,6 +65,7 @@ public class WeaponLogic : MonoBehaviour
                 if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+                    Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
                 }
                 _nextTimeTofire = Time.time + 1f / CurFireRate;
             }
@@ -72,7 +73,7 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    IEnumerator MultyBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, float barrelCount)
+    IEnumerator MultyBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, float barrelCount, ParticleSystem hitFXEffect)
     {
         while (_isShooting)
         {
@@ -86,6 +87,7 @@ public class WeaponLogic : MonoBehaviour
                 if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+                    Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
                 }
                 _lastShootBarrelNumber++;
                 _nextTimeTofire = Time.time + 1f / CurFireRate;

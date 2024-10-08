@@ -74,7 +74,7 @@ public class EnemyWeaponController : MonoBehaviour
     public bool CheckAvailableWeapons(GameObject destroyedWeapon)
     {
         _weapons.Remove(_weapons.Find(weapon => weapon.gameObject == destroyedWeapon));
-        Destroy(destroyedWeapon);
+        //Destroy(destroyedWeapon);
 
         if (_weapons.TrueForAll(weapon => weapon.gameObject == null))
         {

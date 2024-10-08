@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 608948655009569069}
   - component: {fileID: 8152556151357736509}
   - component: {fileID: 5590726123677531623}
+  - component: {fileID: 924144609505258987}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -128,6 +129,23 @@ MonoBehaviour:
   _blowAudioSource: {fileID: 109524048814802522}
   _blowAudioClip: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   _smokeRotationConstraint: {fileID: 7191913190012041031}
+--- !u!114 &924144609505258987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2277924218000246326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 250
+  _detachTorqueValue: 5
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50
 --- !u!1 &5884029322154029502
 GameObject:
   m_ObjectHideFlags: 0

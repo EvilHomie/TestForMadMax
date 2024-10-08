@@ -69,24 +69,13 @@ public class PartHPManager : MonoBehaviour, IDamageable
     protected virtual void OnPartDestroyLogic()
     {
         UILevelStatistic.Instance.OnPartDestroyed(_vehiclePart);
-
-
-
-        if (_vehiclePart == EnumVehiclePart.Other)
+        if (_vehiclePart != EnumVehiclePart.Body)
         {
-            Destroy(gameObject);
+            DetachLogic detachLogic = GetComponent<DetachLogic>();
+            detachLogic?.Detach();
         }
-        else if (_vehiclePart == EnumVehiclePart.Wheel)
-        {
-            Destroy(gameObject);
-            //gameObject.SetActive(false);
-            //TryGetComponent(out WheelRimSparks wheelRimSparks);
-            //if (wheelRimSparks != null)
-            //{
-            //    wheelRimSparks.EnableSparks();
-            //}
-        }
-        else if (_vehiclePart == EnumVehiclePart.Body)
+
+        if (_vehiclePart == EnumVehiclePart.Body)
         {
             _enemyVehicleManager.OnBodyDestoyed();
         }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8669649880195060901}
   - component: {fileID: 7849989173003799865}
   - component: {fileID: 2912181294759676380}
+  - component: {fileID: -303738901954818730}
   m_Layer: 0
   m_Name: Headlight_v1_8
   m_TagString: Untagged
@@ -122,3 +123,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5728235, y: 0.35800838, z: 0.25896072}
   m_Center: {x: 0, y: 0.17938828, z: -0.000000029802322}
+--- !u!114 &-303738901954818730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8648850369898372661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 250
+  _detachTorqueValue: 15
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50

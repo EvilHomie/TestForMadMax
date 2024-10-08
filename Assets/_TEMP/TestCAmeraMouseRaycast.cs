@@ -12,7 +12,7 @@ public class TestCAmeraMouseRaycast : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                ReboundLogic reboundLogic = hit.collider.gameObject.GetComponent<ReboundLogic>();
+                DetachLogic reboundLogic = hit.collider.gameObject.GetComponent<DetachLogic>();
                 reboundLogic?.Detach();
             }
         }

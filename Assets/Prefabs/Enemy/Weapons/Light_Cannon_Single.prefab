@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5187643854936838284}
   - component: {fileID: 6840919032790014912}
   - component: {fileID: 3378834471168960673}
+  - component: {fileID: -4706098335068618222}
   m_Layer: 0
   m_Name: Light_Cannon_Single
   m_TagString: Untagged
@@ -176,6 +177,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.37, y: 0.37, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4706098335068618222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011403678162496428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 250
+  _detachTorqueValue: 15
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50
 --- !u!1001 &4429908141650783527
 PrefabInstance:
   m_ObjectHideFlags: 0

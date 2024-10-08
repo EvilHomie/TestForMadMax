@@ -116,7 +116,7 @@ public class EnemyVehicleManager : MonoBehaviour
         _blowAudioSource.PlayOneShot(_blowAudioClip);
 
         _resourcesInVehicle.DropResources();
-        if (_schemesInVehicle != null)
+        if (_schemesInVehicle != null && _schemesInVehicle.scheme != null)
         {
             _schemesInVehicle.DropScheme();
         }

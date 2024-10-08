@@ -84,3 +84,13 @@ public interface IDamageable
 {
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound);
 }
+
+public enum ReboundDirection
+{
+    X,
+    Y,
+    Z,
+    XY,
+    XZ,
+    YZ
+}

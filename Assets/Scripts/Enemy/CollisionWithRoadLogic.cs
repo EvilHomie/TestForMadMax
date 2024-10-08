@@ -3,9 +3,10 @@ using UnityEngine;
 public class CollisionWithRoadLogic : MonoBehaviour
 {
     [SerializeField] LayerMask _vehicleBodyLayer;
+    [SerializeField] LayerMask _roadLayer;
     EnemyVehicleManager _enemyVehicleManager;
     Rigidbody _RB;
-    bool _isDead = false;
+    bool _isCrashed = false;
 
     private void Awake()
     {
@@ -15,10 +16,21 @@ public class CollisionWithRoadLogic : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_isDead) return;
-        if (1 << collision.GetContact(0).thisCollider.gameObject.layer != _vehicleBodyLayer.value) return;
-        _isDead = true;
-        _enemyVehicleManager.OnBodyCollisionWithRoad();
-        _RB.AddForceAtPosition(GameConfig.Instance.TouchRoadImpulse * RaidManager.Instance.PlayerMoveSpeed * Vector3.up, collision.GetContact(0).point, ForceMode.VelocityChange);
+        if (_isCrashed) return;
+        bool isBodyCollider = 1 << collision.GetContact(0).thisCollider.gameObject.layer == _vehicleBodyLayer.value;
+        if (!isBodyCollider) return;
+
+        Debug.Log("Collide AS BODY");
+        Debug.Log(collision.GetContact(0).thisCollider.gameObject.name);
+
+        bool collideWithRoad = 1 << collision.GetContact(0).otherCollider.gameObject.layer == _roadLayer.value;
+        bool collideWithotherBody = 1 << collision.GetContact(0).otherCollider.gameObject.layer == _vehicleBodyLayer.value;
+
+        if (collideWithRoad || collideWithotherBody)
+        {
+            _isCrashed = true;
+            _enemyVehicleManager.OnBodyCollisionWithRoad();
+            _RB.AddForceAtPosition(GameConfig.Instance.TouchRoadImpulse * RaidManager.Instance.PlayerMoveSpeed * Vector3.up, collision.GetContact(0).point, ForceMode.VelocityChange);
+        }
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1477208790345723957}
   - component: {fileID: 9093912489685788917}
   - component: {fileID: 3498409332937354372}
+  - component: {fileID: 4990771052365562547}
   m_Layer: 0
   m_Name: Projector_v1
   m_TagString: Untagged
@@ -122,3 +123,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7116928, y: 1.0163367, z: 0.89075375}
   m_Center: {x: 0, y: -0.00000011920929, z: 0}
+--- !u!114 &4990771052365562547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501246565627689017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detachDirection: 1
+  _detachForceValue: 250
+  _detachTorqueValue: 15
+  _onDetachedTranslateSpeed: 500
+  _onAditionCollideForce: 50
