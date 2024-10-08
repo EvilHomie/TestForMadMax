@@ -150,7 +150,7 @@ public class RaidManager : MonoBehaviour
         _reservedSpawnLinesNumbers.Remove(reservedLineNumber);
 
         //_killedSimpleEnemyCount++;
-
+        //Debug.Log(_reservedSpawnLinesNumbers.Count);
         if (_bossIsSpawned || _reservedSpawnLinesNumbers.Count > 0)
         {
             return;

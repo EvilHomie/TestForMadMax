@@ -20,9 +20,6 @@ public class CollisionWithRoadLogic : MonoBehaviour
         bool isBodyCollider = 1 << collision.GetContact(0).thisCollider.gameObject.layer == _vehicleBodyLayer.value;
         if (!isBodyCollider) return;
 
-        Debug.Log("Collide AS BODY");
-        Debug.Log(collision.GetContact(0).thisCollider.gameObject.name);
-
         bool collideWithRoad = 1 << collision.GetContact(0).otherCollider.gameObject.layer == _roadLayer.value;
         bool collideWithotherBody = 1 << collision.GetContact(0).otherCollider.gameObject.layer == _vehicleBodyLayer.value;
 

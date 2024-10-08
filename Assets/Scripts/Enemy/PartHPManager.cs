@@ -81,6 +81,7 @@ public class PartHPManager : MonoBehaviour, IDamageable
         }
         else if (_vehiclePart == EnumVehiclePart.Weapon)
         {
+            gameObject.GetComponent<EnemyWeapon>().StopShooting();
             _enemyVehicleManager.OnWeaponLossHP(gameObject);
         }
     }

@@ -1,5 +1,5 @@
 {
-  "idSave": 232,
+  "idSave": 274,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -90,16 +90,16 @@
   ],
   "schemesNames": [],
   "availableResources": {
-    "Сopper": 488,
-    "Wires": 527,
-    "ScrapMetal": 149
+    "Сopper": 523,
+    "Wires": 786,
+    "ScrapMetal": 577
   },
   "equipedItems": {
     "0": "Advanced_Truck_V_1",
     "1": "Dual_Cannon_V_1",
     "2": "Simple_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-2",
+  "lastSelectedLevelName": "1-10",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",

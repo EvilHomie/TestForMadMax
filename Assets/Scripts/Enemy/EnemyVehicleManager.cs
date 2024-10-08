@@ -95,6 +95,7 @@ public class EnemyVehicleManager : MonoBehaviour
     {
         if (!_enemyWeaponController.CheckAvailableWeapons(weapon))
         {
+            if(_isDead) return;
             _vehicleMovementController.OnTryRunMovementLogic();
         }
     }

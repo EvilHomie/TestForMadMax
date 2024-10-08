@@ -15,8 +15,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] float _shakeDuration = 0.5f;
     [SerializeField] float _shakeIntensity = 5f;
 
-    List<UILevelInfo> UILevelInfos = new();
-    UILevelInfo lastSelectedLevel;
+    [SerializeField] List<UILevelInfo> UILevelInfos = new();
+    [SerializeField] UILevelInfo lastSelectedLevel;
 
     public GameObject SelectLevelsWindow => _selectLevelsWindow;
 
