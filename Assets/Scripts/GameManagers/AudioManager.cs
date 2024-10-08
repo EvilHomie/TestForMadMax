@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
     {
         if (!_soundIsOn) return;
         _toggleSoundButton.image.sprite = _soundsFullIcon;
-        _audioMixer.SetFloat("MasterSound", 0f);
+        _audioMixer.SetFloat("MasterSound", -15f);
     }
 
     public void LerpDisableSound()
