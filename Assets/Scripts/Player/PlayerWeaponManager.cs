@@ -174,8 +174,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
         _currentCameraRotation.x += movementVector.x * Time.deltaTime * _weaponsByIndex[_selectedWeaponIndex].RotationSpeed;
         _currentCameraRotation.y -= movementVector.y * Time.deltaTime * _weaponsByIndex[_selectedWeaponIndex].RotationSpeed;
-        _currentCameraRotation.x = Mathf.Clamp(_currentCameraRotation.x, -GameConfig.Instance.MaxYRotateAngle, GameConfig.Instance.MaxYRotateAngle);
-        _currentCameraRotation.y = Mathf.Clamp(_currentCameraRotation.y, -GameConfig.Instance.MaxXRotateAngle, GameConfig.Instance.MaxXRotateAngle);
+        _currentCameraRotation.x = Mathf.Clamp(_currentCameraRotation.x, -GameConfig.Instance.MaxYRotateAngleAndroid, GameConfig.Instance.MaxYRotateAngleAndroid);
+        _currentCameraRotation.y = Mathf.Clamp(_currentCameraRotation.y, -GameConfig.Instance.MaxXRotateAngleAndroid, GameConfig.Instance.MaxXRotateAngleAndroid);
 
         Camera.main.transform.rotation = Quaternion.Euler(_currentCameraRotation.y, _currentCameraRotation.x, 0);
         

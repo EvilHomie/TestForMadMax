@@ -66,6 +66,7 @@ public class WeaponLogic : MonoBehaviour
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
                     Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
+                    hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
                 }
                 _nextTimeTofire = Time.time + 1f / CurFireRate;
             }
@@ -88,6 +89,7 @@ public class WeaponLogic : MonoBehaviour
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
                     Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
+                    hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
                 }
                 _lastShootBarrelNumber++;
                 _nextTimeTofire = Time.time + 1f / CurFireRate;

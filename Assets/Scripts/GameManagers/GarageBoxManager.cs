@@ -4,6 +4,9 @@ using UnityEngine;
 public class GarageBoxManager : MonoBehaviour
 {
     public static GarageBoxManager Instance;
+
+    [SerializeField] Animation _animation;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -13,6 +16,7 @@ public class GarageBoxManager : MonoBehaviour
     public void OnPlayerStartRaid(float startMoveDelay)
     {
         StartCoroutine(MoveGarage(startMoveDelay));
+        _animation.Play();
     }
 
     public void OnPlayerEndRaid()
@@ -20,6 +24,7 @@ public class GarageBoxManager : MonoBehaviour
         StopAllCoroutines();
         transform.position = Vector3.zero;
         gameObject.SetActive(true);
+        //_animation.Re();
     }
 
     IEnumerator MoveGarage(float startMoveDelay)
@@ -32,4 +37,6 @@ public class GarageBoxManager : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
+
+    
 }

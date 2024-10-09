@@ -42,6 +42,9 @@ public class GameConfig : MonoBehaviour
     [SerializeField] float _maxYRotateAngle;
     [SerializeField] float _maxXRotateAngle;
 
+    [SerializeField] float _maxYRotateAngleAndroid;
+    [SerializeField] float _maxXRotateAngleAndroid;
+
     [Header("PhysicData")]
     [SerializeField] float _touchRoadImpulse = 25;
 
@@ -80,6 +83,9 @@ public class GameConfig : MonoBehaviour
     public float OnPlayerDieSpeedMod => _onPlayerDieSpeedMod;
     public float MaxYRotateAngle => _maxYRotateAngle;
     public float MaxXRotateAngle => _maxXRotateAngle;
+
+    public float MaxYRotateAngleAndroid => _maxYRotateAngleAndroid;
+    public float MaxXRotateAngleAndroid => _maxXRotateAngleAndroid;
 
     public float TouchRoadImpulse => _touchRoadImpulse;
 

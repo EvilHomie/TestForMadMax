@@ -85,6 +85,11 @@ public interface IDamageable
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound);
 }
 
+public interface IHitable
+{
+    public void OnHit(Vector3 hitPos, AudioClip hitSound);
+}
+
 public enum ReboundDirection
 {
     X,
