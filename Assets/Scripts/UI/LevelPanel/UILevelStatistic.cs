@@ -152,7 +152,7 @@ public class UILevelStatistic : MonoBehaviour
         {
             _bodiesDestroyedSumm++;
         }
-        else if (part == EnumVehiclePart.Other)
+        else if (part == EnumVehiclePart.OtherPart)
         {
             _othersDestroyedSumm++;
         }

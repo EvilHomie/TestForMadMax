@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4581301982338165750}
   - component: {fileID: 7953793658616408872}
   - component: {fileID: 1833269742749277533}
+  - component: {fileID: -2028753414976535275}
   m_Layer: 10
   m_Name: HCoupe_SuperEasy
   m_TagString: Untagged
@@ -369,10 +370,13 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 3
+    _amount: 5
   - _type: 1
     _dropChance: 60
-    _amount: 2
+    _amount: 5
+  - _type: 0
+    _dropChance: 40
+    _amount: 5
 --- !u!114 &1833269742749277533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +394,22 @@ MonoBehaviour:
   _blowAudioClip: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   _reservedLineNumber: 0
   _smokeRotationConstraint: {fileID: 6093764323984407456}
+--- !u!114 &-2028753414976535275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559731282399706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce0b5226aec83442a5a5e88122a5135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyHullHP: 30
+  _haveShields: 0
+  _weaponDMGMod: 0.7
+  _weaponFRMod: 0.7
 --- !u!1 &7073050759683873232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,40 +1147,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4238120311318386}
     m_Modifications:
-    - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1617800044370608168, guid: d255044c796adec409fa9551816c914b,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2916078227168733567, guid: d255044c796adec409fa9551816c914b,
         type: 3}
       propertyPath: m_Name
       value: Light_Cannon_Dual
-      objectReference: {fileID: 0}
-    - target: {fileID: 5060933799747518606, guid: d255044c796adec409fa9551816c914b,
-        type: 3}
-      propertyPath: _hullHP
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7537319152935062148, guid: d255044c796adec409fa9551816c914b,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7537319152935062148, guid: d255044c796adec409fa9551816c914b,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7537319152935062148, guid: d255044c796adec409fa9551816c914b,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7537319152935062148, guid: d255044c796adec409fa9551816c914b,
         type: 3}

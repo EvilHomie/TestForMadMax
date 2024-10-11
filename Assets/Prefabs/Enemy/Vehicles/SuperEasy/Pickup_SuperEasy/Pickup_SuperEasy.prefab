@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 83433948710527792}
   - component: {fileID: 5061098971570299069}
   - component: {fileID: 4275665919426480416}
+  - component: {fileID: 3595570253548335909}
   m_Layer: 10
   m_Name: Pickup_SuperEasy
   m_TagString: Untagged
@@ -350,10 +351,13 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 3
+    _amount: 5
   - _type: 1
     _dropChance: 60
-    _amount: 2
+    _amount: 5
+  - _type: 0
+    _dropChance: 40
+    _amount: 5
 --- !u!114 &83433948710527792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +414,22 @@ MonoBehaviour:
   _roadLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &3595570253548335909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409228833715688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce0b5226aec83442a5a5e88122a5135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyHullHP: 40
+  _haveShields: 0
+  _weaponDMGMod: 0.7
+  _weaponFRMod: 0.7
 --- !u!1 &2332917957151434844
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,11 +597,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 287214568217980711}
     m_Modifications:
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
@@ -784,16 +799,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tire_Corrugated_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2304399659895036750, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7483442544406193157, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1029,16 +1034,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tire_Corrugated_2 (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 2304399659895036750, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7483442544406193157, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1058,11 +1053,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 287214568217980711}
     m_Modifications:
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
@@ -1137,11 +1127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 287214568217980711}
     m_Modifications:
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
@@ -1290,11 +1275,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 287214568217980711}
     m_Modifications:
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
@@ -1738,16 +1718,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tire_Corrugated_2 (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 2304399659895036750, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7483442544406193157, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1822,16 +1792,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tire_Corrugated_2 (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 2304399659895036750, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7483442544406193157, guid: 564ed3f30b7bcc04685f9cfa345ec592,
-        type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1900,21 +1860,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5248445066935274488, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
-        type: 3}
-      propertyPath: _hullHP
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 5892922725827330228, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5892922725827330228, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8225509727764590808, guid: 5130514b95ddfbf4a81c23e3ebd191fe,
         type: 3}

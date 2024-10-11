@@ -9,6 +9,7 @@ public class PartHPManager : MonoBehaviour, IDamageable
     [SerializeField] Renderer _partRenderer;
 
     protected EnemyVehicleManager _enemyVehicleManager;
+    EnemyCharacteristics _enemyCharacteristics;
     Coroutine _hitVisualCoroutine;
     bool _partIsDestroyed = false;
 
@@ -18,17 +19,55 @@ public class PartHPManager : MonoBehaviour, IDamageable
     private void Awake()
     {
         _enemyVehicleManager = transform.root.GetComponent<EnemyVehicleManager>();
+        _enemyCharacteristics = transform.root.GetComponent<EnemyCharacteristics>();
     }
 
     protected virtual void Start()
     {
         _partRenderer.material.DisableKeyword("_EMISSION");
-        _hullHP *= LevelManager.Instance.GetSelectedLevelinfo().EnemyHPMod;
-        _shieldHP *= LevelManager.Instance.GetSelectedLevelinfo().EnemyHPMod;
+        //_hullHP *= LevelManager.Instance.GetSelectedLevelinfo().EnemyHPMod;
+        //_shieldHP *= LevelManager.Instance.GetSelectedLevelinfo().EnemyHPMod;
+
+        SetHPValues();
+    }
+
+
+    void SetHPValues()
+    {
+        switch (_vehiclePart)
+        {
+            case EnumVehiclePart.Body:
+                _hullHP = _enemyCharacteristics.BodyHullHP;
+                _shieldHP = _enemyCharacteristics.BodyHullShieldHP;
+                break;
+            case EnumVehiclePart.Wheel:
+                _hullHP = _enemyCharacteristics.WheelHP;
+                _shieldHP = _enemyCharacteristics.WheelShieldHP;
+                break;
+            case EnumVehiclePart.ExplosivePart:
+                _hullHP = _enemyCharacteristics.ExplosivePartHP;
+                _shieldHP = _enemyCharacteristics.ExplosivePartShieldHP;
+                break;
+            case EnumVehiclePart.Weapon:
+                _hullHP = _enemyCharacteristics.WeaponHP;
+                _shieldHP = _enemyCharacteristics.WeaponShieldHP;
+                break;
+            case EnumVehiclePart.ArmoredPart:
+                _hullHP = _enemyCharacteristics.ArmoredPartHP;
+                _shieldHP = _enemyCharacteristics.ArmoredPartShieldHP;
+                break;
+            case EnumVehiclePart.OtherPart:
+                _hullHP = _enemyCharacteristics.OtherPartHP;
+                _shieldHP = _enemyCharacteristics.OtherPartShieldHP;
+                break;
+            default:
+                break;
+        }
 
         _maxHullHp = _hullHP;
         _maxShieldHp = _shieldHP;
     }
+
 
     public void OnHit(float hullDmgValue, float shieldDmgValue, AudioClip hitSound)
     {

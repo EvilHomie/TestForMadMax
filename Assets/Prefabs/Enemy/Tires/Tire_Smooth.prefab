@@ -138,5 +138,5 @@ MonoBehaviour:
   _detachDirection: 0
   _detachForceValue: 500
   _detachTorqueValue: 15
-  _onDetachedTranslateSpeed: 400
+  _onDetachedTranslateSpeed: 100
   _onAditionCollideForce: 50

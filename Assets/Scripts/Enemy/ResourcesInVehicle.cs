@@ -15,27 +15,43 @@ public class ResourcesInVehicle : MonoBehaviour
 
         foreach (DropedResource resource in _resources)
         {
-            for (int i = 0; i <= resource.Amount; i++)
+            float chance = Random.Range(resource.DropChance, 100f);
+            int amount = (int)(resource.Amount * chance/100);
+
+            if (resource.ResourcesType == ResourcesType.Ñopper)
             {
-                float chance = Random.Range(0, 100f);
-                if (resource.DropChance < chance) continue;
-
-
-                if (resource.ResourcesType == ResourcesType.Ñopper)
-                {
-                    copperAmount++;
-                }
-                else if (resource.ResourcesType == ResourcesType.Wires)
-                {
-                    wiresAmount++;
-                }
-                else if (resource.ResourcesType == ResourcesType.ScrapMetal)
-                {
-                    scrapMetalAmount++;
-                }
+                copperAmount = amount;
+            }
+            else if (resource.ResourcesType == ResourcesType.Wires)
+            {
+                wiresAmount = amount;
+            }
+            else if (resource.ResourcesType == ResourcesType.ScrapMetal)
+            {
+                scrapMetalAmount = amount;
             }
         }
 
         UIResourcesManager.Instance.AddResources(copperAmount, wiresAmount, scrapMetalAmount);
+
+        //for (int i = 0; i <= resource.Amount; i++)
+        //{
+        //    float chance = Random.Range(0, 100f);
+        //    if (resource.DropChance < chance) continue;
+
+
+        //    if (resource.ResourcesType == ResourcesType.Ñopper)
+        //    {
+        //        copperAmount++;
+        //    }
+        //    else if (resource.ResourcesType == ResourcesType.Wires)
+        //    {
+        //        wiresAmount++;
+        //    }
+        //    else if (resource.ResourcesType == ResourcesType.ScrapMetal)
+        //    {
+        //        scrapMetalAmount++;
+        //    }
+        //}
     }
 }

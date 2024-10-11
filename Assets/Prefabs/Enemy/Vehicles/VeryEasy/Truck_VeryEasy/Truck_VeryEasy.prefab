@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 6703116946443438519}
   - component: {fileID: 7209694932953186992}
   - component: {fileID: 3860330436788466665}
+  - component: {fileID: -1488558102829646056}
   m_Layer: 10
   m_Name: Truck_VeryEasy
   m_TagString: Untagged
@@ -418,13 +419,13 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 20
+    _amount: 40
   - _type: 1
     _dropChance: 60
-    _amount: 20
+    _amount: 40
   - _type: 0
     _dropChance: 40
-    _amount: 20
+    _amount: 40
 --- !u!114 &7209694932953186992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +456,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scheme: {fileID: 0}
+--- !u!114 &-1488558102829646056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047822756579472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce0b5226aec83442a5a5e88122a5135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyHullHP: 160
+  _haveShields: 1
+  _weaponDMGMod: 5
+  _weaponFRMod: 1.1
 --- !u!1 &178980897217812589
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,11 +772,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8809206568596941043, guid: 7c9d255238cf57a47bb711614cb9aae9,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -854,16 +866,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
@@ -1043,16 +1045,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
       propertyPath: m_Center.z
@@ -1131,11 +1123,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809206568596941043, guid: 7c9d255238cf57a47bb711614cb9aae9,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1316,16 +1303,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
       propertyPath: m_Center.z
@@ -1504,40 +1481,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _fireRate
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _hullHP
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 75
-      objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: m_Name
       value: Heavy_Cannon_Dual
-      objectReference: {fileID: 0}
-    - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1620,25 +1567,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1336860668440035370, guid: 13543bdd441e9ab418e2837c639ad04a,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2729297575849920678, guid: 13543bdd441e9ab418e2837c639ad04a,
         type: 3}
       propertyPath: m_Name
       value: Wheel_Dust_Backward
-      objectReference: {fileID: 0}
-    - target: {fileID: 6047200581801480043, guid: 13543bdd441e9ab418e2837c639ad04a,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 6047200581801480043, guid: 13543bdd441e9ab418e2837c639ad04a,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1819,16 +1751,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
       propertyPath: m_Center.z
@@ -1923,16 +1845,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
       propertyPath: m_Center.z
@@ -2007,40 +1919,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _fireRate
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _hullHP
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 75
-      objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
       propertyPath: m_Name
       value: Heavy_Cannon_Dual (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2142,16 +2024,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
@@ -2632,25 +2504,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1336860668440035370, guid: 13543bdd441e9ab418e2837c639ad04a,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2729297575849920678, guid: 13543bdd441e9ab418e2837c639ad04a,
         type: 3}
       propertyPath: m_Name
       value: Wheel_Dust_Backward (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6047200581801480043, guid: 13543bdd441e9ab418e2837c639ad04a,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 6047200581801480043, guid: 13543bdd441e9ab418e2837c639ad04a,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2746,16 +2603,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}
@@ -2924,16 +2771,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _hullHP
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308732282735956671, guid: 6efa75ee4c959244c88e136ba26712ae,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4618697400741377642, guid: 6efa75ee4c959244c88e136ba26712ae,
         type: 3}

@@ -1,5 +1,5 @@
 {
-  "idSave": 310,
+  "idSave": 66,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -20,16 +20,16 @@
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 2,
+      "hullDmgCurLvl": 5,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 2,
+      "shieldDmgCurLvl": 6,
       "shieldDmgMaxLvl": 6,
       "fireRateByLvl": 0.5,
-      "fireRateCurtLvl": 4,
+      "fireRateCurtLvl": 6,
       "fireRateMaxLvl": 6,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 2,
+      "rotationSpeedCurLvl": 6,
       "rotationSpeedMaxLvl": 6
     },
     {
@@ -39,16 +39,16 @@
       "weaponType": 1,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 8,
+      "hullDmgCurLvl": 5,
       "hullDmgMaxLvl": 8,
       "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 7,
+      "shieldDmgCurLvl": 4,
       "shieldDmgMaxLvl": 7,
       "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 10,
+      "fireRateCurtLvl": 8,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 8,
+      "rotationSpeedCurLvl": 7,
       "rotationSpeedMaxLvl": 8
     }
   ],
@@ -62,44 +62,28 @@
       "hullHPCurLvl": 1,
       "hullHPMaxLvl": 5,
       "shieldHPByLvl": 25.0,
-      "shieldHPCurLvl": 0,
+      "shieldHPCurLvl": 2,
       "shieldHPMaxLvl": 2,
       "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 0,
+      "shieldRegenCurtLvl": 2,
       "shieldRegenMaxLvl": 3,
       "curWeaponsCount": 1,
       "maxWeaponsCount": 1
-    },
-    {
-      "deffVehicleName": "Advanced_Truck_V_1",
-      "vehicleNameEN": "Advanced Truck",
-      "vehicleNameRU": "Улучшенный Грузовик",
-      "vehicleRaritie": 0,
-      "hullHPByLvl": 75.0,
-      "hullHPCurLvl": 4,
-      "hullHPMaxLvl": 4,
-      "shieldHPByLvl": 40.0,
-      "shieldHPCurLvl": 4,
-      "shieldHPMaxLvl": 4,
-      "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 6,
-      "shieldRegenMaxLvl": 6,
-      "curWeaponsCount": 2,
-      "maxWeaponsCount": 2
     }
   ],
-  "schemesNames": [],
+  "schemesNames": [
+    "Advanced_Truck_V_1_Scheme"
+  ],
   "availableResources": {
-    "Сopper": 523,
-    "Wires": 807,
-    "ScrapMetal": 615
+    "Сopper": 421,
+    "Wires": 495,
+    "ScrapMetal": 366
   },
   "equipedItems": {
-    "0": "Advanced_Truck_V_1",
-    "1": "Dual_Cannon_V_1",
-    "2": "Simple_Cannon_V_1"
+    "0": "Simple_Truck_V_1",
+    "1": "Dual_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-10",
+  "lastSelectedLevelName": "2-10",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",
@@ -111,6 +95,15 @@
     "1-8",
     "1-9",
     "1-10",
-    "2-1"
+    "2-1",
+    "2-2",
+    "2-3",
+    "2-4",
+    "2-5",
+    "2-6",
+    "2-7",
+    "2-8",
+    "2-9",
+    "2-10"
   ]
 }

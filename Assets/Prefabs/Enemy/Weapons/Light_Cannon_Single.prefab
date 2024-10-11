@@ -153,8 +153,8 @@ MonoBehaviour:
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
   weaponType: 0
-  _hullDmg: 5
-  _shieldDmg: 5
+  _hullDmg: 1
+  _shieldDmg: 1
   _fireRate: 2
 --- !u!65 &3378834471168960673
 BoxCollider:
@@ -192,7 +192,7 @@ MonoBehaviour:
   _detachDirection: 1
   _detachForceValue: 250
   _detachTorqueValue: 15
-  _onDetachedTranslateSpeed: 500
+  _onDetachedTranslateSpeed: 100
   _onAditionCollideForce: 50
 --- !u!1001 &4429908141650783527
 PrefabInstance:

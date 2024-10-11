@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704fa8b9ef0a3a044b96daa658f19e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vehiclePart: 0
+  _vehiclePart: 6
   _hullHP: 10
   _shieldHP: 0
   _partRenderer: {fileID: 8453629135234483808}
@@ -138,5 +138,5 @@ MonoBehaviour:
   _detachDirection: 1
   _detachForceValue: 250
   _detachTorqueValue: 15
-  _onDetachedTranslateSpeed: 500
+  _onDetachedTranslateSpeed: 100
   _onAditionCollideForce: 50

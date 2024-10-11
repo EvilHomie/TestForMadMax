@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 3724609688971391928}
   - component: {fileID: 2565792108696686348}
   - component: {fileID: 1629174143051603928}
+  - component: {fileID: 8046495861455812678}
   m_Layer: 10
   m_Name: Buggy_VeryEasy
   m_TagString: Untagged
@@ -420,13 +421,29 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 5
+    _amount: 10
   - _type: 1
     _dropChance: 60
-    _amount: 4
+    _amount: 10
   - _type: 0
     _dropChance: 40
-    _amount: 3
+    _amount: 10
+--- !u!114 &8046495861455812678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7544449190956722664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce0b5226aec83442a5a5e88122a5135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyHullHP: 40
+  _haveShields: 1
+  _weaponDMGMod: 1.1
+  _weaponFRMod: 1.1
 --- !u!1 &8316656820613526983
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,31 +620,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _fireRate
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2334360030160522715, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _hullHP
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 2964363159993380708, guid: 591de57368c4079479679f7d3a1430b6,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5668104962571450289, guid: 591de57368c4079479679f7d3a1430b6,
         type: 3}
@@ -886,16 +878,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _hullHP
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -980,16 +962,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1be1556eb3390e54c811f1e09b8d8390, type: 2}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _hullHP
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1009,16 +981,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3078412360603654506}
     m_Modifications:
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
@@ -1456,16 +1418,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _hullHP
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1550,16 +1502,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1be1556eb3390e54c811f1e09b8d8390, type: 2}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _hullHP
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7480075221388039034, guid: d9ac4fbd231b14a448f83e8df90dc153,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

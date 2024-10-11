@@ -13,6 +13,16 @@ public class EnemyWeaponController : MonoBehaviour
 
     float _rotationSpeedMod = 3f; //необходим для корректировки скорости поворота, чтобы оружие успело повернутся до истечения времени на прицеливание   
 
+
+    private void Start()
+    {
+        EnemyCharacteristics characteristics = GetComponent<EnemyCharacteristics>();
+        foreach (EnemyWeapon weapon in _weapons)
+        {
+            weapon.SetCharacteristics(characteristics.WeaponDMGMod, characteristics.WeaponFRMod);
+        }
+    }
+
     IEnumerator LockOnPlayer()
     {
         float t = 0;

@@ -5122,6 +5122,7 @@ GameObject:
   - component: {fileID: 5876718680901732870}
   - component: {fileID: 5241711853960031540}
   - component: {fileID: 7923056834703974772}
+  - component: {fileID: 8954166199126627517}
   m_Layer: 10
   m_Name: Minibus_SuperEasy
   m_TagString: Untagged
@@ -5487,10 +5488,29 @@ MonoBehaviour:
   _resources:
   - _type: 2
     _dropChance: 80
-    _amount: 3
+    _amount: 5
   - _type: 1
     _dropChance: 60
-    _amount: 2
+    _amount: 5
+  - _type: 0
+    _dropChance: 40
+    _amount: 5
+--- !u!114 &8954166199126627517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841027084954572958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce0b5226aec83442a5a5e88122a5135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyHullHP: 40
+  _haveShields: 0
+  _weaponDMGMod: 0.7
+  _weaponFRMod: 0.7
 --- !u!1 &3292127621470689425
 GameObject:
   m_ObjectHideFlags: 0
@@ -20527,26 +20547,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5187643854936838284, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _hullHP
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _fireRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9011403678162496428, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}
       propertyPath: m_Name
@@ -20583,21 +20583,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3947597489062477329}
     m_Modifications:
-    - target: {fileID: 4188924029825861032, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4188924029825861032, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _shieldHP
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5590726123677531623, guid: b04e87acd7c2a2343999745d6085c59e,
-        type: 3}
-      propertyPath: _hullHP
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5884029322154029502, guid: b04e87acd7c2a2343999745d6085c59e,
         type: 3}
       propertyPath: m_Name
@@ -20955,26 +20940,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5187643854936838284, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _hullHP
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _hullDmg
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _fireRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840919032790014912, guid: 2ae3758def0922b4a9b828d4ad748085,
-        type: 3}
-      propertyPath: _shieldDmg
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9011403678162496428, guid: 2ae3758def0922b4a9b828d4ad748085,
         type: 3}

@@ -1,11 +1,12 @@
 public enum EnumVehiclePart
 {
-    Other,
+    OtherPart,
     Weapon,
     Body,
     Wheel,
     ExplosivePart,
-    HeadLight
+    HeadLight,
+    ArmoredPart
 }
 
 public enum ResourcesType

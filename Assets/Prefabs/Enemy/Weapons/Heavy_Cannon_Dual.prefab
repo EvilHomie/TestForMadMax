@@ -70,9 +70,9 @@ MonoBehaviour:
   _shootSound: {fileID: 8300000, guid: 91f72c3ab3211c341b17956e44169b7c, type: 3}
   _hitSound: {fileID: 8300000, guid: dbca95f72f8463b429153f2e899b4fbc, type: 3}
   weaponType: 1
-  _hullDmg: 10
-  _shieldDmg: 10
-  _fireRate: 2
+  _hullDmg: 2
+  _shieldDmg: 2
+  _fireRate: 4
 --- !u!65 &6728879495442733198
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   _detachDirection: 1
   _detachForceValue: 250
   _detachTorqueValue: 15
-  _onDetachedTranslateSpeed: 500
+  _onDetachedTranslateSpeed: 100
   _onAditionCollideForce: 50
 --- !u!1 &5737445101936621932
 GameObject:
