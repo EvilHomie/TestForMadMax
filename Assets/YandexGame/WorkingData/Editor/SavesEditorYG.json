@@ -1,5 +1,5 @@
 {
-  "idSave": 66,
+  "idSave": 68,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,7 +11,7 @@
     false
   ],
   "savesIsClear": false,
-  "savedVerion": "0.0.24",
+  "savedVerion": "0.0.25",
   "weaponsData": [
     {
       "deffWeaponName": "Simple_Cannon_V_1",
@@ -75,9 +75,9 @@
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 421,
-    "Wires": 495,
-    "ScrapMetal": 366
+    "Сopper": 498,
+    "Wires": 580,
+    "ScrapMetal": 449
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
