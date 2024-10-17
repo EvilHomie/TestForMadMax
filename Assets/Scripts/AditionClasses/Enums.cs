@@ -43,3 +43,10 @@ public enum SchemeType
     Weapon,
     Vehicle
 }
+
+public enum Direction
+{
+    Front,
+    Left,
+    Right    
+}

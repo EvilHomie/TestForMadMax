@@ -2,14 +2,11 @@ using System.Collections.Generic;
 using YG;
 
 public class MetricaSender
-{
-    //static string _Done = "Done";
-    //static string _Failed = "Failed";
-
-
-    public static void SendLevelStatus(UILevelInfo levelInfo, LevelStatus status)
+{    
+    public static void SendLevelStatus(LevelStatus status)
     {
-        string goalKey = $"{levelInfo.LevelName}_{status}";
+        UILevelInfo selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
+        string goalKey = $"{selectedLevelInfo.LevelParameters.LevelName}_{status}";
         var eventParams = new Dictionary<string, string>
         {
              { "LevelsPassing", goalKey }

@@ -10,7 +10,7 @@ public class WheelRimSparks : MonoBehaviour
     public void EnableSparks()
     {
         _sparksPS = _wheelRimPS.GetComponentInChildren<ParticleSystem>();
-        _sparksPS.collision.AddPlane(RaidManager.Instance.MainRoadTransform);
+        _sparksPS.collision.AddPlane(InRaidManager.Instance.MainRoadTransform);
         _wheelRimPS.Play();
     }
 }

@@ -6,6 +6,7 @@ public class EnemyCharacteristics : MonoBehaviour
     [SerializeField] bool _haveShields;
     [SerializeField] float _weaponDMGMod;
     [SerializeField] float _weaponFRMod;
+    [SerializeField] float _vehicleSlideSpeed;
 
     readonly float _shieldHPMod = 0.5f;
     readonly float _whellHPMod = 0.25f;
@@ -33,4 +34,6 @@ public class EnemyCharacteristics : MonoBehaviour
 
     public float WeaponDMGMod => _weaponDMGMod;
     public float WeaponFRMod => _weaponFRMod;
+
+    public float VehicleSlideSpeed => _vehicleSlideSpeed;
 }

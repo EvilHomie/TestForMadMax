@@ -41,11 +41,9 @@ public class PlayerVehicleManager : MonoBehaviour
     private void Update()
     {
         if (!_engineIsStarted) return;
-
-        _playerVehicle.OnMove();
-        if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
+        if (_lastMoveSpeed != InRaidManager.Instance.PlayerMoveSpeed)
         {
-            _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
+            _lastMoveSpeed = InRaidManager.Instance.PlayerMoveSpeed;
             _playerVehicle.ChangeEngineAudioPitch(_lastMoveSpeed);
         }
     }
@@ -61,14 +59,18 @@ public class PlayerVehicleManager : MonoBehaviour
         _playerVehicle = newVehicleInstance;
     }
 
-    public void OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration)
+    public void OnPlayerStartRaid()
     {
         _engineIsStarted = true;
-        _playerVehicle.StartVehicle();
-        _playerVehicle.GetVehicleStartData(out float startDelay, out float speed, out float duration);
-        startMoveDelay = startDelay;
-        startSpeed = speed;
-        reachStartSpeedDuration = duration;
+        _playerVehicle.StartVehicle();        
+    }
+
+    public void GetVehicleMovingData(out float vehicleStartDelay, out float vehicleFullSpeed, out float vehicleReachFullSpeedDuration)
+    {
+        _playerVehicle.GetVehicleStartData(out float curVehicleStartDelay, out float curVehicleFullSpeed, out float curVehicleReachFullSpeedDuration);
+        vehicleStartDelay = curVehicleStartDelay;
+        vehicleFullSpeed = curVehicleFullSpeed;
+        vehicleReachFullSpeedDuration = curVehicleReachFullSpeedDuration;
     }
 
     public void OnPlayerEndRaid()

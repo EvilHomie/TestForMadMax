@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using YG;
 
 public class UIJoystickTouchController : MonoBehaviour
@@ -8,12 +7,10 @@ public class UIJoystickTouchController : MonoBehaviour
     public static UIJoystickTouchController Instance;
 
     [SerializeField] RectTransform _joystickArea;
-    [SerializeField] Slider _speedSlider;
     [SerializeField] GameObject _joystick;
     [SerializeField] GameObject _shootBtn;
     [SerializeField] Transform[] _weaponIcons;
 
-    [SerializeField] GameObject[] _navigationKeys;
     [SerializeField] GameObject _mouseIconForPC;
 
     CanvasGroup _canvasGroup;
@@ -31,19 +28,11 @@ public class UIJoystickTouchController : MonoBehaviour
     public void Init()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        //_speedSlider.onValueChanged.AddListener(OnChangeSpeed);
         HideInRaidInterface();
 
         if (YandexGame.EnvironmentData.isDesktop)
         {
-            _PCVersion = true;
-            //foreach (var key in _navigationKeys)
-            //{
-            //    key.SetActive(true);
-            //}
-
-            //_joystick.transform.localScale = Vector3.one / 2f;
-            //_shootBtn.transform.localScale = Vector3.one / 2f;
+            _PCVersion = true;            
 
             foreach (var icon in _weaponIcons)
             {
@@ -55,11 +44,7 @@ public class UIJoystickTouchController : MonoBehaviour
             _shootBtn.SetActive(false);
         }
         else
-        {
-            foreach (var key in _navigationKeys)
-            {
-                key.SetActive(false);
-            }
+        {            
             _mouseIconForPC.SetActive(false);
         }
     }
@@ -115,12 +100,6 @@ public class UIJoystickTouchController : MonoBehaviour
         }
     }
 
-    void OnChangeSpeed(float sliderValue)
-    {
-        if (!_controllerIsAcive) return;
-        RaidManager.Instance.ChangeSpeedWhileInRaid(sliderValue);
-    }
-
     public void HideInRaidInterface()
     {
         StopAllCoroutines();
@@ -134,15 +113,13 @@ public class UIJoystickTouchController : MonoBehaviour
     {
         if (YandexGame.EnvironmentData.isDesktop)
         {
-            if (LevelManager.Instance.GetSelectedLevelinfo().LevelName != "1-1")
+            if (LevelManager.Instance.GetSelectedLevelinfo().LevelParameters.LevelName != "1-1")
             {
                 _mouseIconForPC.SetActive(false);
             }
             else _mouseIconForPC.SetActive(true);
         }
 
-
-        _speedSlider.value = 0;
         StartCoroutine(FlickeringAppearance(delay));
     }
 

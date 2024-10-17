@@ -37,16 +37,16 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    protected void ShootAsBot(WeaponType weaponType, float accuracy)
+    protected void ShootAsBot(WeaponType weaponType)
     {
         _isShooting = true;
         if (weaponType == WeaponType.SingleBarreled)
         {
-            StartCoroutine(SingleBarreledShootAsBot(accuracy));
+            StartCoroutine(SingleBarreledShootAsBot());
         }
         else if (weaponType == WeaponType.MultyBarreled)
         {
-            StartCoroutine(MultyBarreledShootAsBot(_firePointManagers.Length, accuracy));
+            StartCoroutine(MultyBarreledShootAsBot(_firePointManagers.Length));
         }
         else if (weaponType == WeaponType.Beam)
         {
@@ -61,7 +61,7 @@ public class WeaponLogic : MonoBehaviour
             if (Time.time >= _nextTimeTofire)
             {
                 CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
-                _firePointManagers[0].OneShoot(_shootSound, CurFireRate);
+                _firePointManagers[0].OneShoot(_shootSound, CurFireRate, true);
                 if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -84,7 +84,7 @@ public class WeaponLogic : MonoBehaviour
 
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound, CurFireRate);
+                _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound, CurFireRate, true);
                 if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -98,21 +98,15 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    IEnumerator SingleBarreledShootAsBot(float accuracy = 0)
+    IEnumerator SingleBarreledShootAsBot()
     {
         yield return new WaitForSeconds(Random.Range(0, 0.5f));
         while (_isShooting && !PlayerHPManager.Instance.IsDead)
         {
             if (Time.time >= _nextTimeTofire)
             {
-                _firePointManagers[0].OneShoot(_shootSound, CurFireRate);
-
-                if (accuracy != 0)
-                {
-                    bool randomDirection = Random.value <= accuracy / 100;
-                    if (randomDirection) PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
-                }
-                else PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+                _firePointManagers[0].OneShoot(_shootSound, CurFireRate);               
+                PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
 
 
                 _nextTimeTofire = Time.time + 1f / CurFireRate;
@@ -121,7 +115,7 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    IEnumerator MultyBarreledShootAsBot(float barrelCount, float accuracy = 0)
+    IEnumerator MultyBarreledShootAsBot(float barrelCount)
     {
         yield return new WaitForSeconds(Random.Range(0, 0.5f));
         while (_isShooting && !PlayerHPManager.Instance.IsDead)
@@ -131,12 +125,7 @@ public class WeaponLogic : MonoBehaviour
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
                 _firePointManagers[_lastShootBarrelNumber].OneShoot(_shootSound, CurFireRate);
-                if (accuracy != 0)
-                {
-                    bool randomDirection = Random.value <= accuracy / 100;
-                    if (randomDirection) PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
-                }
-                else PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+                PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
 
                 _lastShootBarrelNumber++;
                 _nextTimeTofire = Time.time + 1f / CurFireRate;

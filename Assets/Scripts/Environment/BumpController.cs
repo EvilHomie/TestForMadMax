@@ -12,9 +12,9 @@ public class BumpController : MonoBehaviour
         {
             if (bumps.position.x < -1900)
             {
-                bumps.position = new Vector3(1200, bumps.position.y, bumps.position.z);
+                bumps.position = new Vector3(1400, bumps.position.y, bumps.position.z);
             }
-            else bumps.Translate(_moveSpeed * RaidManager.Instance.PlayerMoveSpeed * Time.fixedDeltaTime * Vector3.left);
+            else bumps.Translate(_moveSpeed * InRaidManager.Instance.PlayerMoveSpeed * Time.fixedDeltaTime * Vector3.left);
         }
     }
 }

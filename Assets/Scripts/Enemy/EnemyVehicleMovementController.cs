@@ -1,160 +1,185 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyVehicleMovementController : MonoBehaviour
 {
+    List<Transform> _frontWheels;
+    NavMeshObstacle _navMeshObstacle;
+
     EnemyVehicleManager _enemyVehicleManager;
+    NavMeshAgent _navMeshAgent;
+    PosInEnemyGameZone _reservedPosInEnemyGameZone;
+    Rigidbody _rigidbody;
 
 
-    float _inGameZoneDeffXPos;
-    float _startZPos;
+    bool _gameZoneIsReached = false;
+    bool _isDead = false;
+
     float _currentOffset;
 
-    Coroutine _slidingCoroutine;
-    Coroutine _translateToGameZoneCoroutine;
+    float _wheelRotationSpeed = 120;
+    float bodyRotationSpeed = 15;
+    Vector2 _wheelsRotationMaxAngles = new(75, 105);
 
-    public void StartMovementLogic(EnemyVehicleManager enemyVehicleManager)
+    float _lastBodyZPos = 0;
+    float _rotationTreshhold = 0.5f;
+
+
+    public void Init(EnemyVehicleManager enemyVehicleManager, Rigidbody rigidbody, List<Transform> frontWheels, NavMeshObstacle navMeshObstacle)
     {
+        _navMeshObstacle = navMeshObstacle;
+        _frontWheels = frontWheels;
+        _rigidbody = rigidbody;
         _enemyVehicleManager = enemyVehicleManager;
-        _startZPos = transform.position.z;
-        _translateToGameZoneCoroutine = StartCoroutine(TranslateInGameZone());
+        _reservedPosInEnemyGameZone = EnemyGameZone.Instance.GetPosInGameZone();
+        _reservedPosInEnemyGameZone.IsReserved = true;
+
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshObstacle.enabled = false;
+        _navMeshAgent.updateRotation = false;
+        _navMeshAgent.enabled = true;
+
+        _navMeshAgent.SetDestination(_reservedPosInEnemyGameZone.transform.position);
     }
 
-    IEnumerator TranslateInGameZone()
+    public void CustomUpdate()
     {
-        float startXPos = transform.position.x;
-        float translateDuration = Random.Range(GameConfig.Instance.MinTranslateDuration, GameConfig.Instance.MaxTranslateDuration);
-        float randomXPos = Random.Range(-GameConfig.Instance.GameZoneXSize, GameConfig.Instance.GameZoneXSize);
-        _inGameZoneDeffXPos = randomXPos;
-
-        float t = 0;
-        while (t < 1)
+        if (!_isDead)
         {
-            if (t >= GameConfig.Instance.ValueToStartSlowTranslate)
+            RotationLogic();
+            _rigidbody.transform.position = new(transform.position.x, _rigidbody.transform.position.y, transform.position.z);
+            _lastBodyZPos = transform.position.z;
+
+            if (!_gameZoneIsReached && Vector3.Distance(transform.position, _reservedPosInEnemyGameZone.transform.position) <= 100)
             {
-                t += Time.deltaTime / translateDuration / GameConfig.Instance.SlowTranslateValue;
+                _gameZoneIsReached = true;
+                _navMeshAgent.speed = _enemyVehicleManager.EnemyCharacteristics.VehicleSlideSpeed;
+                _enemyVehicleManager.OnReachGameZone();
+                InvokeRepeating(nameof(ChangeDestination), 0, GameConfig.Instance.ChangeDestinationDelay);
+            }
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (_isDead)
+        {
+            OnDieTranslation();
+        }
+    }
+
+    void RotationLogic()
+    {
+        if (math.abs(transform.position.z - _lastBodyZPos) > _rotationTreshhold)
+        {
+            if (transform.position.z - _lastBodyZPos > 0)
+            {
+                foreach (var wheel in _frontWheels)
+                {
+                    if (wheel == null) continue;
+                    RotateTransform(wheel, Direction.Left, _wheelRotationSpeed);
+                }
+                RotateTransform(_rigidbody.transform, Direction.Left, bodyRotationSpeed);
             }
             else
             {
-                t += Time.deltaTime / translateDuration;
+                foreach (var wheel in _frontWheels)
+                {
+                    if (wheel == null) continue;
+                    RotateTransform(wheel, Direction.Right, _wheelRotationSpeed);
+                }
+                RotateTransform(_rigidbody.transform, Direction.Right, bodyRotationSpeed);
             }
-            transform.position = Vector3.Lerp(new Vector3(startXPos, transform.position.y, _startZPos), new Vector3(randomXPos, transform.position.y, _startZPos), t);
-            yield return null;
         }
-        _translateToGameZoneCoroutine = null;
-        OnReachGameZone();
-    }
-
-    void OnReachGameZone()
-    {
-        _enemyVehicleManager.OnReachGameZone();
-        InvokeRepeating(nameof(ChangeSlideOffset), 0, GameConfig.Instance.ChangeSlideOffsetDelay);
-        _slidingCoroutine = StartCoroutine(CosineSliding());
-    }
-
-    IEnumerator CosineSliding()
-    {
-        while (true) 
+        else
         {
-            float offsetX = _currentOffset * Mathf.Cos(Time.time);
-            float xPos = _inGameZoneDeffXPos + offsetX;
-            transform.position = new Vector3(xPos, transform.position.y, _startZPos);
-            yield return null;
+            foreach (var wheel in _frontWheels)
+            {
+                if (wheel == null) continue;
+                RotateTransform(wheel, Direction.Front, _wheelRotationSpeed);
+            }
+            RotateTransform(_rigidbody.transform, Direction.Front, bodyRotationSpeed);
         }
     }
 
-    void ChangeSlideOffset()
+    void RotateTransform(Transform transform, Direction direction, float rotationSpeed)
     {
-        StartCoroutine(LerpSlideOffset());
-    }
-
-    IEnumerator LerpSlideOffset()
-    {
-        float startOffset = _currentOffset;
-        float slideMod = LevelManager.Instance.GetSelectedLevelinfo().EnemySlideDistanceMod;
-        float newOffset = Random.Range(-GameConfig.Instance.SlideOffsetXValue * slideMod, GameConfig.Instance.SlideOffsetXValue * slideMod);
-
-        float t = 0;
-        while (t <= 1)
+        if (direction == Direction.Front)
         {
-            t += Time.deltaTime / (GameConfig.Instance.ChangeSlideOffsetDelay);
-            _currentOffset = Mathf.Lerp(startOffset, newOffset, t);
-            yield return null;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.rotation.x, 90, transform.rotation.z), rotationSpeed * Time.deltaTime);
+        }
+        else if (direction == Direction.Left)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.rotation.x, _wheelsRotationMaxAngles.x, transform.rotation.z), rotationSpeed * Time.deltaTime);
+        }
+        else if (direction == Direction.Right)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.rotation.x, _wheelsRotationMaxAngles.y, transform.rotation.z), rotationSpeed * Time.deltaTime);
         }
     }
 
-    public void StartDieLogic()
+    void ChangeDestination()
+    {
+        PosInEnemyGameZone newPos = EnemyGameZone.Instance.GetPosInGameZone();
+        newPos.IsReserved = true;
+
+        _reservedPosInEnemyGameZone.IsReserved = false;
+        _reservedPosInEnemyGameZone = newPos;
+        _navMeshAgent.SetDestination(_reservedPosInEnemyGameZone.transform.position);
+    }
+
+    public void OnDie()
     {
         CancelInvoke();
         StopAllCoroutines();
-        StartCoroutine(OnDieTranslation());
+        _navMeshAgent.enabled = false;
+        _navMeshObstacle.enabled = true;
+        _reservedPosInEnemyGameZone.IsReserved = false;
+        _isDead = true;
     }
 
     public void OnTryRunMovementLogic()
     {
-        StartCoroutine(RunAwayTranslation());
+        StartCoroutine(RunAwayTranslation(true));
     }
 
-    IEnumerator OnDieTranslation()
+    void OnDieTranslation()
     {
-        float t = 0;
-        float mod;
+        _rigidbody.maxLinearVelocity = GameConfig.Instance.SpeedMod * 4;
+        _rigidbody.AddForce(GameConfig.Instance.SpeedMod * 2 * Vector3.left, ForceMode.Acceleration);
 
-        while (transform.position.x > -GameConfig.Instance.XOffsetForDestroyObject)
+        if (_rigidbody.transform.position.x < -GameConfig.Instance.XOffsetForDestroyObject)
         {
-            t += Time.deltaTime/ GameConfig.Instance.TimeForChangeSpeed;
-            mod = Mathf.Lerp(0,1,t);
-
-            transform.Translate(mod * GameConfig.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left, Space.World);
-            yield return null;
+            InRaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager);
+            _enemyVehicleManager.OnObjectDestroy();
+            Destroy(gameObject);
         }
-        RaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
-        Destroy(gameObject);
     }
 
-    IEnumerator RunAwayTranslation()
+    IEnumerator RunAwayTranslation(bool withDelay)
     {
-        yield return new WaitForSeconds(Random.Range(GameConfig.Instance.MinDelayForRun, GameConfig.Instance.MaxDelayForRun));
-
+        if (withDelay)
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(GameConfig.Instance.MinDelayForRun, GameConfig.Instance.MaxDelayForRun));
+        }
         CancelInvoke();
-
-        if (_translateToGameZoneCoroutine != null) StopCoroutine(_translateToGameZoneCoroutine);
-        if (_slidingCoroutine != null) StopCoroutine(_slidingCoroutine);
-
-        //float runSpeedMod = Random.Range(GameConfig.Instance.MinRunSpeed, GameConfig.Instance.MaxRunSpeed);
-        bool randomDirection = Random.value < 0.5f;
-
-        float runSpeedMod = randomDirection ? -0.7f: 0.7f;
-
-        while (transform.position.x > -GameConfig.Instance.XOffsetForDestroyObject && transform.position.x < GameConfig.Instance.XOffsetForDestroyObject)
+        _reservedPosInEnemyGameZone.IsReserved = false;
+        _navMeshAgent.SetDestination(EnemyEscapeZone.Instance.GetRandomEscapePos());
+        yield return null;
+        while (_navMeshAgent.remainingDistance >= 100)
         {
-            transform.Translate(GameConfig.Instance.SpeedMod * RaidManager.Instance.PlayerMoveSpeed * runSpeedMod * Time.deltaTime * Vector3.right, Space.World);
             yield return null;
         }
-        RaidManager.Instance.OnEnemyObjectDestroyed(_enemyVehicleManager, _enemyVehicleManager.ReservedLineNumber);
-        RaidManager.Instance.OnEnemyEscaped();
+        InRaidManager.Instance.OnEnemyEscaped(_enemyVehicleManager);
+        _enemyVehicleManager.OnObjectDestroy();
         Destroy(gameObject);
     }
 
     public void OnPlayerDie()
     {
-        if (_translateToGameZoneCoroutine != null) StopCoroutine(_translateToGameZoneCoroutine);
-        if (_slidingCoroutine != null) StopCoroutine(_slidingCoroutine);
-        StartCoroutine(OnPlayerDieTranslation());
-    }
-
-    IEnumerator OnPlayerDieTranslation()
-    {
-        float t = 0;
-        float mod;
-
-        while (transform.position.x < GameConfig.Instance.XOffsetForDestroyObject)
-        {
-            t += Time.deltaTime / 2;
-            mod = Mathf.Lerp(0, 1, t);
-
-            transform.Translate(mod * GameConfig.Instance.SpeedMod * GameConfig.Instance.OnPlayerDieSpeedMod * Time.deltaTime * Vector3.right, Space.World);
-            yield return null;
-        }
+        StartCoroutine(RunAwayTranslation(false));
     }
 }

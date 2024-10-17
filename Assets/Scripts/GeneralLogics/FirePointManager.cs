@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class FirePointManager : MonoBehaviour
@@ -17,21 +18,24 @@ public class FirePointManager : MonoBehaviour
     {
         _barrelDefPos = transform.parent.localPosition;
     }
-    public void OneShoot(AudioClip shootSound, float fireRate)
+    public void OneShoot(AudioClip shootSound, float fireRate, bool withAnimation = false)
     {
         foreach (var particleSystem in _particleSystems)
         {
             particleSystem.Emit(1);
         }
         soundSource.PlayOneShot(shootSound);
-        StartCoroutine(BarrelShootAnimation(fireRate));
+        if (withAnimation)
+        {
+            StartCoroutine(BarrelShootAnimation(fireRate));
+        }
     }
 
     IEnumerator BarrelShootAnimation(float fireRate)
     {
         float t = 0;
 
-        while (t < 1 )
+        while (t < 1)
         {
             t += Time.deltaTime * fireRate;
 

@@ -29,6 +29,11 @@ public class PlayerHPManager : MonoBehaviour
         else Instance = this;
     }
 
+    public void Init()
+    {
+        OnPlayerEndRaid();
+    }
+
     public void OnPlayerStartRaid()
     {
         VehicleData vehicleData = (VehicleData)PlayerVehicleManager.Instance.PlayerVehicle.GetItemData();
@@ -98,7 +103,7 @@ public class PlayerHPManager : MonoBehaviour
     {
         _explosionPS.Play();
         _hitAudioSource.PlayOneShot(_onDieExplosionSound);
-        RaidManager.Instance.OnPLayerDie();
+        InRaidManager.Instance.OnPLayerDie();
         PlayerWeaponManager.Instance.OnPlayerDie();
         FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: false);
     }

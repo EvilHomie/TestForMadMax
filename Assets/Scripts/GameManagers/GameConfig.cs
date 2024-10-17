@@ -29,7 +29,7 @@ public class GameConfig : MonoBehaviour
     [SerializeField] float _slowTranslateValue = 5f;
 
     [Header("ENEMY BRAINS")]
-    [SerializeField] float _changeSlideOffsetDelay = 5;
+    [SerializeField] float _changeDestinationDelay = 5;
     [SerializeField] float _slideOffsetXValue = 500f;
     [SerializeField] float _minDelayForRun = 2f;
     [SerializeField] float _maxDelayForRun = 4f;
@@ -72,7 +72,7 @@ public class GameConfig : MonoBehaviour
     public float SlowTranslateValue => _slowTranslateValue;
 
 
-    public float ChangeSlideOffsetDelay => _changeSlideOffsetDelay;
+    public float ChangeDestinationDelay => _changeDestinationDelay;
     public float SlideOffsetXValue => _slideOffsetXValue;
     public float MinDelayForRun => _minDelayForRun;
     public float MaxDelayForRun => _maxDelayForRun;
