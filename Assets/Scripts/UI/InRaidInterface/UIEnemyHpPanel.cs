@@ -21,6 +21,12 @@ public class UIEnemyHpPanel : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
+
+    public void Init()
+    {
+        DisableHPBars();
+    }
+
     public void OnPlayerStartRaid()
     {
         DisableHPBars();

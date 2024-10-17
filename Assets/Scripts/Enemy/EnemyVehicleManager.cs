@@ -1,102 +1,128 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations;
+using UnityEngine.AI;
 
-
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(EnemyVehicleMovementController))]
 [RequireComponent(typeof(EnemyWeaponController))]
-[RequireComponent(typeof(CollisionWithRoadLogic))]
-[RequireComponent(typeof(PartHPManager))]
 [RequireComponent(typeof(VehicleVisualEffectsLogic))]
 [RequireComponent(typeof(ResourcesInVehicle))]
+[RequireComponent(typeof(EnemyCharacteristics))]
+
 public class EnemyVehicleManager : MonoBehaviour
 {
-    EnemyVehicleMovementController _vehicleMovementController;
-    VehicleVisualEffectsLogic _vehicleEffectsController;
+    [SerializeField] EnemyType _enemyType;
+    EnemyDieExplosion _enemyDieExplosion;
+
+    VehiclePartManager _bodyPartHPManager;    
+    
+    EnemyVehicleMovementController _enemyVehicleMovementController;
+    VehicleVisualEffectsLogic _vehicleVisualEffectsController;
     EnemyWeaponController _enemyWeaponController;
+    EnemyCharacteristics _enemyCharacteristics;
     ResourcesInVehicle _resourcesInVehicle;
     SchemesInVehicle _schemesInVehicle;
+
     AudioSource _vehicleAudioSource;
+    Rigidbody _rigidbody;
+    List<Transform> _wheels = new();
+    List<Transform> _frontWheels = new();
+    List<EnemyWeapon> _weapons = new();
+    List<ParticleSystem> _wheelsDustPS = new();
+    NavMeshObstacle _navMeshObstacle;
 
-    [SerializeField] ParticleSystem _blowParticleSystem;
-    [SerializeField] AudioSource _blowAudioSource;
-    [SerializeField] AudioClip _blowAudioClip;
-    [SerializeField] int _reservedLineNumber;
-    [SerializeField] RotationConstraint _smokeRotationConstraint;
+    List<Vector3> explodeOffsetPositions = new();
 
-    float _lastMoveSpeed;
     bool _isDead = false;
-    bool _isCollideWithRoad = false;
-    ConstraintSource constraintSource;
 
-    PartHPManager _bodyPartHPManager;
+    public EnemyType EnemyType => _enemyType;
+    public AudioSource VehicleAudioSource { get => _vehicleAudioSource; set => _vehicleAudioSource = value; }
+    public Rigidbody Rigidbody { get => _rigidbody; set => _rigidbody = value; }
+    public bool IsDead => _isDead;
+    public EnemyCharacteristics EnemyCharacteristics => _enemyCharacteristics;
 
-    public AudioSource VehicleAudioSource => _vehicleAudioSource;
-    public int ReservedLineNumber { get => _reservedLineNumber; set => _reservedLineNumber = value; }
+    public List<Transform> Wheels => _wheels;
+    public List<Transform> FrontWheels => _frontWheels;
+    public List<EnemyWeapon> Weapons => _weapons;
+    public VehiclePartManager BodyPartHPManager { get => _bodyPartHPManager; set => _bodyPartHPManager = value; }
+    public NavMeshObstacle NavMeshObstacle { get => _navMeshObstacle; set => _navMeshObstacle = value; }
+    public List<ParticleSystem> WheelsDustPS { get => _wheelsDustPS; set => _wheelsDustPS = value; }
+    public EnemyDieExplosion EnemyDieExplosion { get => _enemyDieExplosion; set => _enemyDieExplosion = value; }
 
-    private void Awake()
+    void Awake()
     {
-        _vehicleMovementController = GetComponent<EnemyVehicleMovementController>();
-        _vehicleEffectsController = GetComponent<VehicleVisualEffectsLogic>();
+        _enemyVehicleMovementController = GetComponent<EnemyVehicleMovementController>();
+        _vehicleVisualEffectsController = GetComponent<VehicleVisualEffectsLogic>();
         _enemyWeaponController = GetComponent<EnemyWeaponController>();
-        _vehicleAudioSource = GetComponent<AudioSource>();
         _resourcesInVehicle = GetComponent<ResourcesInVehicle>();
         _schemesInVehicle = GetComponent<SchemesInVehicle>();
-        _bodyPartHPManager = GetComponent<PartHPManager>();
+        _enemyCharacteristics = GetComponent<EnemyCharacteristics>();
     }
 
-
-    private void Start()
+    void Start()
     {
-        constraintSource.sourceTransform = RaidManager.Instance.transform;
-        constraintSource.weight = 1.0f;
-        _smokeRotationConstraint.AddSource(constraintSource);
-        _vehicleMovementController.StartMovementLogic(this);
+        Init();
     }
 
     void Update()
     {
-        if (_isCollideWithRoad) return;
-        _vehicleEffectsController.PlayMoveEffects();
+        _enemyVehicleMovementController.CustomUpdate();
+        _vehicleVisualEffectsController.CustomUpdate();
     }
 
-    private void OnDestroy()
+    void Init()
     {
-        if (!Application.isPlaying) return;
+        _enemyDieExplosion.Init();
+        _enemyVehicleMovementController.Init(this, _rigidbody, _frontWheels, _navMeshObstacle);
+        _vehicleVisualEffectsController.Init(_wheels, _wheelsDustPS);
+        _enemyWeaponController.Init(this, _weapons);
 
-        
+        explodeOffsetPositions.Add(Vector3.forward * 100);
+        explodeOffsetPositions.Add(Vector3.back * 200);
+        explodeOffsetPositions.Add(Vector3.right * 50);
+        explodeOffsetPositions.Add(Vector3.left * 50);
+    }
+
+    public void OnObjectDestroy()
+    {
+        if(!Application.isPlaying) return;
         if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
         {
             UIEnemyHpPanel.Instance.DisableHPBars();
         }
     }
 
-
     public void OnReachGameZone()
     {
         _enemyWeaponController.StartShootLogic();
     }
 
+    public void OnPlayerDie()
+    {
+        if (_isDead) return;
+        _enemyVehicleMovementController.OnPlayerDie();
+    }
+
     public void OnBodyDestoyed()
     {
+        if (_isDead) return;
+        int offsetIndex = Random.Range(0, explodeOffsetPositions.Count);
+        _rigidbody.AddForceAtPosition(GameConfig.Instance.TouchRoadImpulse * Vector3.up, transform.position + explodeOffsetPositions[offsetIndex], ForceMode.VelocityChange);
         OnDie();
     }
 
-    public void OnBodyCollisionWithRoad()
+    public void OnBodyCollision()
     {
-        _isCollideWithRoad = true;  
         OnDie();
-        _vehicleEffectsController.StopDustEmmiting();
+        //_vehicleVisualEffectsController.CutDustPS();
     }
 
     public void OnWeaponLossHP(GameObject weapon)
     {
         if (!_enemyWeaponController.CheckAvailableWeapons(weapon))
         {
-            if(_isDead) return;
-            _vehicleMovementController.OnTryRunMovementLogic();
+            if (_isDead) return;
+            _enemyVehicleMovementController.OnTryRunMovementLogic();
         }
     }
 
@@ -107,14 +133,12 @@ public class EnemyVehicleManager : MonoBehaviour
 
     void OnDie()
     {
-        if(_isDead) return;
+        if (_isDead) return;
         _isDead = true;
-        
-        _vehicleMovementController.StartDieLogic();
+        _vehicleVisualEffectsController.CutDustPS();
+        _enemyVehicleMovementController.OnDie();
         _enemyWeaponController.StopShooting();
-
-        _blowParticleSystem.Play();
-        _blowAudioSource.PlayOneShot(_blowAudioClip);
+        _enemyDieExplosion.OnDie();        
 
         _resourcesInVehicle.DropResources();
         if (_schemesInVehicle != null && _schemesInVehicle.scheme != null)
@@ -122,13 +146,13 @@ public class EnemyVehicleManager : MonoBehaviour
             _schemesInVehicle.DropScheme();
         }
 
-        if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
-        {
-            UIEnemyHpPanel.Instance.DisableHPBars();
-        }
+        UIEnemyHpPanel.Instance.DisableHPBars();
+        //if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
+        //{
+        //    UIEnemyHpPanel.Instance.DisableHPBars();
+        //}
 
-        //RaidManager.Instance.OnEnemyDestroyed(this, _reservedLineNumber);
-        RaidManager.Instance.OnPlayerKillEnemy();
+        InRaidManager.Instance.OnPlayerKillEnemy();
     }
 
     public void OnHitPart()
@@ -136,9 +160,18 @@ public class EnemyVehicleManager : MonoBehaviour
         _bodyPartHPManager.GetBodyHPRelativeValues(out float hullHPRelativeValue, out float shieldHPRelativeValue);
         UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, this);
     }
-    public void OnPlayerDie()
+
+    public void OnLooseWheel(bool isFrontWheel)
     {
-        if (_isDead) return;
-        _vehicleMovementController.OnPlayerDie();
+        _rigidbody.automaticCenterOfMass = false;
+        if (isFrontWheel)
+        {
+            _rigidbody.centerOfMass = new Vector3(0, 0, 100);
+        }
+        else
+        {
+            _rigidbody.centerOfMass = new Vector3(0, 0, -100);
+        }
     }
+
 }

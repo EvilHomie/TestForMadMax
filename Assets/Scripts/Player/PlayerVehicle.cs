@@ -9,9 +9,12 @@ public class PlayerVehicle : MonoBehaviour, IItem
     [SerializeField] float _shakeDelayOnStart = 0.5f;
     [SerializeField] float _shakeDurationOnStart = 0.8f;
     [SerializeField] float _delayBeforeStartMove = 2;
-    [SerializeField] float _targetSpeedOnStart = 5;
+    [SerializeField] float _targetSpeedOnStart = 10;
     [SerializeField] float _reachTargetSpeedDuration = 10;
     [SerializeField] float _delayForDustAfterMove = 3;
+
+    [SerializeField] List<Transform> _wheels;
+    [SerializeField] List<ParticleSystem> _wheelsDustPS;
 
     [SerializeField] List<PlayerVehicleWeaponPoint> _weaponPoints;
 
@@ -26,9 +29,10 @@ public class PlayerVehicle : MonoBehaviour, IItem
         _vehicleEffectsController = GetComponent<VehicleVisualEffectsLogic>();
         _engineAudioSource = GetComponent<AudioSource>();
     }
-    public void OnMove()
+
+    private void Start()
     {
-        _vehicleEffectsController.PlayMoveEffects();
+        _vehicleEffectsController.Init(_wheels, _wheelsDustPS, false);
     }
 
     public void ChangeEngineAudioPitch(float newSpeed)

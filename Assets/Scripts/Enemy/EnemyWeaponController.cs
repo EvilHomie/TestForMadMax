@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class EnemyWeaponController : MonoBehaviour
 {
-    [SerializeField] List<EnemyWeapon> _weapons;
-    [SerializeField] float _accuracy;
+    List<EnemyWeapon> _weapons;
 
     bool _allWeaponsDestroyed = false;
 
     Vector3 _targetPos = new(0, 100, 0);
 
-    float _rotationSpeedMod = 3f; //необходим для корректировки скорости поворота, чтобы оружие успело повернутся до истечения времени на прицеливание   
+    float _rotationSpeedMod = 5f;  
 
 
-    private void Start()
+    public void Init(EnemyVehicleManager enemyVehicleManager, List<EnemyWeapon> enemyWeapons)
     {
-        EnemyCharacteristics characteristics = GetComponent<EnemyCharacteristics>();
+        _weapons = enemyWeapons;
+        _allWeaponsDestroyed = false;
         foreach (EnemyWeapon weapon in _weapons)
         {
-            weapon.SetCharacteristics(characteristics.WeaponDMGMod, characteristics.WeaponFRMod);
+            weapon.SetCharacteristics(enemyVehicleManager.EnemyCharacteristics.WeaponDMGMod, enemyVehicleManager.EnemyCharacteristics.WeaponFRMod);
         }
-    }
+    }  
 
     IEnumerator LockOnPlayer()
     {
@@ -55,8 +55,7 @@ public class EnemyWeaponController : MonoBehaviour
     }
 
     public void StartShootLogic()
-    {
-        _allWeaponsDestroyed = false;
+    {        
         StartCoroutine(LockOnPlayer());
         StartCoroutine(StartShootWhithDelay());
     }
@@ -67,7 +66,7 @@ public class EnemyWeaponController : MonoBehaviour
         foreach (var weapon in _weapons)
         {
             if (weapon == null) continue;
-            weapon.StartShooting(_accuracy);
+            weapon.StartShooting();
         }
     }
 
@@ -84,7 +83,6 @@ public class EnemyWeaponController : MonoBehaviour
     public bool CheckAvailableWeapons(GameObject destroyedWeapon)
     {
         _weapons.Remove(_weapons.Find(weapon => weapon.gameObject == destroyedWeapon));
-        //Destroy(destroyedWeapon);
 
         if (_weapons.TrueForAll(weapon => weapon.gameObject == null))
         {

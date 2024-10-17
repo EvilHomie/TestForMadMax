@@ -17,6 +17,11 @@ public class CameraManager : MonoBehaviour
         else Instance = this;
     }
 
+    public void Init()
+    {
+        OnPlayerEndRaid();
+    }
+
     void Update()
     {
         if(!_playerOnRaid) return;

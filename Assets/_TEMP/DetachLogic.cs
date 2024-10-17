@@ -5,16 +5,19 @@ public class DetachLogic : MonoBehaviour
     [SerializeField] ReboundDirection _detachDirection = ReboundDirection.Y;
     [SerializeField] float _detachForceValue = 250;
     [SerializeField] float _detachTorqueValue = 5;
-    [SerializeField] float _onDetachedTranslateSpeed = 50;
     [SerializeField] float _onAditionCollideForce = 50;
     Rigidbody rb;
     bool _isDetached = false;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isDetached)
         {
-            rb.AddForce(Vector3.left * _onDetachedTranslateSpeed, ForceMode.Acceleration);
+            rb.AddForce(GameConfig.Instance.SpeedMod / 20 * Vector3.left, ForceMode.VelocityChange);
+            if (transform.position.x < -GameConfig.Instance.XOffsetForDestroyObject)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -22,8 +25,9 @@ public class DetachLogic : MonoBehaviour
     {
         if (!_isDetached)
         {
+            Destroy(gameObject, 10);
             _isDetached = true;
-            gameObject.transform.parent = transform.root;
+            gameObject.transform.parent = null;
             rb = gameObject.AddComponent<Rigidbody>();
 
             Vector3 dir = _detachDirection switch
@@ -45,6 +49,10 @@ public class DetachLogic : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        rb.AddForce(Vector3.up * _onAditionCollideForce, ForceMode.VelocityChange);
+        if (_isDetached)
+        {
+            rb.AddForce(Vector3.up * _onAditionCollideForce, ForceMode.VelocityChange);
+            return;
+        }
     }
 }

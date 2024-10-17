@@ -1,24 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleVisualEffectsLogic : MonoBehaviour
 {
-    [SerializeField] Transform[] _wheels;
-    [SerializeField] ParticleSystem[] _wheelsDustPS;
-    float _lastMoveSpeed = 0;
+    List<Transform> _wheels;
+    List<ParticleSystem> _wheelsDustPS;
 
-    public void PlayMoveEffects()
+    public void Init(List<Transform> wheels, List<ParticleSystem> wheelsDustPS, bool autoStart = true)
     {
-        TrackSpeed();
-        RotateWheels();
+        _wheels = wheels;
+        _wheelsDustPS = wheelsDustPS;
+        SetDustsParameters();
+        if (autoStart)
+        {
+            PlayDustPS();
+        }
     }
 
-    void TrackSpeed()
+    public void CustomUpdate()
     {
-        if (_lastMoveSpeed != RaidManager.Instance.PlayerMoveSpeed)
-        {
-            _lastMoveSpeed = RaidManager.Instance.PlayerMoveSpeed;
-            UpdateDustsSettings(_lastMoveSpeed);
-        }
+        RotateWheels();
     }
 
     void RotateWheels()
@@ -26,20 +27,20 @@ public class VehicleVisualEffectsLogic : MonoBehaviour
         foreach (var wheel in _wheels)
         {
             if (wheel == null) continue;
-            wheel.Rotate(_lastMoveSpeed * GameConfig.Instance.WheelsRotateSpeedMod * Time.deltaTime, 0, 0, Space.Self);
+            wheel.Rotate(GameConfig.Instance.WheelsRotateSpeedMod * Time.deltaTime, 0, 0, Space.Self);
         }
     }
 
-    void UpdateDustsSettings(float newSpeed)
+    void SetDustsParameters()
     {
         foreach (var dust in _wheelsDustPS)
         {
             if (dust == null) continue;
             var main = dust.main;
-            main.startSpeed = GameConfig.Instance.SpeedMod * newSpeed;
+            main.startSpeed = GameConfig.Instance.SpeedMod;
 
             var emmision = dust.emission;
-            emmision.rateOverTime = GameConfig.Instance.DustPSEmmisionRateMod * newSpeed;
+            emmision.rateOverTime = GameConfig.Instance.DustPSEmmisionRateMod;
         }
     }
 
@@ -68,4 +69,5 @@ public class VehicleVisualEffectsLogic : MonoBehaviour
             dust.Play();
         }
     }
+
 }

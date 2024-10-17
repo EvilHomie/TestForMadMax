@@ -1,39 +1,58 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UILevelInfo : MonoBehaviour
 {
-    [SerializeField] ScrollRect _scrollRect;     
+    ScrollRect _scrollRect;     
 
     [SerializeField] Button _selectBtn;
     [SerializeField] Image _levelImage;
     [SerializeField] Image _isSelectedImage;
-    [SerializeField] string _levelName;
+    //[SerializeField] string _levelName;
     [SerializeField] TextMeshProUGUI _unlockStatusText;
+    [SerializeField] TextMeshProUGUI _levelNumberText;
+    LevelParameters _levelParameters;
 
-    [SerializeField] List<EnemyVehicleManager> enemyList;
-    [SerializeField] int _enemyCount = 1;
-    [SerializeField] float _enemySlideDistanceMod = 1;
-    [SerializeField] float _enemyDmgMod = 1;
-    [SerializeField] float _enemyHPMod = 1;
+    //[SerializeField] List<EnemyVehicleManager> enemyList;
+    //[SerializeField] int _simpleEnemyCount = 1;
+    ////[SerializeField] float _enemySlideDistanceMod = 1;
+    ////[SerializeField] float _enemyDmgMod = 1;
+    ////[SerializeField] float _enemyHPMod = 1;
 
-    [Header("OPTIONAL")]
-    [SerializeField] EnemyVehicleManager _bossEnemyVehicle;
+    //[Header("OPTIONAL")]
+    //[SerializeField] EnemyVehicleManager _bossEnemyVehicle;
 
-    public List<EnemyVehicleManager> EnemyList => enemyList;
-    public int EnemyCount => _enemyCount;
-    public float EnemySlideDistanceMod => _enemySlideDistanceMod;
-    public float EnemyDmgMod => _enemyDmgMod;
-    public float EnemyHPMod => _enemyHPMod;
+    //public List<EnemyVehicleManager> EnemyList => enemyList;
+    //public int SimpleEnemyCount => _simpleEnemyCount;
+    //public float EnemySlideDistanceMod => _enemySlideDistanceMod;
+    //public float EnemyDmgMod => _enemyDmgMod;
+    //public float EnemyHPMod => _enemyHPMod;
     public Button SelectBtn => _selectBtn;
-    public string LevelName => _levelName;
+    public LevelParameters LevelParameters => _levelParameters;
+    //public string LevelName => _levelName;
 
-    public Image LevelImage => _levelImage;
+    //public Image LevelImage => _levelImage;
 
-    public EnemyVehicleManager BossEnemyVehicle => _bossEnemyVehicle;
+    //public EnemyVehicleManager BossEnemyVehicle => _bossEnemyVehicle;
+
+
+
+    public void Init(ScrollRect scrollRect, LevelParameters levelParameters)
+    {
+        _levelParameters = levelParameters;
+        _scrollRect = scrollRect;
+        _levelImage.sprite = levelParameters.LevelImage;
+        _levelNumberText.text = levelParameters.LevelName;
+
+        Deselect();
+        if (PlayerData.Instance.UnlockedLevelsNames.Contains(_levelParameters.LevelName))
+        {
+            UnlockLevel();
+        }
+        else LockLevel();
+    }
 
     public void Select()
     {

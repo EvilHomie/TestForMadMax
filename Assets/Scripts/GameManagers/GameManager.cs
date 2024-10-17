@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button _garageBtn;
     [SerializeField] Button _openInventoryBtn;
     [SerializeField] Button _changeLevelsBtn;
-    [SerializeField] Button _closeUpgradesBtn;
+    [SerializeField] Button _closeInventoryBtn;
     [SerializeField] Button _settingsBtn;
 
 
@@ -22,9 +22,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    float _showControllerDelay = 3; // зависит от звука запуска двигателя, а точнее времени набора стартовой скорости
-    bool _playerOnRaid = false;
-    bool _settingsIsopened = false;
+    float _showControllerDelay = 3;
 
     private void Awake()
     {
@@ -32,9 +30,6 @@ public class GameManager : MonoBehaviour
         else Instance = this;
 
     }
-
-    //private void OnEnable() => YandexGame.GetDataEvent += Init;
-    //private void OnDisable() => YandexGame.GetDataEvent -= Init;
 
     void Start()
     {
@@ -47,7 +42,6 @@ public class GameManager : MonoBehaviour
     void Init()
     {
         Canvas.ForceUpdateCanvases();
-        Application.targetFrameRate = 1000;
         TextConstants.SetLanguage();
         SaveLoadManager.Instance.CheckSaveData();
 
@@ -58,38 +52,33 @@ public class GameManager : MonoBehaviour
         InventoryInfoPanelManager.Instance.Init();
         InventoryManager.Instance.Init();
         InventoryUpgradePanelManager.Instance.Init();
-        LevelManager.Instance.Init();
+        
         UIResourcesManager.Instance.Init();
         UINewSchemeManager.Instance.Init();
-        UILevelStatistic.Instance.Init();
+
+        LevelManager.Instance.Init();
+        InRaidManager.Instance.Init();
         AddListenersOnBtns();
 
-        _playerOnRaid = false;
         PlayerVehicleManager.Instance.Init();
         PlayerWeaponManager.Instance.Init();
 
         UIJoystickTouchController.Instance.Init();
         UIWeaponsSwitcher.Instance.Init();
-        GarageBoxManager.Instance.OnPlayerEndRaid();
-        CameraManager.Instance.OnPlayerEndRaid();
-        RaidManager.Instance.OnPlayerEndRaid();
-        PlayerHPManager.Instance.OnPlayerEndRaid();
-        UIEnemyHpPanel.Instance.OnPlayerEndRaid();
+        CameraManager.Instance.Init();
+        PlayerHPManager.Instance.Init();
+        UIEnemyHpPanel.Instance.Init();
 
-        //SwitchMenuElements();
-
-        //ToggleMenu();
         SwitchUIButton(true);
         _settingsBtn.gameObject.SetActive(false);
     }
 
     void AddListenersOnBtns()
     {
-        //_settingsBtn.onClick.AddListener(ToggleMenu);
         _startRaidBtn.onClick.AddListener(OnStartRaid);
         _garageBtn.onClick.AddListener(OnReturnToGarage);
         _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
-        _closeUpgradesBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
+        _closeInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
     }   
 
@@ -98,22 +87,7 @@ public class GameManager : MonoBehaviour
        _UIButtons.SetActive(enableStatus);
     }
 
-    void ToggleMenu()
-    {
-        _settingsIsopened = !_settingsIsopened;
-        if (_settingsIsopened)
-        {
-            SwitchMenuElements();
-            //Time.timeScale = 0;
-            //AudioListener.pause = true;
-        }
-        else
-        {
-            DisableMenuElements();
-            //Time.timeScale = 1;
-            //AudioListener.pause = false;
-        }
-    }
+    
 
     void OnOpenLevels()
     {
@@ -123,64 +97,41 @@ public class GameManager : MonoBehaviour
     public void OnStartRaid()
     {
         SwitchUIButton(false);
-        _playerOnRaid = true;
         _settingsBtn.gameObject.SetActive(true);
         SaveLoadManager.Instance.SaveData();
-        PlayerVehicleManager.Instance.OnPlayerStartRaid(out float startMoveDelay, out float startSpeed, out float reachStartSpeedDuration);
+        
         PlayerWeaponManager.Instance.OnPlayerStartRaid();
 
         UIJoystickTouchController.Instance.ShowControllers(_showControllerDelay);
-        GarageBoxManager.Instance.OnPlayerStartRaid(startMoveDelay);
+        
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
-        RaidManager.Instance.OnPlayerStartRaid(startMoveDelay, startSpeed, reachStartSpeedDuration);
+        InRaidManager.Instance.OnPlayerStartRaid();
         PlayerHPManager.Instance.OnPlayerStartRaid();
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
 
 
-        //DisableMenuElements();
         YandexGame.GameplayStart();
     }
 
     public void OnReturnToGarage()
     {
         SwitchUIButton(true);
-        _playerOnRaid = false;
         _settingsBtn.gameObject.SetActive(false);
         SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();
 
         UIJoystickTouchController.Instance.HideInRaidInterface();
-        GarageBoxManager.Instance.OnPlayerEndRaid();
-        //WeaponsSwitcher.Instance.OnPlayerEndRaid();
+        
         CameraManager.Instance.OnPlayerEndRaid();
-        RaidManager.Instance.OnPlayerEndRaid();
+        InRaidManager.Instance.OnPlayerEndRaid();
         PlayerHPManager.Instance.OnPlayerEndRaid();
         UIEnemyHpPanel.Instance.OnPlayerEndRaid();
+        
 
-        //SwitchMenuElements();
         YandexGame.GameplayStop();
-    }
-
-    void DisableMenuElements()
-    {
-        _startRaidBtn.gameObject.SetActive(false);
-        _garageBtn.gameObject.SetActive(false);
-        _openInventoryBtn.gameObject.SetActive(false);
-        _changeLevelsBtn.gameObject.SetActive(false);
-        _settingsIsopened = false;
-        InventoryManager.Instance.gameObject.SetActive(false);
-        LevelManager.Instance.SelectLevelsWindow.SetActive(false);
-    }
-
-    void SwitchMenuElements()
-    {
-        _startRaidBtn.gameObject.SetActive(!_playerOnRaid);
-        _garageBtn.gameObject.SetActive(_playerOnRaid);
-        _openInventoryBtn.gameObject.SetActive(!_playerOnRaid);
-        _changeLevelsBtn.gameObject.SetActive(!_playerOnRaid);
     }
 }
 

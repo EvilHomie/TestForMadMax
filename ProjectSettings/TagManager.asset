@@ -16,10 +16,10 @@ TagManager:
   - Road
   - RoadBumps
   - VehicleBody
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Obsticle
+  - DestroyedVehicle
+  - MouseDetect
   - 
   - 
   - 

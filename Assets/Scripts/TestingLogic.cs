@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ using YG;
 public class TestingLogic : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _fpsCounter;
+    [SerializeField] TextMeshProUGUI _log;
     [SerializeField] Button _reset;
     [SerializeField] Button _ADD;
     int _fps = 0;
@@ -19,8 +21,15 @@ public class TestingLogic : MonoBehaviour
 
     private void Start()
     {
-        //Debug.LogWarning(FInishStatus.Done);
+        Application.logMessageReceived += ShowMessageOnDisplay;
     }
+
+    private void ShowMessageOnDisplay(string logString, string stackTrace, LogType type)
+    {
+        _log.text = logString +"     " + stackTrace;
+    }
+
+    
 
     void Update()
     {
