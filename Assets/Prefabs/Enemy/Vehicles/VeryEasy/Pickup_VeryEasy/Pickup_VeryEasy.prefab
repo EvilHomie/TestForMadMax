@@ -345,10 +345,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wheels:
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 4570391959623725072}
+  - {fileID: 4819048540687130538}
   - {fileID: 7659177149827869736}
+  - {fileID: 6244031952207845943}
   _wheelsDustPS:
   - {fileID: 8566135979617198174}
   - {fileID: 3532363110785730772}
@@ -428,8 +428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bodyHullHP: 80
   _haveShields: 1
-  _weaponDMGMod: 1.1
-  _weaponFRMod: 1.1
+  _weaponDMGMod: 0.5
+  _weaponFRMod: 0.8
 --- !u!1 &2332917957151434844
 GameObject:
   m_ObjectHideFlags: 0

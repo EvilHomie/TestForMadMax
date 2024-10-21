@@ -107066,7 +107066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isTesting: 0
-  _enableDebug: 1
+  _enableDebug: 0
   _language: 1
   _minPlayerSpeed: 5
   _maxPlayerSpeed: 10
