@@ -36,7 +36,7 @@ public static class TextConstants
     public static string RAID = "Raid";
     public static string GARAGE = "Garage";
     public static string UNLOCKCOST = "UnlockCost";
-    public static string NEWSCHEME = "New SCHEME";
+    public static string NEWSCHEME = "New SCHEME";    
     public static string[] TIPSCOLLECTION =
         {
         "Don't forget to upgrade your equipment in the inventory tab.",
@@ -66,7 +66,8 @@ public static class TextConstants
     public static string PREVIOUS = "PREVIOUS";
     public static string RAIDDONE = "RAID DONE";
     public static string RAIDFAILED = "RAID FAILED";
-
+    public static string WAVEISAPPROACHING = "Wave is approaching";
+    public static string BOSSISAPPROACHING = "Boss is approaching";
     public static void SetLanguage()
     {
         string language = YandexGame.EnvironmentData.language;
@@ -140,6 +141,8 @@ public static class TextConstants
             PREVIOUS = "Назад";
             RAIDDONE = "Пройдено";
             RAIDFAILED = "Неудачно";
+            WAVEISAPPROACHING = "Приближается Волна";
+            BOSSISAPPROACHING = "Приближается Босс";
 
         }
 
