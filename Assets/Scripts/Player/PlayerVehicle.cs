@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerVehicle : MonoBehaviour, IItem
 {
+    [SerializeField] RenderQueue3001 _renderQueue3001;
     [SerializeField] VehicleData _vehicleData;
     [SerializeField] float _shakeIntensityOnStart = 0.5f;
     [SerializeField] float _shakeDelayOnStart = 0.5f;
@@ -32,6 +33,7 @@ public class PlayerVehicle : MonoBehaviour, IItem
 
     private void Start()
     {
+        _renderQueue3001.Init();
         _vehicleEffectsController.Init(_wheels, _wheelsDustPS, false);
     }
 

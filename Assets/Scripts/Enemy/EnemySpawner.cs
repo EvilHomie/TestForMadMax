@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] List<Transform> _enemySpawnPositions;
 
+    int _lastSpawnPosIndex = 0;
+
     List<EnemyVehicleManager> _enemiesInRaidList = new();
 
     float _spawnNewEnemyDelay;
@@ -36,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void Init(int maxEnemyCountInRaid, float spawnNewEnemyDelay, float spawnNewEnemyRepitRate)
     {
+        UIWaveIsApproachingPanel.Instance.Init();
         CancelInvoke();
         _maxEnemyCountInRaidInTime = maxEnemyCountInRaid;
         _spawnNewEnemyDelay = spawnNewEnemyDelay;
@@ -46,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
+
         StopAllCoroutines();
         CancelInvoke();
         ConfigureDataOnStartRaid();
@@ -54,6 +58,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void OnPlayerEndRaid()
     {
+        UIWaveIsApproachingPanel.Instance.HideText();
         StopAllCoroutines();
         CancelInvoke();
         DestroySpawnedEnemies();
@@ -61,6 +66,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnNewWave()
     {
+        UIWaveIsApproachingPanel.Instance.ShowWaveText();
         CancelInvoke();
         _waveSpawnedEnemyCount = 0;
         _waveDestroyedEnemyCount = 0;
@@ -123,9 +129,8 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void OnEnemyObjectDestroyed(EnemyVehicleManager enemy)
+    public void OnPlayerKillEnemy()
     {
-        _enemiesInRaidList.Remove(enemy);
         _waveDestroyedEnemyCount++;
         _totalDestroyedEnemyCount++;
         if (_waveDestroyedEnemyCount >= _waveEnemiesCount)
@@ -141,8 +146,28 @@ public class EnemySpawner : MonoBehaviour
                 CancelInvoke();
             }
         }
+    }
 
-        if (_totalDestroyedEnemyCount >= _totalEnemiesCount)
+    public void OnEnemyObjectDestroyed(EnemyVehicleManager enemy)
+    {
+        _enemiesInRaidList.Remove(enemy);
+        //_waveDestroyedEnemyCount++;
+        //_totalDestroyedEnemyCount++;
+        //if (_waveDestroyedEnemyCount >= _waveEnemiesCount)
+        //{
+        //    _currentWaveNumber++;
+        //    if (_currentWaveNumber <= _totalWaveCount)
+        //    {
+        //        SpawnNewWave();
+        //    }
+        //    else
+        //    {
+        //        //Debug.LogWarning("")
+        //        CancelInvoke();
+        //    }
+        //}
+
+        if (_totalDestroyedEnemyCount >= _totalEnemiesCount && _enemiesInRaidList.Count == 0)
         {
             if (_bossIsSpawned)
             {
@@ -171,6 +196,19 @@ public class EnemySpawner : MonoBehaviour
         }
 
         int randomPosIndex = Random.Range(0, accessibleEnemySpawnPositions.Count);
+
+        if (randomPosIndex == _lastSpawnPosIndex)
+        {
+            if (randomPosIndex == accessibleEnemySpawnPositions.Count - 1)
+            {
+                randomPosIndex--;
+            }
+            if (randomPosIndex == 0)
+            {
+                randomPosIndex++;
+            }
+        }
+        _lastSpawnPosIndex = randomPosIndex;
         Vector3 spwanPos = accessibleEnemySpawnPositions[randomPosIndex].transform.position;
 
         int randomIndex = Random.Range(0, _selectedWaveSimpleEnemies.Count);
@@ -192,6 +230,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnBoss()
     {
+        UIWaveIsApproachingPanel.Instance.ShowBossText();
         int randomPosIndex = Random.Range(0, _enemySpawnPositions.Count);
         Vector3 spwanPos = _enemySpawnPositions[randomPosIndex].transform.position;
 

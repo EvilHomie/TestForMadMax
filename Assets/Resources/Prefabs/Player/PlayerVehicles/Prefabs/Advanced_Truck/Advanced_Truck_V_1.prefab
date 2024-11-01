@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e8e204596715d47ad6ebeab1bedd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderQueue3001: {fileID: 1600305522663505008}
   _vehicleData: {fileID: 11400000, guid: 8664fe69a15391f458ec6670fc7fe59b, type: 2}
   _shakeIntensityOnStart: 0.5
   _shakeDelayOnStart: 0.5

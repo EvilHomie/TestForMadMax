@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     }
 
     public void Init()
-    {
+    {        
         //LevelsData levelsDataCopy = Instantiate(_levelsData);
         SelectLevelWindow.Instance.Init(_levelsData, _UILevelInfoPF);
         _selectLevelsWindow = SelectLevelWindow.Instance.transform.gameObject;

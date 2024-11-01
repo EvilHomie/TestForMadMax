@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class RenderQueue3001 : MonoBehaviour
 {
-    private void Start()
+    public void Init()
     {
         GetComponent<Renderer>().material.renderQueue = 3000;
+    }
+
+    private void OnEnable()
+    {
+        Init();
     }
 }

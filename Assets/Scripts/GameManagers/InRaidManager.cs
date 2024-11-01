@@ -6,8 +6,8 @@ public class InRaidManager : MonoBehaviour
     public static InRaidManager Instance;
 
     [SerializeField] MeshRenderer _mainRoadRenderer;
-    [SerializeField] int _spawnNewEnemyDelay;
-    [SerializeField] int _spawnNewEnemyRepitRate;
+    [SerializeField] float _spawnNewEnemyDelay;
+    [SerializeField] float _spawnNewEnemyRepitRate;
     [SerializeField] int _maxEnemyCountInRaid;
 
     float _worldMoveSpeed = 0f;
@@ -108,6 +108,10 @@ public class InRaidManager : MonoBehaviour
             MetricaSender.SendLevelStatus(LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
             FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
+        }
+        else
+        {
+            EnemySpawner.Instance.OnPlayerKillEnemy();
         }
     }
     public void OnEnemyEscaped(EnemyVehicleManager enemy)
