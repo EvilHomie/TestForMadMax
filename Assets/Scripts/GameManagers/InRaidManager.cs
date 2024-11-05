@@ -6,9 +6,12 @@ public class InRaidManager : MonoBehaviour
     public static InRaidManager Instance;
 
     [SerializeField] MeshRenderer _mainRoadRenderer;
+    [SerializeField] float _speedMod;
+    //[SerializeField] MeshRenderer _BG;
     [SerializeField] float _spawnNewEnemyDelay;
     [SerializeField] float _spawnNewEnemyRepitRate;
     [SerializeField] int _maxEnemyCountInRaid;
+    //[SerializeField] float _mod;
 
     float _worldMoveSpeed = 0f;
     bool _onRaid = false;
@@ -45,7 +48,8 @@ public class InRaidManager : MonoBehaviour
 
     void MoveMainRoad()
     {
-        _mainRoadRenderer.material.mainTextureOffset += GameConfig.Instance.MoveRoadMod * _worldMoveSpeed * Time.deltaTime * Vector2.left;
+        _mainRoadRenderer.material.mainTextureOffset += _speedMod * _worldMoveSpeed * Time.deltaTime * Vector2.left;
+        //_BG.material.mainTextureOffset -= GameConfig.Instance.MoveRoadMod * _worldMoveSpeed * Time.deltaTime * Vector2.left / _mod;
     }
 
     public void OnPlayerStartRaid()

@@ -59,7 +59,7 @@ MeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
@@ -103,11 +103,7 @@ MonoBehaviour:
   _detachDirection: 1
   _detachForceValue: 250
   _detachTorqueValue: 15
-  _onDetachedTranslateSpeed: 200
   _onAditionCollideForce: 50
-  _vehicleBodyLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!65 &4136869222800309352
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance;
 
-    [SerializeField] List<Transform> _enemySpawnPositions;
+    [SerializeField] List<EnemySpawnPos> _enemySpawnPositions;
 
     int _lastSpawnPosIndex = 0;
 
@@ -29,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
     //int _spawnedWavesCount = 0;
     LevelParameters _levelParametersCopy;
     List<WaveEnemie> _selectedWaveSimpleEnemies;
+
+
 
     void Awake()
     {
@@ -62,6 +64,7 @@ public class EnemySpawner : MonoBehaviour
         StopAllCoroutines();
         CancelInvoke();
         DestroySpawnedEnemies();
+        _enemySpawnPositions.ForEach(position => { position.ResetStatusImmediately(); });
     }
 
     public void SpawnNewWave()
@@ -183,34 +186,49 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnSimpleEnemy()
+    Vector3 GetSpawnPos()
     {
-        List<Transform> accessibleEnemySpawnPositions = null;
+        List<EnemySpawnPos> accessibleEnemySpawnPositions = _enemySpawnPositions.FindAll(pos => !pos.ReservedStatus);
         if (OldHangarManager.Instance.gameObject.activeSelf)
         {
-            accessibleEnemySpawnPositions = _enemySpawnPositions.FindAll(pos => pos.position.x > 0);
+            accessibleEnemySpawnPositions = accessibleEnemySpawnPositions.FindAll(pos => pos.transform.position.x > 0);
         }
-        else
-        {
-            accessibleEnemySpawnPositions = _enemySpawnPositions;
-        }
-
         int randomPosIndex = Random.Range(0, accessibleEnemySpawnPositions.Count);
+        EnemySpawnPos spwanPos = accessibleEnemySpawnPositions[randomPosIndex];
 
-        if (randomPosIndex == _lastSpawnPosIndex)
-        {
-            if (randomPosIndex == accessibleEnemySpawnPositions.Count - 1)
-            {
-                randomPosIndex--;
-            }
-            if (randomPosIndex == 0)
-            {
-                randomPosIndex++;
-            }
-        }
-        _lastSpawnPosIndex = randomPosIndex;
-        Vector3 spwanPos = accessibleEnemySpawnPositions[randomPosIndex].transform.position;
+        spwanPos.ChangeStatus();
+        return spwanPos.transform.position;
+    }
 
+    void SpawnSimpleEnemy()
+    {
+        //List<EnemySpawnPos> accessibleEnemySpawnPositions = null;
+        //if (OldHangarManager.Instance.gameObject.activeSelf)
+        //{
+        //    accessibleEnemySpawnPositions = _enemySpawnPositions.FindAll(pos => pos.transform.position.x > 0);
+        //}
+        //else
+        //{
+        //    accessibleEnemySpawnPositions = _enemySpawnPositions;
+        //}
+
+        //int randomPosIndex = Random.Range(0, accessibleEnemySpawnPositions.Count);
+
+        //if (randomPosIndex == _lastSpawnPosIndex)
+        //{
+        //    if (randomPosIndex == accessibleEnemySpawnPositions.Count - 1)
+        //    {
+        //        randomPosIndex--;
+        //    }
+        //    if (randomPosIndex == 0)
+        //    {
+        //        randomPosIndex++;
+        //    }
+        //}
+        //_lastSpawnPosIndex = randomPosIndex;
+        //Vector3 spwanPos = accessibleEnemySpawnPositions[randomPosIndex].transform.position;
+
+        Vector3 spwanPos = GetSpawnPos();
         int randomIndex = Random.Range(0, _selectedWaveSimpleEnemies.Count);
         WaveEnemie selectedWave = _selectedWaveSimpleEnemies[randomIndex];
         EnemyType enemyType = selectedWave.enemyType;

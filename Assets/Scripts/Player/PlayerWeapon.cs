@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerWeapon : WeaponLogic, IItem
 {
     [SerializeField] WeaponData _weaponData;    
-    [SerializeField] LineRenderer _targetMarkerLine;
     [SerializeField] GameObject _targetMarker;
     [SerializeField] Vector3 _observerPos;    
     [SerializeField] float _shakeOnShootIntensity = 0.2f;
@@ -19,8 +18,6 @@ public class PlayerWeapon : WeaponLogic, IItem
 
     public override float RotationSpeed => _weaponData.rotationSpeedByLvl * _weaponData.rotationSpeedCurLvl;
     public Vector3 ObserverPos => _observerPos;
-    public LineRenderer TargetMarkerLine => _targetMarkerLine;
-
     public GameObject TargetMarker => _targetMarker;
     public FirePointManager[] FirePointsManagers => _firePointManagers;
 
