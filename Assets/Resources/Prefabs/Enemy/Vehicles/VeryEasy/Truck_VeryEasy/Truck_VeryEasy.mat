@@ -25,10 +25,11 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _RECEIVE_SHADOWS_OFF
   - _SPECULAR_COLOR
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_LightmapFlags: 6
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
@@ -118,7 +119,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _Shininess: 0
     - _Smoothness: 0.3
     - _SmoothnessSource: 0
@@ -131,8 +132,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.078125}
-    - _Color: {r: 1, g: 1, b: 1, a: 0.078125}
+    - _BaseColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    - _Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.3}
   m_BuildTextureStacks: []

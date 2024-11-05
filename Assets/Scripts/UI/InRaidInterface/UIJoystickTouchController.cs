@@ -28,6 +28,8 @@ public class UIJoystickTouchController : MonoBehaviour
     public void Init()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
+        _joystick.SetActive(false);
+        _shootBtn.SetActive(false);
         HideInRaidInterface();
 
         if (YandexGame.EnvironmentData.isDesktop)
@@ -40,17 +42,22 @@ public class UIJoystickTouchController : MonoBehaviour
             }
 
 
-            _joystick.SetActive(false);
-            _shootBtn.SetActive(false);
+            //_joystick.SetActive(false);
+            //_shootBtn.SetActive(false);
         }
         else
-        {            
+        {
+            _PCVersion = false;
             _mouseIconForPC.SetActive(false);
         }
+        //else
+        //{            
+        //    _mouseIconForPC.SetActive(false);
+        //}
     }
     private void Update()
     {
-        if (!_PCVersion) return;
+        //if (!_PCVersion) return;
         if (!_controllerIsAcive) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -60,6 +67,13 @@ public class UIJoystickTouchController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             PlayerWeaponManager.Instance.StopShoot();
+        }
+
+        if (_PCVersion) return;
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+            PlayerWeaponManager.Instance.RotateCameraByFinger(-touchDeltaPosition);
         }
 
     }
@@ -100,16 +114,27 @@ public class UIJoystickTouchController : MonoBehaviour
         }
     }
 
-    public void HideInRaidInterface()
+    void HideInRaidInterface()
     {
         StopAllCoroutines();
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
-        _controllerIsAcive = false;
+        
     }
 
-    public void ShowControllers(float delay)
+    public void OnStartRaid(float delay)
+    {
+        _controllerIsAcive = true;
+        ShowControllers(delay);
+    }
+    public void OnPlayerEndRaid()
+    {
+        _controllerIsAcive = false;
+        HideInRaidInterface();
+    }
+
+    void ShowControllers(float delay)
     {
         if (YandexGame.EnvironmentData.isDesktop)
         {

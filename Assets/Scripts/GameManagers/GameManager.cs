@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         
         PlayerWeaponManager.Instance.OnPlayerStartRaid();
 
-        UIJoystickTouchController.Instance.ShowControllers(_showControllerDelay);
+        UIJoystickTouchController.Instance.OnStartRaid(_showControllerDelay);
         
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();
 
-        UIJoystickTouchController.Instance.HideInRaidInterface();
+        UIJoystickTouchController.Instance.OnPlayerEndRaid();
         
         CameraManager.Instance.OnPlayerEndRaid();
         InRaidManager.Instance.OnPlayerEndRaid();

@@ -6,6 +6,7 @@ public class OldHangarManager : MonoBehaviour
     public static OldHangarManager Instance;
 
     [SerializeField] Animation _animation;
+    [SerializeField] float _speed;
     
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class OldHangarManager : MonoBehaviour
         yield return new WaitForSeconds(startMoveDelay);
         while (transform.position.x > -15000)
         {
-            transform.position += 170 * InRaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left;
+            transform.position += _speed * InRaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left;
             yield return null;
         }
         gameObject.SetActive(false);
