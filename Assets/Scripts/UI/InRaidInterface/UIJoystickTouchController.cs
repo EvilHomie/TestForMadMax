@@ -73,7 +73,7 @@ public class UIJoystickTouchController : MonoBehaviour
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-            PlayerWeaponManager.Instance.RotateCameraByFinger(-touchDeltaPosition);
+            PlayerWeaponManager.Instance.RotateCameraByFinger(touchDeltaPosition);
         }
 
     }

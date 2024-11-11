@@ -135,8 +135,14 @@ public class SaveLoadManager : MonoBehaviour
     {
         PlayerData.Instance.PlayerItemsData = new();
 
+
         foreach (var weaponData in YandexGame.savesData.weaponsData)
         {
+            if (!GameAssets.Instance.CheckExistings(weaponData.deffWeaponName))
+            {
+                ResetProgress(_deffaultItemsNames);
+                return ;
+            }
             WeaponData newWeaponData = ScriptableObject.CreateInstance<WeaponData>();
             newWeaponData.SetData(weaponData);
             PlayerData.Instance.PlayerItemsData.Add(newWeaponData);
@@ -144,6 +150,11 @@ public class SaveLoadManager : MonoBehaviour
 
         foreach (var vehicleData in YandexGame.savesData.vehiclesData)
         {
+            if (!GameAssets.Instance.CheckExistings(vehicleData.deffVehicleName))
+            {
+                ResetProgress(_deffaultItemsNames);
+                return;
+            }
             VehicleData newVehicleData = ScriptableObject.CreateInstance<VehicleData>();
             newVehicleData.SetData(vehicleData);
             PlayerData.Instance.PlayerItemsData.Add(newVehicleData);
@@ -151,6 +162,11 @@ public class SaveLoadManager : MonoBehaviour
 
         foreach (var schemeName in YandexGame.savesData.schemesNames)
         {
+            if (!GameAssets.Instance.CheckExistings(schemeName))
+            {
+                ResetProgress(_deffaultItemsNames);
+                return;
+            }
             SchemeData schemeData = GameAssets.Instance.GameItems.SchemeData.Find(scheme => scheme.SchemeName == schemeName);
             PlayerData.Instance.PlayerItemsData.Add((IItemData)schemeData);
         }
@@ -191,7 +207,7 @@ public class SaveLoadManager : MonoBehaviour
                 return true;
             }
         }
-        else return true;        
+        else return true;
     }
 }
 

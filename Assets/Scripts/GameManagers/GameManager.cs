@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         Canvas.ForceUpdateCanvases();
         TextConstants.SetLanguage();
+        GameAssets.Instance.Init();
         SaveLoadManager.Instance.CheckSaveData();
 
         _startRaidBtnText.text = TextConstants.RAID;
