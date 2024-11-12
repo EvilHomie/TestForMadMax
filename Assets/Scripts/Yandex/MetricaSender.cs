@@ -32,6 +32,15 @@ public class MetricaSender
         YandexMetrica.Send("LevelsPassing", eventParams);
     }
 
+    public static void SendTutorialData(string eventName)
+    {
+        var eventParams = new Dictionary<string, string>
+        {
+             { "TutorialPassing", eventName }
+        };
+        YandexMetrica.Send("TutorialPassing", eventParams);
+    }
+
 }
 
 public enum LevelStatus

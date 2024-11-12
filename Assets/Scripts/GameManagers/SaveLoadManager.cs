@@ -7,7 +7,6 @@ public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
     string[] _deffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Dual_Cannon_V_1_Scheme", "Simple_Truck_V_1", "Advanced_Truck_V_1_Scheme" };
-    string[] _TESTdeffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Simple_Truck_V_1", "Advanced_Truck_V_1" };
 
     [SerializeField] bool resetProgressRequired = false;
 
@@ -17,11 +16,6 @@ public class SaveLoadManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-
-    //private void Start()
-    //{
-    //    CompareVersions();
-    //}
 
     void ResetProgress(string[] ItemsNames)
     {
@@ -35,7 +29,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         foreach (var itemName in ItemsNames)
         {
-            PlayerVehicle playerVehicle = GameAssets.Instance.GameItems.PlayerVehicles.Find(weapon => weapon.name == itemName);
+            PlayerVehicle playerVehicle = GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == itemName);
             if (playerVehicle == null) continue;
             PlayerData.Instance.PlayerItemsData.Add(Instantiate((VehicleData)playerVehicle.GetItemData()));
         }
@@ -55,18 +49,12 @@ public class SaveLoadManager : MonoBehaviour
         PlayerData.Instance.LastSelectedLevelName = "1-1";
         PlayerData.Instance.UnlockedLevelsNames = new() { "1-1" };
         PlayerData.Instance.AvailableResources = new() { { ResourcesType.Сopper, 0 }, { ResourcesType.Wires, 0 }, { ResourcesType.ScrapMetal, 0 } };
-        UIResourcesManager.Instance.AddResources(0, 15, 30);
+        UIResourcesManager.Instance.AddResources(0, 20, 55);
+        YandexGame.savesData.tutorilaIsComplete = false;
 
         YandexGame.savesData.idSave = 1;
         SaveData();
 
-    }
-
-    void UnlockAllData()
-    {
-        ResetProgress(_TESTdeffaultItemsNames);
-        UIResourcesManager.Instance.AddResources(3000, 3000, 3000);
-        PlayerData.Instance.UnlockedLevelsNames = new() { "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9", "2-10" };
     }
 
     public void SaveData()
@@ -115,19 +103,15 @@ public class SaveLoadManager : MonoBehaviour
 
     public void CheckSaveData()
     {
+        //ResetProgress(_deffaultItemsNames);
         if (YandexGame.savesData.savesIsClear)
         {
             ResetProgress(_deffaultItemsNames);
-            return;
-        }
-
-        if (CheckVersionsCompatibility())
-        {
-            LoadSaveData();
         }
         else
         {
-            ResetProgress(_deffaultItemsNames);
+            YandexGame.savesData.tutorilaIsComplete = true;
+            LoadSaveData();
         }
     }
 
@@ -141,7 +125,7 @@ public class SaveLoadManager : MonoBehaviour
             if (!GameAssets.Instance.CheckExistings(weaponData.deffWeaponName))
             {
                 ResetProgress(_deffaultItemsNames);
-                return ;
+                return;
             }
             WeaponData newWeaponData = ScriptableObject.CreateInstance<WeaponData>();
             newWeaponData.SetData(weaponData);
@@ -307,107 +291,3 @@ public class VehicleDataForSave
         maxWeaponsCount = vehicleData.maxWeaponsCount;
     }
 }
-
-
-
-
-//  Версия через PlayerPrefs
-//public void SaveData()
-//    {
-//        List<VehicleData> vehiclesData = new();
-//        List<WeaponData> weaponsData = new();
-//        List<string> schemesNames = new();
-
-//        foreach (var item in PlayerData.Instance.PlayerItemsData)
-//        {
-//            if (item is WeaponData WData) weaponsData.Add(WData);
-//            else if (item is VehicleData VData) vehiclesData.Add(VData);
-//            else if (item is SchemeData WSData) schemesNames.Add(WSData.SchemeName);
-//        }
-
-//        List<string> weaponsDataAsStrings = new();
-//        List<string> vehiclesDataAsStrings = new();
-
-//        foreach (var item in weaponsData)
-//        {
-//            string stringData = JsonConvert.SerializeObject(item, Formatting.Indented);
-//            weaponsDataAsStrings.Add(stringData);
-//        }
-//        PlayerPrefs.SetString("SavedWeaponsData", JsonConvert.SerializeObject(weaponsDataAsStrings, Formatting.Indented));
-
-//        foreach (var item in vehiclesData)
-//        {
-//            string stringData = JsonConvert.SerializeObject(item, Formatting.Indented);
-//            vehiclesDataAsStrings.Add(stringData);
-//        }
-//        PlayerPrefs.SetString("SavedVehiclesData", JsonConvert.SerializeObject(vehiclesDataAsStrings, Formatting.Indented));
-
-//        PlayerPrefs.SetString("SavedSchemeNames", JsonConvert.SerializeObject(schemesNames, Formatting.Indented));
-
-//        string savedResources = JsonConvert.SerializeObject(PlayerData.Instance.AvailableResources);
-//        PlayerPrefs.SetString("SavedResourcesData", savedResources);
-
-//        string savedEquipedItems = JsonConvert.SerializeObject(PlayerData.Instance.EquipedItems);
-//        PlayerPrefs.SetString("SavedEquipedItems", savedEquipedItems);
-
-//        string lastselectedLevelName = PlayerData.Instance.LastSelectedLevelName;
-//        PlayerPrefs.SetString("LastselectedLevelName", lastselectedLevelName);
-
-//        string unlockedLevelsNames = JsonConvert.SerializeObject(PlayerData.Instance.UnlockedLevelsNames);
-//        PlayerPrefs.SetString("UnlockedLevelsNames", unlockedLevelsNames);
-
-//        CustomLogDebuger.Log("DATA SAVED");
-//    }
-
-//    public void LoadSaveData()
-//    {
-//        if (!PlayerPrefs.HasKey("SavedWeaponsData") || !PlayerPrefs.HasKey("SavedVehiclesData") || !PlayerPrefs.HasKey("SavedResourcesData") || !PlayerPrefs.HasKey("SavedEquipedItems"))
-//        {
-//            ResetProgress(_deffaultItemsNames);
-//            return;
-//        }
-
-//        PlayerData.Instance.PlayerItemsData = new();
-
-
-
-//        List<string> weaponsDataAsStrings = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedWeaponsData"));
-//        foreach (var weaponStringData in weaponsDataAsStrings)
-//        {            
-//            WeaponData weaponData = ScriptableObject.CreateInstance<WeaponData>();
-//            JsonUtility.FromJsonOverwrite(weaponStringData, weaponData);
-//            PlayerData.Instance.PlayerItemsData.Add(weaponData);
-//        }
-//        CustomLogDebuger.Log("WEAPONS LOADED");
-
-//        List<string> vehiclesDataAsStrings = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedVehiclesData"));
-//        foreach (var vehicleStringData in vehiclesDataAsStrings)
-//        {
-//            VehicleData vehicleData = ScriptableObject.CreateInstance<VehicleData>();
-//            JsonUtility.FromJsonOverwrite(vehicleStringData, vehicleData);
-//            PlayerData.Instance.PlayerItemsData.Add(vehicleData);
-//        }
-//        CustomLogDebuger.Log("VEHICLES LOADED");
-
-
-
-//        List<string> schemeNames = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("SavedSchemeNames"));
-//        foreach (var schemeName in schemeNames)
-//        {
-//            SchemeData schemeData = GameAssets.Instance.GameItems.SchemeData.Find(scheme => scheme.SchemeName == schemeName);
-//            PlayerData.Instance.PlayerItemsData.Add((IItemData)schemeData);
-//        }
-//        CustomLogDebuger.Log("WEAPON SCHEMES LOADED");
-
-//        PlayerData.Instance.AvailableResources = JsonConvert.DeserializeObject<Dictionary<ResourcesType, int>>(PlayerPrefs.GetString("SavedResourcesData"));
-//        CustomLogDebuger.Log("RESOURCES LOADED");
-
-//        PlayerData.Instance.EquipedItems = JsonConvert.DeserializeObject<Dictionary<int, string>>(PlayerPrefs.GetString("SavedEquipedItems"));
-//        CustomLogDebuger.Log("EquipedItems LOADED");
-
-//        PlayerData.Instance.LastSelectedLevelName = PlayerPrefs.GetString("LastselectedLevelName");
-
-//        PlayerData.Instance.UnlockedLevelsNames = JsonConvert.DeserializeObject<List<string>>(PlayerPrefs.GetString("UnlockedLevelsNames"));
-
-//        CustomLogDebuger.Log("LevelsData LOADED");
-//    }

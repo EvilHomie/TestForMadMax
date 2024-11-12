@@ -38,6 +38,8 @@ public class InRaidManager : MonoBehaviour
         OldHangarManager.Instance.OnPlayerEndRaid();
         UILevelStatistic.Instance.Init();
         EnemySpawner.Instance.Init(_maxEnemyCountInRaid, _spawnNewEnemyDelay, _spawnNewEnemyRepitRate);
+        UIComboCounterManager.Instance.Init();
+        FinishLevelManager.Instance.Init();
     }
 
 
@@ -61,6 +63,7 @@ public class InRaidManager : MonoBehaviour
         OldHangarManager.Instance.OnPlayerStartRaid(startMoveDelay);
         StartCoroutine(AccelerationMoveSpeed(startMoveDelay, fullSpeed, reachFullSpeedDuration));
         EnemySpawner.Instance.OnPlayerStartRaid();
+        UIComboCounterManager.Instance.OnPlayerStartRaid();
         MetricaSender.SendLevelStatus(LevelStatus.Start);
     }
 
@@ -82,6 +85,7 @@ public class InRaidManager : MonoBehaviour
         _worldMoveSpeed = 0;
         OldHangarManager.Instance.OnPlayerEndRaid();
         EnemySpawner.Instance.OnPlayerEndRaid();
+        UIComboCounterManager.Instance.OnPlayerEndRaid();
     }
 
     IEnumerator AccelerationMoveSpeed(float startMoveDelay, float speed, float reachSpeedDuration)
@@ -101,35 +105,42 @@ public class InRaidManager : MonoBehaviour
         if (!_onRaid) return;
         EnemySpawner.Instance.OnEnemyObjectDestroyed(enemy);
     }
+    public void OnEnemyEscaped(EnemyVehicleManager enemy)
+    {
+        if (!_onRaid) return;
+        EnemySpawner.Instance.OnEnemyObjectDestroyed(enemy);
+        CheckRaidCompleteStatus();
+    }
 
     public void OnPlayerKillEnemy()
+    {
+        UIComboCounterManager.Instance.OnEnemyKilled();
+        CheckRaidCompleteStatus();
+    }
+
+    void CheckRaidCompleteStatus()
     {
         _killedEnemiesCount++;
 
         if (_killedEnemiesCount >= _enemyTotalCountOnLevel)
         {
             _onRaid = false;
-            MetricaSender.SendLevelStatus(LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
             FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
+            SaveLoadManager.Instance.SaveData();
         }
         else
         {
             EnemySpawner.Instance.OnPlayerKillEnemy();
         }
     }
-    public void OnEnemyEscaped(EnemyVehicleManager enemy)
-    {
-        if (!_onRaid) return;
-        EnemySpawner.Instance.OnEnemyObjectDestroyed(enemy);
-        OnPlayerKillEnemy();
-    }
+     
 
     public void OnPLayerDie()
     {
         StartCoroutine(ChangeSpeedOnDie());
         EnemySpawner.Instance.OnPLayerDie();
-        MetricaSender.SendLevelStatus(LevelStatus.Failed);
+        FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: false);
     }
 
     IEnumerator ChangeSpeedOnDie()

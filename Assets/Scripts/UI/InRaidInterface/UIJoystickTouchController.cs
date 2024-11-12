@@ -6,9 +6,9 @@ public class UIJoystickTouchController : MonoBehaviour
 {
     public static UIJoystickTouchController Instance;
 
-    [SerializeField] RectTransform _joystickArea;
-    [SerializeField] GameObject _joystick;
-    [SerializeField] GameObject _shootBtn;
+    //[SerializeField] RectTransform _joystickArea;
+    //[SerializeField] GameObject _joystick;
+    //[SerializeField] GameObject _shootBtn;
     [SerializeField] Transform[] _weaponIcons;
 
     [SerializeField] GameObject _mouseIconForPC;
@@ -28,8 +28,8 @@ public class UIJoystickTouchController : MonoBehaviour
     public void Init()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        _joystick.SetActive(false);
-        _shootBtn.SetActive(false);
+        //_joystick.SetActive(false);
+        //_shootBtn.SetActive(false);
         HideInRaidInterface();
 
         if (YandexGame.EnvironmentData.isDesktop)
@@ -91,7 +91,7 @@ public class UIJoystickTouchController : MonoBehaviour
     public void OnStopRotation()
     {
         _isRotating = false;
-        _joystickPosition = _joystickArea.anchoredPosition = Vector2.zero;
+        //_joystickPosition = _joystickArea.anchoredPosition = Vector2.zero;
     }
 
     public void OnPressShootBtn()

@@ -22,4 +22,5 @@ MonoBehaviour:
   - waveEnemies:
     - enemyType: 3
       count: 5
+  _blockedEnemiesLinesInGameZone: 0100000002000000
   _boss: {fileID: 0}

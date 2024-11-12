@@ -1,5 +1,5 @@
 {
-  "idSave": 2,
+  "idSave": 7,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,7 +11,7 @@
     false
   ],
   "savesIsClear": false,
-  "savedVerion": "0.0.28",
+  "savedVerion": "0.0.29",
   "weaponsData": [
     {
       "deffWeaponName": "Simple_Cannon_V_1",
@@ -58,8 +58,8 @@
   ],
   "availableResources": {
     "Сopper": 0,
-    "Wires": 15,
-    "ScrapMetal": 30
+    "Wires": 20,
+    "ScrapMetal": 55
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
@@ -68,5 +68,9 @@
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
     "1-1"
+  ],
+  "tutorilaIsComplete": true,
+  "completedTutorialStages": [
+    1
   ]
 }

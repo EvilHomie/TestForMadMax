@@ -35,5 +35,11 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler
     {
         if (_item == null) return;
         InventoryManager.Instance.OnSelectInventoryItem(_item);
+
+        if (_item as WeaponData)
+        {
+            TutorialManager.Instance.TryConfirmStage(StageName.FirstOpenInventory);
+        }
+
     }
 }

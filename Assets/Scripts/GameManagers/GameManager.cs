@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         YandexGame.GameReadyAPI();
         //YandexGame.EnvironmentData.isDesktop = false;
         Init();
+
     }
 
 
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         _garageBtnText.text = TextConstants.GARAGE;
         _openInventoryBtnText.text = TextConstants.INVENTORY;
 
+        AudioManager.Instance.Init();
         InventoryInfoPanelManager.Instance.Init();
         InventoryManager.Instance.Init();
         InventoryUpgradePanelManager.Instance.Init();
@@ -72,14 +74,27 @@ public class GameManager : MonoBehaviour
 
         SwitchUIButton(true);
         _settingsBtn.gameObject.SetActive(false);
+
+        TutorialManager.Instance.Init();
     }
 
     void AddListenersOnBtns()
     {
-        _startRaidBtn.onClick.AddListener(OnStartRaid);
+        _startRaidBtn.onClick.AddListener(delegate
+        { 
+            OnStartRaid();           
+            TutorialManager.Instance.TryConfirmStage(StageName.FirstRaidLaunch);
+        });
         _garageBtn.onClick.AddListener(OnReturnToGarage);
-        _openInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnOpenInventory(); });
-        _closeInventoryBtn.onClick.AddListener(delegate { InventoryManager.Instance.OnCloseInventory(); });
+        _openInventoryBtn.onClick.AddListener(delegate
+        {
+            InventoryManager.Instance.OnOpenInventory();
+        });
+        _closeInventoryBtn.onClick.AddListener(delegate
+        {
+            InventoryManager.Instance.OnCloseInventory();
+            SaveLoadManager.Instance.SaveData();
+        });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
     }   
 

@@ -54,7 +54,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
             _rigidbody.transform.position = new(transform.position.x, _rigidbody.transform.position.y, transform.position.z);
             _lastBodyZPos = transform.position.z;
 
-            if (!_gameZoneIsReached && Vector3.Distance(transform.position, _reservedPosInEnemyGameZone.transform.position) <= 100)
+            if (!_gameZoneIsReached && Vector3.Distance(transform.position, _reservedPosInEnemyGameZone.transform.position) <= 500)
             {
                 _gameZoneIsReached = true;
                 _navMeshAgent.speed = _enemyVehicleManager.EnemyCharacteristics.VehicleSlideSpeed;
@@ -168,8 +168,9 @@ public class EnemyVehicleMovementController : MonoBehaviour
         CancelInvoke();
         _reservedPosInEnemyGameZone.IsReserved = false;
         _navMeshAgent.SetDestination(EnemyEscapeZone.Instance.GetRandomEscapePos());
+        _navMeshAgent.speed = _enemyVehicleManager.EnemyCharacteristics.VehicleSlideSpeed * 2;
         yield return null;
-        while (_navMeshAgent.remainingDistance >= 100)
+        while (_navMeshAgent.remainingDistance >= 500)
         {
             yield return null;
         }

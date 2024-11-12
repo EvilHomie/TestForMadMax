@@ -29,6 +29,8 @@ namespace YG
         public Dictionary<int, string> equipedItems = new();
         public string lastSelectedLevelName = null;
         public List<string> unlockedLevelsNames = new();
+        public bool tutorilaIsComplete = false;
+        public List<StageName> completedTutorialStages = new();
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 

@@ -21,7 +21,7 @@ public class FinishLevelManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    private void Start()
+    public void Init()
     {
         _blackoutImage.gameObject.SetActive(false);
         _levelStatusText.transform.parent.gameObject.SetActive(false);
@@ -31,11 +31,23 @@ public class FinishLevelManager : MonoBehaviour
 
     public void OnFinishLevel(bool isSuccessfully)
     {
-        StartCoroutine(OnLevelFinishLogic());
-        ShowLevelStatusPanel(isSuccessfully);
+        StartCoroutine(OnLevelFinishLogic(isSuccessfully));
+        ShowLevelStatusPanel(isSuccessfully);        
     }
 
-    IEnumerator OnLevelFinishLogic()
+    void AditionActionsOnFinishLevel(bool isSuccessfully)
+    {
+        if (isSuccessfully)
+        {            
+            TutorialManager.Instance.TryEnableStage(StageName.ShowLevelStatisticPanel);
+        }
+        else
+        {
+            //TutorialManager.Instance.TryEnableStage(StageName.FirstLevelFailed);
+        }
+    }
+
+    IEnumerator OnLevelFinishLogic(bool isSuccessfully)
     {
         yield return new WaitForSeconds(_blackoutDelay);
         float t = 0;
@@ -50,13 +62,24 @@ public class FinishLevelManager : MonoBehaviour
         }
         UILevelStatistic.Instance.ShowStatistic();
         GameManager.Instance.OnReturnToGarage();
+        AditionActionsOnFinishLevel(isSuccessfully);
     }
 
-    public void OnCloseLevelStatisicAndReturnInGarage()
+    public void OnCloseLevelStatisicAndOpenInventory()
     {
         _blackoutImage.gameObject.SetActive(false);
         _levelStatusText.transform.parent.gameObject.SetActive(false);
-        YandexGame.FullscreenShow();
+        TutorialManager.Instance.TryConfirmStage(StageName.FirstLevelCompleted);
+
+        if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
+        {
+            _viewingAdsYG.customEvents.CloseAd.AddListener(OpenInventoryOnCloseAD);
+            YandexGame.FullscreenShow();
+        }
+        else
+        {            
+            InventoryManager.Instance.OnOpenInventory();
+        }
     }
 
     public void OnCloseLevelStatisicAndStartNewRaid()
@@ -82,6 +105,13 @@ public class FinishLevelManager : MonoBehaviour
         _viewingAdsYG.customEvents.CloseAd.RemoveListener(StartNewRaidOnCloseAD);
     }
 
+    void OpenInventoryOnCloseAD()
+    {
+        InventoryManager.Instance.OnOpenInventory();
+        //Debug.Log("NEW RAID AFTER AD");
+        _viewingAdsYG.customEvents.CloseAd.RemoveListener(OpenInventoryOnCloseAD);
+    }
+
     void OnAdClose()
     {
         AudioManager.Instance.EnableMasterSound();
@@ -97,11 +127,13 @@ public class FinishLevelManager : MonoBehaviour
         {
             _levelStatusText.color = Color.green;
             _levelStatusText.text = TextConstants.RAIDDONE;
+            MetricaSender.SendLevelStatus(LevelStatus.Done);
         }
         else
         {
             _levelStatusText.color = Color.red;
             _levelStatusText.text = TextConstants.RAIDFAILED;
+            MetricaSender.SendLevelStatus(LevelStatus.Failed);
         }
         _levelStatusText.transform.parent.gameObject.SetActive(true);
     }

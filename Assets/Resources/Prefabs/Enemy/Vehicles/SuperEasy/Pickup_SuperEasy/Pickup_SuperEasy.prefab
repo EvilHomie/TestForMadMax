@@ -838,26 +838,6 @@ PrefabInstance:
       propertyPath: m_CenterOfMass.x
       value: 55.68
       objectReference: {fileID: 0}
-    - target: {fileID: 762351574099071987, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 762351574099071987, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
-        type: 3}
-      propertyPath: m_Extents.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 762351574099071987, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
-        type: 3}
-      propertyPath: m_Extents.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 762351574099071987, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
-        type: 3}
-      propertyPath: m_Extents.z
-      value: 1.91
-      objectReference: {fileID: 0}
     - target: {fileID: 765136998019589596, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
       propertyPath: _roadLayer.m_Bits
@@ -885,6 +865,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1931149797356830342, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1931149797356830342, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
       propertyPath: m_BaseOffset
       value: 0
       objectReference: {fileID: 0}
@@ -897,6 +882,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[1]._amount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[2]._amount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[0]._dropChance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[1]._dropChance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[2]._dropChance
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3166818438165545966, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
@@ -1532,6 +1542,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bullbar_v2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669584149638129679, guid: 0e24dcb17278ba84e9f0cfe6bc25f124,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

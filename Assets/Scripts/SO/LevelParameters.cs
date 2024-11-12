@@ -10,9 +10,12 @@ public class LevelParameters : ScriptableObject
     [SerializeField] EnemyLevel _enemiesLevel;
     [SerializeField] List<Wave> _waves;
     [Header("OPTIONAL")]
+    [SerializeField] List<int> _blockedEnemiesLinesInGameZone;
     [SerializeField] EnemyVehicleManager _boss;
     public string LevelName => _levelName;
     public Sprite LevelImage => _levelImage;
+
+    public List<int> BlockedEnemiesLinesInGameZone => _blockedEnemiesLinesInGameZone;
     public EnemyVehicleManager Boss => _boss;
     public EnemyLevel EnemyLevel => _enemiesLevel;
     public int WavesCount => _waves.Count;

@@ -26,4 +26,5 @@ MonoBehaviour:
       count: 3
     - enemyType: 3
       count: 3
+  _blockedEnemiesLinesInGameZone: 02000000
   _boss: {fileID: 0}

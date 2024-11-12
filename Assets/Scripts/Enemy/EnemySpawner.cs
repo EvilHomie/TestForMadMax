@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] List<EnemySpawnPos> _enemySpawnPositions;
 
-    int _lastSpawnPosIndex = 0;
 
     List<EnemyVehicleManager> _enemiesInRaidList = new();
 
@@ -18,8 +17,8 @@ public class EnemySpawner : MonoBehaviour
 
 
     bool _bossIsSpawned = false;
-    int _totalEnemiesCount;
-    int _totalDestroyedEnemyCount = 0;
+    int _totalSimpleEnemiesCount;
+    int _totalDestroyedSimpleEnemyCount = 0;
     int _waveEnemiesCount;
     int _waveSpawnedEnemyCount = 0;
     int _waveDestroyedEnemyCount = 0;
@@ -51,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
-
+        
         StopAllCoroutines();
         CancelInvoke();
         ConfigureDataOnStartRaid();
@@ -103,11 +102,12 @@ public class EnemySpawner : MonoBehaviour
         //_spawnedWavesCount = 0;
         _waveSpawnedEnemyCount = 0;
         _waveDestroyedEnemyCount = 0;
-        _totalDestroyedEnemyCount = 0;
+        _totalDestroyedSimpleEnemyCount = 0;
         _levelParametersCopy = Instantiate(LevelManager.Instance.GetSelectedLevelinfo().LevelParameters);
         _bossIsSpawned = false;
         _totalWaveCount = _levelParametersCopy.WavesCount;
-        _totalEnemiesCount = _levelParametersCopy.GetTotalSimpleEnemyCount();
+        _totalSimpleEnemiesCount = _levelParametersCopy.GetTotalSimpleEnemyCount();
+        EnemyGameZone.Instance.OnPlayerStartRaid(_levelParametersCopy);
     }
 
     void DestroySpawnedEnemies()
@@ -135,7 +135,7 @@ public class EnemySpawner : MonoBehaviour
     public void OnPlayerKillEnemy()
     {
         _waveDestroyedEnemyCount++;
-        _totalDestroyedEnemyCount++;
+        
         if (_waveDestroyedEnemyCount >= _waveEnemiesCount)
         {
             _currentWaveNumber++;
@@ -145,7 +145,6 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                //Debug.LogWarning("")
                 CancelInvoke();
             }
         }
@@ -154,23 +153,9 @@ public class EnemySpawner : MonoBehaviour
     public void OnEnemyObjectDestroyed(EnemyVehicleManager enemy)
     {
         _enemiesInRaidList.Remove(enemy);
-        //_waveDestroyedEnemyCount++;
-        //_totalDestroyedEnemyCount++;
-        //if (_waveDestroyedEnemyCount >= _waveEnemiesCount)
-        //{
-        //    _currentWaveNumber++;
-        //    if (_currentWaveNumber <= _totalWaveCount)
-        //    {
-        //        SpawnNewWave();
-        //    }
-        //    else
-        //    {
-        //        //Debug.LogWarning("")
-        //        CancelInvoke();
-        //    }
-        //}
+        _totalDestroyedSimpleEnemyCount++;
 
-        if (_totalDestroyedEnemyCount >= _totalEnemiesCount && _enemiesInRaidList.Count == 0)
+        if (_totalDestroyedSimpleEnemyCount >= _totalSimpleEnemiesCount)
         {
             if (_bossIsSpawned)
             {
@@ -201,33 +186,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     void SpawnSimpleEnemy()
-    {
-        //List<EnemySpawnPos> accessibleEnemySpawnPositions = null;
-        //if (OldHangarManager.Instance.gameObject.activeSelf)
-        //{
-        //    accessibleEnemySpawnPositions = _enemySpawnPositions.FindAll(pos => pos.transform.position.x > 0);
-        //}
-        //else
-        //{
-        //    accessibleEnemySpawnPositions = _enemySpawnPositions;
-        //}
-
-        //int randomPosIndex = Random.Range(0, accessibleEnemySpawnPositions.Count);
-
-        //if (randomPosIndex == _lastSpawnPosIndex)
-        //{
-        //    if (randomPosIndex == accessibleEnemySpawnPositions.Count - 1)
-        //    {
-        //        randomPosIndex--;
-        //    }
-        //    if (randomPosIndex == 0)
-        //    {
-        //        randomPosIndex++;
-        //    }
-        //}
-        //_lastSpawnPosIndex = randomPosIndex;
-        //Vector3 spwanPos = accessibleEnemySpawnPositions[randomPosIndex].transform.position;
-
+    {     
         Vector3 spwanPos = GetSpawnPos();
         int randomIndex = Random.Range(0, _selectedWaveSimpleEnemies.Count);
         WaveEnemie selectedWave = _selectedWaveSimpleEnemies[randomIndex];

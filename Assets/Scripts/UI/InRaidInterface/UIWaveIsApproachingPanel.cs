@@ -6,10 +6,9 @@ public class UIWaveIsApproachingPanel : MonoBehaviour
 {
     public static UIWaveIsApproachingPanel Instance;
     [SerializeField] TextMeshProUGUI _waveIsApproachingText;
-    //[SerializeField] float _showDelay;
-    [SerializeField] float _showDuration;
-    [SerializeField] float _flickeringSpeedMod;
-    //[SerializeField] float _flickeringCount;
+    [SerializeField] float _flickeringCount;
+    [SerializeField] float _flickeringDelay;
+    [SerializeField] float _flickeringOneTimeDuration;
     CanvasGroup _canvasGroup;
     private void Awake()
     {
@@ -27,33 +26,47 @@ public class UIWaveIsApproachingPanel : MonoBehaviour
     public void ShowWaveText()
     {
         _waveIsApproachingText.text = TextConstants.WAVEISAPPROACHING;
-        StartCoroutine(ShowTextCoroutine());
+        StartCoroutine(FlickeringAppearance());
     }
 
     public void ShowBossText()
     {
         _waveIsApproachingText.text = TextConstants.BOSSISAPPROACHING;
-        StartCoroutine(ShowTextCoroutine());
+        StartCoroutine(FlickeringAppearance());
     }
 
     public void HideText()
     {
         StopAllCoroutines();
         _canvasGroup.alpha = 0;
-    }
+    }   
 
-    IEnumerator ShowTextCoroutine()
+    IEnumerator FlickeringAppearance()
     {
-        //yield return new WaitForSeconds(_showDelay);
-
-        float currentShowDuration = 0;
-        while (currentShowDuration < _showDuration)
+        for (int i = 1; i <= _flickeringCount; i++)
         {
-            currentShowDuration += Time.deltaTime;
+            float t = 0;
 
-            float t = (Mathf.Sin(Time.time * _flickeringSpeedMod) + 1) / 2;
-            _canvasGroup.alpha = Mathf.Lerp(0, 1, t);
-            yield return null;
+            while (t <= 1)
+            {
+                t += Time.deltaTime / _flickeringOneTimeDuration;
+                _canvasGroup.alpha = t;
+                yield return null;
+            }
+
+            if (i == 2)
+            {
+                TutorialManager.Instance.TryEnableStage(StageName.ShowWaveWarning);
+            }
+
+            while (t >= 0)
+            {
+                t -= Time.deltaTime / _flickeringOneTimeDuration;
+                _canvasGroup.alpha = t;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(_flickeringDelay);
         }
         HideText();
     }

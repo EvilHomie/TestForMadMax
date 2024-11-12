@@ -18,11 +18,18 @@ public class AudioManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    private void Start()
+    public void Init()
     {
         _soundIsOn = true;
         _toggleSoundButton.image.sprite = _soundsFullIcon;
         _toggleSoundButton.onClick.AddListener(SwitchSoundVolume);
+        //GameFlowManager.GameFlowChangeStateOnPause += ConfigAudioOnChangeFlowState;
+    }
+
+    void ConfigAudioOnChangeFlowState(bool onPause)
+    {
+        if (onPause) DisableSFX();
+        else EnableSFX();
     }
 
     void SwitchSoundVolume()
@@ -52,14 +59,13 @@ public class AudioManager : MonoBehaviour
         _audioMixer.SetFloat("MasterSound", -15f);
     }
 
-    public void LerpDisableSound()
+    void DisableSFX()
     {
-
+        _audioMixer.SetFloat("SFX", -80f);
     }
-
-    public void LerpEnableSound()
+    public void EnableSFX() 
     {
-
+        _audioMixer.SetFloat("SFX", -1f);
     }
 
 }

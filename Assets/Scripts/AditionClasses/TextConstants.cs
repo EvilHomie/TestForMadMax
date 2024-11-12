@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using YG;
 
 public static class TextConstants
@@ -29,14 +30,14 @@ public static class TextConstants
     public static string LEVEL = "Level";
     public static string UPEFFECT = "Up Effect";
     public static string COST = "Cost";
-    public static string UPGRADE = "Upgrade";
+    public static string UPGRADE = "Improve";
     public static string MAXLEVEL = "MaxLevel";
     public static string NEWSCHEMES = "New Schemes";
     public static string INVENTORY = "Inventory";
     public static string RAID = "Raid";
     public static string GARAGE = "Garage";
     public static string UNLOCKCOST = "UnlockCost";
-    public static string NEWSCHEME = "New SCHEME";    
+    public static string NEWSCHEME = "New SCHEME";
     public static string[] TIPSCOLLECTION =
         {
         "Don't forget to upgrade your equipment in the inventory tab.",
@@ -68,6 +69,21 @@ public static class TextConstants
     public static string RAIDFAILED = "RAID FAILED";
     public static string WAVEISAPPROACHING = "Wave is approaching";
     public static string BOSSISAPPROACHING = "Boss is approaching";
+    public static string COMBO = "Combo";
+
+    public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
+        {
+            { StageName.Greetings, "Hey, fighter!\r\nMy name is Meg,\r\nI'm your driver.\r\nI'll help you on your first raid in the Badlands." },
+            { StageName.FirstRaidLaunch, "Our warehouse is empty right now and we're in urgent need of resources.\r\nLet's go get them." },
+            { StageName.ShowWaveWarning, "Careful, we've been spotted!\r\nI suggest you to shoot at vulnerable areas.\r\nLike <color=\"red\">wheels</color> or <color=\"red\">canisters</color>." },
+            { StageName.ShowLevelStatisticPanel, "All right!\r\nWe've gathered some resources." },
+            { StageName.FirstLevelCompleted, "Let's spend it on improving our inventory." },
+            { StageName.FirstOpenInventory, "Here is the panel of the already installed inventory.\r\nLet's improve our weapon.\r\nClick on it to select it." },
+            { StageName.ShowUpgradeDiscription, "Here you can improve the characteristics." },
+            { StageName.UpgradeRotateSpeed, "The first thing to do is to increase the rotation speed.\r\nTo do this, press the <color=\"green\">“Improve”</color> button 3 times." },
+            { StageName.UpgradeFireRate, "Now you need to improve your shooting speed.\r\nPress <color=\"green\">“Improve”</color> 2 times." },
+            { StageName.WishGoodluck, "All right,\r\nwe're ready for the next raid!" }
+        };
     public static void SetLanguage()
     {
         string language = YandexGame.EnvironmentData.language;
@@ -106,14 +122,14 @@ public static class TextConstants
             UPGRADE = "Улучшить";
             MAXLEVEL = "Макс Уровень";
             NEWSCHEMES = "Новые Схемы";
-            INVENTORY = "Склад";
+            INVENTORY = "Инвентарь";
             RAID = "В Рейд";
             GARAGE = "Гараж";
             UNLOCKCOST = "Стоимость Открытия";
             NEWSCHEME = "Новая Схема";
 
             string[] tipscollectionRu =
-            { "Не забывайте улучшать свое снаряжение во вкладке склад.",
+            { "Не забывайте улучшать свое снаряжение во вкладке Инвентарь.",
               "Новые схемы можно получить из врагов. Для открытия требуются ресурсы.",
               "разрушение взрывоопасной части нанесет корпусу значительные повреждения.",
               "Убегающий враг не принесет вам ресурсов. Враги убегают, если потеряли все свое оружие.",
@@ -143,9 +159,25 @@ public static class TextConstants
             RAIDFAILED = "Неудачно";
             WAVEISAPPROACHING = "Приближается Волна";
             BOSSISAPPROACHING = "Приближается Босс";
+            COMBO = "Комбо";
 
+
+            Dictionary<StageName, string> tutorialTextsRu = new()
+            {
+                { StageName.Greetings, "Привет, боец!\r\nМеня зовут Мэг,\r\n я твой водитель.\r\nЯ помогу тебе в твоем первом рейде по Пустоши." },
+                { StageName.FirstRaidLaunch, "Наш склад сейчас пуст\r\nи нам срочно требуются ресурсы.\r\nДавай прокатимся за ними." },
+                { StageName.ShowWaveWarning, "Осторожно, нас уже заметили! Советую стрелять по уязвимым местам.\r\nНапример, <color=\"red\">колеса</color> или <color=\"red\">балоны</color>." },
+                { StageName.ShowLevelStatisticPanel, "Отлично!\r\nМы собрали немного ресурсов." },
+                { StageName.FirstLevelCompleted, "Давай их потратим на улучшение нашего инвентаря." },
+                { StageName.FirstOpenInventory, "Здесь находится панель уже установленного инвентаря. Давай улучшим наше оружие. Нажми на него, чтобы выбрать." },
+                { StageName.ShowUpgradeDiscription, "Здесь вы можете улучшить характеристики." },
+                { StageName.UpgradeRotateSpeed, "Первым делом увеличим скорость поворота.\r\nДля это нужно нажать на кнопку <color=\"green\">“Улучшить”</color> 3 раза." },
+                { StageName.UpgradeFireRate, "Теперь нужно улучшить скорость стрельбы.\r\nНажимай <color=\"green\">“Улучшить”</color> 2 раза." },
+                { StageName.WishGoodluck, "Отлично, мы готовы к следующему рейду!" }
+            };
+
+            TUTORIALSTAGESTEXTS = tutorialTextsRu;
         }
-
     }
 }
 

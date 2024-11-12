@@ -70,6 +70,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: cde90aa13279812468a16bc62349828a
     name: MasterSound
+  - guid: 0bac2d67deeb4e446a11fb7094f79947
+    name: SFX
   m_AudioMixerGroupViews:
   - guids:
     - d137fb0688742784d92ad7a4d4e2a918

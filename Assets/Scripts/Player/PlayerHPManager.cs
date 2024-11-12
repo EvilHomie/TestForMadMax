@@ -104,7 +104,6 @@ public class PlayerHPManager : MonoBehaviour
         _explosionPS.Play();
         _hitAudioSource.PlayOneShot(_onDieExplosionSound);
         InRaidManager.Instance.OnPLayerDie();
-        PlayerWeaponManager.Instance.OnPlayerDie();
-        FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: false);
+        PlayerWeaponManager.Instance.OnPlayerDie();        
     }
 }

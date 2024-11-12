@@ -37,6 +37,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         //YandexGame.EnvironmentData.isDesktop = test;
         if (_playerIsDead || !_playerOnRaid) return;
+        if (GameFlowManager.GameFlowState == GameFlowState.PAUSE) return;
         RotateWeaponToCamera();
     }
 
@@ -193,7 +194,7 @@ public class PlayerWeaponManager : MonoBehaviour
             _currentCameraRotation.x -= pointOutOfDeadZone.y * _mouseSensitivity;
             ClampCameraRotation();
             Camera.main.transform.rotation = Quaternion.Euler(_currentCameraRotation);
-        }        
+        }
     }
 
 

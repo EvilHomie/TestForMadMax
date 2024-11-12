@@ -24,7 +24,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _InventoryText;
 
     List<InventoryItem> _inventoryItems = new();
-    //List<InventoryItem> _inventorySchemes = new();
     IItemData _selectedItem;
 
     private void Awake()
@@ -48,6 +47,8 @@ public class InventoryManager : MonoBehaviour
     public void OnOpenInventory()
     {
         gameObject.SetActive(true);
+        
+        TutorialManager.Instance.TryEnableStage(StageName.FirstOpenInventory);
         foreach (Transform child in _mainInventoryContainer)
         {
             Destroy(child.gameObject);
@@ -67,12 +68,15 @@ public class InventoryManager : MonoBehaviour
 
         InventoryEquipPanelManager.Instance.ResetData();
         MetricaSender.SendInventoryData("Open Inventory");
+        Canvas.ForceUpdateCanvases();
     }
     public void OnCloseInventory()
     {
         PlayerVehicleManager.Instance.OnCloseInventory();
         PlayerWeaponManager.Instance.OnCloseInventory();
         gameObject.SetActive(false);
+        TutorialManager.Instance.TryConfirmStage(StageName.CloseInventory);
+        Canvas.ForceUpdateCanvases();
     }
 
     public void OnSelectInventoryItem(IItemData itemData)
@@ -117,6 +121,7 @@ public class InventoryManager : MonoBehaviour
         InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
         InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(_selectedItem);
         MetricaSender.SendInventoryData("Buy Upgrade");
+        SaveLoadManager.Instance.SaveData();
     }
 
 
@@ -124,8 +129,24 @@ public class InventoryManager : MonoBehaviour
     {
         if (charName == TextConstants.HULLDMG) weaponData.hullDmgCurLvl++;
         else if (charName == TextConstants.SHIELDDMG) weaponData.shieldDmgCurLvl++;
-        else if (charName == TextConstants.ROTATIONSPEED) weaponData.rotationSpeedCurLvl++;
-        else if (charName == TextConstants.FIRERATE) weaponData.fireRateCurtLvl++;
+        else if (charName == TextConstants.ROTATIONSPEED)
+        {
+            weaponData.rotationSpeedCurLvl++;
+            TutorialManager.Instance.UpgradeRotationSpeedCounter++;
+            if (TutorialManager.Instance.UpgradeRotationSpeedCounter == 3)
+            {
+                TutorialManager.Instance.TryConfirmStage(StageName.UpgradeRotateSpeed);
+            }            
+        }
+        else if (charName == TextConstants.FIRERATE)
+        {            
+            weaponData.fireRateCurtLvl++;
+            TutorialManager.Instance.UpgradeFireRateCounter++;
+            if (TutorialManager.Instance.UpgradeFireRateCounter == 2)
+            {
+                TutorialManager.Instance.TryConfirmStage(StageName.UpgradeFireRate);
+            }
+        }
     }
 
     void UpgradeVehicle(VehicleData vehicleData, string charName)
@@ -144,6 +165,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (_selectedItem is WeaponData) InventoryEquipPanelManager.Instance.EnableWeaponEquipOption(_selectedItem);
         else if (_selectedItem is VehicleData) InventoryEquipPanelManager.Instance.OnEquipNewVehicle(_selectedItem);
+        SaveLoadManager.Instance.SaveData();
     }
 
     void ADDItemToInventory(IItemData item)
@@ -170,7 +192,10 @@ public class InventoryManager : MonoBehaviour
 
     public void OnSelectedItemEquiped(IItemData newItem = null, IItemData previousItem = null)
     {
-        _inventoryAS.PlayOneShot(_equipSound);
+        if (newItem != null)
+        {
+            _inventoryAS.PlayOneShot(_equipSound);
+        }
         _equipBtn.gameObject.SetActive(false);
 
         if (newItem != null && previousItem != null)
@@ -206,6 +231,7 @@ public class InventoryManager : MonoBehaviour
             UnlockScheme((IItemData)SData, newItem);
             InventoryInfoPanelManager.Instance.UpdateInfoPanel(newItem);
             InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(newItem);
+            SaveLoadManager.Instance.SaveData();
         }
     }
 

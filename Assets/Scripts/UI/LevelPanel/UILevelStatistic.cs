@@ -36,8 +36,8 @@ public class UILevelStatistic : MonoBehaviour
     [SerializeField] Button _prevTipBtn;
     [SerializeField] Button _raidBtn;
     [SerializeField] TextMeshProUGUI _raidBtnText;
-    [SerializeField] Button _garageBtn;
-    [SerializeField] TextMeshProUGUI _garageBtnText;
+    [SerializeField] Button _inventoryBtn;
+    [SerializeField] TextMeshProUGUI _inventoryBtnText;
     [SerializeField] TextMeshProUGUI _tipBodyText;
 
     int _lastTipIndex;
@@ -75,7 +75,7 @@ public class UILevelStatistic : MonoBehaviour
         _explosivePartsText.text = TextConstants.EXPLOSIVEPARTS;
         _tipText.text = TextConstants.TIP;
         _raidBtnText.text = TextConstants.RAID;
-        _garageBtnText.text = TextConstants.GARAGE;
+        _inventoryBtnText.text = TextConstants.INVENTORY;
         //_previousText.text = TextConstants.PREVIOUS;
         //_nextTipText.text = TextConstants.NEXTTIP;
 
@@ -86,7 +86,7 @@ public class UILevelStatistic : MonoBehaviour
         _nextTipBtn.onClick.AddListener(ShowNewTip);
         _prevTipBtn.onClick.AddListener(ShowPreviousTip);
         _raidBtn.onClick.AddListener(StartNewRaid);
-        _garageBtn.onClick.AddListener(ShowGarage);
+        _inventoryBtn.onClick.AddListener(ShowInventory);
     }
 
     public void OnPlayerStartRaid()
@@ -189,10 +189,10 @@ public class UILevelStatistic : MonoBehaviour
         _tipBodyText.text = TextConstants.TIPSCOLLECTION[_lastTipIndex];
     }
 
-    void ShowGarage()
+    void ShowInventory()
     {
         gameObject.SetActive(false);
-        FinishLevelManager.Instance.OnCloseLevelStatisicAndReturnInGarage();
+        FinishLevelManager.Instance.OnCloseLevelStatisicAndOpenInventory();
     }
     void StartNewRaid()
     {

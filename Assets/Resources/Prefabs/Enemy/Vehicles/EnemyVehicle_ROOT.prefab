@@ -50,7 +50,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 500
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -194,6 +194,12 @@ MonoBehaviour:
   _wheelsLayer:
     serializedVersion: 2
     m_Bits: 128
+  _deffaultLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  _layersForPartDestroy:
+    serializedVersion: 2
+    m_Bits: 1280
 --- !u!208 &762351574099071987
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -201,10 +207,10 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071904079381326908}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.825, y: 0.935, z: 2.46}
+  m_Extents: {x: 0.05, y: 0.05, z: 0.05}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
