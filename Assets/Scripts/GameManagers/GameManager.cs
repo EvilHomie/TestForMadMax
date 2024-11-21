@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         YandexGame.GameReadyAPI();
         //YandexGame.EnvironmentData.isDesktop = false;
         Init();
+        //Application.targetFrameRate = 60;
 
     }
 

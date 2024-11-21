@@ -208,8 +208,7 @@ public class EnemySpawner : MonoBehaviour
     void SpawnBoss()
     {
         UIWaveIsApproachingPanel.Instance.ShowBossText();
-        int randomPosIndex = Random.Range(0, _enemySpawnPositions.Count);
-        Vector3 spwanPos = _enemySpawnPositions[randomPosIndex].transform.position;
+        Vector3 spwanPos = GetSpawnPos();
 
         EnemyVehicleManager bossEnemy = Instantiate(_levelParametersCopy.Boss, spwanPos, _levelParametersCopy.Boss.transform.rotation);
 

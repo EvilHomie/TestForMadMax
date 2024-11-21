@@ -27,7 +27,9 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     float _lastBodyZPos = 0;
     float _rotationTreshhold = 0.5f;
-
+    bool _isInit = false;
+    float _runSpeedMod = 3;
+    bool _tryRunAway = false;
 
     public void Init(EnemyVehicleManager enemyVehicleManager, Rigidbody rigidbody, List<Transform> frontWheels, NavMeshObstacle navMeshObstacle)
     {
@@ -44,10 +46,13 @@ public class EnemyVehicleMovementController : MonoBehaviour
         _navMeshAgent.enabled = true;
 
         _navMeshAgent.SetDestination(_reservedPosInEnemyGameZone.transform.position);
+        _isInit = true;
     }
 
     public void CustomUpdate()
     {
+        if (!_isInit) return;
+        if(_tryRunAway) return;
         if (!_isDead)
         {
             RotationLogic();
@@ -165,13 +170,19 @@ public class EnemyVehicleMovementController : MonoBehaviour
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(GameConfig.Instance.MinDelayForRun, GameConfig.Instance.MaxDelayForRun));
         }
+        _tryRunAway = true;
         CancelInvoke();
         _reservedPosInEnemyGameZone.IsReserved = false;
-        _navMeshAgent.SetDestination(EnemyEscapeZone.Instance.GetRandomEscapePos());
-        _navMeshAgent.speed = _enemyVehicleManager.EnemyCharacteristics.VehicleSlideSpeed * 2;
+        Vector3 escapePos = EnemyEscapeZone.Instance.GetRandomEscapePos();
+        _navMeshAgent.SetDestination(escapePos);
+
+        //float runSpeedMod = escapePos.x < transform.position.x ? _runSpeedMod.x : _runSpeedMod.y;
+
+        _navMeshAgent.speed = _enemyVehicleManager.EnemyCharacteristics.VehicleSlideSpeed * _runSpeedMod;
         yield return null;
-        while (_navMeshAgent.remainingDistance >= 500)
+        while (Vector3.Distance(transform.position, escapePos) >= 500)
         {
+            _rigidbody.transform.position = new(transform.position.x, _rigidbody.transform.position.y, transform.position.z);
             yield return null;
         }
         InRaidManager.Instance.OnEnemyEscaped(_enemyVehicleManager);

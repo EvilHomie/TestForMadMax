@@ -90,6 +90,7 @@ public class PlayerWeaponManager : MonoBehaviour
         _playerOnRaid = true;
         _playerIsDead = false;
         _weaponsByIndex[_selectedWeaponIndex].TargetMarker.SetActive(true);
+        _cameraCursor.SetActive(true);
     }
 
 
@@ -98,6 +99,7 @@ public class PlayerWeaponManager : MonoBehaviour
         //DetectFingerManager.Instance.OnPlayerEndRaid();
         _playerOnRaid = false;
         _weaponsByIndex[_selectedWeaponIndex].StopShooting();
+        _cameraCursor.SetActive(false);
     }
 
     void ResetCameraPos()
@@ -105,6 +107,8 @@ public class PlayerWeaponManager : MonoBehaviour
         Vector3 newPos = _weaponPointsTransform[0].position + _weaponsByIndex[1].ObserverPos;
         CameraManager.Instance.ChangeInitPos(newPos);
         Camera.main.transform.SetPositionAndRotation(newPos, Quaternion.Euler(Vector3.zero));
+        _currentCameraRotation = Vector3.zero;
+        _cameraCursor.SetActive(false);
     }
 
     public void ChangeWeapon(int selectedSlotIndex)

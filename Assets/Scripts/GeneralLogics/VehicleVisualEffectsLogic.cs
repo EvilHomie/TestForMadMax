@@ -6,6 +6,7 @@ public class VehicleVisualEffectsLogic : MonoBehaviour
     List<Transform> _wheels;
     List<ParticleSystem> _wheelsDustPS;
 
+    bool _isInit = false;
     public void Init(List<Transform> wheels, List<ParticleSystem> wheelsDustPS, bool autoStart = true)
     {
         _wheels = wheels;
@@ -15,10 +16,12 @@ public class VehicleVisualEffectsLogic : MonoBehaviour
         {
             PlayDustPS();
         }
+        _isInit = true;
     }
 
     public void CustomUpdate()
     {
+        if(!_isInit) return;
         RotateWheels();
     }
 

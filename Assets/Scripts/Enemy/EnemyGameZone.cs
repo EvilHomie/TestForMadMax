@@ -36,7 +36,7 @@ public class EnemyGameZone : MonoBehaviour
         }
         else
         {
-            _availablePosInEnemyGameZones = _allPosInEnemyGameZones;
+            _availablePosInEnemyGameZones = new(_allPosInEnemyGameZones);
         }
 
         
