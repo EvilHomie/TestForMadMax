@@ -1,5 +1,5 @@
 {
-  "idSave": 284,
+  "idSave": 59,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -23,33 +23,14 @@
       "hullDmgCurLvl": 5,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 2,
+      "shieldDmgCurLvl": 3,
       "shieldDmgMaxLvl": 6,
       "fireRateByLvl": 0.5,
       "fireRateCurtLvl": 6,
       "fireRateMaxLvl": 6,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 6,
+      "rotationSpeedCurLvl": 5,
       "rotationSpeedMaxLvl": 6
-    },
-    {
-      "deffWeaponName": "Dual_Cannon_V_1",
-      "weaponNameEN": "Dual Cannon",
-      "weaponNameRU": "Двойная Пушка",
-      "weaponType": 1,
-      "weaponRaritie": 0,
-      "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 8,
-      "hullDmgMaxLvl": 8,
-      "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 7,
-      "shieldDmgMaxLvl": 7,
-      "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 10,
-      "fireRateMaxLvl": 10,
-      "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 8,
-      "rotationSpeedMaxLvl": 8
     }
   ],
   "vehiclesData": [
@@ -72,36 +53,29 @@
     }
   ],
   "schemesNames": [
+    "Dual_Cannon_V_1_Scheme",
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 600,
-    "Wires": 590,
-    "ScrapMetal": 520
+    "Сopper": 71,
+    "Wires": 86,
+    "ScrapMetal": 75
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
-    "1": "Dual_Cannon_V_1"
+    "1": "Simple_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-5",
+  "lastSelectedLevelName": "1-4",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",
     "1-3",
-    "1-4",
-    "1-5",
-    "1-6",
-    "1-7",
-    "1-8",
-    "1-9",
-    "1-10",
-    "2-1",
-    "2-2",
-    "2-3",
-    "2-4"
+    "1-4"
   ],
   "tutorilaIsComplete": true,
   "completedTutorialStages": [
-    1
+    1,
+    2,
+    3
   ]
 }

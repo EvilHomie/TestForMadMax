@@ -15,6 +15,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] RectTransform _clickableAreaRT;
     [SerializeField] Image _clickableAreaBlockRaycastImage;
     [SerializeField] GameObject _tutorialInteractWindow;
+    [SerializeField] Button _fullScreenConfirmButton;
 
     TutorialShowStageManager _tutorialShowStageManager;
     TutorialStageAditionActionManager _tutorialStageAditionActionManager;
@@ -51,9 +52,10 @@ public class TutorialManager : MonoBehaviour
 
         _tutorialShowStageManager = GetComponent<TutorialShowStageManager>();
         _tutorialStageAditionActionManager = GetComponent<TutorialStageAditionActionManager>();
-        _tutorialShowStageManager.Init(_tutorialArrow, _tutorialTextPanel, _clickableAreaRT, _clickableAreaBlockRaycastImage, _whiteAreaTransformationDuration);
+        _tutorialShowStageManager.Init(_tutorialArrow, _tutorialTextPanel, _clickableAreaRT, _clickableAreaBlockRaycastImage, _whiteAreaTransformationDuration, _fullScreenConfirmButton);
         _tutorialStageAditionActionManager.Init(_clickableAreaRT);
         _tutorialTextPanel.ConfirmationButton.onClick.AddListener(delegate { TryConfirmStage(_lastStageName); });
+        _fullScreenConfirmButton.onClick.AddListener(delegate { TryConfirmStage(_lastStageName); });
 
         _tutorialStageByName = new();
         foreach (var stage in _tutorialStages)

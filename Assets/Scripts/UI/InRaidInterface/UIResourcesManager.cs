@@ -18,8 +18,6 @@ public class UIResourcesManager : MonoBehaviour
     [SerializeField] float _shakeDuration = 0.5f;
     [SerializeField] float _shakeIntensity = 0.2f;
 
-    Vector3 _deffPos;
-
     void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -27,8 +25,7 @@ public class UIResourcesManager : MonoBehaviour
     }
 
     public void Init()
-    {
-        _deffPos = transform.position;
+    { 
         UpdateCounters();
         DisableAddTexts();
     }
@@ -138,11 +135,11 @@ public class UIResourcesManager : MonoBehaviour
         while (duration > 0)
         {
             duration -= Time.deltaTime;
-            Vector3 randomOffset = Random.insideUnitSphere * _shakeIntensity;
-            transform.position = _deffPos + randomOffset;
+            Vector3 randomOffset = Random.insideUnitCircle * _shakeIntensity;
+            transform.localPosition = Vector3.zero + randomOffset;
             yield return null;
         }
-        transform.position = _deffPos;
+        transform.localPosition = Vector3.zero;
     }
 
     bool CheckResources(int scrapMetalAmount, int wiresAmount, int copperAmount)

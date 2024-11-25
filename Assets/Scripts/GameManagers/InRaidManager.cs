@@ -13,9 +13,12 @@ public class InRaidManager : MonoBehaviour
     [SerializeField] int _maxEnemyCountInRaid;
     //[SerializeField] float _mod;
 
+
+    UILevelInfo _selectedLevelInfo;
     float _worldMoveSpeed = 0f;
     bool _onRaid = false;
     int _killedEnemiesCount = 0;
+    int _escapedEnemiesCount = 0;
     int _enemyTotalCountOnLevel = 0;
 
 
@@ -64,7 +67,7 @@ public class InRaidManager : MonoBehaviour
         StartCoroutine(AccelerationMoveSpeed(startMoveDelay, fullSpeed, reachFullSpeedDuration));
         EnemySpawner.Instance.OnPlayerStartRaid();
         UIComboCounterManager.Instance.OnPlayerStartRaid();
-        MetricaSender.SendLevelStatus(LevelStatus.Start);
+        MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Start);
     }
 
     void ConfigureDataOnStartRaid()
@@ -72,10 +75,11 @@ public class InRaidManager : MonoBehaviour
         Cursor.visible = false;
 
         _onRaid = true;
-        UILevelInfo selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
-        int bossCount = selectedLevelInfo.LevelParameters.Boss == null ? 0 : 1;
-        _enemyTotalCountOnLevel = selectedLevelInfo.LevelParameters.GetTotalSimpleEnemyCount() + bossCount;
+        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
+        int bossCount = _selectedLevelInfo.LevelParameters.Boss == null ? 0 : 1;
+        _enemyTotalCountOnLevel = _selectedLevelInfo.LevelParameters.GetTotalSimpleEnemyCount() + bossCount;
         _killedEnemiesCount = 0;
+        _escapedEnemiesCount = 0;
     }
     public void OnPlayerEndRaid()
     {
@@ -108,36 +112,42 @@ public class InRaidManager : MonoBehaviour
     public void OnEnemyEscaped(EnemyVehicleManager enemy)
     {
         if (!_onRaid) return;
+        _escapedEnemiesCount++;
+        if (_selectedLevelInfo.LevelParameters.LevelName == "1-1") MetricaSender.KillEnemyOnFirstLevel(_selectedLevelInfo.LevelParameters.LevelName, _escapedEnemiesCount, LevelEnemyStatus.Escaped);
+        
         EnemySpawner.Instance.OnEnemyObjectDestroyed(enemy);
         CheckRaidCompleteStatus();
     }
 
     public void OnPlayerKillEnemy()
     {
+        _killedEnemiesCount++;
+        if (_selectedLevelInfo.LevelParameters.LevelName == "1-1") MetricaSender.KillEnemyOnFirstLevel(_selectedLevelInfo.LevelParameters.LevelName, _killedEnemiesCount, LevelEnemyStatus.Killed);
+       
         UIComboCounterManager.Instance.OnEnemyKilled();
         CheckRaidCompleteStatus();
     }
 
     void CheckRaidCompleteStatus()
     {
-        _killedEnemiesCount++;
-
-        if (_killedEnemiesCount >= _enemyTotalCountOnLevel)
+        if (_killedEnemiesCount + _escapedEnemiesCount >= _enemyTotalCountOnLevel)
         {
             _onRaid = false;
+            MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
             FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
             SaveLoadManager.Instance.SaveData();
         }
         else
         {
-            EnemySpawner.Instance.OnPlayerKillEnemy();
+            EnemySpawner.Instance.OnKilledOrEscapedEnemy();
         }
     }
-     
+
 
     public void OnPLayerDie()
     {
+        MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Failed);
         StartCoroutine(ChangeSpeedOnDie());
         EnemySpawner.Instance.OnPLayerDie();
         FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: false);

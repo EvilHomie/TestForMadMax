@@ -132,7 +132,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void OnPlayerKillEnemy()
+    public void OnKilledOrEscapedEnemy()
     {
         _waveDestroyedEnemyCount++;
         

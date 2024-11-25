@@ -10,10 +10,11 @@ public class TutorialShowStageManager : MonoBehaviour
     TutorialTextPanel _tutorialTextPanel;
     RectTransform _clickableAreaRT;
     Image _clickableAreaBlockRaycastImage;
+    Button _fullScreenConfirmButton;
 
     float _transformationDuration = 1f;
     float _scaleFactor;
-    public void Init(RectTransform tutorialArrow, TutorialTextPanel tutorialTextPanel, RectTransform clickableAreaRT, Image clickableAreaBlockRaycastImage, float transformationDuration)
+    public void Init(RectTransform tutorialArrow, TutorialTextPanel tutorialTextPanel, RectTransform clickableAreaRT, Image clickableAreaBlockRaycastImage, float transformationDuration, Button fullScreenConfirmButton)
     {
         _tutorialTextPanel = tutorialTextPanel;
         _tutorialArrowRT = tutorialArrow;
@@ -23,14 +24,17 @@ public class TutorialShowStageManager : MonoBehaviour
         _canvasRT = transform.root.GetComponent<RectTransform>();
         _scaleFactor = _canvasRT.localScale.x;
         _transformationDuration = transformationDuration;
+        _fullScreenConfirmButton = fullScreenConfirmButton;
 
 
         _tutorialArrowRT.gameObject.SetActive(false);
         _tutorialTextRT.gameObject.SetActive(false);
+        _fullScreenConfirmButton.gameObject.SetActive(false);
     }
 
     public void ConfigureStage(TutorialStage stage)
     {
+        _fullScreenConfirmButton.gameObject.SetActive(false);
         _clickableAreaRT.gameObject.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(AreaTransformation(stage));
@@ -161,12 +165,13 @@ public class TutorialShowStageManager : MonoBehaviour
                 _tutorialTextRT.localPosition = (Vector3)stage.textPanelAditionOffset;
             }
 
-            _tutorialTextPanel.ConfirmationButton.gameObject.SetActive(!stage.stageConfirmViaScript);
+            _fullScreenConfirmButton.gameObject.SetActive(!stage.stageConfirmViaScript);
         }
         else
         {
             _tutorialTextPanel.gameObject.SetActive(false);
         }
+        _tutorialTextPanel.ConfirmationButton.gameObject.SetActive(!stage.stageConfirmViaScript);
 
     }
 
@@ -176,6 +181,7 @@ public class TutorialShowStageManager : MonoBehaviour
         _tutorialArrowRT.gameObject.SetActive(false);
         _tutorialTextRT.gameObject.SetActive(false);
         _clickableAreaRT.gameObject.SetActive(false);
+        _tutorialTextPanel.ConfirmationButton.gameObject.SetActive(false);
     }
 
     IEnumerator ArrowAnimation(Vector3 startPos, Vector3 endPos)

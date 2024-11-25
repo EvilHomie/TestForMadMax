@@ -30,7 +30,7 @@ public class FinishLevelManager : MonoBehaviour
     }
 
     public void OnFinishLevel(bool isSuccessfully)
-    {
+    {        
         StartCoroutine(OnLevelFinishLogic(isSuccessfully));
         ShowLevelStatusPanel(isSuccessfully);        
     }
@@ -126,14 +126,12 @@ public class FinishLevelManager : MonoBehaviour
         if (isSuccessfully)
         {
             _levelStatusText.color = Color.green;
-            _levelStatusText.text = TextConstants.RAIDDONE;
-            MetricaSender.SendLevelStatus(LevelStatus.Done);
+            _levelStatusText.text = TextConstants.RAIDDONE;            
         }
         else
         {
             _levelStatusText.color = Color.red;
             _levelStatusText.text = TextConstants.RAIDFAILED;
-            MetricaSender.SendLevelStatus(LevelStatus.Failed);
         }
         _levelStatusText.transform.parent.gameObject.SetActive(true);
     }

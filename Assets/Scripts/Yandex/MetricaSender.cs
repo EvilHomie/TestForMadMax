@@ -3,10 +3,9 @@ using YG;
 
 public class MetricaSender
 {    
-    public static void SendLevelStatus(LevelStatus status)
+    public static void SendLevelStatus(string levelName, LevelStatus status)
     {
-        UILevelInfo selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
-        string goalKey = $"{selectedLevelInfo.LevelParameters.LevelName}_{status}";
+        string goalKey = $"{levelName}_{status}";
         var eventParams = new Dictionary<string, string>
         {
              { "LevelsPassing", goalKey }
@@ -41,6 +40,16 @@ public class MetricaSender
         YandexMetrica.Send("TutorialPassing", eventParams);
     }
 
+    public static void KillEnemyOnFirstLevel(string levelName, int enemyNumber, LevelEnemyStatus levelEnemyStatus)
+    {
+        string goalKey = $"{levelName}_Enemy_{enemyNumber}_{levelEnemyStatus}";
+        var eventParams = new Dictionary<string, string>
+        {
+             { "LevelEnemyStatistic", goalKey }
+        };
+        YandexMetrica.Send("LevelEnemyStatistic", eventParams);
+    }
+
 }
 
 public enum LevelStatus
@@ -48,4 +57,9 @@ public enum LevelStatus
     Start,
     Done,
     Failed,
+}
+public enum LevelEnemyStatus
+{
+    Killed,
+    Escaped
 }
