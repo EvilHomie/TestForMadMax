@@ -1,5 +1,5 @@
 {
-  "idSave": 59,
+  "idSave": 19,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -20,10 +20,10 @@
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 5,
+      "hullDmgCurLvl": 2,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 1.0,
-      "shieldDmgCurLvl": 3,
+      "shieldDmgCurLvl": 2,
       "shieldDmgMaxLvl": 6,
       "fireRateByLvl": 0.5,
       "fireRateCurtLvl": 6,
@@ -57,25 +57,28 @@
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 71,
-    "Wires": 86,
-    "ScrapMetal": 75
+    "Сopper": 0,
+    "Wires": 0,
+    "ScrapMetal": 0
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
     "1": "Simple_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-4",
+  "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
-    "1-1",
-    "1-2",
-    "1-3",
-    "1-4"
+    "1-1"
   ],
   "tutorilaIsComplete": true,
   "completedTutorialStages": [
     1,
     2,
-    3
+    3,
+    17,
+    5,
+    8,
+    9,
+    16,
+    11
   ]
 }

@@ -76,8 +76,9 @@ public static class TextConstants
             { StageName.Greetings, "Hey, fighter!\r\nMy name is Meg,\r\nI'm your driver.\r\nI'll help you on your first raid in the Badlands." },
             { StageName.FirstRaidLaunch, "Our warehouse is empty right now and we're in urgent need of resources.\r\nLet's go get them." },
             { StageName.ShowWaveWarning, "Careful, we've been spotted!\r\nI suggest you to shoot at vulnerable areas.\r\nLike <color=\"red\">wheels</color> or <color=\"red\">canisters</color>." },
+            { StageName.FirstLevelCompleted, "That was very easy!\r\nThe next raid will be more difficult, can you handle it?" },
             { StageName.ShowLevelStatisticPanel, "All right!\r\nWe've gathered some resources." },
-            { StageName.FirstLevelCompleted, "Let's spend it on improving our inventory." },
+            { StageName.SecondLevelCompleted, "Let's spend it on improving our inventory." },
             { StageName.FirstOpenInventory, "Here is the panel of the already installed inventory.\r\nLet's improve our weapon.\r\nClick on it to select it." },
             { StageName.ShowUpgradeDiscription, "Here you can improve the characteristics." },
             { StageName.UpgradeRotateSpeed, "The first thing to do is to increase the rotation speed.\r\nTo do this, press the <color=\"green\">“Improve”</color> button 3 times." },
@@ -164,11 +165,12 @@ public static class TextConstants
 
             Dictionary<StageName, string> tutorialTextsRu = new()
             {
-                { StageName.Greetings, "Привет, боец!\r\nМеня зовут Мэг,\r\n я твой водитель.\r\nЯ помогу тебе в твоем первом рейде по Пустоши." },
+                { StageName.Greetings, "Привет, боец!\r\nМеня зовут Мэг, я твой водитель. Я помогу тебе в твоем первом рейде по Пустоши." },
                 { StageName.FirstRaidLaunch, "Наш склад сейчас пуст\r\nи нам срочно требуются ресурсы.\r\nДавай прокатимся за ними." },
                 { StageName.ShowWaveWarning, "Осторожно, нас уже заметили! Советую стрелять по уязвимым местам.\r\nНапример, <color=\"red\">колеса</color> или <color=\"red\">балоны</color>." },
+                { StageName.FirstLevelCompleted, "Это было очень просто!\r\nСледующий рейд будет сложнее, справишься?" },
                 { StageName.ShowLevelStatisticPanel, "Отлично!\r\nМы собрали немного ресурсов." },
-                { StageName.FirstLevelCompleted, "Давай их потратим на улучшение нашего инвентаря." },
+                { StageName.SecondLevelCompleted, "Давай их потратим на улучшение нашего инвентаря." },
                 { StageName.FirstOpenInventory, "Здесь находится панель уже установленного инвентаря. Давай улучшим наше оружие. Нажми на него, чтобы выбрать." },
                 { StageName.ShowUpgradeDiscription, "Здесь вы можете улучшить характеристики." },
                 { StageName.UpgradeRotateSpeed, "Первым делом увеличим скорость поворота.\r\nДля это нужно нажать на кнопку <color=\"green\">“Улучшить”</color> 3 раза." },

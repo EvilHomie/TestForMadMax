@@ -182,6 +182,7 @@ public class TutorialShowStageManager : MonoBehaviour
         _tutorialTextRT.gameObject.SetActive(false);
         _clickableAreaRT.gameObject.SetActive(false);
         _tutorialTextPanel.ConfirmationButton.gameObject.SetActive(false);
+        _fullScreenConfirmButton.gameObject.SetActive(false);
     }
 
     IEnumerator ArrowAnimation(Vector3 startPos, Vector3 endPos)

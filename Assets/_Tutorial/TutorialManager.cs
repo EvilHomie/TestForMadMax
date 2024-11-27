@@ -140,9 +140,6 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-
-
-
 }
 
 [Serializable]
@@ -197,5 +194,6 @@ public enum StageName
     OnLevelFailed,
     ShowInventoryButton,
     ShowLevelStatisticPanel,
-    UpgradeFireRate
+    UpgradeFireRate,
+    SecondLevelCompleted
 }

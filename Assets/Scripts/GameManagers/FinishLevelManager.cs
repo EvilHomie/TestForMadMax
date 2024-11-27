@@ -29,17 +29,18 @@ public class FinishLevelManager : MonoBehaviour
         _viewingAdsYG.customEvents.OpenAd.AddListener(OnAdOpen);
     }
 
-    public void OnFinishLevel(bool isSuccessfully)
+    public void OnFinishLevel(string levelName, bool isSuccessfully)
     {        
-        StartCoroutine(OnLevelFinishLogic(isSuccessfully));
+        StartCoroutine(OnLevelFinishLogic(levelName, isSuccessfully));
         ShowLevelStatusPanel(isSuccessfully);        
     }
 
-    void AditionActionsOnFinishLevel(bool isSuccessfully)
+    void AditionActionsOnFinishLevel(string levelName, bool isSuccessfully)
     {
         if (isSuccessfully)
-        {            
-            TutorialManager.Instance.TryEnableStage(StageName.ShowLevelStatisticPanel);
+        {           
+            if(levelName == "1-1") TutorialManager.Instance.TryEnableStage(StageName.FirstLevelCompleted);
+            else if (levelName == "1-2") TutorialManager.Instance.TryEnableStage(StageName.ShowLevelStatisticPanel);
         }
         else
         {
@@ -47,7 +48,7 @@ public class FinishLevelManager : MonoBehaviour
         }
     }
 
-    IEnumerator OnLevelFinishLogic(bool isSuccessfully)
+    IEnumerator OnLevelFinishLogic(string levelName, bool isSuccessfully)
     {
         yield return new WaitForSeconds(_blackoutDelay);
         float t = 0;
@@ -62,14 +63,14 @@ public class FinishLevelManager : MonoBehaviour
         }
         UILevelStatistic.Instance.ShowStatistic();
         GameManager.Instance.OnReturnToGarage();
-        AditionActionsOnFinishLevel(isSuccessfully);
+        AditionActionsOnFinishLevel(levelName, isSuccessfully);
     }
 
     public void OnCloseLevelStatisicAndOpenInventory()
     {
         _blackoutImage.gameObject.SetActive(false);
         _levelStatusText.transform.parent.gameObject.SetActive(false);
-        TutorialManager.Instance.TryConfirmStage(StageName.FirstLevelCompleted);
+        TutorialManager.Instance.TryConfirmStage(StageName.SecondLevelCompleted);
 
         if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
         {
@@ -86,6 +87,7 @@ public class FinishLevelManager : MonoBehaviour
     {
         _blackoutImage.gameObject.SetActive(false);
         _levelStatusText.transform.parent.gameObject.SetActive(false);
+        TutorialManager.Instance.TryConfirmStage(StageName.FirstLevelCompleted);
 
         if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
         {

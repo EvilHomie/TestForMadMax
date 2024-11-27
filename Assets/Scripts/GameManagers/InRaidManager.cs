@@ -135,7 +135,7 @@ public class InRaidManager : MonoBehaviour
             _onRaid = false;
             MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
-            FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: true);
+            FinishLevelManager.Instance.OnFinishLevel(_selectedLevelInfo.LevelParameters.LevelName, isSuccessfully: true);
             SaveLoadManager.Instance.SaveData();
         }
         else
@@ -150,7 +150,7 @@ public class InRaidManager : MonoBehaviour
         MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Failed);
         StartCoroutine(ChangeSpeedOnDie());
         EnemySpawner.Instance.OnPLayerDie();
-        FinishLevelManager.Instance.OnFinishLevel(isSuccessfully: false);
+        FinishLevelManager.Instance.OnFinishLevel(_selectedLevelInfo.LevelParameters.LevelName, isSuccessfully: false);
     }
 
     IEnumerator ChangeSpeedOnDie()
