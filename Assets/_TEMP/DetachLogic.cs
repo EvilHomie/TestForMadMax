@@ -33,8 +33,10 @@ public class DetachLogic : MonoBehaviour
             Vector3 dir = _detachDirection switch
             {
                 ReboundDirection.X => transform.right,
+                ReboundDirection.XReverse => -transform.right,
                 ReboundDirection.Y => transform.up,
-                ReboundDirection.Z => transform.forward,
+                ReboundDirection.Z => Vector3.forward,
+                ReboundDirection.ZReverse => -Vector3.forward,
                 ReboundDirection.XY => transform.right + Vector3.up,
                 ReboundDirection.XZ => transform.right + Vector3.forward,
                 ReboundDirection.YZ => transform.up + Vector3.forward,

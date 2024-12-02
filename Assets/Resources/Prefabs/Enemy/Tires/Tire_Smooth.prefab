@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6973c775d6bcd754f9ada1be662a58b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detachDirection: 0
+  _detachDirection: 2
   _detachForceValue: 500
   _detachTorqueValue: 15
   _onAditionCollideForce: 50

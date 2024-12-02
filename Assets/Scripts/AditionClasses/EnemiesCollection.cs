@@ -9,6 +9,7 @@ public class EnemiesCollection : MonoBehaviour
 
     Dictionary<EnemyType, EnemyVehicleManager> _enemyVehiclesSuperEasy;
     Dictionary<EnemyType, EnemyVehicleManager> _enemyVehiclesVeryEasy;
+    Dictionary<EnemyType, EnemyVehicleManager> _enemyVehiclesEasy;
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -27,6 +28,9 @@ public class EnemiesCollection : MonoBehaviour
 
         EnemyVehicleManager[] veryEasyEnemies = Resources.LoadAll<EnemyVehicleManager>("Prefabs/Enemy/Vehicles/VeryEasy");
         _enemyVehiclesVeryEasy = veryEasyEnemies.ToDictionary(vehicle => vehicle.EnemyType, vehicle => vehicle);
+
+        EnemyVehicleManager[] easyEnemies = Resources.LoadAll<EnemyVehicleManager>("Prefabs/Enemy/Vehicles/Easy");
+        _enemyVehiclesEasy = easyEnemies.ToDictionary(vehicle => vehicle.EnemyType, vehicle => vehicle);
     }
 
     public EnemyVehicleManager GetEnemyPF(EnemyType enemyType, EnemyLevel enemyLevel)
@@ -35,6 +39,7 @@ public class EnemiesCollection : MonoBehaviour
         {
             EnemyLevel.SuperEasy => _enemyVehiclesSuperEasy[enemyType],
             EnemyLevel.VeryEasy => _enemyVehiclesVeryEasy[enemyType],
+            EnemyLevel.Easy => _enemyVehiclesEasy[enemyType],
             _ => null
         };
     }
@@ -59,14 +64,15 @@ public class WaveEnemie
 
 public enum EnemyType
 {
-    Buggy,
-    Mustang,
-    Minibus,
-    Pickup,
-    Truck
+    HP_lDMG_h,
+    HP_mDMG_m,
+    HP_hDMG_m,
+    HP_hDMG_l,
+    Boss
 }
 public enum EnemyLevel
 {
     SuperEasy,
-    VeryEasy
+    VeryEasy,
+    Easy
 }

@@ -97,5 +97,7 @@ public enum ReboundDirection
     Z,
     XY,
     XZ,
-    YZ
+    YZ,
+    XReverse,
+    ZReverse
 }

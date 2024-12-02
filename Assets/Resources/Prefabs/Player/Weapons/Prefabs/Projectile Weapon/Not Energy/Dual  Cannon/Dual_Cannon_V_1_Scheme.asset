@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db6465a4a525b44e8ada2409ef3604d, type: 3}
   m_Name: Dual_Cannon_V_1_Scheme
   m_EditorClassIdentifier: 
-  copperAmountForUnlock: 50
-  wiresAmountForUnlock: 50
-  scrapMetalAmountForUnlock: 50
+  copperAmountForUnlock: 100
+  wiresAmountForUnlock: 100
+  scrapMetalAmountForUnlock: 100
   weaponData: {fileID: 11400000, guid: d392fc143a428104cb163ef3a6ff06a5, type: 2}
   dropChanceIfDuplicate: 5
