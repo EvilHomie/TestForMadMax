@@ -15,6 +15,7 @@ MonoBehaviour:
   _weapons:
   - {fileID: -5013337906677554371, guid: 9c5bd48f331aaec44b4b77dd81bf55f8, type: 3}
   - {fileID: -7435112072028318016, guid: 6e062b7a3c161484a83c174be286739e, type: 3}
+  - {fileID: -5013337906677554371, guid: 7005b7b638f67f440a3d6b4340b6a456, type: 3}
   _itemsSpritesAtlas: {fileID: 100100200, guid: 8ba0462ead0b4d54596dae3a30bd14b9,
     type: 3}
   _playerVehicles:
@@ -25,3 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8981695e2d38b8945a8f31bf9222e42b, type: 2}
   - {fileID: 11400000, guid: c7fc99659d110d649ad3d4ab0486a756, type: 2}
   - {fileID: 11400000, guid: 25e35f31b8b5f204581064656248db82, type: 2}
+  - {fileID: 11400000, guid: 5312b30dfffb5d34ca0800e3bfbc388f, type: 2}

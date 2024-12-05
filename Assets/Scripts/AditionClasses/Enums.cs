@@ -20,7 +20,9 @@ public enum WeaponType
 {
     SingleBarreled,
     MultyBarreled,
-    Beam
+    Beam,
+    RotatingSingle,
+    RotatingMuly
 }
 
 public enum Raritie

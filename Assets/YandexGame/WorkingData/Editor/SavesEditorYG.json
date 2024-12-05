@@ -1,5 +1,5 @@
 {
-  "idSave": 75,
+  "idSave": 51,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -20,36 +20,36 @@
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 5,
+      "hullDmgCurLvl": 2,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
       "fireRateByLvl": 0.5,
-      "fireRateCurtLvl": 6,
+      "fireRateCurtLvl": 4,
       "fireRateMaxLvl": 6,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 6,
+      "rotationSpeedCurLvl": 2,
       "rotationSpeedMaxLvl": 6
     },
     {
-      "deffWeaponName": "Dual_Cannon_V_1",
-      "weaponNameEN": "Dual Cannon",
-      "weaponNameRU": "Двойная Пушка",
-      "weaponType": 1,
+      "deffWeaponName": "MiniGun_V_1",
+      "weaponNameEN": "MiniGun",
+      "weaponNameRU": "Пулемет",
+      "weaponType": 3,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 8,
-      "hullDmgMaxLvl": 8,
+      "hullDmgCurLvl": 2,
+      "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
-      "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 4,
-      "fireRateMaxLvl": 4,
+      "fireRateByLvl": 2.0,
+      "fireRateCurtLvl": 10,
+      "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 8,
-      "rotationSpeedMaxLvl": 8
+      "rotationSpeedCurLvl": 2,
+      "rotationSpeedMaxLvl": 6
     }
   ],
   "vehiclesData": [
@@ -69,36 +69,22 @@
       "shieldRegenMaxLvl": 0,
       "curWeaponsCount": 1,
       "maxWeaponsCount": 1
-    },
-    {
-      "deffVehicleName": "Advanced_Truck_V_1",
-      "vehicleNameEN": "Advanced Truck",
-      "vehicleNameRU": "Улучшенный Грузовик",
-      "vehicleRaritie": 0,
-      "hullHPByLvl": 75.0,
-      "hullHPCurLvl": 4,
-      "hullHPMaxLvl": 4,
-      "shieldHPByLvl": 25.0,
-      "shieldHPCurLvl": 2,
-      "shieldHPMaxLvl": 2,
-      "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 3,
-      "shieldRegenMaxLvl": 3,
-      "curWeaponsCount": 1,
-      "maxWeaponsCount": 1
     }
   ],
-  "schemesNames": [],
+  "schemesNames": [
+    "Dual_Cannon_V_1_Scheme",
+    "Advanced_Truck_V_1_Scheme"
+  ],
   "availableResources": {
-    "Сopper": 2680,
-    "Wires": 2602,
-    "ScrapMetal": 2252
+    "Сopper": 2763,
+    "Wires": 2735,
+    "ScrapMetal": 2704
   },
   "equipedItems": {
-    "0": "Advanced_Truck_V_1",
-    "1": "Dual_Cannon_V_1"
+    "0": "Simple_Truck_V_1",
+    "1": "MiniGun_V_1"
   },
-  "lastSelectedLevelName": "2-6",
+  "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",
@@ -123,10 +109,5 @@
     "3-1"
   ],
   "tutorilaIsComplete": true,
-  "completedTutorialStages": [
-    1,
-    2,
-    3,
-    4
-  ]
+  "completedTutorialStages": []
 }
