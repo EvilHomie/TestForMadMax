@@ -6,7 +6,8 @@ public enum EnumVehiclePart
     Wheel,
     ExplosivePart,
     HeadLight,
-    ArmoredPart
+    ArmoredPart,
+    BigWheel
 }
 
 public enum ResourcesType

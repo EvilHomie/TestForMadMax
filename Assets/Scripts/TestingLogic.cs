@@ -11,12 +11,14 @@ public class TestingLogic : MonoBehaviour
     [SerializeField] TextMeshProUGUI _log;
     [SerializeField] Button _reset;
     [SerializeField] Button _ADD;
+    [SerializeField] Button _unlock;
     int _fps = 0;
     string _strFPS;
     private void Awake()
     {
         _reset.onClick.AddListener(ResetProgress);
-        _ADD.onClick.AddListener(ADD);
+        _ADD.onClick.AddListener(UnlockAllData);
+        //_unlock.onClick.AddListener(UnlockAllData);
     }
 
     private void Start()
@@ -32,7 +34,7 @@ public class TestingLogic : MonoBehaviour
     {
         //ResetProgress(_TESTdeffaultItemsNames);
         UIResourcesManager.Instance.AddResources(3000, 3000, 3000);
-        PlayerData.Instance.UnlockedLevelsNames = new() { "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9", "2-10" };
+        PlayerData.Instance.UnlockedLevelsNames = new() { "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9", "2-10", "3-1" };
     }
 
 

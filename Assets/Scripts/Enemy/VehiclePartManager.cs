@@ -45,6 +45,10 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
                 _hullHP = _enemyCharacteristics.WheelHP;
                 _shieldHP = _enemyCharacteristics.WheelShieldHP;
                 break;
+            case EnumVehiclePart.BigWheel:
+                _hullHP = _enemyCharacteristics.ArmoredPartHP;
+                _shieldHP = _enemyCharacteristics.ArmoredPartShieldHP;
+                break;
             case EnumVehiclePart.ExplosivePart:
                 _hullHP = _enemyCharacteristics.ExplosivePartHP;
                 _shieldHP = _enemyCharacteristics.ExplosivePartShieldHP;
@@ -83,6 +87,10 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
                 _enemyVehicleManager.Wheels.Add(transform);
                 if (_isFrontWheel) _enemyVehicleManager.FrontWheels.Add(transform);
                 break;
+            case EnumVehiclePart.BigWheel:
+                _enemyVehicleManager.Wheels.Add(transform);
+                if (_isFrontWheel) _enemyVehicleManager.FrontWheels.Add(transform);
+                break;
             case EnumVehiclePart.Weapon:
                 _enemyVehicleManager.Weapons.Add(GetComponent<EnemyWeapon>());
                 break;
@@ -97,7 +105,7 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
         if (hitSound != null) _enemyVehicleManager.VehicleAudioSource.PlayOneShot(hitSound);
         if (_partIsDestroyed) return;
 
-        
+
         if (_shieldHP > 0)
         {
             _shieldHP -= shieldDmgValue;
@@ -141,8 +149,7 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
         UILevelStatistic.Instance.OnPartDestroyed(_vehiclePart);
         if (_vehiclePart != EnumVehiclePart.Body)
         {
-            DetachLogic detachLogic = GetComponent<DetachLogic>();
-            detachLogic?.Detach();
+            if (TryGetComponent<DetachLogic>(out var detachLogic)) detachLogic.Detach();
         }
         if (_vehiclePart == EnumVehiclePart.Body)
         {
@@ -154,6 +161,10 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
             _enemyVehicleManager.OnWeaponLossHP(gameObject);
         }
         else if (_vehiclePart == EnumVehiclePart.Wheel)
+        {
+            _enemyVehicleManager.OnLooseWheel(_isFrontWheel);
+        }
+        else if (_vehiclePart == EnumVehiclePart.BigWheel)
         {
             _enemyVehicleManager.OnLooseWheel(_isFrontWheel);
         }

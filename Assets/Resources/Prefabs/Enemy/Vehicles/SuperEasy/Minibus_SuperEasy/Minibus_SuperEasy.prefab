@@ -81,6 +81,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2705381680012792343}
     m_Modifications:
+    - target: {fileID: -1556961152887830756, guid: a405fba2ac172564ead531a1c7bef3f3,
+        type: 3}
+      propertyPath: _detachDirection
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1337652842795231684, guid: a405fba2ac172564ead531a1c7bef3f3,
         type: 3}
       propertyPath: _isFrontWheel
@@ -629,6 +634,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Minibus_SuperEasy
       objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[0]._amount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[1]._amount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[2]._amount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[0]._dropChance
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[1]._dropChance
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829557243180117898, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
+        type: 3}
+      propertyPath: _resources.Array.data[2]._dropChance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3166818438165545966, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -848,6 +883,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2705381680012792343}
     m_Modifications:
+    - target: {fileID: -1556961152887830756, guid: a405fba2ac172564ead531a1c7bef3f3,
+        type: 3}
+      propertyPath: _detachDirection
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2348128879579254854, guid: a405fba2ac172564ead531a1c7bef3f3,
         type: 3}
       propertyPath: m_LocalPosition.x

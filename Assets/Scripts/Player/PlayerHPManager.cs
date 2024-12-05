@@ -77,7 +77,7 @@ public class PlayerHPManager : MonoBehaviour
 
             if (_playerShieldHP < 0)
             {
-                _playerHullHP -= hullDmgValue + _playerShieldHP;
+                _playerHullHP -= hullDmgValue -  (hullDmgValue +_playerShieldHP);
                 UILevelStatistic.Instance.OnDamageRecieved(hullDmgValue + _playerShieldHP, -_playerShieldHP);
                 _playerShieldHP = 0;
             }

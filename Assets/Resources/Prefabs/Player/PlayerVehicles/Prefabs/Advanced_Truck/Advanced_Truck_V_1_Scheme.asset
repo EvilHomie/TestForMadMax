@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e796c816fb21d144b16e8f4857f5ca5, type: 3}
   m_Name: Advanced_Truck_V_1_Scheme
   m_EditorClassIdentifier: 
-  copperAmountForUnlock: 150
-  wiresAmountForUnlock: 125
-  scrapMetalAmountForUnlock: 100
+  copperAmountForUnlock: 250
+  wiresAmountForUnlock: 250
+  scrapMetalAmountForUnlock: 250
   vehicleData: {fileID: 11400000, guid: 8664fe69a15391f458ec6670fc7fe59b, type: 2}
   dropChanceIfDuplicate: 0
