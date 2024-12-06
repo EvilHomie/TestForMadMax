@@ -65,7 +65,7 @@ public class WeaponLogic : MonoBehaviour
             if (Time.time >= _nextTimeTofire)
             {
                 CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
-                _firePointManagers[0].SimpleShootEffect(_shootSound, CurFireRate, true);
+                _firePointManagers[0].SimpleShoot(_shootSound, CurFireRate, true);
                 if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -88,7 +88,7 @@ public class WeaponLogic : MonoBehaviour
 
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].SimpleShootEffect(_shootSound, CurFireRate, true);
+                _firePointManagers[_lastShootBarrelNumber].SimpleShoot(_shootSound, CurFireRate, true);
                 if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -109,7 +109,7 @@ public class WeaponLogic : MonoBehaviour
             if (Time.time >= _nextTimeTofire)
             {
                 CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
-                _firePointManagers[0].RotateShootEffect(_shootSound, CurFireRate, true);
+                _firePointManagers[0].RotateShoot(_shootSound, CurFireRate, true);
                 if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -132,7 +132,7 @@ public class WeaponLogic : MonoBehaviour
 
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].RotateShootEffect(_shootSound, CurFireRate, true);
+                _firePointManagers[_lastShootBarrelNumber].RotateShoot(_shootSound, CurFireRate, true);
                 if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
                 {
                     hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
@@ -153,7 +153,7 @@ public class WeaponLogic : MonoBehaviour
         {
             if (Time.time >= _nextTimeTofire)
             {
-                _firePointManagers[0].SimpleShootEffect(_shootSound, CurFireRate);               
+                _firePointManagers[0].SimpleShoot(_shootSound, CurFireRate);               
                 PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
 
 
@@ -172,7 +172,7 @@ public class WeaponLogic : MonoBehaviour
             {
                 if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].SimpleShootEffect(_shootSound, CurFireRate);
+                _firePointManagers[_lastShootBarrelNumber].SimpleShoot(_shootSound, CurFireRate);
                 PlayerHPManager.Instance.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
 
                 _lastShootBarrelNumber++;

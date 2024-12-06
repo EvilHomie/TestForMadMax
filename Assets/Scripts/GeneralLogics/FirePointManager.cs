@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FirePointManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class FirePointManager : MonoBehaviour
     Coroutine _slowDownRotateCoroutine;
     float _rotationSpeed;
     float _rotationMod = 90;
+
+    bool _isShooting;
     private void Awake()
     {
         soundSource = GetComponent<AudioSource>();
@@ -22,7 +25,7 @@ public class FirePointManager : MonoBehaviour
     {
         _barrelDefPos = transform.parent.localPosition;
     }
-    public void SimpleShootEffect(AudioClip shootSound, float fireRate, bool withAnimation = false)
+    public void SimpleShoot(AudioClip shootSound, float fireRate, bool withAnimation = false)
     {
         ShootEffects(shootSound);
         if (withAnimation)
@@ -31,24 +34,10 @@ public class FirePointManager : MonoBehaviour
         }
     }
 
-    public void RotateShootEffect(AudioClip shootSound, float fireRate, bool withAnimation = false)
+    public void RotateShoot(AudioClip shootSound, float fireRate, bool withAnimation = false)
     {
-
-        //foreach (var particleSystem in _particleSystems)
-        //{
-        //    particleSystem.Emit(1);
-        //}
-        //soundSource.PlayOneShot(shootSound);
-        if (_slowDownRotateCoroutine != null)
-        {
-            StopCoroutine(_slowDownRotateCoroutine);
-        }
-
-
-        if (withAnimation && _rotateCoroutine == null)
-        {
-            _rotateCoroutine = StartCoroutine(BarrelRotateAnimation(shootSound, fireRate));
-        }
+        _isShooting = true;
+        _rotateCoroutine ??= StartCoroutine(ChangeRotationSpeed(shootSound, fireRate));
     }
 
     IEnumerator BarrelShootAnimation(float fireRate)
@@ -67,56 +56,38 @@ public class FirePointManager : MonoBehaviour
         }
     }
 
-    IEnumerator BarrelRotateAnimation(AudioClip shootSound, float fireRate)
+    IEnumerator ChangeRotationSpeed(AudioClip shootSound, float fireRate)
     {
-        float rotateSpeedMod = 0;
-
-        while (rotateSpeedMod < 1)
-        {
-            rotateSpeedMod += Time.deltaTime;
-            _rotationSpeed = fireRate * _rotationMod * _animationCurve.Evaluate(rotateSpeedMod) * Time.deltaTime;            
-            _animationT.Rotate(Vector3.forward, -_rotationSpeed);
-            yield return null;
-        }
-        ShootEffects(shootSound);
-        float nextTimeTofire = Time.time + 1f / fireRate;
+        float t = 0;
 
         while (true)
         {
-            _animationT.Rotate(Vector3.forward, -_animationCurve.Evaluate(rotateSpeedMod) * _rotationMod * fireRate * Time.deltaTime);
-            if (Time.time > nextTimeTofire)
+            if (_isShooting)
+            {
+                t += Time.deltaTime;
+                if (t >= 1) t = 1;
+            }
+            else
+            {
+                t -= Time.deltaTime;
+                if (t <= 0) t = 0;
+            }
+            _rotationSpeed = fireRate * _rotationMod * _animationCurve.Evaluate(t) * Time.deltaTime;
+            _animationT.Rotate(Vector3.forward, -_rotationSpeed);
+            if (t <= 0)
+            {
+                _rotateCoroutine = null;
+                yield break;
+            }
+            else if (t >= 1)
             {
                 ShootEffects(shootSound);
-                nextTimeTofire = Time.time + 1f / fireRate;
+                yield return new WaitForSeconds(1 / fireRate);
             }
+
             yield return null;
         }
     }
-
-    //IEnumerator SpeedUpRotation()
-    //{
-
-    //}
-
-    IEnumerator SlowDownRotation()
-    {
-        float t = 0;
-        float incomeRotateSpeed = _rotationSpeed;
-
-        while (t < 1)
-        {
-            t += Time.deltaTime;
-
-            _animationT.Rotate(Vector3.forward, -Mathf.Lerp(incomeRotateSpeed, 0 , t));
-
-            //_rotationSpeed *= _animationCurve.Evaluate(1 - t) * Time.deltaTime;
-
-            //Debug.LogWarning(_rotationSpeed);
-            //_animationT.Rotate(Vector3.forward, -_rotationSpeed);
-            yield return null;
-        }
-    }
-
 
     void ShootEffects(AudioClip shootSound)
     {
@@ -125,16 +96,16 @@ public class FirePointManager : MonoBehaviour
             particleSystem.Emit(1);
         }
         soundSource.PlayOneShot(shootSound);
+        //if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
+        //{
+        //    hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+        //    Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
+        //    hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
+        //}
     }
 
     public void StopShooting()
     {
-        if (_rotateCoroutine != null)
-        {
-            StopCoroutine(_rotateCoroutine);
-            _rotateCoroutine = null;
-        }
-
-        _slowDownRotateCoroutine = StartCoroutine(SlowDownRotation());
+        _isShooting = false;
     }
 }

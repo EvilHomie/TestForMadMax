@@ -1,5 +1,5 @@
 {
-  "idSave": 51,
+  "idSave": 62,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -76,9 +76,9 @@
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 2763,
-    "Wires": 2735,
-    "ScrapMetal": 2704
+    "Сopper": 2766,
+    "Wires": 2740,
+    "ScrapMetal": 2709
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
