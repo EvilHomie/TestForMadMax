@@ -34,7 +34,7 @@ public class UIJoystickTouchController : MonoBehaviour
 
         if (YandexGame.EnvironmentData.isDesktop)
         {
-            _PCVersion = true;            
+            _PCVersion = true;
 
             foreach (var icon in _weaponIcons)
             {
@@ -57,7 +57,7 @@ public class UIJoystickTouchController : MonoBehaviour
     }
     private void Update()
     {
-        //if (!_PCVersion) return;
+        if (GameFlowManager.GameFlowState == GameFlowState.PAUSE) return;
         if (!_controllerIsAcive) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -120,7 +120,7 @@ public class UIJoystickTouchController : MonoBehaviour
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
-        
+
     }
 
     public void OnStartRaid(float delay)

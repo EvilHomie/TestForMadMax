@@ -103,14 +103,12 @@ public class FinishLevelManager : MonoBehaviour
     void StartNewRaidOnCloseAD()
     {
         GameManager.Instance.OnStartRaid();
-        //Debug.Log("NEW RAID AFTER AD");
         _viewingAdsYG.customEvents.CloseAd.RemoveListener(StartNewRaidOnCloseAD);
     }
 
     void OpenInventoryOnCloseAD()
     {
         InventoryManager.Instance.OnOpenInventory();
-        //Debug.Log("NEW RAID AFTER AD");
         _viewingAdsYG.customEvents.CloseAd.RemoveListener(OpenInventoryOnCloseAD);
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using YG;
 
 public class PlayerHPManager : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class PlayerHPManager : MonoBehaviour
     [SerializeField] float _playerHullHP;
     [SerializeField] float _playerShieldHP;
     [SerializeField] float _playerShieldRegRate;
-    
+
 
     [SerializeField] float _onHitShakeIntensity;
     [SerializeField] AudioSource _musicAudioSource;
@@ -20,6 +21,7 @@ public class PlayerHPManager : MonoBehaviour
 
     bool _onRaid = false;
     bool _isDead = false;
+    bool _restoreOfferWasProposed = false;
 
     public bool IsDead => _isDead;
 
@@ -44,11 +46,12 @@ public class PlayerHPManager : MonoBehaviour
         _maxHullHp = _playerHullHP;
         _onRaid = true;
         _isDead = false;
+        _restoreOfferWasProposed = false;
         _musicAudioSource.Play();
     }
 
     public void OnPlayerEndRaid()
-    { 
+    {
         _onRaid = false;
         _musicAudioSource.Stop();
     }
@@ -77,7 +80,7 @@ public class PlayerHPManager : MonoBehaviour
 
             if (_playerShieldHP < 0)
             {
-                _playerHullHP -= hullDmgValue -  (hullDmgValue +_playerShieldHP);
+                _playerHullHP -= hullDmgValue - (hullDmgValue + _playerShieldHP);
                 UILevelStatistic.Instance.OnDamageRecieved(hullDmgValue + _playerShieldHP, -_playerShieldHP);
                 _playerShieldHP = 0;
             }
@@ -92,18 +95,49 @@ public class PlayerHPManager : MonoBehaviour
             UILevelStatistic.Instance.OnDamageRecieved(hullDmgValue, 0);
         }
 
+        if (_playerHullHP <= _maxHullHp * 0.1f && !_restoreOfferWasProposed)
+        {
+            _restoreOfferWasProposed = true;
+            RewardedAdManager.Instance.ShowRewardOffer(OnSelectRewardOption, RewardName.RestoreHP);
+            return;
+        }
+
         if (_playerHullHP <= 0)
         {
             _isDead = true;
             OnPlayerVehicleDestroyed();
         }
+        //RewardedAdManager.Instance.OpenRewardAd(RewardName.RestoreHP);
     }
+
+    void OnSelectRewardOption(bool GetRewardStatus)
+    {
+        if(GetRewardStatus)
+        {
+            RestoreHP();
+        }
+        else
+        {
+            if (_playerHullHP <= 0)
+            {
+                _isDead = true;
+                OnPlayerVehicleDestroyed();
+            }
+        }
+    }
+
+
 
     void OnPlayerVehicleDestroyed()
     {
         _explosionPS.Play();
         _hitAudioSource.PlayOneShot(_onDieExplosionSound);
         InRaidManager.Instance.OnPLayerDie();
-        PlayerWeaponManager.Instance.OnPlayerDie();        
+        PlayerWeaponManager.Instance.OnPlayerDie();
+    }
+
+    void RestoreHP()
+    {
+        _playerHullHP = _maxHullHp / 2;
     }
 }

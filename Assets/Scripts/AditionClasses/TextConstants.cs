@@ -70,6 +70,8 @@ public static class TextConstants
     public static string WAVEISAPPROACHING = "Wave is approaching";
     public static string BOSSISAPPROACHING = "Boss is approaching";
     public static string COMBO = "Combo";
+    public static string ACCEPT = "ACCEPT";
+    public static string CANCEL = "CANCEL";
 
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
@@ -85,6 +87,12 @@ public static class TextConstants
             { StageName.UpgradeFireRate, "Now you need to improve your shooting speed.\r\nPress <color=\"green\">“Improve”</color> 2 times." },
             { StageName.WishGoodluck, "All right,\r\nwe're ready for the next raid!" }
         };
+
+    public static Dictionary<RewardName, string> _rewardText = new()
+    {
+        {RewardName.RestoreHP, "You are almost destroyed. Restore half of the hull HitPoints for watching an ad?" }
+    };
+
     public static void SetLanguage()
     {
         string language = YandexGame.EnvironmentData.language;
@@ -161,6 +169,8 @@ public static class TextConstants
             WAVEISAPPROACHING = "Приближается Волна";
             BOSSISAPPROACHING = "Приближается Босс";
             COMBO = "Комбо";
+            ACCEPT = "Хорошо";
+            CANCEL = "Нет";
 
 
             Dictionary<StageName, string> tutorialTextsRu = new()
@@ -179,6 +189,12 @@ public static class TextConstants
             };
 
             TUTORIALSTAGESTEXTS = tutorialTextsRu;
+
+            Dictionary<RewardName, string> rewardTextRu = new()
+            {
+                {RewardName.RestoreHP, "Вас почти уничтожили. Восстановить половину прочности корпуса за просмотр рекламы?" }
+            };
+            _rewardText = rewardTextRu;
         }
     }
 }
