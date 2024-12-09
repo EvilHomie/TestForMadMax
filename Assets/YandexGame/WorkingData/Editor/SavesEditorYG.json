@@ -1,5 +1,5 @@
 {
-  "idSave": 6,
+  "idSave": 10,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -69,7 +69,7 @@
   "unlockedLevelsNames": [
     "1-1"
   ],
-  "tutorilaIsComplete": false,
+  "tutorilaIsComplete": true,
   "completedTutorialStages": [
     1,
     2,

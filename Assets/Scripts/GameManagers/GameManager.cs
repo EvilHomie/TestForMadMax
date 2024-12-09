@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.Init();
         PlayerHPManager.Instance.Init();
         UIEnemyHpPanel.Instance.Init();
+        RewardedAdManager.Instance.Init();
 
         SwitchUIButton(true);
         _settingsBtn.gameObject.SetActive(false);
