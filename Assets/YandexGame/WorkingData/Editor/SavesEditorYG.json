@@ -1,5 +1,5 @@
 {
-  "idSave": 178,
+  "idSave": 36,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -39,36 +39,17 @@
       "weaponType": 3,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 2,
+      "hullDmgCurLvl": 5,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
-      "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 5,
+      "fireRateByLvl": 2.0,
+      "fireRateCurtLvl": 10,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 2,
+      "rotationSpeedCurLvl": 6,
       "rotationSpeedMaxLvl": 6
-    },
-    {
-      "deffWeaponName": "Dual_Cannon_V_1",
-      "weaponNameEN": "Dual Cannon",
-      "weaponNameRU": "Двойная Пушка",
-      "weaponType": 1,
-      "weaponRaritie": 0,
-      "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 8,
-      "hullDmgMaxLvl": 8,
-      "shieldDmgByLvl": 0.0,
-      "shieldDmgCurLvl": 0,
-      "shieldDmgMaxLvl": 0,
-      "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 4,
-      "fireRateMaxLvl": 4,
-      "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 8,
-      "rotationSpeedMaxLvl": 8
     }
   ],
   "vehiclesData": [
@@ -78,7 +59,7 @@
       "vehicleNameRU": "Простой Грузовик",
       "vehicleRaritie": 0,
       "hullHPByLvl": 50.0,
-      "hullHPCurLvl": 5,
+      "hullHPCurLvl": 1,
       "hullHPMaxLvl": 5,
       "shieldHPByLvl": 0.0,
       "shieldHPCurLvl": 0,
@@ -91,18 +72,19 @@
     }
   ],
   "schemesNames": [
+    "Dual_Cannon_V_1_Scheme",
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 2642,
-    "Wires": 2514,
-    "ScrapMetal": 2230
+    "Сopper": 2775,
+    "Wires": 2728,
+    "ScrapMetal": 2649
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
     "1": "MiniGun_V_1"
   },
-  "lastSelectedLevelName": "1-10",
+  "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",

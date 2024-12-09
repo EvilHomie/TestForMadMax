@@ -33,11 +33,12 @@ public class WeaponLogic : MonoBehaviour
         }
         else if (weaponType == WeaponType.RotatingSingle)
         {
-            StartCoroutine(RotateSingleBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, hitFXEffect));
+            CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
+            _firePointManagers[0].RotateShoot(_shootSound, CurFireRate, hitFXEffect, CurHullDmg, CurShieldDmg, _hitSound);
         }
         else if (weaponType == WeaponType.RotatingSingle)
         {
-            StartCoroutine(RotateMultyBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, _firePointManagers.Length, hitFXEffect));
+            //StartCoroutine(RotateMultyBarreledShootAsPlayer(shakeOnShootDuration, shakeOnShootIntensity, _firePointManagers.Length, hitFXEffect));
         }
     }
 
@@ -102,49 +103,48 @@ public class WeaponLogic : MonoBehaviour
         }
     }
 
-    IEnumerator RotateSingleBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, ParticleSystem hitFXEffect)
-    {
-        while (_isShooting)
-        {
-            if (Time.time >= _nextTimeTofire)
-            {
-                CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
-                _firePointManagers[0].RotateShoot(_shootSound, CurFireRate, true);
-                if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
-                {
-                    hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
-                    Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
-                    hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
-                }
-                _nextTimeTofire = Time.time + 1f / CurFireRate;
-            }
-            yield return null;
-        }
-    }
+    //IEnumerator RotateSingleBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, ParticleSystem hitFXEffect)
+    //{
+    //    while (_isShooting)
+    //    {
+    //        if (Time.time >= _nextTimeTofire)
+    //        {
+                
+    //            if (Physics.Raycast(_firePointManagers[0].transform.position, _firePointManagers[0].transform.forward, out RaycastHit hitInfo))
+    //            {
+    //                hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+    //                Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
+    //                hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
+    //            }
+    //            _nextTimeTofire = Time.time + 1f / CurFireRate;
+    //        }
+    //        yield return null;
+    //    }
+    //}
 
-    IEnumerator RotateMultyBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, float barrelCount, ParticleSystem hitFXEffect)
-    {
-        while (_isShooting)
-        {
-            if (Time.time >= _nextTimeTofire)
-            {
-                CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
+    //IEnumerator RotateMultyBarreledShootAsPlayer(float shakeOnShootDuration, float shakeOnShootIntensity, float barrelCount, ParticleSystem hitFXEffect)
+    //{
+    //    while (_isShooting)
+    //    {
+    //        if (Time.time >= _nextTimeTofire)
+    //        {
+    //            CameraManager.Instance.Shake(shakeOnShootDuration, shakeOnShootIntensity);
 
-                if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
+    //            if (_lastShootBarrelNumber >= barrelCount) _lastShootBarrelNumber = 0;
 
-                _firePointManagers[_lastShootBarrelNumber].RotateShoot(_shootSound, CurFireRate, true);
-                if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
-                {
-                    hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
-                    Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
-                    hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
-                }
-                _lastShootBarrelNumber++;
-                _nextTimeTofire = Time.time + 1f / CurFireRate;
-            }
-            yield return null;
-        }
-    }
+    //            _firePointManagers[_lastShootBarrelNumber].RotateShoot(_shootSound, CurFireRate, true);
+    //            if (Physics.Raycast(_firePointManagers[_lastShootBarrelNumber].transform.position, _firePointManagers[_lastShootBarrelNumber].transform.forward, out RaycastHit hitInfo))
+    //            {
+    //                hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+    //                Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
+    //                hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
+    //            }
+    //            _lastShootBarrelNumber++;
+    //            _nextTimeTofire = Time.time + 1f / CurFireRate;
+    //        }
+    //        yield return null;
+    //    }
+    //}
 
     IEnumerator SingleBarreledShootAsBot()
     {

@@ -33,10 +33,10 @@ public class FirePointManager : MonoBehaviour
         }
     }
 
-    public void RotateShoot(AudioClip shootSound, float fireRate, bool withAnimation = false)
+    public void RotateShoot(AudioClip shootSound, float fireRate, ParticleSystem hitFXEffect, float CurHullDmg, float CurShieldDmg, AudioClip hitSound)
     {
         _isShooting = true;
-        _rotateCoroutine ??= StartCoroutine(MiniGunShootLogic(shootSound, fireRate));
+        _rotateCoroutine ??= StartCoroutine(MiniGunShootLogic(shootSound, fireRate, hitFXEffect, CurHullDmg, CurShieldDmg, hitSound));
     }
 
     IEnumerator BarrelShootAnimation(float fireRate)
@@ -55,7 +55,7 @@ public class FirePointManager : MonoBehaviour
         }
     }
 
-    IEnumerator MiniGunShootLogic(AudioClip shootSound, float fireRate)
+    IEnumerator MiniGunShootLogic(AudioClip shootSound, float fireRate, ParticleSystem hitFXEffect, float CurHullDmg, float CurShieldDmg, AudioClip _hitSound)
     {
         float t = 0;
         float lastShootTime = 0;
@@ -117,6 +117,14 @@ public class FirePointManager : MonoBehaviour
             {
                 if (Time.time > lastShootTime)
                 {
+                    if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo))
+                    {
+                        hitInfo.collider.GetComponent<IDamageable>()?.OnHit(CurHullDmg, CurShieldDmg, _hitSound);
+                        Instantiate(hitFXEffect, hitInfo.point, hitFXEffect.transform.rotation);
+                        hitInfo.collider.GetComponent<IHitable>()?.OnHit(hitInfo.point, _hitSound);
+                    }
+
+
                     ShootEffects(shootSound, false);
                     lastShootTime = Time.time + 1 / fireRate;
                 }
