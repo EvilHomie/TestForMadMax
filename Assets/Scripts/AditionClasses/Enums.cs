@@ -22,7 +22,7 @@ public enum WeaponType
     MultyBarreled,
     Beam,
     RotatingSingle,
-    RotatingMuly
+    RotatingMulty
 }
 
 public enum Raritie

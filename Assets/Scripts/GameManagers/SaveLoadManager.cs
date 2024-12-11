@@ -6,7 +6,7 @@ using YG;
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
-    string[] _deffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Dual_Cannon_V_1_Scheme", "Simple_Truck_V_1", "Advanced_Truck_V_1_Scheme", "MiniGun_V_1_Scheme" };
+    string[] _deffaultItemsNames = new string[] { "Simple_Cannon_V_1", "Dual_Cannon_V_1_Scheme", "Simple_Truck_V_1", "Advanced_Truck_V_1_Scheme", "MiniGun_V_1_Scheme", "Dual_MiniGun_V_1_Scheme" };
 
     [SerializeField] bool resetProgressRequired = false;
 

@@ -1,5 +1,5 @@
 {
-  "idSave": 36,
+  "idSave": 9,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -33,22 +33,22 @@
       "rotationSpeedMaxLvl": 6
     },
     {
-      "deffWeaponName": "MiniGun_V_1",
-      "weaponNameEN": "MiniGun",
-      "weaponNameRU": "Пулемет",
-      "weaponType": 3,
+      "deffWeaponName": "Dual_MiniGun_V_1",
+      "weaponNameEN": "Dual MiniGun",
+      "weaponNameRU": "Двойной Пулемет",
+      "weaponType": 4,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 5,
+      "hullDmgCurLvl": 2,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
-      "fireRateByLvl": 2.0,
-      "fireRateCurtLvl": 10,
+      "fireRateByLvl": 4.0,
+      "fireRateCurtLvl": 1,
       "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 6,
+      "rotationSpeedCurLvl": 2,
       "rotationSpeedMaxLvl": 6
     }
   ],
@@ -73,16 +73,17 @@
   ],
   "schemesNames": [
     "Dual_Cannon_V_1_Scheme",
-    "Advanced_Truck_V_1_Scheme"
+    "Advanced_Truck_V_1_Scheme",
+    "MiniGun_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 2775,
-    "Wires": 2728,
-    "ScrapMetal": 2649
+    "Сopper": 2504,
+    "Wires": 2525,
+    "ScrapMetal": 2560
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
-    "1": "MiniGun_V_1"
+    "1": "Dual_MiniGun_V_1"
   },
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [

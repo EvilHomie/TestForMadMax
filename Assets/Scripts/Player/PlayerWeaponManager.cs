@@ -269,10 +269,10 @@ public class PlayerWeaponManager : MonoBehaviour
             {
                 Vector3 dir = firePointhitInfo.point - weaponBarrel.transform.parent.position;
                 Vector3 newDir = Vector3.RotateTowards(weaponBarrel.transform.parent.forward, dir, RotationRadiansSpeed * Time.deltaTime, 0.0f);
-                Quaternion quaternion1 = Quaternion.LookRotation(newDir);
-
-                Vector3 eulerAngles1 = quaternion1.eulerAngles;
-                weaponBarrel.transform.parent.rotation = Quaternion.Euler(eulerAngles1.x, eulerAngles1.y, 0);
+                //Quaternion quaternion1 = Quaternion.LookRotation(newDir);
+                //weaponBarrel.transform.parent.forward = dir;
+                //Vector3 eulerAngles1 = quaternion1.eulerAngles;
+                weaponBarrel.transform.parent.rotation = Quaternion.LookRotation(newDir);
             }
         }
     }

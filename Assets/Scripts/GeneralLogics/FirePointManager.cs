@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FirePointManager : MonoBehaviour
@@ -60,10 +58,11 @@ public class FirePointManager : MonoBehaviour
         float t = 0;
         float lastShootTime = 0;
         bool warmup = false;
+        bool isRotated = false;
 
 
-        float frMod = Mathf.InverseLerp(10, 50, fireRate);
-        float pitchmod = Mathf.Lerp(0.9f, 1.2f, frMod);
+        float frMod = Mathf.InverseLerp(4, 40, fireRate);
+        float pitchmod = Mathf.Lerp(0.8f, 1.2f, frMod);
         soundSource.pitch = pitchmod;
 
         while (true)
@@ -77,11 +76,12 @@ public class FirePointManager : MonoBehaviour
                     soundSource.time = 0;
                     soundSource.Play();
                 }
-                else if (warmup == false)
+                else if (warmup == false && isRotated)
                 {
                     float time = shootSound.length - soundSource.time;
                     soundSource.time = time;
                 }
+                isRotated = true;
                 warmup = true;
                 t += Time.deltaTime;
                 if (t >= 0.7f) t = 0.7f;
@@ -93,7 +93,6 @@ public class FirePointManager : MonoBehaviour
                 {
                     float time = shootSound.length - 0.8f;
                     soundSource.Stop();
-                    Debug.LogWarning(time);
                     soundSource.time = time;
                     soundSource.Play();
                 }
