@@ -167,6 +167,7 @@ public class UILevelStatistic : MonoBehaviour
         UpdateStatistic();
         ShowNewTip();
         gameObject.SetActive(true);
+        Cursor.visible = true;
     }
 
     void ShowNewTip()

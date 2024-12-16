@@ -1,26 +1,19 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using YG;
 
 public class RewardedAdManager : MonoBehaviour
 {
     public static RewardedAdManager Instance;
 
-    [SerializeField] Button _acceptOfferButton;
-    [SerializeField] Button _cancelOfferButton;
-    [SerializeField] TextMeshProUGUI _acceptOfferButtonText;
-    [SerializeField] TextMeshProUGUI _cancelOfferButtonText;
-    [SerializeField] TextMeshProUGUI _offerText;
-
     RewardName _proposedRewardName;
-    Action<bool> _rewardAction;
+    Action<bool> _rewardReceivedAction;
 
     Dictionary<RewardName, int> _rewardIdByName = new()
     {
-        {RewardName.RestoreHP, 1 }
+        {RewardName.RestoreHP, 1 },
+        {RewardName.FreeUpgrade, 2 }
     };
 
     private void Awake()
@@ -29,84 +22,61 @@ public class RewardedAdManager : MonoBehaviour
         else Instance = this;
     }
 
-    public void Init()
-    {
-        _acceptOfferButtonText.text = TextConstants.ACCEPT;
-        _cancelOfferButtonText.text = TextConstants.CANCEL;
-        _acceptOfferButton.onClick.AddListener(OnAcceptOffer);
-        _cancelOfferButton.onClick.AddListener(OnCancelOffer);
-        YandexGame.RewardVideoEvent += Rewarded;
-        gameObject.SetActive(false);
-        //YandexGame.ErrorVideoEvent += OnRewardError;
-    }
-
-    //// Подписываемся на событие открытия рекламы в OnEnable
-    //private void OnEnable()
-    //{
-
-    //}
-    //// Отписываемся от события открытия рекламы в OnDisable
-    //private void OnDisable()
-    //{
-    //    _acceptOfferButton.onClick.RemoveListener(OnAcceptOffer);
-    //    _cancelOfferButton.onClick.RemoveListener(OnCancelOffer);
-    //    YandexGame.RewardVideoEvent -= Rewarded;
-    //}
-    // Подписанный метод получения награды
     void Rewarded(int id)
     {
-        // Если ID = 1, то востанавливаем прочность
-        if (id == 1)
-            _rewardAction.Invoke(true);
+        YandexGame.timerShowAd = 0;
+        //Debug.Log("REWARD SUCCESSFUL");
+        OnReceivedRewardResult(true);
+        return;
 
-        YandexGame.ErrorVideoEvent -= OnRewardError;
-        GameFlowManager.Instance.Unpause(this);
-        gameObject.SetActive(false);
+        //if (id == 1)
+        //{
+        //}
     }
 
     void OnRewardError()
     {
-        YandexGame.ErrorVideoEvent -= OnRewardError;
-        _rewardAction.Invoke(false);
-        Cursor.visible = false;
-        GameFlowManager.Instance.Unpause(this);
-        gameObject.SetActive(false);
+        //Debug.Log("REWARD ERROR");
+        OnReceivedRewardResult(false);
     }
 
-    public void ShowRewardOffer(Action<bool> action, RewardName rewardName)
+    public void PrepareReward(Action<bool> action, RewardName rewardName)
     {
+        YandexGame.RewardVideoEvent += Rewarded;
         YandexGame.ErrorVideoEvent += OnRewardError;
         GameFlowManager.Instance.SetPause(this);
-        Cursor.visible = true;
-        _rewardAction = action;
+        _rewardReceivedAction = action;
         _proposedRewardName = rewardName;
-        _offerText.text = TextConstants._rewardText[rewardName];
-        gameObject.SetActive(true);
     }
 
-    // Метод для вызова видео рекламы
-    void OpenRewardAd()
+    public void OnAcceptOffer()
     {
-        // Вызываем метод открытия видео рекламы
+        //Debug.Log("ACCEPT OFFER");
         YandexGame.RewVideoShow(_rewardIdByName[_proposedRewardName]);
     }
 
-    void OnAcceptOffer()
+    public void OnCancelOffer()
     {
-        Cursor.visible = false;
-        OpenRewardAd();
+        //Debug.Log("CANCEL OFFER");
+        OnReceivedRewardResult(false);
     }
-    void OnCancelOffer()
+
+
+    void OnReceivedRewardResult(bool result)
     {
+        YandexGame.RewardVideoEvent -= Rewarded;
         YandexGame.ErrorVideoEvent -= OnRewardError;
-        _rewardAction.Invoke(false);
-        Cursor.visible = false;
         GameFlowManager.Instance.Unpause(this);
-        gameObject.SetActive(false);
+        if (_rewardReceivedAction != null)
+        {
+            _rewardReceivedAction.Invoke(result);
+            _rewardReceivedAction = null;
+        }
     }
 }
 
 public enum RewardName
 {
-    RestoreHP
+    RestoreHP,
+    FreeUpgrade
 }

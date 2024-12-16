@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 2-4
   m_EditorClassIdentifier: 
   _levelName: 2-4
+  _levelFullName: Thug Lands
   _levelImage: {fileID: 21300000, guid: 0f7fbd33020990c40b0787af42c3de75, type: 3}
   _enemiesLevel: 1
   _waves:
@@ -26,4 +27,5 @@ MonoBehaviour:
       count: 2
     - enemyType: 1
       count: 4
+  _blockedEnemiesLinesInGameZone: 
   _boss: {fileID: 0}

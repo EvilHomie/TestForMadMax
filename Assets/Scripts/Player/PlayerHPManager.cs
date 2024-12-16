@@ -1,5 +1,4 @@
 using UnityEngine;
-using YG;
 
 public class PlayerHPManager : MonoBehaviour
 {
@@ -11,8 +10,7 @@ public class PlayerHPManager : MonoBehaviour
 
 
     [SerializeField] float _onHitShakeIntensity;
-    [SerializeField] AudioSource _musicAudioSource;
-    [SerializeField] AudioSource _hitAudioSource;
+    
     [SerializeField] ParticleSystem _explosionPS;
     [SerializeField] AudioClip _onDieExplosionSound;
 
@@ -47,13 +45,11 @@ public class PlayerHPManager : MonoBehaviour
         _onRaid = true;
         _isDead = false;
         _restoreOfferWasProposed = false;
-        _musicAudioSource.Play();
     }
 
     public void OnPlayerEndRaid()
     {
         _onRaid = false;
-        _musicAudioSource.Stop();
     }
 
     private void Update()
@@ -73,7 +69,7 @@ public class PlayerHPManager : MonoBehaviour
     {
         if (_isDead) return;
         CameraManager.Instance.Shake(0.1f, _onHitShakeIntensity);
-        _hitAudioSource.PlayOneShot(hitSound);
+        AudioManager.Instance.PlayHitToPLayerSound(hitSound);
         if (_playerShieldHP > 0)
         {
             _playerShieldHP -= shieldDmgValue;
@@ -98,7 +94,7 @@ public class PlayerHPManager : MonoBehaviour
         if (_playerHullHP <= _maxHullHp * 0.1f && !_restoreOfferWasProposed)
         {
             _restoreOfferWasProposed = true;
-            RewardedAdManager.Instance.ShowRewardOffer(OnSelectRewardOption, RewardName.RestoreHP);
+            LowHpRewardOffer.Instance.ShowRewardOffer(OnSelectRewardOption, RewardName.RestoreHP);
             return;
         }
 
@@ -131,7 +127,7 @@ public class PlayerHPManager : MonoBehaviour
     void OnPlayerVehicleDestroyed()
     {
         _explosionPS.Play();
-        _hitAudioSource.PlayOneShot(_onDieExplosionSound);
+        AudioManager.Instance.PlayHitToPLayerSound(_onDieExplosionSound);
         InRaidManager.Instance.OnPLayerDie();
         PlayerWeaponManager.Instance.OnPlayerDie();
     }
@@ -139,5 +135,6 @@ public class PlayerHPManager : MonoBehaviour
     void RestoreHP()
     {
         _playerHullHP = _maxHullHp / 2;
+        Cursor.visible = false;
     }
 }

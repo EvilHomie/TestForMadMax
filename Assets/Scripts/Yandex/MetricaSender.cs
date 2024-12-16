@@ -50,6 +50,16 @@ public class MetricaSender
         YandexMetrica.Send("LevelEnemyStatistic", eventParams);
     }
 
+    public static void QuickImprovementAfterLevel(string levelName, QuickImprovement quickImprovementType)
+    {
+        string goalKey = $"{levelName}_{quickImprovementType}";
+        var eventParams = new Dictionary<string, string>
+        {
+             { "QuickImprovement", goalKey }
+        };
+        YandexMetrica.Send("QuickImprovement", eventParams);
+    }
+
 }
 
 public enum LevelStatus
@@ -62,4 +72,12 @@ public enum LevelEnemyStatus
 {
     Killed,
     Escaped
+}
+
+public enum QuickImprovement
+{
+    Error,
+    AcceptOffer,
+    CancelOffer,
+    JustUpgrade
 }

@@ -6,6 +6,7 @@ public class UIChangeLevelButton : MonoBehaviour
 {
     public static UIChangeLevelButton Instance;
     [SerializeField] TextMeshProUGUI _levelNumberText;
+    [SerializeField] TextMeshProUGUI _levelFullNameText;
     [SerializeField] Image _levelImage;
 
     private void Awake()
@@ -18,5 +19,6 @@ public class UIChangeLevelButton : MonoBehaviour
     {
         _levelImage.sprite = uILevelInfo.LevelParameters.LevelImage;
         _levelNumberText.text = uILevelInfo.LevelParameters.LevelName;
+        _levelFullNameText.text = TextConstants.LEVELSFULLNAMES[uILevelInfo.LevelParameters.LevelFullName];
     }
 }

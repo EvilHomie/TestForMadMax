@@ -32,12 +32,14 @@ public static class TextConstants
     public static string COST = "Cost";
     public static string UPGRADE = "Improve";
     public static string MAXLEVEL = "MaxLevel";
+    public static string MAX = "Max";
     public static string NEWSCHEMES = "New Schemes";
     public static string INVENTORY = "Inventory";
     public static string RAID = "Raid";
     public static string GARAGE = "Garage";
     public static string UNLOCKCOST = "UnlockCost";
     public static string NEWSCHEME = "New SCHEME";
+    public static string QUICKIMPROVEMENT = "Quick improvement";
     public static string[] TIPSCOLLECTION =
         {
         "Don't forget to upgrade your equipment in the inventory tab.",
@@ -72,10 +74,11 @@ public static class TextConstants
     public static string COMBO = "Combo";
     public static string ACCEPT = "ACCEPT";
     public static string CANCEL = "CANCEL";
+    public static string REFUSEIMPROVEMENT = "Refuse improvement";
 
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
-            { StageName.Greetings, "Hey, fighter!\r\nMy name is Meg,\r\nI'm your driver.\r\nI'll help you on your first raid in the Badlands." },
+            { StageName.Greetings, "Hey, fighter!\r\nMy name is Meg, i'm your driver.\r\nI'll help you on your first raid in the Badlands." },
             { StageName.FirstRaidLaunch, "Our warehouse is empty right now and we're in urgent need of resources.\r\nLet's go get them." },
             { StageName.ShowWaveWarning, "Careful, we've been spotted!\r\nI suggest you to shoot at vulnerable areas.\r\nLike <color=\"red\">wheels</color> or <color=\"red\">canisters</color>." },
             { StageName.FirstLevelCompleted, "That was very easy!\r\nThe next raid will be more difficult, can you handle it?" },
@@ -90,7 +93,13 @@ public static class TextConstants
 
     public static Dictionary<RewardName, string> _rewardText = new()
     {
-        {RewardName.RestoreHP, "You are almost destroyed. Restore half of the hull HitPoints for watching an ad?" }
+        {RewardName.RestoreHP, "You are almost destroyed. Restore half of the hull HitPoints for watching an ad?" },
+        {RewardName.FreeUpgrade, "Improve to max for watching ads?"}
+    };
+
+    public static Dictionary<string, string> LEVELSFULLNAMES = new()
+    {
+        {"Thug Lands", "Thug lands" }
     };
 
     public static void SetLanguage()
@@ -130,12 +139,14 @@ public static class TextConstants
             COST = "Стоимость";
             UPGRADE = "Улучшить";
             MAXLEVEL = "Макс Уровень";
+            MAX = "Max";
             NEWSCHEMES = "Новые Схемы";
             INVENTORY = "Инвентарь";
             RAID = "В Рейд";
             GARAGE = "Гараж";
             UNLOCKCOST = "Стоимость Открытия";
             NEWSCHEME = "Новая Схема";
+            QUICKIMPROVEMENT = "Быстрая прокачка";
 
             string[] tipscollectionRu =
             { "Не забывайте улучшать свое снаряжение во вкладке Инвентарь.",
@@ -171,6 +182,7 @@ public static class TextConstants
             COMBO = "Комбо";
             ACCEPT = "Хорошо";
             CANCEL = "Нет";
+            REFUSEIMPROVEMENT = "Отказ от прокачки";
 
 
             Dictionary<StageName, string> tutorialTextsRu = new()
@@ -192,9 +204,17 @@ public static class TextConstants
 
             Dictionary<RewardName, string> rewardTextRu = new()
             {
-                {RewardName.RestoreHP, "Вас почти уничтожили. Восстановить половину прочности корпуса за просмотр рекламы?" }
+                {RewardName.RestoreHP, "Вас почти уничтожили. Восстановить половину прочности корпуса за просмотр рекламы?" },
+                {RewardName.FreeUpgrade, "Улучшить до максимума за просмотр рекламы?"}
             };
             _rewardText = rewardTextRu;
+
+            Dictionary<string, string> levelsFullNames = new()
+            {
+                {"Thug Lands", "Земли головорезов" }
+            };
+
+            LEVELSFULLNAMES = levelsFullNames;
         }
     }
 }

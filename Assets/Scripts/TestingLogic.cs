@@ -12,6 +12,7 @@ public class TestingLogic : MonoBehaviour
     [SerializeField] Button _reset;
     [SerializeField] Button _ADD;
     [SerializeField] Button _unlock;
+    [SerializeField] DebugLevel _debugLevel;
     int _fps = 0;
     string _strFPS;
     private void Awake()
@@ -28,7 +29,8 @@ public class TestingLogic : MonoBehaviour
 
     private void ShowMessageOnDisplay(string logString, string stackTrace, LogType type)
     {
-        _log.text = logString +"     " + stackTrace;
+        if (_debugLevel == DebugLevel.Full) _log.text = logString + "     " + stackTrace;
+        else if (_debugLevel == DebugLevel.Short) _log.text = logString;
     }
     void UnlockAllData()
     {
@@ -128,6 +130,12 @@ public class TestingLogic : MonoBehaviour
         };
         YandexMetrica.Send("triggers", eventParams);
     }
+
+    
 }
 
-
+public enum DebugLevel
+{
+    Short,
+    Full
+}

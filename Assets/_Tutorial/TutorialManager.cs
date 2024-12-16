@@ -40,6 +40,11 @@ public class TutorialManager : MonoBehaviour
 
     public void Init()
     {
+        EndTutorial();
+        return;
+
+
+
         _tutorialInteractWindow.SetActive(false);
         if (YandexGame.savesData.tutorilaIsComplete)
         {

@@ -29,18 +29,25 @@ public class FinishLevelManager : MonoBehaviour
         _viewingAdsYG.customEvents.OpenAd.AddListener(OnAdOpen);
     }
 
-    public void OnFinishLevel(string levelName, bool isSuccessfully)
+    public void OnFinishLevel(bool isSuccessfully)
     {        
-        StartCoroutine(OnLevelFinishLogic(levelName, isSuccessfully));
+        StartCoroutine(OnLevelFinishLogic(isSuccessfully));
         ShowLevelStatusPanel(isSuccessfully);        
     }
 
-    void AditionActionsOnFinishLevel(string levelName, bool isSuccessfully)
+    void AditionActionsOnFinishLevel(bool isSuccessfully)
     {
         if (isSuccessfully)
-        {           
-            if(levelName == "1-1") TutorialManager.Instance.TryEnableStage(StageName.FirstLevelCompleted);
-            else if (levelName == "1-2") TutorialManager.Instance.TryEnableStage(StageName.ShowLevelStatisticPanel);
+        {
+            if (InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName == "1-1")
+            {
+                TutorialManager.Instance.TryEnableStage(StageName.FirstLevelCompleted);
+            }
+            else if (InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName == "1-2")
+            {
+                TutorialManager.Instance.TryEnableStage(StageName.ShowLevelStatisticPanel);
+            }
+
         }
         else
         {
@@ -48,7 +55,7 @@ public class FinishLevelManager : MonoBehaviour
         }
     }
 
-    IEnumerator OnLevelFinishLogic(string levelName, bool isSuccessfully)
+    IEnumerator OnLevelFinishLogic(bool isSuccessfully)
     {
         yield return new WaitForSeconds(_blackoutDelay);
         float t = 0;
@@ -57,13 +64,13 @@ public class FinishLevelManager : MonoBehaviour
         {
             t += Time.deltaTime / _blackoutDuration;
             Color color = Color.Lerp(Color.clear, Color.black, t);
-            //Debug.LogWarning(t);
             _blackoutImage.color = color;
             yield return null;
         }
-        UILevelStatistic.Instance.ShowStatistic();
+        //UILevelStatistic.Instance.ShowStatistic();
+        UpgradesAfterLevel.Instance.ConfigPanel();
+        AditionActionsOnFinishLevel(isSuccessfully);
         GameManager.Instance.OnReturnToGarage();
-        AditionActionsOnFinishLevel(levelName, isSuccessfully);
     }
 
     public void OnCloseLevelStatisicAndOpenInventory()
@@ -114,11 +121,11 @@ public class FinishLevelManager : MonoBehaviour
 
     void OnAdClose()
     {
-        AudioManager.Instance.EnableMasterSound();
+        MainAudioManager.Instance.EnableMasterSound();
     }
     void OnAdOpen()
     {
-        AudioManager.Instance.DisableMasterSound();
+        MainAudioManager.Instance.DisableMasterSound();
     }
 
     void ShowLevelStatusPanel(bool isSuccessfully)

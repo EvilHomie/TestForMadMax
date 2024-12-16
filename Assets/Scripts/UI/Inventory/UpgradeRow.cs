@@ -20,6 +20,10 @@ public class UpgradeRow : MonoBehaviour
     List<ResCost> _upgradeCost;
     Color _notAvailableColir = new(0.128f, 0.128f, 0.128f, 1);
 
+    bool _withUpdateInventory;
+
+
+    public Button UpgradeBtn => _upgradeBtn;
 
    
     public void Init()
@@ -33,7 +37,7 @@ public class UpgradeRow : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetData(string charName, int currentLvl, int maxLvl, float upgradeEffect, List<ResCost> resCosts)
+    public void SetData(string charName, int currentLvl, int maxLvl, float upgradeEffect, List<ResCost> resCosts, bool updateInventory = true)
     {
         gameObject.SetActive(true);
         _upgradeBtn.gameObject.SetActive(true);
@@ -41,6 +45,7 @@ public class UpgradeRow : MonoBehaviour
         _upgradeCost = resCosts;
         _upEffectValueText.text = $"+ {upgradeEffect}";
         _maxLvlText.gameObject.SetActive(false);
+        _withUpdateInventory = updateInventory;
 
         ShowLvl(currentLvl, maxLvl);
         ShowCost(resCosts);
@@ -89,7 +94,7 @@ public class UpgradeRow : MonoBehaviour
 
     void OnBuyUpgrade()
     {
-        InventoryManager.Instance.OnBuyUpgrade(_charName.text, _upgradeCost);
+        InventoryManager.Instance.OnBuyUpgrade(_charName.text, _upgradeCost, _withUpdateInventory);
     }
 
     public void DisableBuyUpgradeOption()
