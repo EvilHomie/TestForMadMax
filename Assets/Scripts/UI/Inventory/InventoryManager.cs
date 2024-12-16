@@ -14,9 +14,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Transform _schemesContainer;
     [SerializeField] Button _equipBtn;
     [SerializeField] Button _unlockBtn;
-    [SerializeField] AudioSource _inventoryAS;
-    [SerializeField] AudioClip _upgradeSound;
-    [SerializeField] AudioClip _equipSound;
 
     [SerializeField] CanvasGroup _vehicleSlotCG;
 
@@ -26,6 +23,7 @@ public class InventoryManager : MonoBehaviour
     List<InventoryItem> _inventoryItems = new();
     IItemData _selectedItem;
 
+    public IItemData SelectedItem { get => _selectedItem; set => _selectedItem = value; }
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -98,7 +96,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void OnBuyUpgrade(string charName, List<ResCost> upgradeCost)
+    public void OnBuyUpgrade(string charName, List<ResCost> upgradeCost, bool updateInventory = true)
     {
         int scrapMetalAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.ScrapMetal).Amount;
         int wiresAmount = upgradeCost.FirstOrDefault(res => res.ResourcesType == ResourcesType.Wires).Amount;
@@ -116,10 +114,14 @@ public class InventoryManager : MonoBehaviour
         {
             UpgradeVehicle(VData, charName);
         }
-        _inventoryAS.PlayOneShot(_upgradeSound);
+        AudioManager.Instance.PlayInventorySound(UISound.UpgradeSound);
 
-        InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
-        InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(_selectedItem);
+        if (updateInventory)
+        {
+            InventoryInfoPanelManager.Instance.UpdateInfoPanel(_selectedItem);
+            InventoryUpgradePanelManager.Instance.UpdateUpgradePanel(_selectedItem);
+        }
+        
         MetricaSender.SendInventoryData("Buy Upgrade");
         SaveLoadManager.Instance.SaveData();
     }
@@ -194,7 +196,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (newItem != null)
         {
-            _inventoryAS.PlayOneShot(_equipSound);
+            AudioManager.Instance.PlayInventorySound(UISound.EquipSound);
         }
         _equipBtn.gameObject.SetActive(false);
 

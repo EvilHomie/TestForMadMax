@@ -7,7 +7,7 @@ public class OldHangarManager : MonoBehaviour
 
     [SerializeField] Animation _animation;
     [SerializeField] float _speed;
-    
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -35,6 +35,12 @@ public class OldHangarManager : MonoBehaviour
             transform.position += _speed * InRaidManager.Instance.PlayerMoveSpeed * Time.deltaTime * Vector3.left;
             yield return null;
         }
+        gameObject.SetActive(false);
+    }
+
+    public void DisableGarage()
+    {
+        StopAllCoroutines();
         gameObject.SetActive(false);
     }
 }

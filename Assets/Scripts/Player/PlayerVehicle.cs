@@ -28,13 +28,14 @@ public class PlayerVehicle : MonoBehaviour, IItem
     private void Awake()
     {
         _vehicleEffectsController = GetComponent<VehicleVisualEffectsLogic>();
-        _engineAudioSource = GetComponent<AudioSource>();
+        
     }
 
     private void Start()
     {
         _renderQueue3001.Init();
         _vehicleEffectsController.Init(_wheels, _wheelsDustPS, false);
+        _engineAudioSource = AudioManager.Instance.PlayerEngineAS;
     }
 
     public void ChangeEngineAudioPitch(float newSpeed)
@@ -63,7 +64,7 @@ public class PlayerVehicle : MonoBehaviour, IItem
     }
     IEnumerator StartMovement()
     {
-        _engineAudioSource.Play();
+        //_engineAudioSource.Play();
         yield return new WaitForSeconds(_shakeDelayOnStart);
         CameraManager.Instance.Shake(_shakeDurationOnStart, _shakeIntensityOnStart);
         yield return new WaitForSeconds(_delayBeforeStartMove + _delayForDustAfterMove);

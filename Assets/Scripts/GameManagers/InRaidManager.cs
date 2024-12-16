@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InRaidManager : MonoBehaviour
 {
@@ -7,14 +8,18 @@ public class InRaidManager : MonoBehaviour
 
     [SerializeField] MeshRenderer _mainRoadRenderer;
     [SerializeField] float _speedMod;
-    //[SerializeField] MeshRenderer _BG;
     [SerializeField] float _spawnNewEnemyDelay;
     [SerializeField] float _spawnNewEnemyRepitRate;
     [SerializeField] int _maxEnemyCountInRaid;
-    //[SerializeField] float _mod;
+
+    [SerializeField] Image _totalBlackoutImage;
+    [SerializeField] float _blackoutDelay;
+    [SerializeField] float _blackoutPause;
+    [SerializeField] float _blackoutDuration;
 
 
     UILevelInfo _selectedLevelInfo;
+    bool _selectedLevelCompleteStatus = false;
     float _worldMoveSpeed = 0f;
     bool _onRaid = false;
     int _killedEnemiesCount = 0;
@@ -24,6 +29,8 @@ public class InRaidManager : MonoBehaviour
 
     public float PlayerMoveSpeed => _worldMoveSpeed;
     public Transform MainRoadTransform => _mainRoadRenderer.transform;
+
+    public UILevelInfo SelectedLevelInfo => _selectedLevelInfo;
 
 
     private void Awake()
@@ -37,6 +44,7 @@ public class InRaidManager : MonoBehaviour
         _onRaid = false;
         StopAllCoroutines();
         _worldMoveSpeed = 0;
+        _totalBlackoutImage.gameObject.SetActive(false);
 
         OldHangarManager.Instance.OnPlayerEndRaid();
         UILevelStatistic.Instance.Init();
@@ -54,7 +62,6 @@ public class InRaidManager : MonoBehaviour
     void MoveMainRoad()
     {
         _mainRoadRenderer.material.mainTextureOffset += _speedMod * _worldMoveSpeed * Time.deltaTime * Vector2.left;
-        //_BG.material.mainTextureOffset -= GameConfig.Instance.MoveRoadMod * _worldMoveSpeed * Time.deltaTime * Vector2.left / _mod;
     }
 
     public void OnPlayerStartRaid()
@@ -65,9 +72,40 @@ public class InRaidManager : MonoBehaviour
         PlayerVehicleManager.Instance.OnPlayerStartRaid();
         OldHangarManager.Instance.OnPlayerStartRaid(startMoveDelay);
         StartCoroutine(AccelerationMoveSpeed(startMoveDelay, fullSpeed, reachFullSpeedDuration));
-        EnemySpawner.Instance.OnPlayerStartRaid();
         UIComboCounterManager.Instance.OnPlayerStartRaid();
         MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Start);
+
+        StartCoroutine(StartRaidLogic());
+        
+    }
+
+    IEnumerator StartRaidLogic()
+    {
+        AudioManager.Instance.StartEngineSoundLogic(_blackoutDelay, _blackoutDuration, _blackoutPause, _blackoutDuration);
+        yield return new WaitForSeconds(_blackoutDelay);
+        float t = 0;
+        _totalBlackoutImage.gameObject.SetActive(true);
+        while (t <= 1)
+        {
+            t += Time.deltaTime / _blackoutDuration;
+            Color color = Color.Lerp(Color.clear, Color.black, t);
+            _totalBlackoutImage.color = color;
+            yield return null;
+        }
+        AudioManager.Instance.ToggleMusic(true);
+        OldHangarManager.Instance.DisableGarage();
+        yield return new WaitForSeconds(_blackoutPause);
+        
+        t = 0;
+        while (t <= 1)
+        {
+            t += Time.deltaTime / _blackoutDuration;
+            Color color = Color.Lerp(Color.black, Color.clear, t);
+            _totalBlackoutImage.color = color;
+            yield return null;
+        }
+        _totalBlackoutImage.gameObject.SetActive(false);
+        EnemySpawner.Instance.OnPlayerStartRaid();
     }
 
     void ConfigureDataOnStartRaid()
@@ -76,6 +114,7 @@ public class InRaidManager : MonoBehaviour
 
         _onRaid = true;
         _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
+        _selectedLevelCompleteStatus = false;
         int bossCount = _selectedLevelInfo.LevelParameters.Boss == null ? 0 : 1;
         _enemyTotalCountOnLevel = _selectedLevelInfo.LevelParameters.GetTotalSimpleEnemyCount() + bossCount;
         _killedEnemiesCount = 0;
@@ -90,6 +129,7 @@ public class InRaidManager : MonoBehaviour
         OldHangarManager.Instance.OnPlayerEndRaid();
         EnemySpawner.Instance.OnPlayerEndRaid();
         UIComboCounterManager.Instance.OnPlayerEndRaid();
+        AudioManager.Instance.ToggleMusic(false);
     }
 
     IEnumerator AccelerationMoveSpeed(float startMoveDelay, float speed, float reachSpeedDuration)
@@ -133,9 +173,10 @@ public class InRaidManager : MonoBehaviour
         if (_killedEnemiesCount + _escapedEnemiesCount >= _enemyTotalCountOnLevel)
         {
             _onRaid = false;
+            _selectedLevelCompleteStatus = true;
             MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
-            FinishLevelManager.Instance.OnFinishLevel(_selectedLevelInfo.LevelParameters.LevelName, isSuccessfully: true);
+            FinishLevelManager.Instance.OnFinishLevel(_selectedLevelCompleteStatus);
             SaveLoadManager.Instance.SaveData();
         }
         else
@@ -147,10 +188,12 @@ public class InRaidManager : MonoBehaviour
 
     public void OnPLayerDie()
     {
+        _selectedLevelCompleteStatus = false;
         MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Failed);
         StartCoroutine(ChangeSpeedOnDie());
         EnemySpawner.Instance.OnPLayerDie();
-        FinishLevelManager.Instance.OnFinishLevel(_selectedLevelInfo.LevelParameters.LevelName, isSuccessfully: false);
+        FinishLevelManager.Instance.OnFinishLevel(_selectedLevelCompleteStatus);
+        SaveLoadManager.Instance.SaveData();
     }
 
     IEnumerator ChangeSpeedOnDie()

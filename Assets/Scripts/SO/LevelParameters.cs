@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelParameters : ScriptableObject
 {
     [SerializeField] string _levelName;
+    [SerializeField] string _levelFullName;
     [SerializeField] Sprite _levelImage;
     [SerializeField] EnemyLevel _enemiesLevel;
     [SerializeField] List<Wave> _waves;
@@ -19,6 +20,8 @@ public class LevelParameters : ScriptableObject
     public EnemyVehicleManager Boss => _boss;
     public EnemyLevel EnemyLevel => _enemiesLevel;
     public int WavesCount => _waves.Count;
+
+    public string LevelFullName => _levelFullName;
 
     public int GetWaveEnemyCount(int waveNumber)
     {
