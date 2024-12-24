@@ -94,7 +94,7 @@ public class PlayerHPManager : MonoBehaviour
         if (_playerHullHP <= _maxHullHp * 0.1f && !_restoreOfferWasProposed)
         {
             _restoreOfferWasProposed = true;
-            LowHpRewardOffer.Instance.ShowRewardOffer(OnSelectRewardOption, RewardName.RestoreHP);
+            LowHpRewardOffer.Instance.ShowRewardOffer(OnSelectRewardOption, RewardName.RestoreHP, _playerHullHP / _maxHullHp);
             return;
         }
 

@@ -1,5 +1,5 @@
 {
-  "idSave": 129,
+  "idSave": 110,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,7 +11,7 @@
     false
   ],
   "savesIsClear": false,
-  "savedVerion": "0.0.31",
+  "savedVerion": "0.0.32",
   "weaponsData": [
     {
       "deffWeaponName": "Simple_Cannon_V_1",
@@ -48,7 +48,7 @@
       "fireRateCurtLvl": 4,
       "fireRateMaxLvl": 4,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 8,
+      "rotationSpeedCurLvl": 4,
       "rotationSpeedMaxLvl": 8
     }
   ],
@@ -75,15 +75,15 @@
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 2931,
-    "Wires": 2887,
-    "ScrapMetal": 2805
+    "Сopper": 123,
+    "Wires": 126,
+    "ScrapMetal": 73
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
     "1": "Dual_Cannon_V_1"
   },
-  "lastSelectedLevelName": "2-5",
+  "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",
@@ -95,17 +95,7 @@
     "1-8",
     "1-9",
     "1-10",
-    "2-1",
-    "2-2",
-    "2-3",
-    "2-4",
-    "2-5",
-    "2-6",
-    "2-7",
-    "2-8",
-    "2-9",
-    "2-10",
-    "3-1"
+    "2-1"
   ],
   "tutorilaIsComplete": true,
   "completedTutorialStages": []

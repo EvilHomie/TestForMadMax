@@ -39,4 +39,4 @@ MonoBehaviour:
     - enemyType: 3
       count: 3
   _blockedEnemiesLinesInGameZone: 
-  _boss: {fileID: 7596902607514645331, guid: dd5cc6cc803b47e4fa0255d031384962, type: 3}
+  _boss: {fileID: 7596902607514645331, guid: 6a0dabc132e7d2b4fb33af87b0735036, type: 3}

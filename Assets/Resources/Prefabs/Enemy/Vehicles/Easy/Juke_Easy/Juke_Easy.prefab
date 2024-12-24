@@ -1074,7 +1074,7 @@ PrefabInstance:
     - target: {fileID: 9164670656749315956, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
       propertyPath: _bodyHullHP
-      value: 800
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 9164670656749315956, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
@@ -1084,12 +1084,12 @@ PrefabInstance:
     - target: {fileID: 9164670656749315956, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
       propertyPath: _weaponFRMod
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9164670656749315956, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}
       propertyPath: _weaponDMGMod
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9164670656749315956, guid: 6abc4652ecce43a4f9cf4f5b33aff731,
         type: 3}

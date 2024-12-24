@@ -75,6 +75,12 @@ public static class TextConstants
     public static string ACCEPT = "ACCEPT";
     public static string CANCEL = "CANCEL";
     public static string REFUSEIMPROVEMENT = "Refuse improvement";
+    public static string REPAIR = "Repair";
+    public static string EMERGENCYREPAIR = "Emergency repair";
+    public static string CONTINUE = "Continue";
+    public static string WITHOUT = "without";
+    public static string SEC = "sec.";
+    public static string UPGRADECOST = "Upgrade cost";
 
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
@@ -93,7 +99,7 @@ public static class TextConstants
 
     public static Dictionary<RewardName, string> _rewardText = new()
     {
-        {RewardName.RestoreHP, "You are almost destroyed. Restore half of the hull HitPoints for watching an ad?" },
+        {RewardName.RestoreHP, "Repair\r\n50% hull hp?" },
         {RewardName.FreeUpgrade, "Improve to max for watching ads?"}
     };
 
@@ -183,9 +189,15 @@ public static class TextConstants
             ACCEPT = "Хорошо";
             CANCEL = "Нет";
             REFUSEIMPROVEMENT = "Отказ от прокачки";
+            REPAIR = "Починить";
+            EMERGENCYREPAIR = "Экстренный ремонт";
+            CONTINUE = "Продолжить";
+            WITHOUT = "без";
+            SEC = "сек.";
+            UPGRADECOST = "Стоимость Улучшения";
 
 
-            Dictionary<StageName, string> tutorialTextsRu = new()
+    Dictionary<StageName, string> tutorialTextsRu = new()
             {
                 { StageName.Greetings, "Привет, боец!\r\nМеня зовут Мэг, я твой водитель. Я помогу тебе в твоем первом рейде по Пустоши." },
                 { StageName.FirstRaidLaunch, "Наш склад сейчас пуст\r\nи нам срочно требуются ресурсы.\r\nДавай прокатимся за ними." },
@@ -204,7 +216,7 @@ public static class TextConstants
 
             Dictionary<RewardName, string> rewardTextRu = new()
             {
-                {RewardName.RestoreHP, "Вас почти уничтожили. Восстановить половину прочности корпуса за просмотр рекламы?" },
+                {RewardName.RestoreHP, "Отремонтировать\r\n50% хп корпуса?" },
                 {RewardName.FreeUpgrade, "Улучшить до максимума за просмотр рекламы?"}
             };
             _rewardText = rewardTextRu;

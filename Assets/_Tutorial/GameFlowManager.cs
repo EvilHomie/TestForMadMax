@@ -16,6 +16,10 @@ public class GameFlowManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
+    //private void Update()
+    //{
+    //    Debug.Log(GameFlowState);
+    //}
 
 
     public void SetPause(object obj)
@@ -26,6 +30,8 @@ public class GameFlowManager : MonoBehaviour
         GameFlowState = GameFlowState.PAUSE;
         //Debug.LogWarning("PAUSE");
 
+       //var test = obj as MonoBehaviour;
+       // Debug.LogWarning($"PAUSE     {test.gameObject.name}");
     }
 
     public void Unpause(object obj)
@@ -38,6 +44,9 @@ public class GameFlowManager : MonoBehaviour
             GameFlowState = GameFlowState.UNPAUSE;
             //Debug.LogWarning("UNPAUSE");
         }
+
+        //var test = obj as MonoBehaviour;
+        //Debug.LogWarning($"UNPAUSE     {test.gameObject.name}");
     }
 }
 

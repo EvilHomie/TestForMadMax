@@ -10,6 +10,7 @@ public class SelectLevelWindow : MonoBehaviour
     [SerializeField] Transform _levelsContainer;
     [SerializeField] TextMeshProUGUI _headText;
     [SerializeField] ScrollRect _levelsScrollRect;
+    [SerializeField] Button _closeButton;
 
     List<UILevelInfo> _UILevelInfos = new();
 
@@ -36,6 +37,7 @@ public class SelectLevelWindow : MonoBehaviour
             info.Init(_levelsScrollRect, levelParametersCopy);
             _UILevelInfos.Add(info);
         }
+        _closeButton.onClick.AddListener(() => gameObject.SetActive(false));
     }
 
     public List<UILevelInfo> GetCreatedLevels()

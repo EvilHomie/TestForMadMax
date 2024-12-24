@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour
     List<UILevelInfo> _UILevelInfos = new();
     public GameObject SelectLevelsWindow => _selectLevelsWindow;
 
+    public LevelsData LevelsData => _levelsData;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);

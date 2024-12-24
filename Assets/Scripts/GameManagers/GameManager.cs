@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -114,7 +115,7 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.SelectLevelsWindow.SetActive(true);
     }
 
-    public void OnStartRaid()
+    public void OnStartRaid(bool immediateStart = false)
     {
         //SwitchUIButton(false);
         //_settingsBtn.gameObject.SetActive(true);
@@ -131,7 +132,14 @@ public class GameManager : MonoBehaviour
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
 
-        ConfigMainPanel(true);
+        if (!immediateStart)
+        {
+            ConfigMainPanel(true);
+        }
+        else
+        {
+            _garageMainPanel.gameObject.SetActive(false);
+        }
 
 
 
@@ -161,7 +169,7 @@ public class GameManager : MonoBehaviour
 
     void ConfigMainPanel(bool inRaidStatus)
     {
-        if (inRaidStatus) _garageMainPanel.HidePanel(); 
+        if (inRaidStatus) _garageMainPanel.HidePanel();
         else _garageMainPanel.ResetPosition();
         _startRaidBtn.interactable = !inRaidStatus;
         _openInventoryBtn.interactable = !inRaidStatus;

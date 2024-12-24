@@ -25,8 +25,8 @@ public class FinishLevelManager : MonoBehaviour
     {
         _blackoutImage.gameObject.SetActive(false);
         _levelStatusText.transform.parent.gameObject.SetActive(false);
-        _viewingAdsYG.customEvents.CloseAd.AddListener(OnAdClose);
-        _viewingAdsYG.customEvents.OpenAd.AddListener(OnAdOpen);
+        //_viewingAdsYG.customEvents.CloseAd.AddListener(OnAdClose);
+        //_viewingAdsYG.customEvents.OpenAd.AddListener(OnAdOpen);
     }
 
     public void OnFinishLevel(bool isSuccessfully)
@@ -82,6 +82,7 @@ public class FinishLevelManager : MonoBehaviour
         if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
         {
             _viewingAdsYG.customEvents.CloseAd.AddListener(OpenInventoryOnCloseAD);
+            MainAudioManager.Instance.DisableMasterSound();
             YandexGame.FullscreenShow();
         }
         else
@@ -99,34 +100,62 @@ public class FinishLevelManager : MonoBehaviour
         if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
         {
             _viewingAdsYG.customEvents.CloseAd.AddListener(StartNewRaidOnCloseAD);
+            MainAudioManager.Instance.DisableMasterSound();
             YandexGame.FullscreenShow();
         }
         else
         {
-            GameManager.Instance.OnStartRaid();
+            GameManager.Instance.OnStartRaid(true);
+        }
+    }
+
+    public void OnCloseLevelStatisic()
+    {
+        _blackoutImage.gameObject.SetActive(false);
+        _levelStatusText.transform.parent.gameObject.SetActive(false);
+        TutorialManager.Instance.TryConfirmStage(StageName.FirstLevelCompleted);
+
+        if (YandexGame.timerShowAd >= YandexGame.Instance.infoYG.fullscreenAdInterval)
+        {
+            _viewingAdsYG.customEvents.CloseAd.AddListener(ShowMenuOnCloseAD);
+            MainAudioManager.Instance.DisableMasterSound();
+            YandexGame.FullscreenShow();
+        }
+        else
+        {
+            //GameManager.Instance.OnStartRaid(true);
         }
     }
 
     void StartNewRaidOnCloseAD()
     {
-        GameManager.Instance.OnStartRaid();
+        MainAudioManager.Instance.EnableMasterSound();
+        GameManager.Instance.OnStartRaid(true);
         _viewingAdsYG.customEvents.CloseAd.RemoveListener(StartNewRaidOnCloseAD);
     }
 
     void OpenInventoryOnCloseAD()
     {
+        MainAudioManager.Instance.EnableMasterSound();
         InventoryManager.Instance.OnOpenInventory();
         _viewingAdsYG.customEvents.CloseAd.RemoveListener(OpenInventoryOnCloseAD);
     }
 
-    void OnAdClose()
+    void ShowMenuOnCloseAD()
     {
         MainAudioManager.Instance.EnableMasterSound();
+        //InventoryManager.Instance.OnOpenInventory();
+        _viewingAdsYG.customEvents.CloseAd.RemoveListener(ShowMenuOnCloseAD);
     }
-    void OnAdOpen()
-    {
-        MainAudioManager.Instance.DisableMasterSound();
-    }
+
+    //void OnAdClose()
+    //{
+    //    MainAudioManager.Instance.EnableMasterSound();
+    //}
+    //void OnAdOpen()
+    //{
+    //    MainAudioManager.Instance.DisableMasterSound();
+    //}
 
     void ShowLevelStatusPanel(bool isSuccessfully)
     {
