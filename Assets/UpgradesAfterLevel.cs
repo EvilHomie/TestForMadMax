@@ -16,6 +16,7 @@ public class UpgradesAfterLevel : MonoBehaviour
     [SerializeField] TextMeshProUGUI _panelName;
     [SerializeField] TextMeshProUGUI _maxLevelText;
     [SerializeField] TextMeshProUGUI _cancelOfferText;
+    [SerializeField] TextMeshProUGUI _upgradeCostText;
     //[SerializeField] TextMeshProUGUI _offerText;
 
     bool _withUpdateInventory = false;
@@ -34,10 +35,11 @@ public class UpgradesAfterLevel : MonoBehaviour
         _panelName.text = TextConstants.QUICKIMPROVEMENT;
         _maxLevelText.text = TextConstants.MAX;
         _cancelOfferText.text = TextConstants.REFUSEIMPROVEMENT;
+        _upgradeCostText.text = TextConstants.UPGRADECOST;
         //_offerText.text = TextConstants._rewardText[RewardName.FreeUpgrade];
         _acceptOfferButton.onClick.AddListener(OnAcceptOffer);
         _cancelOfferButton.onClick.AddListener(OnCancelOffer);
-        _closeButton.onClick.AddListener(OnCancelOffer);
+        _closeButton.onClick.AddListener(OnCloseOffer);
         _fastUpgradeRow.UpgradeBtn.onClick.AddListener(OnBuyUpgrade);
         gameObject.SetActive(false);
     }
@@ -46,6 +48,7 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     public void ConfigPanel()
     {
+        RewardedAdManager.Instance.PrepareReward(OnSelectRewardOption, RewardName.FreeUpgrade);
         gameObject.SetActive(true);
         Cursor.visible = true;
         GetLessUpgradedItemAndCharacteristic(out IItemData targetItemData, out string targetCharName);
@@ -280,12 +283,13 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     void OnNoUpgradesAvailable()
     {
+        RewardedAdManager.Instance.OnNotAvailable();
         OnClosePanel();
     }
 
     void OnBuyUpgrade()
     {
-        MetricaSender.QuickImprovementAfterLevel(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName, QuickImprovement.JustUpgrade);
+        MetricaSender.QuickImprovement(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName);
         UpdatePanel();
     }
 
@@ -301,16 +305,19 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     private void OnCancelOffer()
     {
-        MetricaSender.QuickImprovementAfterLevel(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName, QuickImprovement.CancelOffer);
         RewardedAdManager.Instance.OnCancelOffer();
+        OnClosePanel();
+    }
+    private void OnCloseOffer()
+    {
+        RewardedAdManager.Instance.OnPlayerCloseOffer();
         OnClosePanel();
     }
 
     private void OnAcceptOffer()
     {
         AudioManager.Instance.PlayInventorySound(UISound.UpgradeSound);
-        _fastUpgradeRow.MaxLevelImitation();
-        RewardedAdManager.Instance.PrepareReward(OnSelectRewardOption, RewardName.FreeUpgrade);
+        _fastUpgradeRow.MaxLevelImitation();        
         RewardedAdManager.Instance.OnAcceptOffer();
     }
 
@@ -318,7 +325,6 @@ public class UpgradesAfterLevel : MonoBehaviour
     {
         if (GetRewardStatus)
         {
-            MetricaSender.QuickImprovementAfterLevel(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName, QuickImprovement.AcceptOffer);
             UpgradeCharacteristicToMax();
         }
         else
@@ -345,6 +351,8 @@ public class UpgradesAfterLevel : MonoBehaviour
         }
         SaveLoadManager.Instance.SaveData();
     }
+
+    
 
 }
 

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using YG;
 
 public class MetricaSender
-{    
+{
     public static void SendLevelStatus(string levelName, LevelStatus status)
     {
         string goalKey = $"{levelName}_{status}";
@@ -50,14 +50,34 @@ public class MetricaSender
         YandexMetrica.Send("LevelEnemyStatistic", eventParams);
     }
 
-    public static void QuickImprovementAfterLevel(string levelName, QuickImprovement quickImprovementType)
+    public static void QuickImprovementAfterLevel(string levelName, RewardStatus rewardStatus)
     {
-        string goalKey = $"{levelName}_{quickImprovementType}";
+        string goalKey = $"{levelName}_{rewardStatus}";
         var eventParams = new Dictionary<string, string>
         {
              { "QuickImprovement", goalKey }
         };
         YandexMetrica.Send("QuickImprovement", eventParams);
+    }
+
+    public static void QuickImprovement(string levelName)
+    {
+        string goalKey = $"{levelName}_JustUpgrade";
+        var eventParams = new Dictionary<string, string>
+        {
+             { "QuickImprovement", goalKey }
+        };
+        YandexMetrica.Send("QuickImprovement", eventParams);
+    }
+
+    public static void RestoreHPByADD(string levelName, RewardStatus rewardStatus)
+    {
+        string goalKey = $"{levelName}_{rewardStatus}";
+        var eventParams = new Dictionary<string, string>
+        {
+             { "RestoreHP", goalKey }
+        };
+        YandexMetrica.Send("RestoreHP", eventParams);
     }
 
 }

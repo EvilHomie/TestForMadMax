@@ -35,6 +35,7 @@ public class UILevelStatistic : MonoBehaviour
     [SerializeField] Button _nextTipBtn;
     [SerializeField] Button _prevTipBtn;
     [SerializeField] Button _raidBtn;
+    [SerializeField] Button _confirmBtn;
     [SerializeField] TextMeshProUGUI _raidBtnText;
     [SerializeField] Button _inventoryBtn;
     [SerializeField] TextMeshProUGUI _inventoryBtnText;
@@ -85,8 +86,9 @@ public class UILevelStatistic : MonoBehaviour
 
         _nextTipBtn.onClick.AddListener(ShowNewTip);
         _prevTipBtn.onClick.AddListener(ShowPreviousTip);
-        _raidBtn.onClick.AddListener(StartNewRaid);
-        _inventoryBtn.onClick.AddListener(ShowInventory);
+        //_raidBtn.onClick.AddListener(StartNewRaid);
+        //_inventoryBtn.onClick.AddListener(ShowInventory);
+        _confirmBtn.onClick.AddListener(CloseStatistic);
     }
 
     public void OnPlayerStartRaid()
@@ -199,5 +201,11 @@ public class UILevelStatistic : MonoBehaviour
     {
         gameObject.SetActive(false);
         FinishLevelManager.Instance.OnCloseLevelStatisicAndStartNewRaid();
+    }
+
+    void CloseStatistic()
+    {
+        gameObject.SetActive(false);
+        FinishLevelManager.Instance.OnCloseLevelStatisic();
     }
 }

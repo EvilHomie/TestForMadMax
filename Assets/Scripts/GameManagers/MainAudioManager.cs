@@ -103,8 +103,10 @@ public class MainAudioManager : MonoBehaviour
         {
             t += Time.deltaTime / duration;
             float value = Mathf.Lerp(1, 0.0001f, t);
-
-            _audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+            if (_SFXIsOn)
+            {
+                _audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+            }
             yield return null;
         }
         _audioMixer.SetFloat("SFX", _sfxMin);
@@ -121,8 +123,10 @@ public class MainAudioManager : MonoBehaviour
         {
             t += Time.deltaTime / duration;
             float value = Mathf.Lerp(0.0001f, 1, t);
-
-            _audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+            if (_SFXIsOn)
+            {
+                _audioMixer.SetFloat("SFX", Mathf.Log10(value) * 20f);
+            }
             yield return null;
         }
         _audioMixer.SetFloat("SFX", _sfxMax);

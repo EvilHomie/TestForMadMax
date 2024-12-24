@@ -75,6 +75,14 @@ public class TestingLogic : MonoBehaviour
             UIResourcesManager.Instance.AddResources(1000, 1000, 1000);
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            //ReviewYG wdaw = new ReviewYG();
+            //Debug.Log("AWDWA");
+            YandexGame.ReviewShow(false);
+            //wdaw.ReviewShow();
+        }
+
         //if (Input.GetKeyDown(KeyCode.B))
         //{
         //    TrigerSend("B");
