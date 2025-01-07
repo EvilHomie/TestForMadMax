@@ -32,7 +32,7 @@ public class UIChangeLevelButton : MonoBehaviour
 
         _levelImage.sprite = uILevelInfo.LevelParameters.LevelImage;
         _levelNumberText.text = uILevelInfo.LevelParameters.LevelName;
-        _levelFullNameText.text = TextConstants.LEVELSFULLNAMES[uILevelInfo.LevelParameters.LevelFullName];
+        _levelFullNameText.text = TextConstants.LEVELSFULLNAMES[uILevelInfo.LevelParameters.LevelChapterName];
 
         Dictionary<string, List<string>> unlockedLevelsInChapter = new();
 

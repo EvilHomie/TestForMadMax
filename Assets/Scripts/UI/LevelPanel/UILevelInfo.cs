@@ -10,34 +10,11 @@ public class UILevelInfo : MonoBehaviour
     [SerializeField] Button _selectBtn;
     [SerializeField] Image _levelImage;
     [SerializeField] Image _isSelectedImage;
-    //[SerializeField] string _levelName;
     [SerializeField] TextMeshProUGUI _unlockStatusText;
     [SerializeField] TextMeshProUGUI _levelNumberText;
     LevelParameters _levelParameters;
-
-    //[SerializeField] List<EnemyVehicleManager> enemyList;
-    //[SerializeField] int _simpleEnemyCount = 1;
-    ////[SerializeField] float _enemySlideDistanceMod = 1;
-    ////[SerializeField] float _enemyDmgMod = 1;
-    ////[SerializeField] float _enemyHPMod = 1;
-
-    //[Header("OPTIONAL")]
-    //[SerializeField] EnemyVehicleManager _bossEnemyVehicle;
-
-    //public List<EnemyVehicleManager> EnemyList => enemyList;
-    //public int SimpleEnemyCount => _simpleEnemyCount;
-    //public float EnemySlideDistanceMod => _enemySlideDistanceMod;
-    //public float EnemyDmgMod => _enemyDmgMod;
-    //public float EnemyHPMod => _enemyHPMod;
     public Button SelectBtn => _selectBtn;
     public LevelParameters LevelParameters => _levelParameters;
-    //public string LevelName => _levelName;
-
-    //public Image LevelImage => _levelImage;
-
-    //public EnemyVehicleManager BossEnemyVehicle => _bossEnemyVehicle;
-
-
 
     public void Init(ScrollRect scrollRect, LevelParameters levelParameters)
     {

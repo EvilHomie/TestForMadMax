@@ -289,7 +289,7 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     void OnBuyUpgrade()
     {
-        MetricaSender.QuickImprovement(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName);
+        MetricaSender.QuickImprovement(InRaidManager.Instance.SelectedLeveParameters.LevelName);
         UpdatePanel();
     }
 

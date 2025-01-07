@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -50,13 +51,39 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
-        
         StopAllCoroutines();
         CancelInvoke();
         ConfigureDataOnStartRaid();
 
         StartCoroutine(SpawnFirstWaveWithDelay(_spawnNewEnemyDelay));
     }
+
+    public void OnPlayerStartSurviveMod()
+    {
+        StopAllCoroutines();
+        CancelInvoke();
+        ConfigureDataOnStartRaid();
+
+        UIWaveIsApproachingPanel.Instance.ShowWaveText();
+        InvokeRepeating(nameof(SpawnEnemyInSurviveMod), 0, _spawnNewEnemyRepitRate);
+    }
+
+    void SpawnEnemyInSurviveMod()
+    {
+        if (_enemiesInRaidList.Count >= SurviveModManager.Instance.MaxEnemiesCount) return;
+
+        Vector3 spwanPos = GetSpawnPos();
+        Wave wave = InRaidManager.Instance.SelectedLeveParameters.GetWaveData(1);
+        List<EnemyType> enemyTypes = wave.waveEnemies.Select(enemy => enemy.enemyType).ToList();
+
+        int randomIndex = Random.Range(0, enemyTypes.Count);
+
+        EnemyVehicleManager enemyPF = EnemiesCollection.Instance.GetEnemyPF(enemyTypes[randomIndex], InRaidManager.Instance.SelectedLeveParameters.EnemyLevel);
+
+        EnemyVehicleManager enemy = Instantiate(enemyPF, spwanPos, enemyPF.transform.rotation);
+        _enemiesInRaidList.Add(enemy);
+    }
+
     public void OnPlayerEndRaid()
     {
         UIWaveIsApproachingPanel.Instance.HideText();
@@ -103,7 +130,7 @@ public class EnemySpawner : MonoBehaviour
         _waveSpawnedEnemyCount = 0;
         _waveDestroyedEnemyCount = 0;
         _totalDestroyedSimpleEnemyCount = 0;
-        _levelParametersCopy = Instantiate(LevelManager.Instance.GetSelectedLevelinfo().LevelParameters);
+        _levelParametersCopy = Instantiate(InRaidManager.Instance.SelectedLeveParameters);
         _bossIsSpawned = false;
         _totalWaveCount = _levelParametersCopy.WavesCount;
         _totalSimpleEnemiesCount = _levelParametersCopy.GetTotalSimpleEnemyCount();

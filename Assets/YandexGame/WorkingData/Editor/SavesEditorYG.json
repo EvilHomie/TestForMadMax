@@ -1,10 +1,10 @@
 {
-  "idSave": 113,
+  "idSave": 192,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
-  "money": 1,
-  "newPlayerName": "Hello!",
+  "money": 2131,
+  "newPlayerName": "qweq",
   "openLevels": [
     false,
     false,
@@ -39,16 +39,16 @@
       "weaponType": 1,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 8,
-      "hullDmgMaxLvl": 8,
+      "hullDmgCurLvl": 10,
+      "hullDmgMaxLvl": 10,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
-      "fireRateByLvl": 1.0,
-      "fireRateCurtLvl": 4,
-      "fireRateMaxLvl": 4,
+      "fireRateByLvl": 2.0,
+      "fireRateCurtLvl": 10,
+      "fireRateMaxLvl": 10,
       "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 4,
+      "rotationSpeedCurLvl": 5,
       "rotationSpeedMaxLvl": 8
     }
   ],
@@ -75,9 +75,9 @@
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 123,
-    "Wires": 126,
-    "ScrapMetal": 73
+    "Сopper": 127,
+    "Wires": 130,
+    "ScrapMetal": 79
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",

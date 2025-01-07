@@ -138,7 +138,7 @@ public class UIJoystickTouchController : MonoBehaviour
     {
         if (YandexGame.EnvironmentData.isDesktop)
         {
-            if (LevelManager.Instance.GetSelectedLevelinfo().LevelParameters.LevelName != "1-1")
+            if (LevelManager.Instance.GetSelectedLevelParameters().LevelName != "1-1")
             {
                 _mouseIconForPC.SetActive(false);
             }

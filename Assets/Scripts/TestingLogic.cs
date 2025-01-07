@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,9 @@ public class TestingLogic : MonoBehaviour
         UIResourcesManager.Instance.AddResources(3000, 3000, 3000);
         PlayerData.Instance.UnlockedLevelsNames = new() { "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "2-1", "2-2", "2-3", "2-4", "2-5", "2-6", "2-7", "2-8", "2-9", "2-10", "3-1" };
     }
+
+
+   
 
 
     void Update()
@@ -139,7 +143,7 @@ public class TestingLogic : MonoBehaviour
         YandexMetrica.Send("triggers", eventParams);
     }
 
-    
+
 }
 
 public enum DebugLevel

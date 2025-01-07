@@ -100,8 +100,8 @@ public class RewardedAdManager : MonoBehaviour
 
     void SendMetrica(RewardStatus rewardStatus)
     {
-        if (_proposedRewardName == RewardName.FreeUpgrade) MetricaSender.QuickImprovementAfterLevel(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName, rewardStatus);
-        if (_proposedRewardName == RewardName.RestoreHP) MetricaSender.RestoreHPByADD(InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName, rewardStatus);
+        if (_proposedRewardName == RewardName.FreeUpgrade) MetricaSender.QuickImprovementAfterLevel(InRaidManager.Instance.SelectedLeveParameters.LevelName, rewardStatus);
+        if (_proposedRewardName == RewardName.RestoreHP) MetricaSender.RestoreHPByADD(InRaidManager.Instance.SelectedLeveParameters.LevelName, rewardStatus);
     }
 
     public void OnNotAvailable()

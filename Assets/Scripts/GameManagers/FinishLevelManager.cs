@@ -39,11 +39,11 @@ public class FinishLevelManager : MonoBehaviour
     {
         if (isSuccessfully)
         {
-            if (InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName == "1-1")
+            if (InRaidManager.Instance.SelectedLeveParameters.LevelName == "1-1")
             {
                 TutorialManager.Instance.TryEnableStage(StageName.FirstLevelCompleted);
             }
-            else if (InRaidManager.Instance.SelectedLevelInfo.LevelParameters.LevelName == "1-2")
+            else if (InRaidManager.Instance.SelectedLeveParameters.LevelName == "1-2")
             {
                 TutorialManager.Instance.TryEnableStage(StageName.ShowLevelStatisticPanel);
             }

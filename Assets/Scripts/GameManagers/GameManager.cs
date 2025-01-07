@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GarageMainPanleAnimation _garageMainPanel;
     [SerializeField] GameObject _inGarageInterface;
     [SerializeField] Button _startRaidBtn;
+    [SerializeField] Button _startSurviveModBtn;
     //[SerializeField] Button _garageBtn;
     [SerializeField] Button _openInventoryBtn;
     [SerializeField] Button _changeLevelsBtn;
@@ -101,6 +102,12 @@ public class GameManager : MonoBehaviour
             SaveLoadManager.Instance.SaveData();
         });
         _changeLevelsBtn.onClick.AddListener(OnOpenLevels);
+
+        _startSurviveModBtn.onClick.AddListener(delegate
+        {
+            SurviveModManager.Instance.OnStartMod();
+            ConfigMainPanel(true);
+        });
     }
 
     void SwitchUIButton(bool enableStatus)

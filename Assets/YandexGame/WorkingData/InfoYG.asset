@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa747916aa66674d96ea40ca8a480b2, type: 3}
   m_Name: InfoYG
   m_EditorClassIdentifier: 
-  scopes: 0
+  scopes: 1
   playerPhotoSize: 0
   autoGameReadyAPI: 0
   playerInfoSimulation:
     authorized: 0
     isMobile: 0
-    language: en
+    language: ru
     name: Player this
     uniqueID: 000
     photo: https://justplaygames.ru/public/icon_player.png
@@ -40,10 +40,10 @@ MonoBehaviour:
   quitGameParameters:
     objectName: YandexGame
     methodName: _SaveProgress
-  leaderboardEnable: 0
+  leaderboardEnable: 1
   saveScoreAnonymousPlayers: 1
   leaderboardSimulation:
-  - technoName: advanced
+  - technoName: TESTSCORES
     entries: 'Test LeaderBoard
 
       Name: advanced
@@ -81,7 +81,7 @@ MonoBehaviour:
       uniqueID: 321
     - rank: 5
       name: Player this
-      score: 40
+      score: 12
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 000
     - rank: 6

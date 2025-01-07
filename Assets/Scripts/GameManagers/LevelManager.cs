@@ -62,9 +62,9 @@ public class LevelManager : MonoBehaviour
         UIChangeLevelButton.Instance.UpdateSelectedLevel(_lastSelectedLevel);
     }
 
-    public UILevelInfo GetSelectedLevelinfo()
+    public LevelParameters GetSelectedLevelParameters()
     {
-        return _lastSelectedLevel;
+        return _lastSelectedLevel.LevelParameters;
     }
 
     public void UnlockNextLevel()

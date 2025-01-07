@@ -69,7 +69,6 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-
     void CreateWeaponInstance(int weaponIndex)
     {
         string weaponName = PlayerData.Instance.EquipedItems[weaponIndex];
@@ -84,9 +83,18 @@ public class PlayerWeaponManager : MonoBehaviour
         _weaponsByIndex[weaponIndex] = newWeaponInstance;
     }
 
+    void CreateSpecificWeaponInstance(WeaponData weaponData)
+    {
+        PlayerWeapon weaponPF = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == weaponData.DeffItemName);
+        Transform matchPoint = _weaponPointsTransform[0];
+        PlayerWeapon newWeaponInstance = Instantiate(weaponPF, matchPoint);
+        newWeaponInstance.SetItemData(weaponData);
+        newWeaponInstance.TargetMarker.SetActive(false);
+        _weaponsByIndex[1] = newWeaponInstance;
+    }
+
     public void OnPlayerStartRaid()
     {
-        //DetectFingerManager.Instance.OnPlayerStartRaid();
         _playerOnRaid = true;
         _playerIsDead = false;
         _weaponsByIndex[_selectedWeaponIndex].TargetMarker.SetActive(true);
@@ -96,10 +104,17 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void OnPlayerEndRaid()
     {
-        //DetectFingerManager.Instance.OnPlayerEndRaid();
         _playerOnRaid = false;
         _weaponsByIndex[_selectedWeaponIndex].StopShooting();
         _cameraCursor.SetActive(false);
+    }
+
+    public void OnStartSurviveMod(WeaponData startWeaponData)
+    {
+        ResetData();
+        CreateSpecificWeaponInstance(startWeaponData);
+        ResetCameraPos();
+        OnPlayerStartRaid();
     }
 
     void ResetCameraPos()

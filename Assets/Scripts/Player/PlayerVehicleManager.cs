@@ -59,10 +59,19 @@ public class PlayerVehicleManager : MonoBehaviour
         _playerVehicle = newVehicleInstance;
     }
 
+    public void CreateSpecificVehicleInstance(VehicleData vehicleData)
+    {
+        PlayerVehicle vehiclePF = GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == vehicleData.DeffItemName);
+
+        PlayerVehicle newVehicleInstance = Instantiate(vehiclePF, transform);
+        newVehicleInstance.SetItemData(vehicleData);
+        _playerVehicle = newVehicleInstance;
+    }
+
     public void OnPlayerStartRaid()
     {
         _engineIsStarted = true;
-        _playerVehicle.StartVehicle();        
+        _playerVehicle.StartVehicle();
     }
 
     public void GetVehicleMovingData(out float vehicleStartDelay, out float vehicleFullSpeed, out float vehicleReachFullSpeedDuration)

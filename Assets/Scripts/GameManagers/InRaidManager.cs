@@ -18,10 +18,11 @@ public class InRaidManager : MonoBehaviour
     [SerializeField] float _blackoutDuration;
 
 
-    UILevelInfo _selectedLevelInfo;
+    LevelParameters _selectedLeveParameters;
     bool _selectedLevelCompleteStatus = false;
     float _worldMoveSpeed = 0f;
     bool _onRaid = false;
+    bool _inSurviveMod = false;
     int _killedEnemiesCount = 0;
     int _escapedEnemiesCount = 0;
     int _enemyTotalCountOnLevel = 0;
@@ -30,7 +31,9 @@ public class InRaidManager : MonoBehaviour
     public float PlayerMoveSpeed => _worldMoveSpeed;
     public Transform MainRoadTransform => _mainRoadRenderer.transform;
 
-    public UILevelInfo SelectedLevelInfo => _selectedLevelInfo;
+    public LevelParameters SelectedLeveParameters => _selectedLeveParameters;
+
+    public bool InSurviveMod => _inSurviveMod;
 
 
     private void Awake()
@@ -42,6 +45,7 @@ public class InRaidManager : MonoBehaviour
     public void Init()
     {
         _onRaid = false;
+        _inSurviveMod = false;
         StopAllCoroutines();
         _worldMoveSpeed = 0;
         _totalBlackoutImage.gameObject.SetActive(false);
@@ -64,19 +68,28 @@ public class InRaidManager : MonoBehaviour
         _mainRoadRenderer.material.mainTextureOffset += _speedMod * _worldMoveSpeed * Time.deltaTime * Vector2.left;
     }
 
+
     public void OnPlayerStartRaid()
     {
         ConfigureDataOnStartRaid();
-        PlayerVehicleManager.Instance.GetVehicleMovingData(out float startMoveDelay, out float fullSpeed, out float reachFullSpeedDuration);
+        StartLogic();
+    }
 
+    public void OnStartSurviveMod()
+    {
+        ConfigureDataOnStartSurviveMod();
+        StartLogic();
+    }
+
+    void StartLogic()
+    {
+        PlayerVehicleManager.Instance.GetVehicleMovingData(out float startMoveDelay, out float fullSpeed, out float reachFullSpeedDuration);
         PlayerVehicleManager.Instance.OnPlayerStartRaid();
         OldHangarManager.Instance.OnPlayerStartRaid(startMoveDelay);
         StartCoroutine(AccelerationMoveSpeed(startMoveDelay, fullSpeed, reachFullSpeedDuration));
         UIComboCounterManager.Instance.OnPlayerStartRaid();
-        MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Start);
-
+        MetricaSender.SendLevelStatus(_selectedLeveParameters.LevelName, LevelStatus.Start);
         StartCoroutine(StartRaidLogic());
-        
     }
 
     IEnumerator StartRaidLogic()
@@ -95,7 +108,7 @@ public class InRaidManager : MonoBehaviour
         AudioManager.Instance.ToggleMusic(true);
         OldHangarManager.Instance.DisableGarage();
         yield return new WaitForSeconds(_blackoutPause);
-        
+
         t = 0;
         while (t <= 1)
         {
@@ -105,21 +118,45 @@ public class InRaidManager : MonoBehaviour
             yield return null;
         }
         _totalBlackoutImage.gameObject.SetActive(false);
-        EnemySpawner.Instance.OnPlayerStartRaid();
+
+        if (_inSurviveMod)
+        {
+            EnemySpawner.Instance.OnPlayerStartSurviveMod();
+        }
+        else
+        {
+            EnemySpawner.Instance.OnPlayerStartRaid();
+        }
+
+        
     }
 
     void ConfigureDataOnStartRaid()
     {
+        _inSurviveMod = false;
+        _selectedLeveParameters = LevelManager.Instance.GetSelectedLevelParameters();
+        ResetData();
+    }
+
+    void ConfigureDataOnStartSurviveMod()
+    {
+        _inSurviveMod = true;
+        _selectedLeveParameters = SurviveModManager.Instance.CopyLevelParameters;
+        ResetData();
+    }
+
+    void ResetData()
+    {
         Cursor.visible = false;
 
         _onRaid = true;
-        _selectedLevelInfo = LevelManager.Instance.GetSelectedLevelinfo();
         _selectedLevelCompleteStatus = false;
-        int bossCount = _selectedLevelInfo.LevelParameters.Boss == null ? 0 : 1;
-        _enemyTotalCountOnLevel = _selectedLevelInfo.LevelParameters.GetTotalSimpleEnemyCount() + bossCount;
+        int bossCount = _selectedLeveParameters.Boss == null ? 0 : 1;
+        _enemyTotalCountOnLevel = _selectedLeveParameters.GetTotalSimpleEnemyCount() + bossCount;
         _killedEnemiesCount = 0;
         _escapedEnemiesCount = 0;
     }
+
     public void OnPlayerEndRaid()
     {
         Cursor.visible = true;
@@ -152,20 +189,35 @@ public class InRaidManager : MonoBehaviour
     public void OnEnemyEscaped(EnemyVehicleManager enemy)
     {
         if (!_onRaid) return;
-        _escapedEnemiesCount++;
-        if (_selectedLevelInfo.LevelParameters.LevelName == "1-1") MetricaSender.KillEnemyOnFirstLevel(_selectedLevelInfo.LevelParameters.LevelName, _escapedEnemiesCount, LevelEnemyStatus.Escaped);
-        
-        EnemySpawner.Instance.OnEnemyObjectDestroyed(enemy);
-        CheckRaidCompleteStatus();
+
+
+        if (_inSurviveMod)
+        {
+            SurviveModManager.Instance.OnEnemyEscaped();
+        }
+        else
+        {
+            _escapedEnemiesCount++;
+            EnemySpawner.Instance.OnEnemyObjectDestroyed(enemy);
+            if (_selectedLeveParameters.LevelName == "1-1") MetricaSender.KillEnemyOnFirstLevel(_selectedLeveParameters.LevelName, _escapedEnemiesCount, LevelEnemyStatus.Escaped);
+            CheckRaidCompleteStatus();
+        }
     }
 
     public void OnPlayerKillEnemy()
     {
-        _killedEnemiesCount++;
-        if (_selectedLevelInfo.LevelParameters.LevelName == "1-1") MetricaSender.KillEnemyOnFirstLevel(_selectedLevelInfo.LevelParameters.LevelName, _killedEnemiesCount, LevelEnemyStatus.Killed);
-       
         UIComboCounterManager.Instance.OnEnemyKilled();
-        CheckRaidCompleteStatus();
+
+        if (_inSurviveMod)
+        {
+            SurviveModManager.Instance.OnEnemyKilled();
+        }
+        else
+        {
+            _killedEnemiesCount++;
+            if (_selectedLeveParameters.LevelName == "1-1") MetricaSender.KillEnemyOnFirstLevel(_selectedLeveParameters.LevelName, _killedEnemiesCount, LevelEnemyStatus.Killed);
+            CheckRaidCompleteStatus();
+        }
     }
 
     void CheckRaidCompleteStatus()
@@ -174,7 +226,7 @@ public class InRaidManager : MonoBehaviour
         {
             _onRaid = false;
             _selectedLevelCompleteStatus = true;
-            MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Done);
+            MetricaSender.SendLevelStatus(_selectedLeveParameters.LevelName, LevelStatus.Done);
             LevelManager.Instance.UnlockNextLevel();
             FinishLevelManager.Instance.OnFinishLevel(_selectedLevelCompleteStatus);
             SaveLoadManager.Instance.SaveData();
@@ -189,10 +241,19 @@ public class InRaidManager : MonoBehaviour
     public void OnPLayerDie()
     {
         _selectedLevelCompleteStatus = false;
-        MetricaSender.SendLevelStatus(_selectedLevelInfo.LevelParameters.LevelName, LevelStatus.Failed);
+        MetricaSender.SendLevelStatus(_selectedLeveParameters.LevelName, LevelStatus.Failed);
         StartCoroutine(ChangeSpeedOnDie());
         EnemySpawner.Instance.OnPLayerDie();
-        FinishLevelManager.Instance.OnFinishLevel(_selectedLevelCompleteStatus);
+
+        if (_inSurviveMod)
+        {
+            SurviveModManager.Instance.OnPlayerDie();
+        }
+        else
+        {
+            FinishLevelManager.Instance.OnFinishLevel(_selectedLevelCompleteStatus);
+        }
+
         SaveLoadManager.Instance.SaveData();
     }
 

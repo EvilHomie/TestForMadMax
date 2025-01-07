@@ -10,12 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f7dcbe0bcc54864aacead2fd3d02ff2, type: 3}
-  m_Name: 3-6
+  m_Name: SurviveMod
   m_EditorClassIdentifier: 
-  _levelName: 3-6
-  _levelChapterName: Thug Lands
+  _levelName: SurviveMod
+  _levelChapterName: SurviveMod
   _levelImage: {fileID: 21300000, guid: 0f7fbd33020990c40b0787af42c3de75, type: 3}
-  _enemiesLevel: 2
-  _waves: []
+  _enemiesLevel: 1
+  _waves:
+  - waveEnemies:
+    - enemyType: 0
+      count: 1
+    - enemyType: 1
+      count: 1
+    - enemyType: 2
+      count: 1
+    - enemyType: 3
+      count: 1
   _blockedEnemiesLinesInGameZone: 
-  _boss: {fileID: 7596902607514645331, guid: dd5cc6cc803b47e4fa0255d031384962, type: 3}
+  _boss: {fileID: 0}
