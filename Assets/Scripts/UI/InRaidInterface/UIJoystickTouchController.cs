@@ -68,6 +68,10 @@ public class UIJoystickTouchController : MonoBehaviour
         {
             PlayerWeaponManager.Instance.StopShoot();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayerWeaponManager.Instance.Reload();
+        }
 
         if (_PCVersion) return;
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)

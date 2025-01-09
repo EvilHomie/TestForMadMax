@@ -16,7 +16,11 @@ public class SurviveModeManager : MonoBehaviour
     [SerializeField] RectTransform _scullsContainer;
     [SerializeField] LevelParameters _deffLevelParameters;
     [SerializeField] VehicleData[] _vehicleDatas;
-    [SerializeField] WeaponData[] _weaponDatas;
+    [SerializeField] AbstractWeapon[] _originalWeapons;
+    [SerializeField] SMWeaponData[] _weaponsStartData;
+    [SerializeField] UpgradeCardData[] _upgradeCardsData;
+
+    [SerializeField] int _killedCountForLvlUp;
 
     [SerializeField] int _maxEnemiesCount;
     [SerializeField] float _startEnemyDmgMod;
@@ -47,11 +51,14 @@ public class SurviveModeManager : MonoBehaviour
     int _killedEnemiesCount = 0;
     int _escapedEnemiesCount = 0;
     VehicleData _currentVehicleData;
-    WeaponData _currentWeaponData;
+    AbstractWeapon _currentWeapon;
+    SMWeaponData _currentWeaponData;
 
-    float enemyPowerLevel = 1;
+    float _enemyPowerLevel = 1;
 
-    List<EnemyLevel> enemyLevels;
+    List<EnemyLevel> _enemyTirs;
+
+    List<CharacteristicsName> _characteristicsNames;
 
     private void Awake()
     {
@@ -61,7 +68,8 @@ public class SurviveModeManager : MonoBehaviour
 
     private void Start()
     {
-        enemyLevels = Enum.GetValues(typeof(EnemyLevel)).Cast<EnemyLevel>().ToList();
+        _enemyTirs = Enum.GetValues(typeof(EnemyLevel)).Cast<EnemyLevel>().ToList();
+        _characteristicsNames = Enum.GetValues(typeof(CharacteristicsName)).Cast<CharacteristicsName>().ToList();
         _difficultCount = _difficultsColorContainer.childCount;
         _difficultSlider.transform.parent.gameObject.SetActive(false);
     }
@@ -73,7 +81,7 @@ public class SurviveModeManager : MonoBehaviour
         _difficultSlider.transform.parent.gameObject.SetActive(true);
 
         UIResourcesManager.Instance.DisablePanel();
-        PlayerWeaponManager.Instance.OnStartSurviveMod(_currentWeaponData);
+        PlayerWeaponManager.Instance.OnStartSurviveMod(_currentWeapon.gameObject, out AbstractWeapon createdWeapon);
         PlayerVehicleManager.Instance.CreateSpecificVehicleInstance(_currentVehicleData);
         UIJoystickTouchController.Instance.OnStartRaid(_showControllerDelay);
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
@@ -84,9 +92,18 @@ public class SurviveModeManager : MonoBehaviour
         UILevelStatistic.Instance.OnPlayerStartRaid();
         YandexGame.GameplayStart();
 
+        _currentWeapon = createdWeapon;
+        if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
+        {
+            _currentWeaponData = _weaponsStartData[0];
+            weapon.TEMPSetValues(_currentWeaponData);
+            weapon.Init();
+        }
+
+
+
+
         StartCoroutine(IncreaseEnemyPowerInTime(10));
-        //InvokeRepeating(nameof(IncreaseEnemyLevel), _increaseEnemyLevelDelay, _increaseEnemyLevelDelay);
-        //InvokeRepeating(nameof(IncreaseEnemyPower), _increaseEnemyPowerDelay, _increaseEnemyPowerDelay);
     }
 
     void ResetData()
@@ -106,26 +123,24 @@ public class SurviveModeManager : MonoBehaviour
         _currentEnemyLevel = EnemyLevel.SuperEasy;
         _killedEnemiesCount = 0;
         _escapedEnemiesCount = 0;
-        enemyPowerLevel = 1;
+        _enemyPowerLevel = 1;
         _difficultSlider.value = 0;
         _enemyTotalCountOnLevel = _copyLevelParameters.GetTotalSimpleEnemyCount();
         _copyLevelParameters.ChangeEnemiesLevel(_currentEnemyLevel);
         _currentVehicleData = Instantiate(_vehicleDatas[0]);
-        _currentWeaponData = Instantiate(_weaponDatas[0]);
+        //_currentWeaponData = Instantiate(_weaponDatas[0]);
+
+        _currentWeapon = _originalWeapons[0];
 
     }
 
     void IncreaseEnemyLevel()
     {
-        //if (_currentEnemyLevel == EnemyLevel.SuperEasy) _currentEnemyLevel = EnemyLevel.VeryEasy;
-        //else if (_currentEnemyLevel == EnemyLevel.VeryEasy) _currentEnemyLevel = EnemyLevel.Easy;
-        //else return;
-
-        if (_currentEnemyLevel != enemyLevels.Last())
+        if (_currentEnemyLevel != _enemyTirs.Last())
         {
-            int index = enemyLevels.FindIndex(element => element == _currentEnemyLevel);
+            int index = _enemyTirs.FindIndex(element => element == _currentEnemyLevel);
             index++;
-            _currentEnemyLevel = enemyLevels[index];
+            _currentEnemyLevel = _enemyTirs[index];
             _copyLevelParameters.ChangeEnemiesLevel(_currentEnemyLevel);
         }
     }
@@ -138,10 +153,8 @@ public class SurviveModeManager : MonoBehaviour
         float t = 0;
         while (t < 1)
         {
-            Debug.Log(t);
             t += Time.deltaTime / _increaseEnemyPowerDelay;
             _difficultSlider.value = Mathf.Lerp(startSliderValue, endSliderValue, t);
-            Debug.Log(endSliderValue);
             yield return null;
         }
         IncreaseEnemyPower();
@@ -149,16 +162,16 @@ public class SurviveModeManager : MonoBehaviour
 
     void IncreaseEnemyPower()
     {
-        enemyPowerLevel++;
-        if (enemyPowerLevel > _difficultCount && _currentEnemyLevel != enemyLevels.Last())
+        _enemyPowerLevel++;
+        if (_enemyPowerLevel > _difficultCount && _currentEnemyLevel != _enemyTirs.Last())
         {
-            enemyPowerLevel = 1;
+            _enemyPowerLevel = 1;
             _difficultSlider.value = 0;
             _enemyDmgMod = _startEnemyDmgMod;
             _enemyHpMod = _startEnemyHpMod;
             IncreaseEnemyLevel();
         }
-        else if(enemyPowerLevel > _difficultCount && _currentEnemyLevel == enemyLevels.Last())
+        else if (_enemyPowerLevel > _difficultCount && _currentEnemyLevel == _enemyTirs.Last())
         {
             Instantiate(_scullPF, _scullsContainer);
         }
@@ -179,6 +192,10 @@ public class SurviveModeManager : MonoBehaviour
     public void OnEnemyKilled()
     {
         _killedEnemiesCount++;
+        if (_killedEnemiesCount % _killedCountForLvlUp == 0)
+        {
+            OnPlayerLvlUp();
+        }
     }
     public void OnEnemyEscaped()
     {
@@ -202,4 +219,84 @@ public class SurviveModeManager : MonoBehaviour
         _difficultSlider.transform.parent.gameObject.SetActive(false);
     }
 
+    void OnPlayerLvlUp()
+    {
+        List<UpgradeCardData> randomCards = new();
+        List<UpgradeCardData> upgradeCardsCopy = new(_upgradeCardsData);
+
+        while (randomCards.Count < 3)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, upgradeCardsCopy.Count);
+            randomCards.Add(upgradeCardsCopy[randomIndex]);
+            upgradeCardsCopy.RemoveAt(randomIndex);
+        }
+
+        SurviveModeUpgradePanel.Instance.ConfigPanel(randomCards);
+    }
+
+    public void OnSelectUpgradeCard(UpgradeCardData upgradeCardData)
+    {
+        SMWeaponData newWeaponData = _currentWeaponData;
+
+
+
+
+        switch (upgradeCardData.CharacteristicsName)
+        {
+            case (CharacteristicsName.WeaponKineticDmg):
+                newWeaponData.kineticDamage += upgradeCardData.ChangeValue;
+                break;
+            //case (CharacteristicsName.WeaponEnergyDmg):
+
+            //    break;
+            case (CharacteristicsName.WeaponFireRate):
+                newWeaponData.fireRate += upgradeCardData.ChangeValue;
+                break;
+            case (CharacteristicsName.WeaponReloadTime):
+                newWeaponData.reloadTime += upgradeCardData.ChangeValue;
+                if (newWeaponData.reloadTime <= 0.3f) newWeaponData.reloadTime = 0.3f;
+                break;
+            case (CharacteristicsName.WeaponMagCapacity):
+                newWeaponData.magCapacity += (int)upgradeCardData.ChangeValue;
+                break;
+                //case (CharacteristicsName.VehicleHullHP):
+
+                //    break;
+                //case (CharacteristicsName.VehicleShieldHP):
+
+                //    break;
+                //case (CharacteristicsName.VehicleShieldRegRate):
+
+                //    break;
+
+        }
+        _currentWeaponData = newWeaponData;
+
+        if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
+        {
+            weapon.TEMPSetValues(_currentWeaponData);
+        }
+    }
+
+}
+[Serializable]
+public struct SMWeaponData
+{
+    public float kineticDamage;
+    public float energyDamage;
+    public float fireRate;
+    public int magCapacity;
+    public float reloadTime;
+}
+
+[Serializable]
+public struct UpgradeCardData
+{
+    [SerializeField] string _upgradeText;
+    [SerializeField] CharacteristicsName _characteristicsName;
+    [SerializeField] float _changeValue;
+
+    public readonly string UpgradeText => _upgradeText;
+    public readonly CharacteristicsName CharacteristicsName => _characteristicsName;
+    public readonly float ChangeValue => _changeValue;
 }

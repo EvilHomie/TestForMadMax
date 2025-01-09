@@ -16,6 +16,7 @@ public class PlayerWeaponManager : MonoBehaviour
     Vector3 _currentCameraRotation;
 
     Dictionary<int, PlayerWeapon> _weaponsByIndex = new();
+    AbstractWeapon _surviveModeWeapon;
 
     int _selectedWeaponIndex = 1;
     bool _playerIsDead = false;
@@ -83,15 +84,7 @@ public class PlayerWeaponManager : MonoBehaviour
         _weaponsByIndex[weaponIndex] = newWeaponInstance;
     }
 
-    void CreateSpecificWeaponInstance(WeaponData weaponData)
-    {
-        PlayerWeapon weaponPF = GameAssets.Instance.GameItems.Weapons.Find(weapon => weapon.name == weaponData.DeffItemName);
-        Transform matchPoint = _weaponPointsTransform[0];
-        PlayerWeapon newWeaponInstance = Instantiate(weaponPF, matchPoint);
-        newWeaponInstance.SetItemData(weaponData);
-        newWeaponInstance.TargetMarker.SetActive(false);
-        _weaponsByIndex[1] = newWeaponInstance;
-    }
+    
 
     public void OnPlayerStartRaid()
     {
@@ -109,12 +102,27 @@ public class PlayerWeaponManager : MonoBehaviour
         _cameraCursor.SetActive(false);
     }
 
-    public void OnStartSurviveMod(WeaponData startWeaponData)
+    public void OnStartSurviveMod(GameObject abstractWeapon, out AbstractWeapon createdWeapon)
     {
         ResetData();
-        CreateSpecificWeaponInstance(startWeaponData);
+        CreateSpecificWeaponInstance(abstractWeapon);
+        createdWeapon = _surviveModeWeapon;
         ResetCameraPos();
         OnPlayerStartRaid();
+
+    }
+    void CreateSpecificWeaponInstance(GameObject abstractWeapon)
+    {
+        Transform matchPoint = _weaponPointsTransform[0];
+        GameObject newWeapon = Instantiate(abstractWeapon, matchPoint);
+        PlayerWeapon newWeaponInstance = newWeapon.GetComponent<PlayerWeapon>();
+        _surviveModeWeapon = newWeapon.GetComponent<AbstractWeapon>();
+
+        //PlayerWeapon newWeaponInstance = Instantiate(playerWeapon, matchPoint);
+        //newWeaponInstance.SetItemData(weaponData);
+        newWeaponInstance.TargetMarker.SetActive(false);
+        _weaponsByIndex[1] = newWeaponInstance;
+        //_surviveModeWeapon = abstractWeapon;
     }
 
     void ResetCameraPos()
@@ -152,12 +160,39 @@ public class PlayerWeaponManager : MonoBehaviour
     public void StartShoot()
     {
         if (_playerIsDead) return;
+
+        if (InRaidManager.Instance.InSurviveMod)
+        {
+            _surviveModeWeapon.StartShoot();
+        }
+        else
+        {
         _weaponsByIndex[_selectedWeaponIndex].StartShooting();
+        }
     }
 
     public void StopShoot()
     {
-        _weaponsByIndex[_selectedWeaponIndex].StopShooting();
+        if (InRaidManager.Instance.InSurviveMod)
+        {
+            _surviveModeWeapon.StopShoot();
+        }
+        else
+        {
+            _weaponsByIndex[_selectedWeaponIndex].StopShooting();
+        }
+    }
+
+    public void Reload()
+    {
+        if (InRaidManager.Instance.InSurviveMod)
+        {
+            _surviveModeWeapon.Reload();
+        }
+        else
+        {
+
+        }
     }
 
     public void RotateCameraByFinger(Vector3 fingerPosDifference)

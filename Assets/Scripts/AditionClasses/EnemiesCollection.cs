@@ -23,13 +23,13 @@ public class EnemiesCollection : MonoBehaviour
 
     public void Init()
     {
-        EnemyVehicleManager[] superEasyEnemies = Resources.LoadAll<EnemyVehicleManager>("Prefabs/Enemy/Vehicles/SuperEasy");
+        EnemyVehicleManager[] superEasyEnemies = Resources.LoadAll<EnemyVehicleManager>("Enemy/Vehicles/SuperEasy");
         _enemyVehiclesSuperEasy = superEasyEnemies.ToDictionary(vehicle => vehicle.EnemyType, vehicle => vehicle);        
 
-        EnemyVehicleManager[] veryEasyEnemies = Resources.LoadAll<EnemyVehicleManager>("Prefabs/Enemy/Vehicles/VeryEasy");
+        EnemyVehicleManager[] veryEasyEnemies = Resources.LoadAll<EnemyVehicleManager>("Enemy/Vehicles/VeryEasy");
         _enemyVehiclesVeryEasy = veryEasyEnemies.ToDictionary(vehicle => vehicle.EnemyType, vehicle => vehicle);
 
-        EnemyVehicleManager[] easyEnemies = Resources.LoadAll<EnemyVehicleManager>("Prefabs/Enemy/Vehicles/Easy");
+        EnemyVehicleManager[] easyEnemies = Resources.LoadAll<EnemyVehicleManager>("Enemy/Vehicles/Easy");
         _enemyVehiclesEasy = easyEnemies.ToDictionary(vehicle => vehicle.EnemyType, vehicle => vehicle);
     }
 

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum EnumVehiclePart
 {
     OtherPart,
@@ -50,4 +52,17 @@ public enum Direction
     Front,
     Left,
     Right    
+}
+
+public enum CharacteristicsName
+{
+   //WeaponEnergyDmg,
+   WeaponKineticDmg,
+   WeaponFireRate,
+   WeaponReloadTime,
+   WeaponMagCapacity,
+
+   //VehicleHullHP,
+   //VehicleShieldHP,
+   //VehicleShieldRegRate
 }
