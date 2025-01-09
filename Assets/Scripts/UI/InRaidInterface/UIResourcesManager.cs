@@ -163,4 +163,14 @@ public class UIResourcesManager : MonoBehaviour
         }
         return true;
     }
+
+    public void DisablePanel()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void EnablePanel()
+    {
+        gameObject.SetActive(true);
+    }
 }

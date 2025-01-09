@@ -141,7 +141,7 @@ public class InRaidManager : MonoBehaviour
     void ConfigureDataOnStartSurviveMod()
     {
         _inSurviveMod = true;
-        _selectedLeveParameters = SurviveModManager.Instance.CopyLevelParameters;
+        _selectedLeveParameters = SurviveModeManager.Instance.CopyLevelParameters;
         ResetData();
     }
 
@@ -193,7 +193,7 @@ public class InRaidManager : MonoBehaviour
 
         if (_inSurviveMod)
         {
-            SurviveModManager.Instance.OnEnemyEscaped();
+            SurviveModeManager.Instance.OnEnemyEscaped();
         }
         else
         {
@@ -210,7 +210,7 @@ public class InRaidManager : MonoBehaviour
 
         if (_inSurviveMod)
         {
-            SurviveModManager.Instance.OnEnemyKilled();
+            SurviveModeManager.Instance.OnEnemyKilled();
         }
         else
         {
@@ -247,7 +247,7 @@ public class InRaidManager : MonoBehaviour
 
         if (_inSurviveMod)
         {
-            SurviveModManager.Instance.OnPlayerDie();
+            SurviveModeManager.Instance.OnPlayerDie();
         }
         else
         {

@@ -28,8 +28,8 @@ public class EnemyWeapon : WeaponLogic
 
         if (InRaidManager.Instance.InSurviveMod)
         {
-            _hullDmg *= SurviveModManager.Instance.EnemyDmgMod;
-            _shieldDmg *= SurviveModManager.Instance.EnemyDmgMod;
+            _hullDmg *= SurviveModeManager.Instance.EnemyDmgMod;
+            _shieldDmg *= SurviveModeManager.Instance.EnemyDmgMod;
             //_fireRate *= SurviveModManager.Instance.EnemyFRMod;
             //if(_fireRate > 10) _fireRate = 10;
         }

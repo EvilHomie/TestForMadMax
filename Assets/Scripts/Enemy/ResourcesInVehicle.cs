@@ -7,6 +7,7 @@ public class ResourcesInVehicle : MonoBehaviour
 
     public void DropResources()
     {
+        if (InRaidManager.Instance.InSurviveMod) return;
         if (_resources.Count == 0) return;
 
         int copperAmount = 0;
@@ -16,7 +17,7 @@ public class ResourcesInVehicle : MonoBehaviour
         foreach (DropedResource resource in _resources)
         {
             float chance = Random.Range(resource.DropChance, 100f);
-            int amount = (int)(resource.Amount * chance/100);
+            int amount = (int)(resource.Amount * chance / 100);
 
             if (resource.ResourcesType == ResourcesType.Ñopper)
             {

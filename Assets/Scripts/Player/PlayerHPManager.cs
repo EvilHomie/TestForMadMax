@@ -91,7 +91,7 @@ public class PlayerHPManager : MonoBehaviour
             UILevelStatistic.Instance.OnDamageRecieved(hullDmgValue, 0);
         }
 
-        if (_playerHullHP <= _maxHullHp * 0.1f && !_restoreOfferWasProposed)
+        if (_playerHullHP <= _maxHullHp * 0.1f && !_restoreOfferWasProposed && !InRaidManager.Instance.InSurviveMod)
         {
             _restoreOfferWasProposed = true;
             LowHpRewardOffer.Instance.ShowRewardOffer(OnSelectRewardOption, RewardName.RestoreHP, _playerHullHP / _maxHullHp);

@@ -71,8 +71,8 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
 
         if (InRaidManager.Instance.InSurviveMod)
         {
-            _hullHP *= SurviveModManager.Instance.EnemyHpMod;
-            _shieldHP *= SurviveModManager.Instance.EnemyHpMod;
+            _hullHP *= SurviveModeManager.Instance.EnemyHpMod;
+            _shieldHP *= SurviveModeManager.Instance.EnemyHpMod;
         }
 
         _maxHullHp = _hullHP;

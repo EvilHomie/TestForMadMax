@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
 
         _startSurviveModBtn.onClick.AddListener(delegate
         {
-            SurviveModManager.Instance.OnStartMod();
+            SurviveModeManager.Instance.OnStartMode();
             ConfigMainPanel(true);
         });
     }
@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
     {
         //SwitchUIButton(true);
         //_settingsBtn.gameObject.SetActive(false);
+        UIResourcesManager.Instance.EnablePanel();
         SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
         PlayerWeaponManager.Instance.OnPlayerEndRaid();
@@ -167,6 +168,7 @@ public class GameManager : MonoBehaviour
         InRaidManager.Instance.OnPlayerEndRaid();
         PlayerHPManager.Instance.OnPlayerEndRaid();
         UIEnemyHpPanel.Instance.OnPlayerEndRaid();
+        SurviveModeManager.Instance.Disable();
 
         ConfigMainPanel(false);
 

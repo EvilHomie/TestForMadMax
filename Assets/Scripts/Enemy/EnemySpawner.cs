@@ -70,7 +70,8 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemyInSurviveMod()
     {
-        if (_enemiesInRaidList.Count >= SurviveModManager.Instance.MaxEnemiesCount) return;
+        FixSpawnedEnemiesCollection();
+        if (_enemiesInRaidList.Count >= SurviveModeManager.Instance.MaxEnemiesCount) return;
 
         Vector3 spwanPos = GetSpawnPos();
         Wave wave = InRaidManager.Instance.SelectedLeveParameters.GetWaveData(1);
@@ -149,9 +150,22 @@ public class EnemySpawner : MonoBehaviour
         _enemiesInRaidList.Clear();
     }
 
+    void FixSpawnedEnemiesCollection()
+    {
+        for (var i = _enemiesInRaidList.Count - 1; i > -1; i--)
+        {
+            if (_enemiesInRaidList[i].BodyPartHPManager == null)
+            {
+                _enemiesInRaidList.RemoveAt(i);
+            }
+        }
+    }
+
 
     void TrySpawnSimpleEnemy()
     {
+        FixSpawnedEnemiesCollection();
+
         if (_enemiesInRaidList.Count >= _maxEnemyCountInRaidInTime) return;
         if (_waveSpawnedEnemyCount < _waveEnemiesCount)
         {
@@ -162,7 +176,7 @@ public class EnemySpawner : MonoBehaviour
     public void OnKilledOrEscapedEnemy()
     {
         _waveDestroyedEnemyCount++;
-        
+
         if (_waveDestroyedEnemyCount >= _waveEnemiesCount)
         {
             _currentWaveNumber++;
@@ -213,7 +227,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     void SpawnSimpleEnemy()
-    {     
+    {
         Vector3 spwanPos = GetSpawnPos();
         int randomIndex = Random.Range(0, _selectedWaveSimpleEnemies.Count);
         WaveEnemie selectedWave = _selectedWaveSimpleEnemies[randomIndex];

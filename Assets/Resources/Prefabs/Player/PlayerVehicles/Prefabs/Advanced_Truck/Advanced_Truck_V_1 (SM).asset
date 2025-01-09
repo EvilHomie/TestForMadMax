@@ -17,13 +17,13 @@ MonoBehaviour:
   vehicleNameRU: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u043D\u044B\u0439 \u0413\u0440\u0443\u0437\u043E\u0432\u0438\u043A"
   vehicleRaritie: 0
   hullHPByLvl: 75
-  hullHPCurLvl: 10
+  hullHPCurLvl: 3
   hullHPMaxLvl: 10
   shieldHPByLvl: 25
-  shieldHPCurLvl: 10
+  shieldHPCurLvl: 3
   shieldHPMaxLvl: 10
   shieldRegenRateByLvl: 1
-  shieldRegenCurtLvl: 10
+  shieldRegenCurtLvl: 3
   shieldRegenMaxLvl: 10
   curWeaponsCount: 1
   maxWeaponsCount: 1

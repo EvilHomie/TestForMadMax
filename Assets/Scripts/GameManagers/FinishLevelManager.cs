@@ -67,9 +67,16 @@ public class FinishLevelManager : MonoBehaviour
             _blackoutImage.color = color;
             yield return null;
         }
-        //UILevelStatistic.Instance.ShowStatistic();
-        UpgradesAfterLevel.Instance.ConfigPanel();
-        AditionActionsOnFinishLevel(isSuccessfully);
+
+        if (InRaidManager.Instance.InSurviveMod)
+        {
+            UILevelStatistic.Instance.ShowStatistic();
+        }
+        else
+        {
+            UpgradesAfterLevel.Instance.ConfigPanel();
+            AditionActionsOnFinishLevel(isSuccessfully);
+        }
         GameManager.Instance.OnReturnToGarage();
     }
 
