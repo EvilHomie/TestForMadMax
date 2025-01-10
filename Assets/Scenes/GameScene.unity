@@ -7912,7 +7912,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00002861023}
+  m_AnchoredPosition: {x: 0, y: -0.000038146973}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &216232779
@@ -10765,7 +10765,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1095254402}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.80597013
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13855,7 +13855,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1804446773}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.97121763
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -45451,7 +45451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1529594033
@@ -54510,38 +54510,44 @@ MonoBehaviour:
   _scullPF: {fileID: 8708721234712988804, guid: 5af132ae3424f7b459cc96683595c0c9,
     type: 3}
   _scullsContainer: {fileID: 812153689}
+  _deffDifficultData:
+    maxEnemiesCount: 5
+    enemyDmgMod: 1
+    enemyHpMod: 1
+    enemyPowerUpDelay: 10
+    increaseEnemyPowerValue: 0.1
   _deffLevelParameters: {fileID: 11400000, guid: 02dd1a95cbe41e144838099e053b6029,
     type: 2}
+  _startDifficultLogicDelay: 10
   _vehicleDatas:
   - {fileID: 11400000, guid: 813230e25fc2d5848941811f02b0340d, type: 2}
   _originalWeapons:
   - {fileID: 2541408357845221273, guid: ea36185c7985f46499792693826a9448, type: 3}
-  _weaponsStartData:
-  - kineticDamage: 5
+  _weaponsDeffData:
+  - weaponName: Simple_Cannon_V_1
+    kineticDamage: 5
     energyDamage: 5
-    fireRate: 5
-    magCapacity: 10
-    reloadTime: 3
-  _upgradeCardsData:
-  - _upgradeText: Upgrade Dmg
+    fireRate: 2
+    magCapacity: 5
+    reloadTime: 2
+  _upgradeCardsDeffData:
+  - _upgradeText: Upgrade KineticDamage
+    _upgradeItemType: 0
     _characteristicsName: 0
     _changeValue: 5
   - _upgradeText: Upgrade FireRate
+    _upgradeItemType: 0
     _characteristicsName: 1
     _changeValue: 2
-  - _upgradeText: Upgrade Reload Time
+  - _upgradeText: Upgrade ReloadTime
+    _upgradeItemType: 0
     _characteristicsName: 2
     _changeValue: -0.5
-  - _upgradeText: Upgrade Magazine Capacity
+  - _upgradeText: Upgrade Capacity
+    _upgradeItemType: 0
     _characteristicsName: 3
-    _changeValue: 4
-  _killedCountForLvlUp: 3
-  _maxEnemiesCount: 5
-  _startEnemyDmgMod: 1
-  _startEnemyHpMod: 1
-  _increaseEnemyPowerDelay: 60
-  _increaseEnemyPowerValue: 0.5
-  _increaseEnemyLevelDelay: 600
+    _changeValue: 5
+  _killedCountForLvlUp: 2
 --- !u!4 &1864697807
 Transform:
   m_ObjectHideFlags: 0

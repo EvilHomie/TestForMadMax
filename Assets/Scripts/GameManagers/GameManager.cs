@@ -12,20 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _inGarageInterface;
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _startSurviveModBtn;
-    //[SerializeField] Button _garageBtn;
     [SerializeField] Button _openInventoryBtn;
     [SerializeField] Button _changeLevelsBtn;
     [SerializeField] Button _closeInventoryBtn;
-    //[SerializeField] Button _settingsBtn;
-
-
-    //[SerializeField] TextMeshProUGUI _startRaidBtnText;
-    //[SerializeField] TextMeshProUGUI _garageBtnText;
-    //[SerializeField] TextMeshProUGUI _openInventoryBtnText;
-
-
-
-    float _showControllerDelay = 3;
 
     private void Awake()
     {
@@ -37,10 +26,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         YandexGame.GameReadyAPI();
-        //YandexGame.EnvironmentData.isDesktop = false;
         Init();
-        //Application.targetFrameRate = 60;
-
     }
 
 
@@ -50,10 +36,6 @@ public class GameManager : MonoBehaviour
         TextConstants.SetLanguage();
         GameAssets.Instance.Init();
         SaveLoadManager.Instance.CheckSaveData();
-
-        //_startRaidBtnText.text = TextConstants.RAID;
-        //_garageBtnText.text = TextConstants.GARAGE;
-        //_openInventoryBtnText.text = TextConstants.INVENTORY;
 
         MainAudioManager.Instance.Init();
         InventoryInfoPanelManager.Instance.Init();
@@ -78,10 +60,9 @@ public class GameManager : MonoBehaviour
         LowHpRewardOffer.Instance.Init();
         UpgradesAfterLevel.Instance.Init();
 
-        //SwitchUIButton(true);
-        //_settingsBtn.gameObject.SetActive(false);
-
         TutorialManager.Instance.Init();
+
+        SurviveModeManager.Instance.Init();
     }
 
     void AddListenersOnBtns()
@@ -91,7 +72,6 @@ public class GameManager : MonoBehaviour
             OnStartRaid();
             TutorialManager.Instance.TryConfirmStage(StageName.FirstRaidLaunch);
         });
-        //_garageBtn.onClick.AddListener(OnReturnToGarage);
         _openInventoryBtn.onClick.AddListener(delegate
         {
             InventoryManager.Instance.OnOpenInventory();
@@ -110,13 +90,6 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    void SwitchUIButton(bool enableStatus)
-    {
-        _inGarageInterface.SetActive(enableStatus);
-    }
-
-
-
     void OnOpenLevels()
     {
         LevelManager.Instance.SelectLevelsWindow.SetActive(true);
@@ -124,13 +97,11 @@ public class GameManager : MonoBehaviour
 
     public void OnStartRaid(bool immediateStart = false)
     {
-        //SwitchUIButton(false);
-        //_settingsBtn.gameObject.SetActive(true);
         SaveLoadManager.Instance.SaveData();
 
         PlayerWeaponManager.Instance.OnPlayerStartRaid();
 
-        UIJoystickTouchController.Instance.OnStartRaid(_showControllerDelay);
+        UIJoystickTouchController.Instance.OnStartRaid();
 
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
@@ -155,8 +126,6 @@ public class GameManager : MonoBehaviour
 
     public void OnReturnToGarage()
     {
-        //SwitchUIButton(true);
-        //_settingsBtn.gameObject.SetActive(false);
         UIResourcesManager.Instance.EnablePanel();
         SaveLoadManager.Instance.SaveData();
         PlayerVehicleManager.Instance.OnPlayerEndRaid();
@@ -168,7 +137,7 @@ public class GameManager : MonoBehaviour
         InRaidManager.Instance.OnPlayerEndRaid();
         PlayerHPManager.Instance.OnPlayerEndRaid();
         UIEnemyHpPanel.Instance.OnPlayerEndRaid();
-        SurviveModeManager.Instance.Disable();
+        //SurviveModeManager.Instance.OnDisableMode();
 
         ConfigMainPanel(false);
 

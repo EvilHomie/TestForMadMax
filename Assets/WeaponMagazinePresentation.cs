@@ -68,4 +68,9 @@ public class WeaponMagazinePresentation : MonoBehaviour
         _reloadIcon.Rotate(Vector3.forward, _reloadIconRotateSpeed * Time.deltaTime);
     }
 
+    public void DisablePanel()
+    {
+        gameObject.SetActive(false);
+    }
+
 }

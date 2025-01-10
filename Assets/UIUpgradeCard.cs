@@ -15,7 +15,14 @@ public class UIUpgradeCard : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        SurviveModeManager.Instance.OnSelectUpgradeCard(_upgradeCardData);
+        if (_upgradeCardData.UpgradeItemType == UpgradeItemType.Weapon)
+        {
+            SurviveModeManager.Instance.OnSelectWeaponUpgradeCard(_upgradeCardData);
+        }
+        else
+        {
+            SurviveModeManager.Instance.OnSelectVehicleUpgradeCard(_upgradeCardData);
+        }
         SurviveModeUpgradePanel.Instance.OnCardSelected();
     }
 }

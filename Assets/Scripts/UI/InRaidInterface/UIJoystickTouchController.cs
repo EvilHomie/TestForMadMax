@@ -12,6 +12,7 @@ public class UIJoystickTouchController : MonoBehaviour
     [SerializeField] Transform[] _weaponIcons;
 
     [SerializeField] GameObject _mouseIconForPC;
+    float _showControllerDelay = 3;
 
     CanvasGroup _canvasGroup;
     bool _isRotating = false;
@@ -127,10 +128,10 @@ public class UIJoystickTouchController : MonoBehaviour
 
     }
 
-    public void OnStartRaid(float delay)
+    public void OnStartRaid()
     {
         _controllerIsAcive = true;
-        ShowControllers(delay);
+        ShowControllers(_showControllerDelay);
     }
     public void OnPlayerEndRaid()
     {

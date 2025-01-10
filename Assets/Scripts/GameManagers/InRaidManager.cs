@@ -141,7 +141,7 @@ public class InRaidManager : MonoBehaviour
     void ConfigureDataOnStartSurviveMod()
     {
         _inSurviveMod = true;
-        _selectedLeveParameters = SurviveModeManager.Instance.CopyLevelParameters;
+        _selectedLeveParameters = SurviveModeManager.Instance.SMLevelParameters;
         ResetData();
     }
 

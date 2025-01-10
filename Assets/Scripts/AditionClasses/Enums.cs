@@ -62,7 +62,12 @@ public enum CharacteristicsName
    WeaponReloadTime,
    WeaponMagCapacity,
 
-   //VehicleHullHP,
-   //VehicleShieldHP,
-   //VehicleShieldRegRate
+    VehicleHullHP,
+    VehicleShieldHP,
+    VehicleShieldRegRate
+}
+public enum UpgradeItemType
+{
+    Weapon,
+    Vehicle
 }
