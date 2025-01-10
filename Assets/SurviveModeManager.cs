@@ -20,10 +20,12 @@ public class SurviveModeManager : MonoBehaviour
     [SerializeField] VehicleData[] _vehicleDatas;
     [SerializeField] AbstractWeapon[] _originalWeapons;
     [SerializeField] SMWeaponData[] _weaponsDeffData;
+    [SerializeField] SMVehicleData[] _vehicleDeffData;
 
     [Header("Player LvlUp Data")]
     [SerializeField] UpgradeCardData[] _upgradeCardsDeffData;
-    [SerializeField] int _killedCountForLvlUp;
+    //[SerializeField] int _killedCountForLvlUp;
+    [SerializeField] bool _showUpgradeCardsAutomatic;
 
     SurviveModeDifficultManager surviveModeDifficultManager;
     SurviveModeExpManager surviveModeExpManager;
@@ -35,9 +37,9 @@ public class SurviveModeManager : MonoBehaviour
     public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod; 
     
     
-    VehicleData _currentVehicleData;
     AbstractWeapon _currentWeapon;
     SMWeaponData _currentWeaponData;
+    SMVehicleData _currentVehicleData;
 
     private void Awake()
     {
@@ -49,32 +51,49 @@ public class SurviveModeManager : MonoBehaviour
     {
         _difficultSlider.transform.parent.gameObject.SetActive(false);
         surviveModeDifficultManager = new(_difficultSlider, _difficultsColorContainer, _scullPF, _scullsContainer);
-        surviveModeExpManager = new(new(_upgradeCardsDeffData), _killedCountForLvlUp);
+        surviveModeExpManager = new(new(_upgradeCardsDeffData), _deffDifficultData.killAmountForLvlUp, _showUpgradeCardsAutomatic);
+    }
+
+    public void ChangeDifficultValues(float PUDelay, float PUValue, int KillAmount)
+    {
+        Debug.Log($"{PUDelay} {PUValue} {KillAmount}");
+        _deffDifficultData.enemyPowerUpDelay = PUDelay == 0 ? _deffDifficultData.enemyPowerUpDelay: PUDelay;
+        _deffDifficultData.increaseEnemyPowerValue = PUValue == 0 ? _deffDifficultData.increaseEnemyPowerValue : PUValue;
+        _deffDifficultData.killAmountForLvlUp = KillAmount == 0 ? _deffDifficultData.killAmountForLvlUp : KillAmount;
     }
 
     public void OnStartMode()
     {
         surviveModeExpManager.OnStartMode();
         surviveModeDifficultManager.OnStartMode(_deffDifficultData, Instantiate(_deffLevelParameters));
-        _currentVehicleData = Instantiate(_vehicleDatas[0]);
-        CreateItems(0);
+        CreateWeapon(0);
+        CreateVehicle(0);
         Configmanagers();
 
         StartCoroutine(ModeTimersCoroutine(_startDifficultLogicDelay));
+
+        TESTSurviveModStatistics.Instance.UpdatePlayerVehicleData(_currentVehicleData.hullHP, _currentVehicleData.shieldHP, _currentVehicleData.shieldRegRate);
+        TESTSurviveModStatistics.Instance.UpdatePlayerWeaponData(_currentWeaponData.kineticDamage, _currentWeaponData.fireRate, _currentWeaponData.reloadTime, _currentWeaponData.magCapacity);
     }
 
-    void CreateItems(int weaponIndex)
+    void CreateWeapon(int weaponIndex)
     {
         PlayerWeaponManager.Instance.OnStartSurviveMod(_originalWeapons[weaponIndex].gameObject, out AbstractWeapon createdWeapon);
-        PlayerVehicleManager.Instance.CreateSpecificVehicleInstance(_currentVehicleData);
 
         _currentWeapon = createdWeapon;
         if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
         {
-            _currentWeaponData = _weaponsDeffData[0];
-            weapon.TEMPSetValues(_currentWeaponData);
+            _currentWeaponData = _weaponsDeffData[weaponIndex];
+            weapon.TEMPSetValues(_weaponsDeffData[weaponIndex]);
             weapon.Init();
         }
+    }
+
+    void CreateVehicle(int vehicleIndex)
+    {
+        PlayerVehicleManager.Instance.CreateSpecificVehicleInstance(_vehicleDatas[vehicleIndex]);
+        PlayerHPManager.Instance.OnStartSurviveMode(_vehicleDeffData[vehicleIndex]);
+        _currentVehicleData = _vehicleDeffData[vehicleIndex];
     }
 
     void Configmanagers()
@@ -83,8 +102,7 @@ public class SurviveModeManager : MonoBehaviour
         UIJoystickTouchController.Instance.OnStartRaid();
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
-        InRaidManager.Instance.OnStartSurviveMod();
-        PlayerHPManager.Instance.OnPlayerStartRaid();
+        InRaidManager.Instance.OnStartSurviveMod();        
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
         YandexGame.GameplayStart();
@@ -102,16 +120,19 @@ public class SurviveModeManager : MonoBehaviour
 
     public void OnSelectWeaponUpgradeCard(UpgradeCardData upgradeCardData)
     {        
-        _currentWeaponData = surviveModeExpManager.OnSelectWeaponUpgradeCard(upgradeCardData, _currentWeaponData);
+        _currentWeaponData = surviveModeExpManager.GetNewWeaponData(upgradeCardData, _currentWeaponData);
         if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
         {
             weapon.TEMPSetValues(_currentWeaponData);
         }
+        TESTSurviveModStatistics.Instance.UpdatePlayerWeaponData(_currentWeaponData.kineticDamage, _currentWeaponData.fireRate, _currentWeaponData.reloadTime, _currentWeaponData.magCapacity);
     }
 
     public void OnSelectVehicleUpgradeCard(UpgradeCardData upgradeCardData)
     {
-        throw new NotImplementedException();
+        _currentVehicleData = surviveModeExpManager.GetNewVehicleData(upgradeCardData, _currentVehicleData);
+        PlayerHPManager.Instance.OnChangeValuesInSurviveMode(_currentVehicleData);
+        TESTSurviveModStatistics.Instance.UpdatePlayerVehicleData(_currentVehicleData.hullHP, _currentVehicleData.shieldHP, _currentVehicleData.shieldRegRate);
     }
 
 
@@ -170,6 +191,15 @@ public struct SMWeaponData
 }
 
 [Serializable]
+public struct SMVehicleData
+{
+    public string vehicleName;
+    public float hullHP;
+    public float shieldHP;
+    public float shieldRegRate;
+}
+
+[Serializable]
 public struct UpgradeCardData
 {
     [SerializeField] string _upgradeText;
@@ -191,5 +221,6 @@ public struct ModeDifficult
     public float enemyHpMod;
     public float enemyPowerUpDelay;
     public float increaseEnemyPowerValue;
+    public int killAmountForLvlUp;
     //public float enemyTirUpDelay;
 }   

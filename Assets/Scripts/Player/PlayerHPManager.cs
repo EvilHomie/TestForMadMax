@@ -47,6 +47,30 @@ public class PlayerHPManager : MonoBehaviour
         _restoreOfferWasProposed = false;
     }
 
+    public void OnStartSurviveMode(SMVehicleData vehicleData)
+    {
+        _playerHullHP = vehicleData.hullHP;
+        _playerShieldHP = vehicleData.shieldHP;
+        _maxHullHp = _playerHullHP;
+        _maxShieldHp = _playerShieldHP;
+        _playerShieldRegRate = vehicleData.shieldRegRate;
+        _onRaid = true;
+        _isDead = false;
+    }
+
+    public void OnChangeValuesInSurviveMode(SMVehicleData vehicleData)
+    {
+        float maxHullHPDifference = vehicleData.hullHP - _maxHullHp;
+        _maxHullHp = vehicleData.hullHP;
+        _playerHullHP += maxHullHPDifference;
+
+        float maxShieldHPDifference = vehicleData.shieldHP - _maxShieldHp;
+        _maxShieldHp = vehicleData.shieldHP;
+        _playerShieldHP += maxShieldHPDifference;
+
+        _playerShieldRegRate = vehicleData.shieldRegRate;
+    }
+
     public void OnPlayerEndRaid()
     {
         _onRaid = false;
@@ -103,7 +127,6 @@ public class PlayerHPManager : MonoBehaviour
             _isDead = true;
             OnPlayerVehicleDestroyed();
         }
-        //RewardedAdManager.Instance.OpenRewardAd(RewardName.RestoreHP);
     }
 
     void OnSelectRewardOption(bool GetRewardStatus)

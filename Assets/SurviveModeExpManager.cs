@@ -9,16 +9,22 @@ public class SurviveModeExpManager
     List<UpgradeCardData> _upgradeCards;
     List<CharacteristicsName> _characteristicsNames;
 
-    public SurviveModeExpManager(List<UpgradeCardData> copyUpgradeCards, int enemyAmountForLvlUp)
+    
+
+
+
+    public SurviveModeExpManager(List<UpgradeCardData> copyUpgradeCards, int enemyAmountForLvlUp, bool showUpgradeCardsAutomatic)
     {
         _characteristicsNames = Enum.GetValues(typeof(CharacteristicsName)).Cast<CharacteristicsName>().ToList();
         _upgradeCards = copyUpgradeCards;
         _killedCountForLvlUp = enemyAmountForLvlUp;
+        SurviveModeUpgradePanel.Instance.Init(showUpgradeCardsAutomatic);
     }
 
     public void OnStartMode()
     {
-        _killedEnemiesCount = 0;     
+        _killedEnemiesCount = 0;
+        SurviveModeUpgradePanel.Instance.OnStartMode();
     }
 
     public void OnEnemyKilled()
@@ -32,78 +38,61 @@ public class SurviveModeExpManager
 
     void OnPlayerLvlUp()
     {
-        List<UpgradeCardData> randomCards = new();
-        List<UpgradeCardData> upgradeCardsCopy = _upgradeCards.FindAll(card => card.UpgradeItemType == UpgradeItemType.Weapon);
+        List<UpgradeCardData> randomCardsPack = new();
+        List<UpgradeCardData> upgradeCardsCopy = new(_upgradeCards);
 
-        while (randomCards.Count < 3)
+        while (randomCardsPack.Count < 3)
         {
             int randomIndex = UnityEngine.Random.Range(0, upgradeCardsCopy.Count);
-            randomCards.Add(upgradeCardsCopy[randomIndex]);
+            randomCardsPack.Add(upgradeCardsCopy[randomIndex]);
             upgradeCardsCopy.RemoveAt(randomIndex);
         }
-
-        SurviveModeUpgradePanel.Instance.ConfigPanel(randomCards);
+        SurviveModeUpgradePanel.Instance.AddCardsPack(randomCardsPack);
     }
 
-    public SMWeaponData OnSelectWeaponUpgradeCard(UpgradeCardData upgradeCardData, SMWeaponData curentWD)
+    public SMWeaponData GetNewWeaponData(UpgradeCardData upgradeCardData, SMWeaponData curentData)
     {
-        SMWeaponData newWeaponData = curentWD;
+        SMWeaponData newData = curentData;
 
         switch (upgradeCardData.CharacteristicsName)
         {
             case (CharacteristicsName.WeaponKineticDmg):
-                newWeaponData.kineticDamage += upgradeCardData.ChangeValue;
+                newData.kineticDamage += upgradeCardData.ChangeValue;
                 break;
             //case (CharacteristicsName.WeaponEnergyDmg):
 
             //    break;
             case (CharacteristicsName.WeaponFireRate):
-                newWeaponData.fireRate += upgradeCardData.ChangeValue;
+                newData.fireRate += upgradeCardData.ChangeValue;
                 break;
             case (CharacteristicsName.WeaponReloadTime):
-                newWeaponData.reloadTime += upgradeCardData.ChangeValue;
-                if (newWeaponData.reloadTime <= 0.3f) newWeaponData.reloadTime = 0.3f;
+                newData.reloadTime += upgradeCardData.ChangeValue;
+                if (newData.reloadTime <= 0.3f) newData.reloadTime = 0.3f;
                 break;
             case (CharacteristicsName.WeaponMagCapacity):
-                newWeaponData.magCapacity += (int)upgradeCardData.ChangeValue;
+                newData.magCapacity += (int)upgradeCardData.ChangeValue;
                 break;
         }
-        return newWeaponData;
+        return newData;
     }
 
-    //public void OnSelectVehicleUpgradeCard(UpgradeCardData upgradeCardData, SMWeaponData curentWD, out SMWeaponData newWD)
-    //{
-    //    SMWeaponData newWeaponData = curentWD;
+    public SMVehicleData GetNewVehicleData(UpgradeCardData upgradeCardData, SMVehicleData curentData)
+    {
+        SMVehicleData newData = curentData;
 
-    //    switch (upgradeCardData.CharacteristicsName)
-    //    {
-    //        case (CharacteristicsName.WeaponKineticDmg):
-    //            newWeaponData.kineticDamage += upgradeCardData.ChangeValue;
-    //            break;
-    //        //case (CharacteristicsName.WeaponEnergyDmg):
+        switch (upgradeCardData.CharacteristicsName)
+        {
+            case (CharacteristicsName.VehicleHullHP):
+                newData.hullHP += upgradeCardData.ChangeValue;
+                break;
+            case (CharacteristicsName.VehicleShieldHP):
+                newData.shieldHP += upgradeCardData.ChangeValue;
+                break;
+            case (CharacteristicsName.VehicleShieldRegRate):
+                newData.shieldRegRate += upgradeCardData.ChangeValue;
+                break;
 
-    //        //    break;
-    //        case (CharacteristicsName.WeaponFireRate):
-    //            newWeaponData.fireRate += upgradeCardData.ChangeValue;
-    //            break;
-    //        case (CharacteristicsName.WeaponReloadTime):
-    //            newWeaponData.reloadTime += upgradeCardData.ChangeValue;
-    //            if (newWeaponData.reloadTime <= 0.3f) newWeaponData.reloadTime = 0.3f;
-    //            break;
-    //        case (CharacteristicsName.WeaponMagCapacity):
-    //            newWeaponData.magCapacity += (int)upgradeCardData.ChangeValue;
-    //            break;
-    //            //case (CharacteristicsName.VehicleHullHP):
-
-    //            //    break;
-    //            //case (CharacteristicsName.VehicleShieldHP):
-
-    //            //    break;
-    //            //case (CharacteristicsName.VehicleShieldRegRate):
-
-    //            //    break;
-
-    //    }
-    //    newWD = newWeaponData;
-    //}
+        }
+        return newData;
+    }
 }

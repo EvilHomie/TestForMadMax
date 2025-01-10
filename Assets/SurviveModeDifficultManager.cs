@@ -30,9 +30,9 @@ public class SurviveModeDifficultManager
         _difficultSlider = difficultSlider;
         _difficultsColorContainer = difficultsColorContainer;
         _scullPF = scullPF;
-        _scullsContainer = scullsContainer;        
+        _scullsContainer = scullsContainer;
         _difficultsCount = _difficultsColorContainer.childCount;
-        _enemyTirs = Enum.GetValues(typeof(EnemyLevel)).Cast<EnemyLevel>().ToList();        
+        _enemyTirs = Enum.GetValues(typeof(EnemyLevel)).Cast<EnemyLevel>().ToList();
     }
 
     public void OnStartMode(ModeDifficult difficultData, LevelParameters sMLevelParameters)
@@ -56,17 +56,19 @@ public class SurviveModeDifficultManager
 
     public void IncreaseEnemyPowerInTime()
     {
-        _timerValue += Time.deltaTime / _difficultData.enemyPowerUpDelay;
+        _timerValue += Time.deltaTime;
 
-        if (_timerValue < 1)
-        {            
-            _difficultSlider.value = Mathf.InverseLerp(1, 5, _enemyPowerLevel + _timerValue);
+        if (_timerValue < _difficultData.enemyPowerUpDelay)
+        {
+            _difficultSlider.value = Mathf.InverseLerp(1, 5, _enemyPowerLevel + _timerValue / _difficultData.enemyPowerUpDelay);
         }
         else
         {
             _timerValue = 0;
             IncreaseEnemyPower();
         }
+
+        TESTSurviveModStatistics.Instance.UpdateEnemyData(_difficultData.enemyPowerUpDelay - _timerValue, _difficultData.enemyDmgMod, _currentEnemyLevel);
 
 
         //float startSliderValue = _difficultSlider.value;
@@ -117,7 +119,7 @@ public class SurviveModeDifficultManager
 
     public void OnDisableMode()
     {
-             
+
         _difficultSlider.transform.parent.gameObject.SetActive(false);
     }
 }
