@@ -73,7 +73,7 @@ public class UIJoystickTouchController : MonoBehaviour
         {
             PlayerWeaponManager.Instance.Reload();
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q ))
         {
             SurviveModeUpgradePanel.Instance.OpenLevelUpPanel();
         }

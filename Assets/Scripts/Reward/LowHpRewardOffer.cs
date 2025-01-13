@@ -51,26 +51,26 @@ public class LowHpRewardOffer : MonoBehaviour
 
     public void ShowRewardOffer(Action<bool> action, RewardName rewardName, float currentHPValue)
     {
-        RewardedAdManager.Instance.PrepareReward(action, rewardName);
+        RewardedAddManager.Instance.PrepareReward(action, rewardName);
         _HPSlider.value = currentHPValue;
         TogglePanel(true);
     }
     void OnAcceptOffer()
     {
-        RewardedAdManager.Instance.OnAcceptOffer();
+        RewardedAddManager.Instance.OnAcceptOffer();
         TogglePanel(false);
     }
 
     void OnCancelOffer()
     {
-        RewardedAdManager.Instance.OnCancelOffer();
+        RewardedAddManager.Instance.OnCancelOffer();
         TogglePanel(false);
     }
 
 
     void OnPlayerCloseOffer()
     {
-        RewardedAdManager.Instance.OnPlayerCloseOffer();
+        RewardedAddManager.Instance.OnPlayerCloseOffer();
         TogglePanel(false);
     }
 
@@ -99,7 +99,7 @@ public class LowHpRewardOffer : MonoBehaviour
             _cancelOfferTimerText.text = $"{string.Format("{0:f1}", time)} {TextConstants.SEC}";
             yield return null;
         }
-        RewardedAdManager.Instance.OnOfferTimeOut();
+        RewardedAddManager.Instance.OnOfferTimeOut();
         TogglePanel(false);
     }
 }

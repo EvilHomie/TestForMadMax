@@ -48,7 +48,7 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     public void ConfigPanel()
     {
-        RewardedAdManager.Instance.PrepareReward(OnSelectRewardOption, RewardName.FreeUpgrade);
+        RewardedAddManager.Instance.PrepareReward(OnSelectRewardOption, RewardName.FreeUpgrade);
         gameObject.SetActive(true);
         Cursor.visible = true;
         GetLessUpgradedItemAndCharacteristic(out IItemData targetItemData, out string targetCharName);
@@ -283,7 +283,7 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     void OnNoUpgradesAvailable()
     {
-        RewardedAdManager.Instance.OnNotAvailable();
+        RewardedAddManager.Instance.OnNotAvailable();
         OnClosePanel();
     }
 
@@ -305,12 +305,12 @@ public class UpgradesAfterLevel : MonoBehaviour
 
     private void OnCancelOffer()
     {
-        RewardedAdManager.Instance.OnCancelOffer();
+        RewardedAddManager.Instance.OnCancelOffer();
         OnClosePanel();
     }
     private void OnCloseOffer()
     {
-        RewardedAdManager.Instance.OnPlayerCloseOffer();
+        RewardedAddManager.Instance.OnPlayerCloseOffer();
         OnClosePanel();
     }
 
@@ -318,7 +318,7 @@ public class UpgradesAfterLevel : MonoBehaviour
     {
         AudioManager.Instance.PlayInventorySound(UISound.UpgradeSound);
         _fastUpgradeRow.MaxLevelImitation();        
-        RewardedAdManager.Instance.OnAcceptOffer();
+        RewardedAddManager.Instance.OnAcceptOffer();
     }
 
     void OnSelectRewardOption(bool GetRewardStatus)

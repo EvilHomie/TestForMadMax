@@ -135,6 +135,7 @@ public class EnemyVehicleManager : MonoBehaviour
     {
         if (_isDead) return;
         _isDead = true;
+        UIEnemyHpPanel.Instance.DisableHPBarsOnVehicleDestroyed(this);
         _vehicleVisualEffectsController.CutDustPS();
         _enemyVehicleMovementController.OnDie();
         _enemyWeaponController.StopShooting();
@@ -146,7 +147,7 @@ public class EnemyVehicleManager : MonoBehaviour
             _schemesInVehicle.DropScheme();
         }
 
-        UIEnemyHpPanel.Instance.DisableHPBars();
+        //UIEnemyHpPanel.Instance.DisableHPBars();
         //if (UIEnemyHpPanel.Instance.LastEnemyVehicleManager == this)
         //{
         //    UIEnemyHpPanel.Instance.DisableHPBars();
@@ -155,11 +156,11 @@ public class EnemyVehicleManager : MonoBehaviour
         InRaidManager.Instance.OnPlayerKillEnemy();
     }
 
-    public void OnHitPart()
-    {
-        _bodyPartHPManager.GetBodyHPRelativeValues(out float hullHPRelativeValue, out float shieldHPRelativeValue);
-        UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, this);
-    }
+    //public void OnHitPart()
+    //{
+    //    _bodyPartHPManager.GetBodyHPRelativeValues(out float hullHPRelativeValue, out float shieldHPRelativeValue);
+    //    UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, this);
+    //}
 
     public void OnLooseWheel(bool isFrontWheel)
     {

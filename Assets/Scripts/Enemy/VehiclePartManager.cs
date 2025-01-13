@@ -117,9 +117,10 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
             _shieldHP -= shieldDmgValue;
             UILevelStatistic.Instance.OnDamageDone(0, shieldDmgValue);
             _hitVisualCoroutine ??= StartCoroutine(HitEffect(Color.blue));
+            ShowPartHP();
             if (_shieldHP > 0)
             {
-                _enemyVehicleManager.OnHitPart();
+                //_enemyVehicleManager.OnHitPart();
                 return;
             }
         }
@@ -135,8 +136,9 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
         }
         else
         {
-            _enemyVehicleManager.OnHitPart();
+            //_enemyVehicleManager.OnHitPart();
         }
+        ShowPartHP();
     }
 
     IEnumerator HitEffect(Color color)
@@ -185,5 +187,15 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
     {
         hullHPRelativeValue = _hullHP / _maxHullHp;
         shieldHPRelativeValue = _maxShieldHp == 0 ? 0 : _shieldHP / _maxShieldHp;
+    }
+
+    void ShowPartHP()
+    {
+        if(_enemyVehicleManager.IsDead) return;
+
+        float hullHPRelativeValue = _hullHP / _maxHullHp;
+        float shieldHPRelativeValue = _maxShieldHp == 0 ? 0 : _shieldHP / _maxShieldHp;
+
+        UIEnemyHpPanel.Instance.UpdateHPBars(hullHPRelativeValue, shieldHPRelativeValue, _enemyVehicleManager);
     }
 }

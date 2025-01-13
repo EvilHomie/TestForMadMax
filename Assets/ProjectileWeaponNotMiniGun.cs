@@ -31,7 +31,7 @@ public class ProjectileWeaponNotMiniGun : AbstractWeapon
         _fireRate = data.fireRate;
         _magCapacity = data.magCapacity;
         _reloadTime = data.reloadTime;
-        _bulletInMagCount = _magCapacity;
+        //_bulletInMagCount = _magCapacity;
         WeaponMagazinePresentation.Instance.OnChangeMagCapacity(_magCapacity);
     }
 

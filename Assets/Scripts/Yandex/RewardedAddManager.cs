@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using YG;
 
-public class RewardedAdManager : MonoBehaviour
+public class RewardedAddManager : MonoBehaviour
 {
-    public static RewardedAdManager Instance;
+    public static RewardedAddManager Instance;
 
     RewardName _proposedRewardName;
     Action<bool> _rewardReceivedAction;

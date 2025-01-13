@@ -64,6 +64,14 @@ public class UIEnemyHpPanel : MonoBehaviour
         }
     }
 
+    public void DisableHPBarsOnVehicleDestroyed(EnemyVehicleManager enemyVehicleManager)
+    {
+        if (_lastEnemyVehicleManager == enemyVehicleManager)
+        {
+            DisableHPBars();
+        }
+    }
+
     public void DisableHPBars()
     {
         if (!Application.isPlaying) return;
