@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +10,9 @@ public class SurviveModeUpgradePanel : MonoBehaviour
     [SerializeField] UIUpgradeCard UIUpgradeCardPF;
     [SerializeField] Button _availableLevelButton;
 
-    bool _showUpgradeCardsAutomatic;
-    List<List<UpgradeCardData>> _collectedCardsPacks = new();
 
-    //int _collectedPacksLeftAmount;
+    bool _showUpgradeCardsAutomatic;
+    int _collectedLvlUps = 0;
 
     private void Awake()
     {
@@ -32,11 +29,10 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     public void OpenLevelUpPanel()
     {
+        if(_collectedLvlUps <= 0) return;
         _availableLevelButton.gameObject.SetActive(false);
-        //_collectedPacksLeftAmount = _collectedCardsPacks.Count;
-        ConfigPanel(_collectedCardsPacks.First());
         GameFlowManager.Instance.SetPause(this);
-
+        ShowCards();
     }
 
     public void OnStartMode()
@@ -46,32 +42,31 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     private void ResetPanel()
     {
+        _collectedLvlUps = 0;
         _upgradeCardsContainer.parent.gameObject.SetActive(false);
         _availableLevelButton.gameObject.SetActive(false);
-        _collectedCardsPacks.Clear();
-        TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedCardsPacks.Count);
+        TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedLvlUps);
     }
 
-
-    public void AddCardsPack(List<UpgradeCardData> cardsPack)
-    {
+    public void OnPlayerLevelUp()
+    {        
         if (_showUpgradeCardsAutomatic)
         {
-            ConfigPanel(cardsPack);
+            ShowCards();
             GameFlowManager.Instance.SetPause(this);
         }
         else
         {
-            _collectedCardsPacks.Add(cardsPack);
+            _collectedLvlUps++;
             _availableLevelButton.gameObject.SetActive(true);
         }
 
-        TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedCardsPacks.Count);
+        TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedLvlUps);
     }
-
-
-    void ConfigPanel(List<UpgradeCardData> upgradeCardDatas)
+    void ShowCards()
     {
+        List<UpgradeCardData> upgradeCardDatas = SurviveModeUpgradeService.Instance.GetCardsCollection();
+
         foreach (Transform card in _upgradeCardsContainer)
         {
             Destroy(card.gameObject);
@@ -96,12 +91,11 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         }
         else
         {
-            //_collectedPacksLeftAmount--;
-            _collectedCardsPacks.RemoveAt(0);
-            TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedCardsPacks.Count);
-            if (_collectedCardsPacks.Count > 0)
+            _collectedLvlUps--;
+            TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedLvlUps);
+            if (_collectedLvlUps > 0)
             {
-                ConfigPanel(_collectedCardsPacks.First());
+                ShowCards();
             }
             else
             {
@@ -110,6 +104,5 @@ public class SurviveModeUpgradePanel : MonoBehaviour
                 _upgradeCardsContainer.parent.gameObject.SetActive(false);
             }
         }
-
     }
 }

@@ -17,11 +17,11 @@ public class UIUpgradeCard : MonoBehaviour, IPointerClickHandler
     {
         if (_upgradeCardData.UpgradeItemType == UpgradeItemType.Weapon)
         {
-            SurviveModeManager.Instance.OnSelectWeaponUpgradeCard(_upgradeCardData);
+            SurviveModeUpgradeService.Instance.OnWeaponUpgrade(_upgradeCardData);
         }
         else
         {
-            SurviveModeManager.Instance.OnSelectVehicleUpgradeCard(_upgradeCardData);
+            SurviveModeUpgradeService.Instance.OnVehicleUpgrade(_upgradeCardData);
         }
         SurviveModeUpgradePanel.Instance.OnCardSelected();
     }

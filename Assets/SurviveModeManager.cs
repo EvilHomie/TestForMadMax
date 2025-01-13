@@ -24,8 +24,8 @@ public class SurviveModeManager : MonoBehaviour
 
     [Header("Player LvlUp Data")]
     [SerializeField] UpgradeCardData[] _upgradeCardsDeffData;
-    //[SerializeField] int _killedCountForLvlUp;
     [SerializeField] bool _showUpgradeCardsAutomatic;
+    [SerializeField] int _maxCardsCount;
 
     SurviveModeDifficultManager surviveModeDifficultManager;
     SurviveModeExpManager surviveModeExpManager;
@@ -34,12 +34,15 @@ public class SurviveModeManager : MonoBehaviour
     public LevelParameters SMLevelParameters => surviveModeDifficultManager.LevelParameters;
     public int MaxEnemiesCount => surviveModeDifficultManager.ModeDifficult.maxEnemiesCount;
     public float EnemyDmgMod => surviveModeDifficultManager.ModeDifficult.enemyDmgMod;
-    public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod; 
-    
-    
+    public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod;
+
+
     AbstractWeapon _currentWeapon;
     SMWeaponData _currentWeaponData;
     SMVehicleData _currentVehicleData;
+
+    int _curWeaponIndex;
+
 
     private void Awake()
     {
@@ -50,23 +53,24 @@ public class SurviveModeManager : MonoBehaviour
     public void Init()
     {
         _difficultSlider.transform.parent.gameObject.SetActive(false);
-        surviveModeDifficultManager = new(_difficultSlider, _difficultsColorContainer, _scullPF, _scullsContainer);
-        surviveModeExpManager = new(new(_upgradeCardsDeffData), _deffDifficultData.killAmountForLvlUp, _showUpgradeCardsAutomatic);
+        surviveModeDifficultManager = new(_difficultSlider, _difficultsColorContainer, _scullPF, _scullsContainer, _deffDifficultData, Instantiate(_deffLevelParameters));
+        surviveModeExpManager = new(_deffDifficultData);
+        SurviveModeUpgradePanel.Instance.Init(_showUpgradeCardsAutomatic);
+        SurviveModeUpgradeService.Instance.Init(new(_upgradeCardsDeffData), _maxCardsCount);
     }
 
     public void ChangeDifficultValues(float PUDelay, float PUValue, int KillAmount)
     {
-        Debug.Log($"{PUDelay} {PUValue} {KillAmount}");
-        _deffDifficultData.enemyPowerUpDelay = PUDelay == 0 ? _deffDifficultData.enemyPowerUpDelay: PUDelay;
+        _deffDifficultData.enemyPowerUpDelay = PUDelay == 0 ? _deffDifficultData.enemyPowerUpDelay : PUDelay;
         _deffDifficultData.increaseEnemyPowerValue = PUValue == 0 ? _deffDifficultData.increaseEnemyPowerValue : PUValue;
         _deffDifficultData.killAmountForLvlUp = KillAmount == 0 ? _deffDifficultData.killAmountForLvlUp : KillAmount;
     }
 
     public void OnStartMode()
     {
-        surviveModeExpManager.OnStartMode();
-        surviveModeDifficultManager.OnStartMode(_deffDifficultData, Instantiate(_deffLevelParameters));
-        CreateWeapon(0);
+        _curWeaponIndex = 0;
+        _currentWeaponData = _weaponsDeffData[_curWeaponIndex];
+        CreateWeapon(_curWeaponIndex);
         CreateVehicle(0);
         Configmanagers();
 
@@ -83,8 +87,7 @@ public class SurviveModeManager : MonoBehaviour
         _currentWeapon = createdWeapon;
         if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
         {
-            _currentWeaponData = _weaponsDeffData[weaponIndex];
-            weapon.TEMPSetValues(_weaponsDeffData[weaponIndex]);
+            weapon.TEMPSetValues(_currentWeaponData);
             weapon.Init();
         }
     }
@@ -98,13 +101,16 @@ public class SurviveModeManager : MonoBehaviour
 
     void Configmanagers()
     {
-        UIResourcesManager.Instance.DisablePanel();        
+        surviveModeExpManager.OnStartMode();
+        surviveModeDifficultManager.OnStartMode();
+        UIResourcesManager.Instance.DisablePanel();
         UIJoystickTouchController.Instance.OnStartRaid();
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
-        InRaidManager.Instance.OnStartSurviveMod();        
+        InRaidManager.Instance.OnStartSurviveMod();
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
+        SurviveModeUpgradePanel.Instance.OnStartMode();
         YandexGame.GameplayStart();
     }
 
@@ -118,9 +124,19 @@ public class SurviveModeManager : MonoBehaviour
         }
     }
 
-    public void OnSelectWeaponUpgradeCard(UpgradeCardData upgradeCardData)
-    {        
-        _currentWeaponData = surviveModeExpManager.GetNewWeaponData(upgradeCardData, _currentWeaponData);
+    public SMWeaponData GetCurrentWeaponData()
+    {
+        return _currentWeaponData;
+    }
+
+    public SMVehicleData GetCurrentVehicleData()
+    {
+        return _currentVehicleData;
+    }
+
+    public void OnWeaponUpgrade(SMWeaponData newSMWeaponData)
+    {
+        _currentWeaponData = newSMWeaponData;
         if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
         {
             weapon.TEMPSetValues(_currentWeaponData);
@@ -128,12 +144,25 @@ public class SurviveModeManager : MonoBehaviour
         TESTSurviveModStatistics.Instance.UpdatePlayerWeaponData(_currentWeaponData.kineticDamage, _currentWeaponData.fireRate, _currentWeaponData.reloadTime, _currentWeaponData.magCapacity);
     }
 
-    public void OnSelectVehicleUpgradeCard(UpgradeCardData upgradeCardData)
+    public void OnVehicleUpgrade(SMVehicleData newSMVehicleData)
     {
-        _currentVehicleData = surviveModeExpManager.GetNewVehicleData(upgradeCardData, _currentVehicleData);
+        _currentVehicleData = newSMVehicleData;
         PlayerHPManager.Instance.OnChangeValuesInSurviveMode(_currentVehicleData);
         TESTSurviveModStatistics.Instance.UpdatePlayerVehicleData(_currentVehicleData.hullHP, _currentVehicleData.shieldHP, _currentVehicleData.shieldRegRate);
     }
+
+    public void OnChangeWeapon()
+    {
+        _curWeaponIndex++;
+        if(_curWeaponIndex >= _weaponsDeffData.Length) return;
+        SMWeaponData lastWD = _currentWeaponData;
+        SMWeaponData newWD = _weaponsDeffData[_curWeaponIndex];
+        _currentWeaponData = lastWD;
+        _currentWeaponData.maxFireRate = newWD.maxFireRate;
+        _currentWeaponData.minReloadTime = newWD.minReloadTime;
+        CreateWeapon(_curWeaponIndex);
+    }
+
 
 
 
@@ -177,7 +206,7 @@ public class SurviveModeManager : MonoBehaviour
         WeaponMagazinePresentation.Instance.DisablePanel();
     }
 
-   
+
 }
 [Serializable]
 public struct SMWeaponData
@@ -188,6 +217,9 @@ public struct SMWeaponData
     public float fireRate;
     public int magCapacity;
     public float reloadTime;
+
+    public float maxFireRate;
+    public float minReloadTime;
 }
 
 [Serializable]
@@ -224,4 +256,4 @@ public struct ModeDifficult
     public int killAmountForLvlUp;
     public int killAmountForNewWeapon;
     //public float enemyTirUpDelay;
-}   
+}

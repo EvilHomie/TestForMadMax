@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,8 +36,6 @@ public class UIPlayerHpPanel : MonoBehaviour
 
     public void ConfigHPSeparators(float hullHPSepAmount, float shieldHPSepAmount)
     {
-        Debug.LogWarning($"HUUL{hullHPSepAmount}   SHIELD{shieldHPSepAmount}");
-
         UpdateSeparators(hullHPSepAmount, _hullHPseparatorsContainer);
         UpdateSeparators(shieldHPSepAmount, _shieldHPseparatorsContainer);
     }
@@ -54,7 +51,7 @@ public class UIPlayerHpPanel : MonoBehaviour
 
         float space = (_hullHPRT.rect.width - _separatorPF.rect.width * (count + 1)) / count;
 
-        containerGroup.spacing = space /*+ _separatorPF.rect.width*/;
+        containerGroup.spacing = space;
 
         for (int i = 0; i <= count; i++)
         {

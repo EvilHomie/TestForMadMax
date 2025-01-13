@@ -17,15 +17,15 @@ public class SurviveModeDifficultManager
     float _enemyPowerLevel = 1;
     List<EnemyLevel> _enemyTirs;
 
-    float _startEnemyDmgMod;
-    float _startEnemyHpMod;
+    readonly float  _startEnemyDmgMod;
+    readonly float _startEnemyHpMod;
     float _timerValue;
 
     public ModeDifficult ModeDifficult => _difficultData;
     public LevelParameters LevelParameters => _SMLevelParameters;
 
 
-    public SurviveModeDifficultManager(Slider difficultSlider, Transform difficultsColorContainer, GameObject scullPF, RectTransform scullsContainer)
+    public SurviveModeDifficultManager(Slider difficultSlider, Transform difficultsColorContainer, GameObject scullPF, RectTransform scullsContainer, ModeDifficult difficultData, LevelParameters sMLevelParameters)
     {
         _difficultSlider = difficultSlider;
         _difficultsColorContainer = difficultsColorContainer;
@@ -33,19 +33,23 @@ public class SurviveModeDifficultManager
         _scullsContainer = scullsContainer;
         _difficultsCount = _difficultsColorContainer.childCount;
         _enemyTirs = Enum.GetValues(typeof(EnemyLevel)).Cast<EnemyLevel>().ToList();
-    }
 
-    public void OnStartMode(ModeDifficult difficultData, LevelParameters sMLevelParameters)
-    {
         _difficultData = difficultData;
         _SMLevelParameters = sMLevelParameters;
+        _startEnemyDmgMod = difficultData.enemyDmgMod;
+        _startEnemyHpMod = difficultData.enemyHpMod;
+    }
+
+    public void OnStartMode()
+    {
+        _difficultData.enemyHpMod = _startEnemyHpMod;
+        _difficultData.enemyDmgMod = _startEnemyDmgMod;
         _currentEnemyLevel = EnemyLevel.SuperEasy;
         _SMLevelParameters.ChangeEnemiesLevel(_currentEnemyLevel);
         _enemyPowerLevel = 1;
         _difficultSlider.value = 0;
         _timerValue = 0;
-        _startEnemyDmgMod = difficultData.enemyDmgMod;
-        _startEnemyHpMod = difficultData.enemyHpMod;
+        
 
         foreach (Transform c in _scullsContainer)
         {
