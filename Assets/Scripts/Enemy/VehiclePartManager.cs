@@ -19,6 +19,7 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
     protected float _maxHullHp;
     protected float _maxShieldHp;
 
+
     private void Awake()
     {
         _enemyVehicleManager = transform.root.GetComponent<EnemyVehicleManager>();

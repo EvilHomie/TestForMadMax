@@ -14,6 +14,8 @@ public class PlayerHPManager : MonoBehaviour
     [SerializeField] ParticleSystem _explosionPS;
     [SerializeField] AudioClip _onDieExplosionSound;
 
+    [SerializeField] int _separatorHPValue;
+
     float _maxHullHp;
     float _maxShieldHp;
 
@@ -45,6 +47,7 @@ public class PlayerHPManager : MonoBehaviour
         _onRaid = true;
         _isDead = false;
         _restoreOfferWasProposed = false;
+        UIPlayerHpPanel.Instance.ConfigHPSeparators(_maxHullHp / _separatorHPValue, _maxShieldHp / _separatorHPValue);
     }
 
     public void OnStartSurviveMode(SMVehicleData vehicleData)
@@ -56,6 +59,7 @@ public class PlayerHPManager : MonoBehaviour
         _playerShieldRegRate = vehicleData.shieldRegRate;
         _onRaid = true;
         _isDead = false;
+        UIPlayerHpPanel.Instance.ConfigHPSeparators(_maxHullHp / _separatorHPValue, _maxShieldHp / _separatorHPValue);
     }
 
     public void OnChangeValuesInSurviveMode(SMVehicleData vehicleData)
@@ -69,6 +73,7 @@ public class PlayerHPManager : MonoBehaviour
         _playerShieldHP += maxShieldHPDifference;
 
         _playerShieldRegRate = vehicleData.shieldRegRate;
+        UIPlayerHpPanel.Instance.ConfigHPSeparators(_maxHullHp / _separatorHPValue, _maxShieldHp / _separatorHPValue);
     }
 
     public void OnPlayerEndRaid()

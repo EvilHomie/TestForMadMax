@@ -5,20 +5,20 @@ using System.Linq;
 public class SurviveModeExpManager
 {
     int _killedEnemiesCount;
-    int _killedCountForLvlUp;
     List<UpgradeCardData> _upgradeCards;
     List<CharacteristicsName> _characteristicsNames;
-
-    
-
+    ModeDifficult modeDifficultData;
 
 
-    public SurviveModeExpManager(List<UpgradeCardData> copyUpgradeCards, int enemyAmountForLvlUp, bool showUpgradeCardsAutomatic)
+
+
+    public SurviveModeExpManager(List<UpgradeCardData> copyUpgradeCards, ModeDifficult modeDifficult, bool showUpgradeCardsAutomatic)
     {
         _characteristicsNames = Enum.GetValues(typeof(CharacteristicsName)).Cast<CharacteristicsName>().ToList();
         _upgradeCards = copyUpgradeCards;
-        _killedCountForLvlUp = enemyAmountForLvlUp;
+        modeDifficultData = modeDifficult;
         SurviveModeUpgradePanel.Instance.Init(showUpgradeCardsAutomatic);
+
     }
 
     public void OnStartMode()
@@ -30,7 +30,15 @@ public class SurviveModeExpManager
     public void OnEnemyKilled()
     {
         _killedEnemiesCount++;
-        if (_killedEnemiesCount % _killedCountForLvlUp == 0)
+
+        if (_killedEnemiesCount % modeDifficultData.killAmountForNewWeapon == 0)
+        {
+            GiveNewWeapon();
+            _killedEnemiesCount--;
+            return;
+        }
+
+        if (_killedEnemiesCount % modeDifficultData.killAmountForLvlUp == 0)
         {
             OnPlayerLvlUp();
         }
@@ -94,5 +102,10 @@ public class SurviveModeExpManager
 
         }
         return newData;
+    }
+
+    public void GiveNewWeapon()
+    {
+
     }
 }

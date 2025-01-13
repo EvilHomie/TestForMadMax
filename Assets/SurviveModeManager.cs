@@ -222,5 +222,6 @@ public struct ModeDifficult
     public float enemyPowerUpDelay;
     public float increaseEnemyPowerValue;
     public int killAmountForLvlUp;
+    public int killAmountForNewWeapon;
     //public float enemyTirUpDelay;
 }   
