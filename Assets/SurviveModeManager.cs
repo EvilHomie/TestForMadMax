@@ -8,10 +8,6 @@ public class SurviveModeManager : MonoBehaviour
 {
     public static SurviveModeManager Instance;
     [Header("Difficult Data")]
-    [SerializeField] Slider _difficultSlider;
-    [SerializeField] Transform _difficultsColorContainer;
-    [SerializeField] GameObject _scullPF;
-    [SerializeField] RectTransform _scullsContainer;
     [SerializeField] ModeDifficult _deffDifficultData;
     [SerializeField] LevelParameters _deffLevelParameters;
     [SerializeField] float _startDifficultLogicDelay;
@@ -51,10 +47,10 @@ public class SurviveModeManager : MonoBehaviour
     }
 
     public void Init()
-    {
-        _difficultSlider.transform.parent.gameObject.SetActive(false);
-        surviveModeDifficultManager = new(_difficultSlider, _difficultsColorContainer, _scullPF, _scullsContainer, _deffDifficultData, Instantiate(_deffLevelParameters));
+    {        
+        surviveModeDifficultManager = new(_deffDifficultData, Instantiate(_deffLevelParameters));
         surviveModeExpManager = new(_deffDifficultData);
+        SurviveModeDifficultProgress.Instance.Init();
         SurviveModeUpgradePanel.Instance.Init(_showUpgradeCardsAutomatic);
         SurviveModeUpgradeService.Instance.Init(new(_upgradeCardsDeffData), _maxCardsCount);
     }
@@ -72,7 +68,7 @@ public class SurviveModeManager : MonoBehaviour
         _currentWeaponData = _weaponsDeffData[_curWeaponIndex];
         CreateWeapon(_curWeaponIndex);
         CreateVehicle(0);
-        Configmanagers();
+        ConfigManagers();
 
         StartCoroutine(ModeTimersCoroutine(_startDifficultLogicDelay));
 
@@ -99,15 +95,17 @@ public class SurviveModeManager : MonoBehaviour
         _currentVehicleData = _vehicleDeffData[vehicleIndex];
     }
 
-    void Configmanagers()
+    void ConfigManagers()
     {
-        surviveModeExpManager.OnStartMode();
-        surviveModeDifficultManager.OnStartMode();
+        surviveModeExpManager.OnStartSurviveMode();
+        surviveModeDifficultManager.OnStartSurviveMode();
+        UIJoystickTouchController.Instance.OnStartSurviveMode();
+        SurviveModeDifficultProgress.Instance.OnStartMode();
         UIResourcesManager.Instance.DisablePanel();
         UIJoystickTouchController.Instance.OnStartRaid();
         UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
         CameraManager.Instance.OnPlayerStartRaid();
-        InRaidManager.Instance.OnStartSurviveMod();
+        InRaidManager.Instance.OnStartSurviveMode();
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
         SurviveModeUpgradePanel.Instance.OnStartMode();
@@ -202,8 +200,9 @@ public class SurviveModeManager : MonoBehaviour
         StopAllCoroutines();
         CancelInvoke();
         FinishLevelManager.Instance.OnFinishLevel(false);
-        surviveModeDifficultManager.OnDisableMode();
         WeaponMagazinePresentation.Instance.DisablePanel();
+        SurviveModeDifficultProgress.Instance.OnFinishMode();
+        UIJoystickTouchController.Instance.OnFinishSurviveMode();
     }
 
 

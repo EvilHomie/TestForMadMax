@@ -10,7 +10,7 @@ public class SurviveModeExpManager
         modeDifficultData = modeDifficult;
     }
 
-    public void OnStartMode()
+    public void OnStartSurviveMode()
     {
         _killedEnemiesCount = 0;
         _newWeaponCounter = 0;

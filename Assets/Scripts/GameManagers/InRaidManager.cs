@@ -75,7 +75,7 @@ public class InRaidManager : MonoBehaviour
         StartLogic();
     }
 
-    public void OnStartSurviveMod()
+    public void OnStartSurviveMode()
     {
         ConfigureDataOnStartSurviveMod();
         StartLogic();

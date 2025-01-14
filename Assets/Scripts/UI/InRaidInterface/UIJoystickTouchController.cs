@@ -5,10 +5,6 @@ using YG;
 public class UIJoystickTouchController : MonoBehaviour
 {
     public static UIJoystickTouchController Instance;
-
-    //[SerializeField] RectTransform _joystickArea;
-    //[SerializeField] GameObject _joystick;
-    //[SerializeField] GameObject _shootBtn;
     [SerializeField] Transform[] _weaponIcons;
 
     [SerializeField] GameObject _mouseIconForPC;
@@ -29,8 +25,6 @@ public class UIJoystickTouchController : MonoBehaviour
     public void Init()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        //_joystick.SetActive(false);
-        //_shootBtn.SetActive(false);
         HideInRaidInterface();
 
         if (YandexGame.EnvironmentData.isDesktop)
@@ -41,20 +35,27 @@ public class UIJoystickTouchController : MonoBehaviour
             {
                 icon.localScale = Vector3.one * 0.7f;
             }
-
-
-            //_joystick.SetActive(false);
-            //_shootBtn.SetActive(false);
         }
         else
         {
             _PCVersion = false;
             _mouseIconForPC.SetActive(false);
         }
-        //else
-        //{            
-        //    _mouseIconForPC.SetActive(false);
-        //}
+    }
+
+    public void OnStartSurviveMode()
+    {
+        foreach (var icon in _weaponIcons)
+        {
+            icon.gameObject.SetActive(false);
+        }
+    }
+    public void OnFinishSurviveMode()
+    {
+        foreach (var icon in _weaponIcons)
+        {
+            icon.gameObject.SetActive(true);
+        }
     }
     private void Update()
     {
@@ -100,7 +101,6 @@ public class UIJoystickTouchController : MonoBehaviour
     public void OnStopRotation()
     {
         _isRotating = false;
-        //_joystickPosition = _joystickArea.anchoredPosition = Vector2.zero;
     }
 
     public void OnPressShootBtn()
@@ -117,7 +117,6 @@ public class UIJoystickTouchController : MonoBehaviour
     {
         if (_isRotating)
         {
-            // convert the value between 1 0 to -1 +1
             _joystickPosition.x = ((1 - value.x) - 0.5f) * 2f;
             _joystickPosition.y = ((1 - value.y) - 0.5f) * 2f;
         }
