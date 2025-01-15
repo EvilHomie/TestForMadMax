@@ -105,24 +105,21 @@ public class PlayerWeaponManager : MonoBehaviour
     public void OnStartSurviveMod(GameObject abstractWeapon, out AbstractWeapon createdWeapon)
     {
         ResetData();
-        CreateSpecificWeaponInstance(abstractWeapon);
+        SurviveModeCreateWeaponInstance(abstractWeapon);
         createdWeapon = _surviveModeWeapon;
         ResetCameraPos();
         OnPlayerStartRaid();
 
     }
-    void CreateSpecificWeaponInstance(GameObject abstractWeapon)
+    void SurviveModeCreateWeaponInstance(GameObject abstractWeapon)
     {
         Transform matchPoint = _weaponPointsTransform[0];
         GameObject newWeapon = Instantiate(abstractWeapon, matchPoint);
         PlayerWeapon newWeaponInstance = newWeapon.GetComponent<PlayerWeapon>();
         _surviveModeWeapon = newWeapon.GetComponent<AbstractWeapon>();
 
-        //PlayerWeapon newWeaponInstance = Instantiate(playerWeapon, matchPoint);
-        //newWeaponInstance.SetItemData(weaponData);
         newWeaponInstance.TargetMarker.SetActive(false);
         _weaponsByIndex[1] = newWeaponInstance;
-        //_surviveModeWeapon = abstractWeapon;
     }
 
     void ResetCameraPos()

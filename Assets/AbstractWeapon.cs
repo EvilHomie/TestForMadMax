@@ -19,6 +19,8 @@ public abstract class AbstractWeapon : MonoBehaviour
     [SerializeField] protected Transform _turretTransform;
     [SerializeField] protected Transform _targetMarker;
 
+    protected int _bulletInMagCount;
+
 
     //[SerializeField] FirePointManager[] TEMPfirePointManagers;
 
@@ -37,12 +39,19 @@ public abstract class AbstractWeapon : MonoBehaviour
 
 
 
-    public abstract void Init();
+    public abstract void InitAsPlayerWeapon(AbstractAmmunitionBelt abstractAmmunitionBelt);
+    public abstract void OnStartSurviveMode();
     public abstract void UpdateValues(WeaponData weaponData);
     public abstract void StartShoot();
     public abstract void StopShoot();
     public abstract void Reload();
     public abstract void OnShootEffects(int firepointIndex);
+    public abstract void SetValues(SMWeaponData data);
+
+    public int GetLeftBullets()
+    {
+        return _bulletInMagCount;
+    }
 
     protected bool CheckHit(int firepointIndex)
     {

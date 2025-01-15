@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,18 +13,18 @@ public abstract class AbstractAmmunitionBelt : MonoBehaviour
     protected List<Image> _bulletsImages = new();
 
     protected bool _isReloading = false;
-
-    public bool IsReload => _isReloading;
-
-    public abstract void Init();
+    protected Action _onFinishReload;
+    
+    public bool IsReloading => _isReloading;
+    public abstract void Init(Action OnFinishReload);
 
     public abstract void OnStartSurviveMode(int magCapacity);
 
     public abstract void OnChangeMagCapacity(int magCapacity);
 
-    public abstract void OnShoot(int leftBulletsCount, float fireRate);
+    public abstract void OnShoot(int bulletIndex, float fireRate);
 
-    public abstract void OnReload(float reloadDuration = 0);
+    public abstract void OnReload(float reloadDuration);
 
     public abstract void DisablePanel();
 }

@@ -1,46 +1,36 @@
-using System.Collections.Generic;
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class WeaponMagazinePresentation : MonoBehaviour
+public class WeaponMagazinePresentation : AbstractAmmunitionBelt
 {
-    public static WeaponMagazinePresentation Instance;
-
-    [SerializeField] Transform _bulletsContainer;
-    [SerializeField] Image _UIbulletPF;
     [SerializeField] Transform _reloadIcon;
     [SerializeField] float _reloadIconRotateSpeed;
-    [SerializeField] Sprite _filledBulletSprite;
-    [SerializeField] Sprite _emptyBulletSprite;
-
-    List<Image> _bulletsImages = new();
     int _lastMagCapacity;
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
         gameObject.SetActive(false);
     }
 
-    public void Init(int magCapacity)
+    public override void Init(Action OnFinishReload)
+    {
+        _onFinishReload = OnFinishReload;
+    }
+
+    public override void OnStartSurviveMode(int magCapacity)
     {
         _bulletsImages.Clear();
-        foreach (Transform child in _bulletsContainer)
-        {
-            Destroy(child.gameObject);
-        }
-
-        for (int i = 0; i < magCapacity; i++)
-        {
-            _bulletsImages.Add(Instantiate(_UIbulletPF, _bulletsContainer));
-        }
+        SetFullMagazine();
+        _bulletsImages.Clear();
+        foreach (Transform child in _bulletsContainer) Destroy(child.gameObject);
+        for (int i = 0; i < magCapacity; i++) _bulletsImages.Add(Instantiate(_UIbulletPF, _bulletsContainer));
         _lastMagCapacity = magCapacity;
         SetFullMagazine();
         gameObject.SetActive(true);
     }
 
-    public void OnChangeMagCapacity(int magCapacity)
+    public override void OnChangeMagCapacity(int magCapacity)
     {
         int difference = magCapacity - _lastMagCapacity;
         for (int i = 0; i < difference; i++)
@@ -50,7 +40,7 @@ public class WeaponMagazinePresentation : MonoBehaviour
         _lastMagCapacity = magCapacity;
     }
 
-    public void SetFullMagazine()
+    void SetFullMagazine()
     {
         foreach (var image in _bulletsImages)
         {
@@ -58,19 +48,33 @@ public class WeaponMagazinePresentation : MonoBehaviour
         }
     }
 
-    public void OnShoot(int leftBulletsCount)
+    public override void OnShoot(int bulletIndex, float fireRate)
     {
-        _bulletsImages[leftBulletsCount].sprite = _emptyBulletSprite;
+        _bulletsImages[bulletIndex].sprite = _emptyBulletSprite;
     }
 
-    public void ReloadAnimation()
+    public override void OnReload(float reloadDuration)
     {
-        _reloadIcon.Rotate(Vector3.forward, _reloadIconRotateSpeed * Time.deltaTime);
+        StartCoroutine(ReloadLogic(reloadDuration));
     }
 
-    public void DisablePanel()
+    public override void DisablePanel()
     {
         gameObject.SetActive(false);
+    }
+
+    IEnumerator ReloadLogic(float reloadDuration)
+    {
+        float t = 0;
+        while (t < reloadDuration)
+        {
+            t += Time.deltaTime;
+            _reloadIcon.Rotate(Vector3.forward, _reloadIconRotateSpeed * Time.deltaTime);
+            yield return null;
+        }
+        SetFullMagazine();
+        _onFinishReload?.Invoke();
+        _isReloading = false;
     }
 
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,30 +8,47 @@ public class ProjectileWeaponNotMiniGun : AbstractWeapon
     [SerializeField] int _magCapacity;
 
     float _nextTimeTofire;
-    int _bulletInMagCount;
+
     bool _isReloading;
 
 
-    public override void Init()
+    AbstractAmmunitionBelt _abstractAmmunitionBelt;
+
+
+    public override void InitAsPlayerWeapon(AbstractAmmunitionBelt abstractAmmunitionBelt)
     {
-        WeaponMagazinePresentation.Instance.Init(_magCapacity);
+        _abstractAmmunitionBelt = abstractAmmunitionBelt;
+        _abstractAmmunitionBelt.Init(OnFinishReload);
+        _isReloading = _abstractAmmunitionBelt.IsReloading;
         foreach (var fp in _firePoints)
         {
             fp.Init(_audioSource, _animationCurve, _shootSound);
         }
-        _bulletInMagCount = _magCapacity;
-        _nextTimeTofire = 0;
     }
 
-    public void TEMPSetValues(SMWeaponData data)
+    public override void OnStartSurviveMode()
+    {
+        _nextTimeTofire = 0;
+        _bulletInMagCount = _magCapacity;
+        _abstractAmmunitionBelt.OnStartSurviveMode(_magCapacity);
+    }
+
+    public override void SetValues(SMWeaponData data)
     {
         _kineticDamage = data.kineticDamage;
         _energyDamage = data.energyDamage;
         _fireRate = data.fireRate;
-        _magCapacity = data.magCapacity;
         _reloadTime = data.reloadTime;
-        //_bulletInMagCount = _magCapacity;
-        WeaponMagazinePresentation.Instance.OnChangeMagCapacity(_magCapacity);
+        _bulletInMagCount = data.leftBullets;
+
+        if (_magCapacity != 0 && _magCapacity != data.magCapacity)
+        {
+            int diff = data.magCapacity - _magCapacity;
+            _bulletInMagCount += diff;
+            _abstractAmmunitionBelt.OnChangeMagCapacity(data.magCapacity);
+        }
+
+        _magCapacity = data.magCapacity;
     }
 
     public override void UpdateValues(WeaponData weaponData)
@@ -42,38 +58,42 @@ public class ProjectileWeaponNotMiniGun : AbstractWeapon
 
     public override void StartShoot()
     {
+        if (_isShooting) return;
         _isShooting = true;
-        StartCoroutine(ShootAsPlayerLogic());
+        StartCoroutine(ShootLogic());
     }
 
     public override void StopShoot()
     {
         _isShooting = false;
+        StopAllCoroutines();
     }
 
     public override void Reload()
     {
-        if(_isReloading) return;
-        if(_bulletInMagCount == _magCapacity) return;
-        StartCoroutine(ReloadLogic());
+        if (_isReloading) return;
+        if (_bulletInMagCount == _magCapacity) return;
+        _bulletInMagCount = 0;
+        _isReloading = true;
+        _abstractAmmunitionBelt.OnReload(_reloadTime);
     }
 
-    IEnumerator ShootAsPlayerLogic()
+    IEnumerator ShootLogic()
     {
         int barrelCount = _firePoints.Count();
         int lastShootBarrelNumber = 0;
 
         while (_isShooting)
         {
-            if (_bulletInMagCount > 0)
+            if (Time.time >= _nextTimeTofire)
             {
-                if (Time.time >= _nextTimeTofire)
+                if (_bulletInMagCount > 0)
                 {
                     OnShootEffects(lastShootBarrelNumber);
                     CheckHit(lastShootBarrelNumber);
 
+                    _abstractAmmunitionBelt.OnShoot(_magCapacity - _bulletInMagCount, _fireRate);
                     _bulletInMagCount--;
-                    WeaponMagazinePresentation.Instance.OnShoot(_bulletInMagCount);
                     _nextTimeTofire = Time.time + 1f / _fireRate;
 
                     if (barrelCount > 1)
@@ -82,30 +102,19 @@ public class ProjectileWeaponNotMiniGun : AbstractWeapon
                         if (lastShootBarrelNumber >= barrelCount) lastShootBarrelNumber = 0;
                     }
                 }
+                else if (!_isReloading)
+                {
+                    Reload();
+                }
             }
-            else if(!_isReloading)
-            {
-                StartCoroutine(ReloadLogic());
-            }
-
             yield return null;
         }
     }
 
-    IEnumerator ReloadLogic()
+    void OnFinishReload()
     {
-        _isReloading = true;
-        _bulletInMagCount = 0;
-        float t = 0;
-        while (t < _reloadTime)
-        {
-            t += Time.deltaTime;
-            WeaponMagazinePresentation.Instance.ReloadAnimation();
-            yield return null;
-        }
-        WeaponMagazinePresentation.Instance.SetFullMagazine();
-        _bulletInMagCount = _magCapacity;
         _isReloading = false;
+        _bulletInMagCount = _magCapacity;
     }
 
     public override void OnShootEffects(int firepointIndex)

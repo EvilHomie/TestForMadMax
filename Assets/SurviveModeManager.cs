@@ -7,6 +7,9 @@ using YG;
 public class SurviveModeManager : MonoBehaviour
 {
     public static SurviveModeManager Instance;
+
+    [SerializeField] AbstractAmmunitionBelt _abstractAmmunitionBelt;
+
     [Header("Difficult Data")]
     [SerializeField] ModeDifficult _deffDifficultData;
     [SerializeField] LevelParameters _deffLevelParameters;
@@ -67,6 +70,7 @@ public class SurviveModeManager : MonoBehaviour
         _curWeaponIndex = 0;
         _currentWeaponData = _weaponsDeffData[_curWeaponIndex];
         CreateWeapon(_curWeaponIndex);
+        _currentWeapon.OnStartSurviveMode();
         CreateVehicle(0);
         ConfigManagers();
 
@@ -81,11 +85,8 @@ public class SurviveModeManager : MonoBehaviour
         PlayerWeaponManager.Instance.OnStartSurviveMod(_originalWeapons[weaponIndex].gameObject, out AbstractWeapon createdWeapon);
 
         _currentWeapon = createdWeapon;
-        if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
-        {
-            weapon.TEMPSetValues(_currentWeaponData);
-            weapon.Init();
-        }
+        _currentWeapon.InitAsPlayerWeapon(_abstractAmmunitionBelt);
+        _currentWeapon.SetValues(_currentWeaponData);
     }
 
     void CreateVehicle(int vehicleIndex)
@@ -135,10 +136,7 @@ public class SurviveModeManager : MonoBehaviour
     public void OnWeaponUpgrade(SMWeaponData newSMWeaponData)
     {
         _currentWeaponData = newSMWeaponData;
-        if (_currentWeapon is ProjectileWeaponNotMiniGun weapon)
-        {
-            weapon.TEMPSetValues(_currentWeaponData);
-        }
+        _currentWeapon.SetValues(_currentWeaponData);
         TESTSurviveModStatistics.Instance.UpdatePlayerWeaponData(_currentWeaponData.kineticDamage, _currentWeaponData.fireRate, _currentWeaponData.reloadTime, _currentWeaponData.magCapacity);
     }
 
@@ -158,6 +156,7 @@ public class SurviveModeManager : MonoBehaviour
         _currentWeaponData = lastWD;
         _currentWeaponData.maxFireRate = newWD.maxFireRate;
         _currentWeaponData.minReloadTime = newWD.minReloadTime;
+        _currentWeaponData.leftBullets = _currentWeapon.GetLeftBullets();
         CreateWeapon(_curWeaponIndex);
     }
 
@@ -200,7 +199,7 @@ public class SurviveModeManager : MonoBehaviour
         StopAllCoroutines();
         CancelInvoke();
         FinishLevelManager.Instance.OnFinishLevel(false);
-        WeaponMagazinePresentation.Instance.DisablePanel();
+        _abstractAmmunitionBelt.DisablePanel();
         SurviveModeDifficultProgress.Instance.OnFinishMode();
         UIJoystickTouchController.Instance.OnFinishSurviveMode();
     }
@@ -219,6 +218,7 @@ public struct SMWeaponData
 
     public float maxFireRate;
     public float minReloadTime;
+    public int leftBullets;
 }
 
 [Serializable]
