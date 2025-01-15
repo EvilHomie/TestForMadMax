@@ -13,9 +13,8 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
         gameObject.SetActive(false);
     }
 
-    public override void Init(Action OnFinishReload)
+    public override void Init()
     {
-        _onFinishReload = OnFinishReload;
     }
 
     public override void OnStartSurviveMode(int magCapacity)
@@ -53,9 +52,9 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
         _bulletsImages[bulletIndex].sprite = _emptyBulletSprite;
     }
 
-    public override void OnReload(float reloadDuration)
+    public override void OnReload(float reloadDuration, Action OnFinishReload)
     {
-        StartCoroutine(ReloadLogic(reloadDuration));
+        StartCoroutine(ReloadLogic(reloadDuration, OnFinishReload));
     }
 
     public override void DisablePanel()
@@ -63,7 +62,7 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
         gameObject.SetActive(false);
     }
 
-    IEnumerator ReloadLogic(float reloadDuration)
+    IEnumerator ReloadLogic(float reloadDuration, Action OnFinishReload)
     {
         float t = 0;
         while (t < reloadDuration)
@@ -73,8 +72,7 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
             yield return null;
         }
         SetFullMagazine();
-        _onFinishReload?.Invoke();
-        _isReloading = false;
+        OnFinishReload?.Invoke();
     }
 
 }

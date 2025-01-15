@@ -12,11 +12,8 @@ public abstract class AbstractAmmunitionBelt : MonoBehaviour
 
     protected List<Image> _bulletsImages = new();
 
-    protected bool _isReloading = false;
-    protected Action _onFinishReload;
     
-    public bool IsReloading => _isReloading;
-    public abstract void Init(Action OnFinishReload);
+    public abstract void Init();
 
     public abstract void OnStartSurviveMode(int magCapacity);
 
@@ -24,7 +21,7 @@ public abstract class AbstractAmmunitionBelt : MonoBehaviour
 
     public abstract void OnShoot(int bulletIndex, float fireRate);
 
-    public abstract void OnReload(float reloadDuration);
+    public abstract void OnReload(float reloadDuration, Action OnFinishReload);
 
     public abstract void DisablePanel();
 }

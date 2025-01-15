@@ -15,15 +15,15 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         gameObject.SetActive(false);
     }
 
-    public override void Init(Action OnFinishReload)
+    public override void Init()
     {
         _bulletWidth = _UIbulletPF.GetComponent<RectTransform>().rect.width;
         _ammunitionBeltRTWidth = _ammunitionBeltRT.rect.width;
-        _onFinishReload = OnFinishReload;
     }
 
     public override void OnStartSurviveMode(int magCapacity)
     {
+        Debug.Log("RESET BELT");
         _bulletsImages.Clear();
         foreach (Transform child in _bulletsContainer)
         {
@@ -35,6 +35,7 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         }
         _lastMagCapacity = magCapacity;
         SetFullMagazine();
+        _bulletsContainer.localPosition = Vector3.zero;
         gameObject.SetActive(true);
     }
 
@@ -65,10 +66,9 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         StartCoroutine(BeltShootAnimation(1 / fireRate));
     }
 
-    public override void OnReload(float reloadDuration)
+    public override void OnReload(float reloadDuration, Action OnFinishReload)
     {
-        _isReloading = true;
-        StartCoroutine(BeltReloadAnimation(reloadDuration));
+        StartCoroutine(BeltReloadAnimation(reloadDuration, OnFinishReload));
     }
 
     public override void DisablePanel()
@@ -93,10 +93,9 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         }
     }
 
-    IEnumerator BeltReloadAnimation(float duration)
+    IEnumerator BeltReloadAnimation(float duration, Action OnFinishReload)
     {
         Vector3 startPos = _bulletsContainer.localPosition;
-        //Vector3 endPos = startPos + new Vector3(_ammunitionBeltRTWidth, 0, 0);
         float t = 0;
 
         while (t < 1f)
@@ -117,7 +116,6 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
             _bulletsContainer.localPosition = pos;
             yield return null;
         }
-        _onFinishReload?.Invoke();
-        _isReloading = false;
+        OnFinishReload?.Invoke();
     }
 }

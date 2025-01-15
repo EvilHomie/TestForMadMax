@@ -5,7 +5,7 @@ public abstract class AbstractWeapon : MonoBehaviour
     [SerializeField] protected float _kineticDamage;
     [SerializeField] protected float _energyDamage;
     [SerializeField] protected float _reloadTime;
-    [SerializeField] protected int _rotationSpeed;
+    [SerializeField] protected float _rotationSpeed;
     [SerializeField] protected float _shakeOnShootIntensity;
     [SerializeField] protected float _shakeOnShootDuration;
     [SerializeField] protected Vector3 _observerPos;
@@ -19,41 +19,20 @@ public abstract class AbstractWeapon : MonoBehaviour
     [SerializeField] protected Transform _turretTransform;
     [SerializeField] protected Transform _targetMarker;
 
-    protected int _bulletInMagCount;
-
-
-    //[SerializeField] FirePointManager[] TEMPfirePointManagers;
-
+    protected int _barrelsCount;
+    protected int _shootBarrelNumber;
     public float RotationSpeed => _rotationSpeed;
     public Vector3 ObserverPos => _observerPos;
     public GameObject TargetMarker => _targetMarker.gameObject;
-    //public FirePointManager[] FirePointsManagers => TEMPfirePointManagers;
-
     public Transform BaseTransform => _baseTransform;
     public Transform TurretTransform => _turretTransform;
 
-
-    protected bool _isShooting = false;
-
-
-
-
-
-    public abstract void InitAsPlayerWeapon(AbstractAmmunitionBelt abstractAmmunitionBelt);
-    public abstract void OnStartSurviveMode();
-    public abstract void UpdateValues(WeaponData weaponData);
-    public abstract void StartShoot();
+    public abstract void Init(SMWeaponData weaponData);
+    public abstract void UpdateValues(SMWeaponData weaponData);
+    public abstract void Shoot(bool asPlayer);
     public abstract void StopShoot();
-    public abstract void Reload();
-    public abstract void OnShootEffects(int firepointIndex);
-    public abstract void SetValues(SMWeaponData data);
 
-    public int GetLeftBullets()
-    {
-        return _bulletInMagCount;
-    }
-
-    protected bool CheckHit(int firepointIndex)
+    protected bool TryHitEnemy(int firepointIndex)
     {
         if (Physics.Raycast(_firePoints[firepointIndex].transform.position, _firePoints[firepointIndex].transform.forward, out RaycastHit hitInfo))
         {
@@ -63,5 +42,10 @@ public abstract class AbstractWeapon : MonoBehaviour
             return true;
         }
         else return false;
+    }
+
+    protected bool TryHitPlayer()
+    {
+        return true;
     }
 }

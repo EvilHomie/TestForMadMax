@@ -36,7 +36,6 @@ public class SurviveModeManager : MonoBehaviour
     public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod;
 
 
-    AbstractWeapon _currentWeapon;
     SMWeaponData _currentWeaponData;
     SMVehicleData _currentVehicleData;
 
@@ -56,6 +55,7 @@ public class SurviveModeManager : MonoBehaviour
         SurviveModeDifficultProgress.Instance.Init();
         SurviveModeUpgradePanel.Instance.Init(_showUpgradeCardsAutomatic);
         SurviveModeUpgradeService.Instance.Init(new(_upgradeCardsDeffData), _maxCardsCount);
+        PlayerShootLogic.Instance.Init();
     }
 
     public void ChangeDifficultValues(float PUDelay, float PUValue, int KillAmount)
@@ -70,9 +70,8 @@ public class SurviveModeManager : MonoBehaviour
         _curWeaponIndex = 0;
         _currentWeaponData = _weaponsDeffData[_curWeaponIndex];
         CreateWeapon(_curWeaponIndex);
-        _currentWeapon.OnStartSurviveMode();
         CreateVehicle(0);
-        ConfigManagers();
+        ConfigManagersOnStartMode();
 
         StartCoroutine(ModeTimersCoroutine(_startDifficultLogicDelay));
 
@@ -81,12 +80,9 @@ public class SurviveModeManager : MonoBehaviour
     }
 
     void CreateWeapon(int weaponIndex)
-    {
-        PlayerWeaponManager.Instance.OnStartSurviveMod(_originalWeapons[weaponIndex].gameObject, out AbstractWeapon createdWeapon);
-
-        _currentWeapon = createdWeapon;
-        _currentWeapon.InitAsPlayerWeapon(_abstractAmmunitionBelt);
-        _currentWeapon.SetValues(_currentWeaponData);
+    {        
+        PlayerWeaponManager.Instance.OnSurviveModChangeWeapon(_originalWeapons[weaponIndex].gameObject, out AbstractWeapon createdWeapon);
+        PlayerShootLogic.Instance.OnChangeWeapon(createdWeapon, _currentWeaponData);
     }
 
     void CreateVehicle(int vehicleIndex)
@@ -96,7 +92,7 @@ public class SurviveModeManager : MonoBehaviour
         _currentVehicleData = _vehicleDeffData[vehicleIndex];
     }
 
-    void ConfigManagers()
+    void ConfigManagersOnStartMode()
     {
         surviveModeExpManager.OnStartSurviveMode();
         surviveModeDifficultManager.OnStartSurviveMode();
@@ -110,6 +106,8 @@ public class SurviveModeManager : MonoBehaviour
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
         SurviveModeUpgradePanel.Instance.OnStartMode();
+        PlayerShootLogic.Instance.OnStartSurviveMode();
+        PlayerWeaponManager.Instance.OnStartSurviveMod();
         YandexGame.GameplayStart();
     }
 
@@ -136,7 +134,7 @@ public class SurviveModeManager : MonoBehaviour
     public void OnWeaponUpgrade(SMWeaponData newSMWeaponData)
     {
         _currentWeaponData = newSMWeaponData;
-        _currentWeapon.SetValues(_currentWeaponData);
+        PlayerShootLogic.Instance.OnWeaponUpgrade(_currentWeaponData);
         TESTSurviveModStatistics.Instance.UpdatePlayerWeaponData(_currentWeaponData.kineticDamage, _currentWeaponData.fireRate, _currentWeaponData.reloadTime, _currentWeaponData.magCapacity);
     }
 
@@ -156,7 +154,6 @@ public class SurviveModeManager : MonoBehaviour
         _currentWeaponData = lastWD;
         _currentWeaponData.maxFireRate = newWD.maxFireRate;
         _currentWeaponData.minReloadTime = newWD.minReloadTime;
-        _currentWeaponData.leftBullets = _currentWeapon.GetLeftBullets();
         CreateWeapon(_curWeaponIndex);
     }
 
@@ -218,7 +215,6 @@ public struct SMWeaponData
 
     public float maxFireRate;
     public float minReloadTime;
-    public int leftBullets;
 }
 
 [Serializable]
