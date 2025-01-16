@@ -102,7 +102,7 @@ public class SurviveModeManager : MonoBehaviour
         SurviveModeDifficultProgress.Instance.OnStartMode();
         UIResourcesManager.Instance.DisablePanel();
         UIJoystickTouchController.Instance.OnStartRaid();
-        UIWeaponsSwitcher.Instance.OnPlayerStartRaid();
+        UIWeaponsSwitcher.Instance.OnStartSurviveMode();
         CameraManager.Instance.OnPlayerStartRaid();
         InRaidManager.Instance.OnStartSurviveMode();
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
@@ -150,14 +150,16 @@ public class SurviveModeManager : MonoBehaviour
         TESTSurviveModStatistics.Instance.UpdatePlayerVehicleData(_currentVehicleData.hullHP, _currentVehicleData.shieldHP, _currentVehicleData.shieldRegRate);
     }
 
-    public void OnChangeWeapon()
+    public bool OnChangeWeapon()
     {
         _curWeaponIndex++;
-        if(_curWeaponIndex >= _weaponsDeffData.Length) return;
+        if(_curWeaponIndex >= _weaponsDeffData.Length) return false;
+        SurviveModeUpgradePanel.Instance.OnGiveNewWeapon(_weaponsDeffData[_curWeaponIndex].weaponName);
 
         _currentWeaponData.maxFireRate = _weaponsDeffData[_curWeaponIndex].maxFireRate;
         _currentWeaponData.minReloadTime = _weaponsDeffData[_curWeaponIndex].minReloadTime;
-        CreateWeapon(_curWeaponIndex);        
+        CreateWeapon(_curWeaponIndex);       
+        return true;
     }
 
 
@@ -201,7 +203,8 @@ public class SurviveModeManager : MonoBehaviour
         FinishLevelManager.Instance.OnFinishLevel(false);
         _abstractAmmunitionBelt.DisablePanel();
         SurviveModeDifficultProgress.Instance.OnFinishMode();
-        UIJoystickTouchController.Instance.OnFinishSurviveMode();
+        UIExpPresentationManager.Instance.OnStopSurviveMode();
+        //UIJoystickTouchController.Instance.OnFinishSurviveMode();
     }
 
 

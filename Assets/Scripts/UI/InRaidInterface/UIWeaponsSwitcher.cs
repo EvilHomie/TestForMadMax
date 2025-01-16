@@ -73,6 +73,14 @@ public class UIWeaponsSwitcher : MonoBehaviour
         slot.selectBtn.image.sprite = _weaponBGSelected;
     }
 
+    public void OnStartSurviveMode()
+    {
+        foreach (var uiSlot in _inRaidWeaponsSlots)
+        {
+            uiSlot.selectBtn.gameObject.SetActive(false);
+        }
+    }
+
     public void OnSelectWeapon(int weaponIndex)
     {
         if (_lastSelectedWeaponIndex == weaponIndex) return;
