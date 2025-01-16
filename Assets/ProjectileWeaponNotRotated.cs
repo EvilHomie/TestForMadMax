@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class ProjectileWeaponNotMiniGun : AbstractWeapon
+public class ProjectileWeaponNotRotated : AbstractWeapon
 {
     [SerializeField] float _fireRate;
 

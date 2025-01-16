@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ProjectileFirePoint : AbstarctFirePoint
+public class ProjectileFirePointNotRotated : AbstarctFirePoint
 {
     Vector3 _barrelDefPos;
 
