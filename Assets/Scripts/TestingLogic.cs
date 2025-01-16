@@ -26,12 +26,20 @@ public class TestingLogic : MonoBehaviour
     private void Start()
     {
         Application.logMessageReceived += ShowMessageOnDisplay;
+        Debug.Log("sssss");
     }
 
     private void ShowMessageOnDisplay(string logString, string stackTrace, LogType type)
     {
-        if (_debugLevel == DebugLevel.Full) _log.text = logString + "     " + stackTrace;
-        else if (_debugLevel == DebugLevel.Short) _log.text = logString;
+        if (type == LogType.Error)
+        {            
+            _log.transform.parent.gameObject.SetActive(true);
+            _log.text = logString + "     " + stackTrace;
+        }
+
+
+        //if (_debugLevel == DebugLevel.Full) _log.text = logString + "     " + stackTrace;
+        //else if (_debugLevel == DebugLevel.Short) _log.text = logString;
     }
     void UnlockAllData()
     {

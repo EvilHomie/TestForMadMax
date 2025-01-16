@@ -42,21 +42,7 @@ public class UIJoystickTouchController : MonoBehaviour
             _mouseIconForPC.SetActive(false);
         }
     }
-
-    public void OnStartSurviveMode()
-    {
-        foreach (var icon in _weaponIcons)
-        {
-            icon.gameObject.SetActive(false);
-        }
-    }
-    public void OnFinishSurviveMode()
-    {
-        foreach (var icon in _weaponIcons)
-        {
-            icon.gameObject.SetActive(true);
-        }
-    }
+    
     private void Update()
     {
         if (GameFlowManager.GameFlowState == GameFlowState.PAUSE) return;
@@ -136,11 +122,28 @@ public class UIJoystickTouchController : MonoBehaviour
         _controllerIsAcive = true;
         ShowControllers(_showControllerDelay);
     }
+
+    public void OnStartSurviveMode()
+    {
+        foreach (var icon in _weaponIcons)
+        {
+            icon.gameObject.SetActive(false);
+        }
+
+        _controllerIsAcive = true;
+        ShowControllers(_showControllerDelay);
+    }
     public void OnPlayerEndRaid()
     {
         _controllerIsAcive = false;
         HideInRaidInterface();
     }
+    public void OnStopSurviveMode()
+    {
+        _controllerIsAcive = false;
+        HideInRaidInterface();
+    }
+
 
     void ShowControllers(float delay)
     {

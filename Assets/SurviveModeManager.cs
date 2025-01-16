@@ -101,7 +101,6 @@ public class SurviveModeManager : MonoBehaviour
         UIJoystickTouchController.Instance.OnStartSurviveMode();
         SurviveModeDifficultProgress.Instance.OnStartMode();
         UIResourcesManager.Instance.DisablePanel();
-        UIJoystickTouchController.Instance.OnStartRaid();
         UIWeaponsSwitcher.Instance.OnStartSurviveMode();
         CameraManager.Instance.OnPlayerStartRaid();
         InRaidManager.Instance.OnStartSurviveMode();
@@ -204,7 +203,7 @@ public class SurviveModeManager : MonoBehaviour
         _abstractAmmunitionBelt.DisablePanel();
         SurviveModeDifficultProgress.Instance.OnFinishMode();
         UIExpPresentationManager.Instance.OnStopSurviveMode();
-        //UIJoystickTouchController.Instance.OnFinishSurviveMode();
+        UIJoystickTouchController.Instance.OnStopSurviveMode();
     }
 
 
