@@ -10,18 +10,22 @@ public abstract class AbstractAmmunitionBelt : MonoBehaviour
     [SerializeField] protected RectTransform _bulletsContainer;
     [SerializeField] protected Image _UIbulletPF;
 
-    protected List<Image> _bulletsImages = new();
 
-    
+    protected List<Image> _bulletsImages = new();
+    protected NewWeaponData _weaponData;
+    protected int _bulletIndex;
+
     public abstract void Init();
 
-    public abstract void OnStartSurviveMode(int magCapacity);
+    public abstract void OnStartSurviveMode(NewWeaponData currentWeaponData);
 
-    public abstract void OnChangeMagCapacity(int magCapacity);
+    public abstract void OnChangeMagCapacity();
 
-    public abstract void OnShoot(int bulletIndex, float fireRate);
+    public abstract void OnChangeWeapon(NewWeaponData currentWeaponData);
 
-    public abstract void OnReload(float reloadDuration, Action OnFinishReload);
+    public abstract void OnShoot();
+
+    public abstract void OnReload();
 
     public abstract void DisablePanel();
 }

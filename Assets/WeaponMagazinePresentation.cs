@@ -17,26 +17,33 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
     {
     }
 
-    public override void OnStartSurviveMode(int magCapacity)
+    public override void OnStartSurviveMode(NewWeaponData currentWeaponData)
     {
+        _weaponData = currentWeaponData;
         _bulletsImages.Clear();
         SetFullMagazine();
         _bulletsImages.Clear();
         foreach (Transform child in _bulletsContainer) Destroy(child.gameObject);
-        for (int i = 0; i < magCapacity; i++) _bulletsImages.Add(Instantiate(_UIbulletPF, _bulletsContainer));
-        _lastMagCapacity = magCapacity;
+        for (int i = 0; i < _weaponData.magCapacity; i++) _bulletsImages.Add(Instantiate(_UIbulletPF, _bulletsContainer));
+        _lastMagCapacity = _weaponData.magCapacity;
         SetFullMagazine();
         gameObject.SetActive(true);
     }
 
-    public override void OnChangeMagCapacity(int magCapacity)
+    public override void OnChangeWeapon(NewWeaponData currentWeaponData)
     {
-        int difference = magCapacity - _lastMagCapacity;
+        _weaponData = currentWeaponData;
+    }
+
+    public override void OnChangeMagCapacity()
+    {
+        int difference = _weaponData.magCapacity - _lastMagCapacity;
+        _weaponData.bulletInMagLeft += difference;
         for (int i = 0; i < difference; i++)
         {
             _bulletsImages.Add(Instantiate(_UIbulletPF, _bulletsContainer));
         }
-        _lastMagCapacity = magCapacity;
+        _lastMagCapacity = _weaponData.magCapacity;
     }
 
     void SetFullMagazine()
@@ -45,16 +52,18 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
         {
             image.sprite = _filledBulletSprite;
         }
+        _weaponData.bulletInMagLeft = _weaponData.magCapacity;
     }
 
-    public override void OnShoot(int bulletIndex, float fireRate)
+    public override void OnShoot()
     {
-        _bulletsImages[bulletIndex].sprite = _emptyBulletSprite;
+        _bulletIndex = _weaponData.magCapacity - _weaponData.bulletInMagLeft;
+        _bulletsImages[_bulletIndex].sprite = _emptyBulletSprite;
     }
 
-    public override void OnReload(float reloadDuration, Action OnFinishReload)
+    public override void OnReload()
     {
-        StartCoroutine(ReloadLogic(reloadDuration, OnFinishReload));
+        StartCoroutine(ReloadLogic());
     }
 
     public override void DisablePanel()
@@ -62,17 +71,20 @@ public class WeaponMagazinePresentation : AbstractAmmunitionBelt
         gameObject.SetActive(false);
     }
 
-    IEnumerator ReloadLogic(float reloadDuration, Action OnFinishReload)
+    IEnumerator ReloadLogic()
     {
+        _weaponData.isReloading = true;
+        _weaponData.bulletInMagLeft = 0;
         float t = 0;
-        while (t < reloadDuration)
+        while (t < _weaponData.reloadTime)
         {
             t += Time.deltaTime;
             _reloadIcon.Rotate(Vector3.forward, _reloadIconRotateSpeed * Time.deltaTime);
             yield return null;
         }
         SetFullMagazine();
-        OnFinishReload?.Invoke();
+        
+        _weaponData.isReloading = false;
     }
 
 }

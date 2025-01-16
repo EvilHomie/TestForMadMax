@@ -292,12 +292,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e77aaf01723f947a316ae8895603a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _kineticDamage: 0
-  _energyDamage: 0
-  _reloadTime: 0
-  _rotationSpeed: 0
-  _shakeOnShootIntensity: 0.5
-  _shakeOnShootDuration: 0.2
+  _weaponData:
+    weaponName: Simple_Cannon_V_1
+    kineticDamage: 5
+    energyDamage: 0
+    fireRate: 2
+    magCapacity: 5
+    reloadTime: 2
+    rotationSpeed: 60
+    maxFireRate: 5
+    minReloadTime: 0.5
+    shakeOnShootIntensity: 0.5
+    shakeOnShootDuration: 0.2
+    isShooting: 0
+    isReloading: 0
+    nextTimeTofire: 0
+    bulletInMagLeft: 0
   _observerPos: {x: 0, y: 120, z: -30}
   _firePoints:
   - {fileID: 1755351173350875181}
@@ -341,8 +351,6 @@ MonoBehaviour:
   _baseTransform: {fileID: 4000013053745136}
   _turretTransform: {fileID: 4000012307128758}
   _targetMarker: {fileID: 5730251515630247939}
-  _fireRate: 0
-  _magCapacity: 0
 --- !u!82 &3961339699877099545
 AudioSource:
   m_ObjectHideFlags: 0

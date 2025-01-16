@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,47 +7,50 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
 
     int _lastMagCapacity;
     float _ammunitionBeltRTWidth;
-    int _bulletIndex;
     float _bulletWidth;
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
 
     public override void Init()
     {
         _bulletWidth = _UIbulletPF.GetComponent<RectTransform>().rect.width;
         _ammunitionBeltRTWidth = _ammunitionBeltRT.rect.width;
+        gameObject.SetActive(false);
     }
 
-    public override void OnStartSurviveMode(int magCapacity)
+    public override void OnStartSurviveMode(NewWeaponData weaponData)
     {
-        Debug.Log("RESET BELT");
+        _weaponData =  weaponData;
         _bulletsImages.Clear();
         foreach (Transform child in _bulletsContainer)
         {
             Destroy(child.gameObject);
         }
-        for (int i = 0; i < magCapacity; i++)
+        for (int i = 0; i < _weaponData.magCapacity; i++)
         {
             _bulletsImages.Add(Instantiate(_UIbulletPF, _bulletsContainer));
         }
-        _lastMagCapacity = magCapacity;
+        _lastMagCapacity = _weaponData.magCapacity;
         SetFullMagazine();
+        _weaponData.bulletInMagLeft = _weaponData.magCapacity;
         _bulletsContainer.localPosition = Vector3.zero;
         gameObject.SetActive(true);
     }
 
-    public override void OnChangeMagCapacity(int magCapacity)
+    public override void OnChangeWeapon(NewWeaponData currentWeaponData)
     {
-        int difference = magCapacity - _lastMagCapacity;
+        _weaponData = currentWeaponData;
+    }
+
+    public override void OnChangeMagCapacity()
+    {
+        int difference = _weaponData.magCapacity - _lastMagCapacity;
+        _weaponData.bulletInMagLeft += difference;
         for (int i = 0; i < difference; i++)
         {
             var bullet = Instantiate(_UIbulletPF, _bulletsContainer);
             _bulletsImages.Add(bullet);
             bullet.sprite = _filledBulletSprite;
         }
-        _lastMagCapacity = magCapacity;
+        _lastMagCapacity = _weaponData.magCapacity;
     }
 
     void SetFullMagazine()
@@ -59,16 +61,16 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         }
     }
 
-    public override void OnShoot(int bulletIndex, float fireRate)
+    public override void OnShoot()
     {
-        _bulletIndex = bulletIndex;
-        _bulletsImages[bulletIndex].sprite = _emptyBulletSprite;
-        StartCoroutine(BeltShootAnimation(1 / fireRate));
+        _bulletIndex = _weaponData.magCapacity - _weaponData.bulletInMagLeft;
+        _bulletsImages[_bulletIndex].sprite = _emptyBulletSprite;
+        StartCoroutine(BeltShootAnimation(1 / _weaponData.fireRate));
     }
 
-    public override void OnReload(float reloadDuration, Action OnFinishReload)
+    public override void OnReload()
     {
-        StartCoroutine(BeltReloadAnimation(reloadDuration, OnFinishReload));
+        StartCoroutine(BeltReloadAnimation());
     }
 
     public override void DisablePanel()
@@ -80,9 +82,6 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
     {
         Vector3 startPos = _bulletsContainer.localPosition;
         Vector3 endPos = new(-_bulletWidth * (_bulletIndex + 1), 0, 0);
-        
-        //Debug.LogWarning(startPos);
-        //Debug.LogWarning(endPos);
         float t = 0;
         while (t < 1f)
         {
@@ -93,14 +92,16 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         }
     }
 
-    IEnumerator BeltReloadAnimation(float duration, Action OnFinishReload)
+    IEnumerator BeltReloadAnimation()
     {
+        _weaponData.isReloading = true;
+        _weaponData.bulletInMagLeft = 0;
         Vector3 startPos = _bulletsContainer.localPosition;
         float t = 0;
 
         while (t < 1f)
         {
-            t += Time.deltaTime / (duration / 2);
+            t += Time.deltaTime / (_weaponData.reloadTime / 2);
             Vector3 pos = Vector3.Lerp(startPos, new Vector3(_ammunitionBeltRTWidth, 0, 0), t);
             _bulletsContainer.localPosition = pos;
             yield return null;
@@ -111,11 +112,12 @@ public class UIAmmunitionBelt : AbstractAmmunitionBelt
         t = 0;
         while (t < 1f)
         {
-            t += Time.deltaTime / (duration / 2);
+            t += Time.deltaTime / (_weaponData.reloadTime / 2);
             Vector3 pos = Vector3.Lerp(startPos, Vector3.zero, t);
             _bulletsContainer.localPosition = pos;
             yield return null;
         }
-        OnFinishReload?.Invoke();
+        _weaponData.bulletInMagLeft = _weaponData.magCapacity;
+        _weaponData.isReloading = false;
     }
 }

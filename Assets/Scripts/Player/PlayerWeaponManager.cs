@@ -12,8 +12,6 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] float _fingerSensitivity = 0.1f;
     [SerializeField] Transform[] _weaponPointsTransform;
     [SerializeField] GameObject _cameraCursor;
-    [SerializeField] PlayerShootLogic _playerShootLogic;
-    //[SerializeField] bool test;
     Vector3 _currentCameraRotation;
 
     Dictionary<int, PlayerWeapon> _weaponsByIndex = new();
@@ -21,6 +19,8 @@ public class PlayerWeaponManager : MonoBehaviour
     int _selectedWeaponIndex = 1;
     bool _playerIsDead = false;
     bool _playerOnRaid = false;
+
+    AbstractPlayerWeapon _currentPlayerWeapon;
 
     private void Awake()
     {
@@ -106,15 +106,16 @@ public class PlayerWeaponManager : MonoBehaviour
         OnPlayerStartRaid();
     }
 
-    public void OnSurviveModChangeWeapon(GameObject abstractWeapon, out AbstractWeapon createdWeapon)
+    public void OnSurviveModChangeWeapon(GameObject abstractWeapon, out AbstractPlayerWeapon createdWeapon)
     {
         ResetData();
-        createdWeapon = SurviveModeCreateWeaponInstance(abstractWeapon);
+        SurviveModeCreateWeaponInstance(abstractWeapon);
         ResetCameraPos();
         _weaponsByIndex[_selectedWeaponIndex].TargetMarker.SetActive(true);
+        createdWeapon = _currentPlayerWeapon;
     }
 
-    AbstractWeapon SurviveModeCreateWeaponInstance(GameObject abstractWeapon)
+    void SurviveModeCreateWeaponInstance(GameObject abstractWeapon)
     {
         Transform matchPoint = _weaponPointsTransform[0];
         GameObject newWeapon = Instantiate(abstractWeapon, matchPoint);
@@ -122,7 +123,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         newWeaponInstance.TargetMarker.SetActive(false);
         _weaponsByIndex[1] = newWeaponInstance;
-        return newWeapon.GetComponent<AbstractWeapon>();
+        _currentPlayerWeapon = newWeapon.GetComponent<AbstractPlayerWeapon>();
     }
 
     void ResetCameraPos()
@@ -163,7 +164,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (InRaidManager.Instance.InSurviveMod)
         {
-            PlayerShootLogic.Instance.StartShoot();
+            _currentPlayerWeapon.Shoot();
         }
         else
         {
@@ -175,7 +176,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (InRaidManager.Instance.InSurviveMod)
         {
-            PlayerShootLogic.Instance.StopShoot();
+            _currentPlayerWeapon.StopShoot();
         }
         else
         {
@@ -187,7 +188,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (InRaidManager.Instance.InSurviveMod)
         {
-            PlayerShootLogic.Instance.Reload();
+            _currentPlayerWeapon.Reload();
         }
         else
         {

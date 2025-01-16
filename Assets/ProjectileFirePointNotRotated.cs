@@ -29,7 +29,7 @@ public class ProjectileFirePointNotRotated : AbstarctFirePoint
 
     public override void StopEffects()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     IEnumerator BarrelShootAnimation(float fireRate)

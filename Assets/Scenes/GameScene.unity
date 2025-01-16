@@ -4796,7 +4796,6 @@ GameObject:
   - component: {fileID: 117007043}
   - component: {fileID: 117007044}
   - component: {fileID: 117007047}
-  - component: {fileID: 117007048}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -4853,7 +4852,6 @@ MonoBehaviour:
   - {fileID: 4000013205329055}
   - {fileID: 4000014379437882}
   _cameraCursor: {fileID: 1252238719}
-  _playerShootLogic: {fileID: 117007048}
 --- !u!114 &117007043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4902,19 +4900,6 @@ MonoBehaviour:
   m_Center: {x: 0, y: 0, z: -2086}
   m_Area: 1
   m_AffectedAgents: f2652fae
---- !u!114 &117007048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117007033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa500dd22138d241a13d45cc167acbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _abstractAmmunitionBelt: {fileID: 670581539}
 --- !u!1 &118504138
 GameObject:
   m_ObjectHideFlags: 0
@@ -63591,21 +63576,35 @@ MonoBehaviour:
   - {fileID: 7548380985801514654, guid: b32a5470113a1094494a1fc5330be421, type: 3}
   _weaponsDeffData:
   - weaponName: Simple_Cannon_V_1
-    kineticDamage: 10
-    energyDamage: 5
+    kineticDamage: 5
+    energyDamage: 0
     fireRate: 2
     magCapacity: 5
     reloadTime: 2
+    rotationSpeed: 60
     maxFireRate: 5
-    minReloadTime: 0.5
+    minReloadTime: 1
+    shakeOnShootIntensity: 0.5
+    shakeOnShootDuration: 0.2
+    isShooting: 0
+    isReloading: 0
+    nextTimeTofire: 0
+    bulletInMagLeft: 0
   - weaponName: Dual_Cannon_V_1
-    kineticDamage: 0
+    kineticDamage: 5
     energyDamage: 0
-    fireRate: 0
-    magCapacity: 10
-    reloadTime: 0
+    fireRate: 2
+    magCapacity: 5
+    reloadTime: 2
+    rotationSpeed: 60
     maxFireRate: 10
     minReloadTime: 0.5
+    shakeOnShootIntensity: 0.5
+    shakeOnShootDuration: 0.2
+    isShooting: 0
+    isReloading: 0
+    nextTimeTofire: 0
+    bulletInMagLeft: 0
   _vehicleDeffData:
   - vehicleName: wadawd
     hullHP: 65

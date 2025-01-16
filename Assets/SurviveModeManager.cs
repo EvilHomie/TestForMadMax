@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using YG;
 
 public class SurviveModeManager : MonoBehaviour
@@ -17,8 +16,8 @@ public class SurviveModeManager : MonoBehaviour
 
     [Header("Mode Items")]
     [SerializeField] VehicleData[] _vehicleDatas;
-    [SerializeField] AbstractWeapon[] _originalWeapons;
-    [SerializeField] SMWeaponData[] _weaponsDeffData;
+    [SerializeField] AbstractPlayerWeapon[] _originalWeapons;
+    [SerializeField] NewWeaponData[] _weaponsDeffData;
     [SerializeField] SMVehicleData[] _vehicleDeffData;
 
     [Header("Player LvlUp Data")]
@@ -36,7 +35,8 @@ public class SurviveModeManager : MonoBehaviour
     public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod;
 
 
-    SMWeaponData _currentWeaponData;
+    AbstractPlayerWeapon _currentPlayerWeapon;
+    NewWeaponData _currentWeaponData;
     SMVehicleData _currentVehicleData;
 
     int _curWeaponIndex;
@@ -55,7 +55,7 @@ public class SurviveModeManager : MonoBehaviour
         SurviveModeDifficultProgress.Instance.Init();
         SurviveModeUpgradePanel.Instance.Init(_showUpgradeCardsAutomatic);
         SurviveModeUpgradeService.Instance.Init(new(_upgradeCardsDeffData), _maxCardsCount);
-        PlayerShootLogic.Instance.Init();
+        _abstractAmmunitionBelt.Init();
     }
 
     public void ChangeDifficultValues(float PUDelay, float PUValue, int KillAmount)
@@ -68,7 +68,7 @@ public class SurviveModeManager : MonoBehaviour
     public void OnStartMode()
     {
         _curWeaponIndex = 0;
-        _currentWeaponData = _weaponsDeffData[_curWeaponIndex];
+        _currentWeaponData = new(_weaponsDeffData[_curWeaponIndex]);
         CreateWeapon(_curWeaponIndex);
         CreateVehicle(0);
         ConfigManagersOnStartMode();
@@ -81,8 +81,10 @@ public class SurviveModeManager : MonoBehaviour
 
     void CreateWeapon(int weaponIndex)
     {        
-        PlayerWeaponManager.Instance.OnSurviveModChangeWeapon(_originalWeapons[weaponIndex].gameObject, out AbstractWeapon createdWeapon);
-        PlayerShootLogic.Instance.OnChangeWeapon(createdWeapon, _currentWeaponData);
+        PlayerWeaponManager.Instance.OnSurviveModChangeWeapon(_originalWeapons[weaponIndex].gameObject, out AbstractPlayerWeapon createdWeapon);
+        _currentPlayerWeapon = createdWeapon;
+        _currentPlayerWeapon.Init(_currentWeaponData, _abstractAmmunitionBelt);
+        _abstractAmmunitionBelt.OnChangeWeapon(_currentWeaponData);
     }
 
     void CreateVehicle(int vehicleIndex)
@@ -106,8 +108,8 @@ public class SurviveModeManager : MonoBehaviour
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
         SurviveModeUpgradePanel.Instance.OnStartMode();
-        PlayerShootLogic.Instance.OnStartSurviveMode();
         PlayerWeaponManager.Instance.OnStartSurviveMod();
+        _abstractAmmunitionBelt.OnStartSurviveMode(_currentWeaponData);
         YandexGame.GameplayStart();
     }
 
@@ -121,7 +123,7 @@ public class SurviveModeManager : MonoBehaviour
         }
     }
 
-    public SMWeaponData GetCurrentWeaponData()
+    public NewWeaponData GetCurrentWeaponData()
     {
         return _currentWeaponData;
     }
@@ -131,10 +133,13 @@ public class SurviveModeManager : MonoBehaviour
         return _currentVehicleData;
     }
 
-    public void OnWeaponUpgrade(SMWeaponData newSMWeaponData)
+    public void OnWeaponUpgrade(NewWeaponData newWeaponData, CharacteristicsName characteristicsName)
     {
-        _currentWeaponData = newSMWeaponData;
-        PlayerShootLogic.Instance.OnWeaponUpgrade(_currentWeaponData);
+        _currentWeaponData = newWeaponData;
+        if (characteristicsName == CharacteristicsName.WeaponMagCapacity)
+        {
+            _abstractAmmunitionBelt.OnChangeMagCapacity();
+        }
         TESTSurviveModStatistics.Instance.UpdatePlayerWeaponData(_currentWeaponData.kineticDamage, _currentWeaponData.fireRate, _currentWeaponData.reloadTime, _currentWeaponData.magCapacity);
     }
 
@@ -149,12 +154,10 @@ public class SurviveModeManager : MonoBehaviour
     {
         _curWeaponIndex++;
         if(_curWeaponIndex >= _weaponsDeffData.Length) return;
-        SMWeaponData lastWD = _currentWeaponData;
-        SMWeaponData newWD = _weaponsDeffData[_curWeaponIndex];
-        _currentWeaponData = lastWD;
-        _currentWeaponData.maxFireRate = newWD.maxFireRate;
-        _currentWeaponData.minReloadTime = newWD.minReloadTime;
-        CreateWeapon(_curWeaponIndex);
+
+        _currentWeaponData.maxFireRate = _weaponsDeffData[_curWeaponIndex].maxFireRate;
+        _currentWeaponData.minReloadTime = _weaponsDeffData[_curWeaponIndex].minReloadTime;
+        CreateWeapon(_curWeaponIndex);        
     }
 
 
@@ -204,7 +207,7 @@ public class SurviveModeManager : MonoBehaviour
 
 }
 [Serializable]
-public struct SMWeaponData
+public class NewWeaponData
 {
     public string weaponName;
     public float kineticDamage;
@@ -213,8 +216,36 @@ public struct SMWeaponData
     public int magCapacity;
     public float reloadTime;
 
+    [Header("Logic Data")]
+    public float rotationSpeed;
     public float maxFireRate;
     public float minReloadTime;
+    public float shakeOnShootIntensity;
+    public float shakeOnShootDuration;
+
+    public bool isShooting;
+    public bool isReloading;
+    public float nextTimeTofire;
+    public int bulletInMagLeft;
+
+    public NewWeaponData(NewWeaponData newWeaponData)
+    {
+        weaponName = newWeaponData.weaponName;
+        kineticDamage = newWeaponData.kineticDamage;
+        energyDamage = newWeaponData.energyDamage;
+        fireRate = newWeaponData.fireRate;
+        magCapacity = newWeaponData.magCapacity;
+        reloadTime = newWeaponData.reloadTime;
+        rotationSpeed = newWeaponData.rotationSpeed;
+        maxFireRate = newWeaponData.maxFireRate;
+        minReloadTime = newWeaponData.minReloadTime;
+        shakeOnShootIntensity = newWeaponData.shakeOnShootIntensity;
+        shakeOnShootDuration = newWeaponData.shakeOnShootDuration;
+        isShooting = newWeaponData.isShooting;
+        isReloading = newWeaponData.isReloading;
+        nextTimeTofire = newWeaponData.nextTimeTofire;
+        bulletInMagLeft = newWeaponData.bulletInMagLeft;
+    }
 }
 
 [Serializable]

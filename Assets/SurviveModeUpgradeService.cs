@@ -23,28 +23,28 @@ public class SurviveModeUpgradeService : MonoBehaviour
 
     public void OnWeaponUpgrade(UpgradeCardData upgradeCardData)
     {
-        SMWeaponData newData = SurviveModeManager.Instance.GetCurrentWeaponData();
+        NewWeaponData currentWeaponData = SurviveModeManager.Instance.GetCurrentWeaponData();
 
         switch (upgradeCardData.CharacteristicsName)
         {
             case (CharacteristicsName.WeaponKineticDmg):
-                newData.kineticDamage += upgradeCardData.ChangeValue;
+                currentWeaponData.kineticDamage += upgradeCardData.ChangeValue;
                 break;
             //case (CharacteristicsName.WeaponEnergyDmg):
 
             //    break;
             case (CharacteristicsName.WeaponFireRate):
-                newData.fireRate += upgradeCardData.ChangeValue;
+                currentWeaponData.fireRate += upgradeCardData.ChangeValue;
                 break;
             case (CharacteristicsName.WeaponReloadTime):
-                newData.reloadTime += upgradeCardData.ChangeValue;
-                if (newData.reloadTime <= 0.3f) newData.reloadTime = 0.3f;
+                currentWeaponData.reloadTime += upgradeCardData.ChangeValue;
+                if (currentWeaponData.reloadTime <= 0.3f) currentWeaponData.reloadTime = 0.3f;
                 break;
             case (CharacteristicsName.WeaponMagCapacity):
-                newData.magCapacity += (int)upgradeCardData.ChangeValue;
+                currentWeaponData.magCapacity += (int)upgradeCardData.ChangeValue;
                 break;
         }
-        SurviveModeManager.Instance.OnWeaponUpgrade(newData);
+        SurviveModeManager.Instance.OnWeaponUpgrade(currentWeaponData, upgradeCardData.CharacteristicsName);
     }
 
     public void OnVehicleUpgrade(UpgradeCardData upgradeCardData)
@@ -87,7 +87,7 @@ public class SurviveModeUpgradeService : MonoBehaviour
 
     void FilterCards(List<UpgradeCardData> upgradeCards)
     {
-        SMWeaponData currentWeaponData = SurviveModeManager.Instance.GetCurrentWeaponData();
+        NewWeaponData currentWeaponData = SurviveModeManager.Instance.GetCurrentWeaponData();
 
         if (currentWeaponData.fireRate >= currentWeaponData.maxFireRate)
         {
