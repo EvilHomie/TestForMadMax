@@ -26,6 +26,6 @@ MonoBehaviour:
   fireRateByLvl: 1
   fireRateCurtLvl: 1
   fireRateMaxLvl: 4
-  rotationSpeedByLvl: 15
-  rotationSpeedCurLvl: 1
-  rotationSpeedMaxLvl: 8
+  rotationSpeedByLvl: 25
+  rotationSpeedCurLvl: 4
+  rotationSpeedMaxLvl: 6

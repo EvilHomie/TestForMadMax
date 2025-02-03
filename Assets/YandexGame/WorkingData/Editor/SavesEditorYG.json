@@ -1,10 +1,10 @@
 {
-  "idSave": 638,
+  "idSave": 27,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
-  "money": 2131,
-  "newPlayerName": "qweq",
+  "money": 1,
+  "newPlayerName": "Hello!",
   "openLevels": [
     false,
     false,
@@ -20,36 +20,17 @@
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 5,
+      "hullDmgCurLvl": 2,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
       "fireRateByLvl": 0.5,
-      "fireRateCurtLvl": 6,
+      "fireRateCurtLvl": 4,
       "fireRateMaxLvl": 6,
-      "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 6,
+      "rotationSpeedByLvl": 25.0,
+      "rotationSpeedCurLvl": 4,
       "rotationSpeedMaxLvl": 6
-    },
-    {
-      "deffWeaponName": "Dual_Cannon_V_1",
-      "weaponNameEN": "Dual Cannon",
-      "weaponNameRU": "Двойная Пушка",
-      "weaponType": 1,
-      "weaponRaritie": 0,
-      "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 10,
-      "hullDmgMaxLvl": 10,
-      "shieldDmgByLvl": 0.0,
-      "shieldDmgCurLvl": 0,
-      "shieldDmgMaxLvl": 0,
-      "fireRateByLvl": 2.0,
-      "fireRateCurtLvl": 10,
-      "fireRateMaxLvl": 10,
-      "rotationSpeedByLvl": 15.0,
-      "rotationSpeedCurLvl": 5,
-      "rotationSpeedMaxLvl": 8
     }
   ],
   "vehiclesData": [
@@ -59,7 +40,7 @@
       "vehicleNameRU": "Простой Грузовик",
       "vehicleRaritie": 0,
       "hullHPByLvl": 50.0,
-      "hullHPCurLvl": 5,
+      "hullHPCurLvl": 3,
       "hullHPMaxLvl": 5,
       "shieldHPByLvl": 0.0,
       "shieldHPCurLvl": 0,
@@ -72,12 +53,13 @@
     }
   ],
   "schemesNames": [
+    "Dual_Cannon_V_1_Scheme",
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 131,
-    "Wires": 136,
-    "ScrapMetal": 84
+    "Сopper": 18,
+    "Wires": 47,
+    "ScrapMetal": 24
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
@@ -86,16 +68,7 @@
   "lastSelectedLevelName": "1-1",
   "unlockedLevelsNames": [
     "1-1",
-    "1-2",
-    "1-3",
-    "1-4",
-    "1-5",
-    "1-6",
-    "1-7",
-    "1-8",
-    "1-9",
-    "1-10",
-    "2-1"
+    "1-2"
   ],
   "tutorilaIsComplete": true,
   "completedTutorialStages": []

@@ -30,6 +30,12 @@ public class TESTSurviveModStatistics : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
+        
+    }
+
+    public void Init()
+    {
+        gameObject.SetActive(false);
     }
 
     public void UpdateEnemyData(float leftPowerUpTime, float powerUpMod, EnemyLevel enemyTir)

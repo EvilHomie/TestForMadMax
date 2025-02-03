@@ -50,11 +50,15 @@ public class SurviveModeManager : MonoBehaviour
 
     public void Init()
     {        
+        gameObject.SetActive(false);
+        TESTSurviveModStatistics.Instance.Init();
+
         surviveModeDifficultManager = new(_deffDifficultData, Instantiate(_deffLevelParameters));
         surviveModeExpManager = new(_deffDifficultData);
         SurviveModeDifficultProgress.Instance.Init();
         SurviveModeUpgradePanel.Instance.Init(_showUpgradeCardsAutomatic);
         SurviveModeUpgradeService.Instance.Init(new(_upgradeCardsDeffData), _maxCardsCount);
+
         _abstractAmmunitionBelt.Init();
     }
 
