@@ -8,7 +8,7 @@ public class SurviveModeDifficultManager
     ModeDifficult _difficultData;
     LevelParameters _SMLevelParameters;
     EnemyLevel _currentEnemyLevel;
-    int _difficultsCount;
+    int _difficultsCount = 5;
     float _enemyPowerLevel = 1;
     List<EnemyLevel> _enemyTirs;
 
@@ -32,7 +32,7 @@ public class SurviveModeDifficultManager
 
     public void OnStartSurviveMode()
     {
-        _difficultsCount = SurviveModeDifficultProgress.Instance.DifficultLevelsAmount;
+        //_difficultsCount = SurviveModeDifficultProgress.Instance.DifficultLevelsAmount;
         _difficultData.enemyHpMod = _startEnemyHpMod;
         _difficultData.enemyDmgMod = _startEnemyDmgMod;
         _currentEnemyLevel = EnemyLevel.SuperEasy;
@@ -47,7 +47,7 @@ public class SurviveModeDifficultManager
 
         if (_timerValue < _difficultData.enemyPowerUpDelay)
         {
-            SurviveModeDifficultProgress.Instance.UpdateSliderValue(Mathf.InverseLerp(1, 5, _enemyPowerLevel + _timerValue / _difficultData.enemyPowerUpDelay));
+            SurviveModeDifficultProgress.Instance.UpdateSliderValue(Mathf.InverseLerp(1, 6, _enemyPowerLevel + _timerValue / _difficultData.enemyPowerUpDelay));
             
         }
         else

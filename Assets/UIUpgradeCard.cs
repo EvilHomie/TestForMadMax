@@ -1,15 +1,18 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UIUpgradeCard : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] TextMeshProUGUI _cardText;
+    [SerializeField] Image _cardIcon;
 
     UpgradeCardData _upgradeCardData;
     public void ConfigCard(UpgradeCardData upgradeCardData)
     {
         _upgradeCardData = upgradeCardData;
+        _cardIcon.sprite = upgradeCardData.Icon;
         _cardText.text = $"{upgradeCardData.UpgradeText} {upgradeCardData.ChangeValue}";
     }
 

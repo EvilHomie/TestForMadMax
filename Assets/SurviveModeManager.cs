@@ -71,6 +71,7 @@ public class SurviveModeManager : MonoBehaviour
 
     public void OnStartMode()
     {
+        gameObject.SetActive(true);
         _curWeaponIndex = 0;
         _currentWeaponData = new(_weaponsDeffData[_curWeaponIndex]);
         CreateWeapon(_curWeaponIndex);
@@ -270,11 +271,14 @@ public struct UpgradeCardData
     [SerializeField] UpgradeItemType _upgradeItemType;
     [SerializeField] CharacteristicsName _characteristicsName;
     [SerializeField] float _changeValue;
+    [SerializeField] Sprite _icon;
 
     public readonly string UpgradeText => _upgradeText;
     public readonly UpgradeItemType UpgradeItemType => _upgradeItemType;
     public readonly CharacteristicsName CharacteristicsName => _characteristicsName;
     public readonly float ChangeValue => _changeValue;
+
+    public readonly Sprite Icon => _icon;
 }
 
 [Serializable]

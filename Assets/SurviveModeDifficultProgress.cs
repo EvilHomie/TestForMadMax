@@ -1,16 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class SurviveModeDifficultProgress : MonoBehaviour
 {
     public static SurviveModeDifficultProgress Instance;
-
-    [SerializeField] Slider _difficultSlider;
-    [SerializeField] Transform _difficultsColorContainer;
     [SerializeField] GameObject _scullPF;
     [SerializeField] RectTransform _scullsContainer;
-
-    public int DifficultLevelsAmount => _difficultsColorContainer.childCount;
+    [SerializeField] Transform _difficultArrow;
+    [SerializeField] Vector3 _minEulerAngles;
+    [SerializeField] Vector3 _maxEulerAngles;
 
     private void Awake()
     {
@@ -20,12 +19,13 @@ public class SurviveModeDifficultProgress : MonoBehaviour
 
     public void Init()
     {
+        _difficultArrow.rotation = Quaternion.Euler(_minEulerAngles);
         gameObject.SetActive(false);
     }
 
     public void OnStartMode()
     {
-        _difficultSlider.value = 0;
+        _difficultArrow.rotation = Quaternion.Euler(_minEulerAngles);
         foreach (Transform c in _scullsContainer)
         {
             Destroy(c.gameObject);
@@ -35,12 +35,15 @@ public class SurviveModeDifficultProgress : MonoBehaviour
 
     public void OnFinishMode()
     {
+        _difficultArrow.rotation = Quaternion.Euler(_minEulerAngles);
         gameObject.SetActive(false);
     }
 
     public void UpdateSliderValue(float value)
     {
-        _difficultSlider.value = value;
+        Vector3 targetEulers = Vector3.Lerp(_minEulerAngles, _maxEulerAngles, value);
+
+        _difficultArrow.rotation = Quaternion.Euler(targetEulers);
     }
 
     public void AddDifficultScull()
