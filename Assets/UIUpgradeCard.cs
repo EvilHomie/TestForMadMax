@@ -3,12 +3,23 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIUpgradeCard : MonoBehaviour, IPointerClickHandler
+public class UIUpgradeCard : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _cardText;
     [SerializeField] Image _cardIcon;
+    [SerializeField] Button _btn;
 
     UpgradeCardData _upgradeCardData;
+
+    private void OnEnable()
+    {
+        _btn.onClick.AddListener(OnPointerClick);
+    }
+
+    private void OnDisable()
+    {
+        _btn.onClick.RemoveAllListeners();
+    }
     public void ConfigCard(UpgradeCardData upgradeCardData)
     {
         _upgradeCardData = upgradeCardData;
@@ -16,7 +27,7 @@ public class UIUpgradeCard : MonoBehaviour, IPointerClickHandler
         _cardText.text = $"{upgradeCardData.UpgradeText} {upgradeCardData.ChangeValue}";
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    void OnPointerClick()
     {
         if (_upgradeCardData.UpgradeItemType == UpgradeItemType.Weapon)
         {
