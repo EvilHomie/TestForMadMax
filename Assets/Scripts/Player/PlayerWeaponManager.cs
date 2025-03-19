@@ -30,7 +30,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void Init()
     {        
-        OnCloseInventory();
+        ResetWeapon();
     }
 
     private void LateUpdate()
@@ -41,7 +41,7 @@ public class PlayerWeaponManager : MonoBehaviour
         RotateWeaponToCamera();
     }
 
-    public void OnCloseInventory()
+    public void ResetWeapon()
     {
         ResetData();
         CreateWeaponsOnPoints();
@@ -96,6 +96,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void OnPlayerEndRaid()
     {
+        ResetWeapon();
         _playerOnRaid = false;
         _weaponsByIndex[_selectedWeaponIndex].StopShooting();
         _cameraCursor.SetActive(false);

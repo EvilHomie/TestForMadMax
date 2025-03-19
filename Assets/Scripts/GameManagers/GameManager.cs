@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _inGarageInterface;
     [SerializeField] Button _startRaidBtn;
     [SerializeField] Button _startSurviveModBtn;
+    [SerializeField] Image _lockSurviveModeIcon;
     [SerializeField] Button _openInventoryBtn;
     [SerializeField] Button _changeLevelsBtn;
     [SerializeField] Button _closeInventoryBtn;
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
         TutorialManager.Instance.Init();
 
         SurviveModeManager.Instance.Init();
+
+        SurviveModCheckAvailability();
     }
 
     void AddListenersOnBtns()
@@ -140,6 +143,7 @@ public class GameManager : MonoBehaviour
         //SurviveModeManager.Instance.OnDisableMode();
 
         ConfigMainPanel(false);
+        SurviveModCheckAvailability();
 
 
         YandexGame.GameplayStop();
@@ -152,6 +156,20 @@ public class GameManager : MonoBehaviour
         _startRaidBtn.interactable = !inRaidStatus;
         _openInventoryBtn.interactable = !inRaidStatus;
         _changeLevelsBtn.interactable = !inRaidStatus;
+    }
+
+    void SurviveModCheckAvailability()
+    {
+        if (PlayerData.Instance.UnlockedLevelsNames.Contains("1-7"))
+        {
+            _startSurviveModBtn.interactable = true;
+            _lockSurviveModeIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            _startSurviveModBtn.interactable = false;
+            _lockSurviveModeIcon.gameObject.SetActive(true);
+        }
     }
 }
 

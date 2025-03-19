@@ -10,6 +10,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
     [SerializeField] UIUpgradeCard UIUpgradeCardPF;
     [SerializeField] UINewWeaponCard UINewWeaponCardPF;
     [SerializeField] Button _availableLevelButton;
+    [SerializeField] GameObject _darkBG;
 
 
     bool _showUpgradeCardsAutomatic;
@@ -36,6 +37,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         //_availableLevelButton.gameObject.SetActive(false);
         UIExpPresentationManager.Instance.OnOpenUpgrades();
         GameFlowManager.Instance.SetPause(this);
+        _darkBG.SetActive(true);
         ShowCards();
     }
 
@@ -46,6 +48,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     private void ResetPanel()
     {
+        _darkBG.SetActive(false);
         _panelIsOpened = false;
         _collectedLvlUps = 0;
         _upgradeCardsContainer.parent.gameObject.SetActive(false);
@@ -71,6 +74,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     public void OnGiveNewWeapon(string weaponName)
     {
+        _darkBG.SetActive(true);
         GameFlowManager.Instance.SetPause(this);
         foreach (Transform card in _upgradeCardsContainer)
         {
@@ -123,8 +127,9 @@ public class SurviveModeUpgradePanel : MonoBehaviour
                 GameFlowManager.Instance.Unpause(this);
                 _upgradeCardsContainer.parent.gameObject.SetActive(false);
                 _panelIsOpened = false;
+                _darkBG.SetActive(false);
             }
-        }
+        }        
     }
 
     public void OnWeaponSelectConfirm()
@@ -132,5 +137,6 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         GameFlowManager.Instance.Unpause(this);
         _upgradeCardsContainer.parent.gameObject.SetActive(false);
         Cursor.visible = false;
+        _darkBG.SetActive(false);
     }
 }

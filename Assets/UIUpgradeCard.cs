@@ -24,7 +24,35 @@ public class UIUpgradeCard : MonoBehaviour
     {
         _upgradeCardData = upgradeCardData;
         _cardIcon.sprite = upgradeCardData.Icon;
-        _cardText.text = $"{upgradeCardData.UpgradeText} {upgradeCardData.ChangeValue}";
+
+        string plusSimbol = upgradeCardData.ChangeValue > 0 ? "+" : "";
+
+        switch (upgradeCardData.CharacteristicsName)
+        {
+            case CharacteristicsName.WeaponKineticDmg:
+                _cardText.text = $"{TextConstants.UPGRADEDAMAGE} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            case CharacteristicsName.WeaponFireRate:
+                _cardText.text = $"{TextConstants.UPGRADEFIRERATE} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            case CharacteristicsName.WeaponReloadTime:
+                _cardText.text = $"{TextConstants.UPGRADERELOADTIME} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            case CharacteristicsName.WeaponMagCapacity:
+                _cardText.text = $"{TextConstants.UPGRADECAPACITY} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            case CharacteristicsName.VehicleHullHP:
+                _cardText.text = $"{TextConstants.UPGRADEHULLHP} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            case CharacteristicsName.VehicleShieldHP:
+                _cardText.text = $"{TextConstants.UPGRADESHIELDHP} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            case CharacteristicsName.VehicleShieldRegRate:
+                _cardText.text = $"{TextConstants.UPGRADESHIELDREGRATE} {plusSimbol} {upgradeCardData.ChangeValue}";
+                break;
+            default:
+                break;
+        }
     }
 
     void OnPointerClick()

@@ -71,7 +71,7 @@ public class InventoryManager : MonoBehaviour
     public void OnCloseInventory()
     {
         PlayerVehicleManager.Instance.OnCloseInventory();
-        PlayerWeaponManager.Instance.OnCloseInventory();
+        PlayerWeaponManager.Instance.ResetWeapon();
         gameObject.SetActive(false);
         TutorialManager.Instance.TryConfirmStage(StageName.CloseInventory);
         Canvas.ForceUpdateCanvases();

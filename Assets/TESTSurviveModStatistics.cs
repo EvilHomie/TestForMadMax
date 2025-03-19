@@ -30,17 +30,20 @@ public class TESTSurviveModStatistics : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-        
+
     }
 
     public void Init()
     {
-        gameObject.SetActive(false);
+        if (!GameConfig.Instance.IsTesting)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void UpdateEnemyData(float leftPowerUpTime, float powerUpMod, EnemyLevel enemyTir)
     {
-        if(!gameObject.activeSelf) return;
+        if (!gameObject.activeSelf) return;
         _leftTimeForEnemyPowerUp.text = $"Осталось {string.Format("{0:f}", leftPowerUpTime)}";
         _powerUpMod.text = $"сила врагов {powerUpMod}";
         _enemyTir.text = $"тир врагов {enemyTir}";

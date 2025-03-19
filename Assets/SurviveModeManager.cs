@@ -64,8 +64,8 @@ public class SurviveModeManager : MonoBehaviour
 
     public void ChangeDifficultValues(float PUDelay, float PUValue, int KillAmount)
     {
-        _deffDifficultData.enemyPowerUpDelay = PUDelay == 0 ? _deffDifficultData.enemyPowerUpDelay : PUDelay;
-        _deffDifficultData.increaseEnemyPowerValue = PUValue == 0 ? _deffDifficultData.increaseEnemyPowerValue : PUValue;
+        _deffDifficultData.enemyIncreaseTirDelay = PUDelay == 0 ? _deffDifficultData.enemyIncreaseTirDelay : PUDelay;
+        _deffDifficultData.increaseEnemyPowerMod = PUValue == 0 ? _deffDifficultData.increaseEnemyPowerMod : PUValue;
         _deffDifficultData.killAmountForLvlUp = KillAmount == 0 ? _deffDifficultData.killAmountForLvlUp : KillAmount;
     }
 
@@ -287,8 +287,8 @@ public struct ModeDifficult
     public int maxEnemiesCount;
     public float enemyDmgMod;
     public float enemyHpMod;
-    public float enemyPowerUpDelay;
-    public float increaseEnemyPowerValue;
+    public float enemyIncreaseTirDelay;
+    public float increaseEnemyPowerMod;
     public int killAmountForLvlUp;
     public int killAmountForNewWeapon;
     //public float enemyTirUpDelay;

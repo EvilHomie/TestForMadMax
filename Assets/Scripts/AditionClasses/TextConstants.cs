@@ -82,6 +82,15 @@ public static class TextConstants
     public static string SEC = "sec.";
     public static string UPGRADECOST = "Upgrade cost";
 
+    public static string PRESSSPACE = "Press\r\nSpace";
+    public static string UPGRADEDAMAGE = "Upgrade Damage";
+    public static string UPGRADEFIRERATE = "Upgrade FireRate";
+    public static string UPGRADERELOADTIME = "Upgrade ReloadTime";
+    public static string UPGRADECAPACITY = "Upgrade Capacity";
+    public static string UPGRADEHULLHP = "Upgrade HullHP";
+    public static string UPGRADESHIELDHP = "Upgrade ShieldHP";
+    public static string UPGRADESHIELDREGRATE = "Upgrade Shield RegRate";
+
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
             { StageName.Greetings, "Hey, fighter!\r\nMy name is Meg, i'm your driver.\r\nI'll help you on your first raid in the Badlands." },
@@ -195,9 +204,17 @@ public static class TextConstants
             WITHOUT = "без";
             SEC = "сек.";
             UPGRADECOST = "Стоимость Улучшения";
+            PRESSSPACE = "Жми\r\nПробел";
+            UPGRADEDAMAGE = "Улучшить Урон";
+            UPGRADEFIRERATE = "Улучшить Скорострельность";
+            UPGRADERELOADTIME = "Улучшить Время Перезарядки";
+            UPGRADECAPACITY = "Улучшить Емкость";
+            UPGRADEHULLHP = "Улучшить ХП Корпуса";
+            UPGRADESHIELDHP = "Улучшить ХП Щита";
+            UPGRADESHIELDREGRATE = "Улучшить регенерацию щита";
 
 
-    Dictionary<StageName, string> tutorialTextsRu = new()
+            Dictionary<StageName, string> tutorialTextsRu = new()
             {
                 { StageName.Greetings, "Привет, боец!\r\nМеня зовут Мэг, я твой водитель. Я помогу тебе в твоем первом рейде по Пустоши." },
                 { StageName.FirstRaidLaunch, "Наш склад сейчас пуст\r\nи нам срочно требуются ресурсы.\r\nДавай прокатимся за ними." },

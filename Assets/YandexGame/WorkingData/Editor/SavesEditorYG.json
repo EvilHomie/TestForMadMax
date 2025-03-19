@@ -1,5 +1,5 @@
 {
-  "idSave": 62,
+  "idSave": 42,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -20,16 +20,16 @@
       "weaponType": 0,
       "weaponRaritie": 0,
       "hullDmgByLvl": 2.0,
-      "hullDmgCurLvl": 2,
+      "hullDmgCurLvl": 5,
       "hullDmgMaxLvl": 5,
       "shieldDmgByLvl": 0.0,
       "shieldDmgCurLvl": 0,
       "shieldDmgMaxLvl": 0,
       "fireRateByLvl": 0.5,
-      "fireRateCurtLvl": 4,
+      "fireRateCurtLvl": 6,
       "fireRateMaxLvl": 6,
       "rotationSpeedByLvl": 25.0,
-      "rotationSpeedCurLvl": 4,
+      "rotationSpeedCurLvl": 6,
       "rotationSpeedMaxLvl": 6
     }
   ],
@@ -40,7 +40,7 @@
       "vehicleNameRU": "Простой Грузовик",
       "vehicleRaritie": 0,
       "hullHPByLvl": 50.0,
-      "hullHPCurLvl": 1,
+      "hullHPCurLvl": 5,
       "hullHPMaxLvl": 5,
       "shieldHPByLvl": 0.0,
       "shieldHPCurLvl": 0,
@@ -50,38 +50,22 @@
       "shieldRegenMaxLvl": 0,
       "curWeaponsCount": 1,
       "maxWeaponsCount": 1
-    },
-    {
-      "deffVehicleName": "Advanced_Truck_V_1",
-      "vehicleNameEN": "Advanced Truck",
-      "vehicleNameRU": "Улучшенный Грузовик",
-      "vehicleRaritie": 0,
-      "hullHPByLvl": 75.0,
-      "hullHPCurLvl": 1,
-      "hullHPMaxLvl": 4,
-      "shieldHPByLvl": 25.0,
-      "shieldHPCurLvl": 1,
-      "shieldHPMaxLvl": 2,
-      "shieldRegenRateByLvl": 1.0,
-      "shieldRegenCurtLvl": 0,
-      "shieldRegenMaxLvl": 3,
-      "curWeaponsCount": 1,
-      "maxWeaponsCount": 1
     }
   ],
   "schemesNames": [
-    "Dual_Cannon_V_1_Scheme"
+    "Dual_Cannon_V_1_Scheme",
+    "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 2754,
-    "Wires": 2774,
-    "ScrapMetal": 2801
+    "Сopper": 53,
+    "Wires": 62,
+    "ScrapMetal": 48
   },
   "equipedItems": {
-    "0": "Advanced_Truck_V_1",
+    "0": "Simple_Truck_V_1",
     "1": "Simple_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-1",
+  "lastSelectedLevelName": "1-7",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",
@@ -89,21 +73,7 @@
     "1-4",
     "1-5",
     "1-6",
-    "1-7",
-    "1-8",
-    "1-9",
-    "1-10",
-    "2-1",
-    "2-2",
-    "2-3",
-    "2-4",
-    "2-5",
-    "2-6",
-    "2-7",
-    "2-8",
-    "2-9",
-    "2-10",
-    "3-1"
+    "1-7"
   ],
   "tutorilaIsComplete": true,
   "completedTutorialStages": []

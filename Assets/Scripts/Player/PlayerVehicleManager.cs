@@ -50,6 +50,10 @@ public class PlayerVehicleManager : MonoBehaviour
 
     void CreateVehicleInstance()
     {
+        foreach (Transform vehicle in transform)
+        {
+            Destroy(vehicle.gameObject);
+        }
         string equipedVehicleName = PlayerData.Instance.EquipedItems[0];
         VehicleData vehicleData = (VehicleData)PlayerData.Instance.GetItemDataByName(equipedVehicleName);
         PlayerVehicle vehiclePF = GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == equipedVehicleName);
@@ -61,6 +65,10 @@ public class PlayerVehicleManager : MonoBehaviour
 
     public void CreateSpecificVehicleInstance(VehicleData vehicleData)
     {
+        foreach (Transform vehicle in transform)
+        {
+            Destroy(vehicle.gameObject);
+        }
         PlayerVehicle vehiclePF = GameAssets.Instance.GameItems.PlayerVehicles.Find(vehicle => vehicle.name == vehicleData.DeffItemName);
 
         PlayerVehicle newVehicleInstance = Instantiate(vehiclePF, transform);
@@ -70,6 +78,10 @@ public class PlayerVehicleManager : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
+        if (!InRaidManager.Instance.InSurviveMod)
+        {
+            CreateVehicleInstance();
+        }        
         _engineIsStarted = true;
         _playerVehicle.StartVehicle();
     }

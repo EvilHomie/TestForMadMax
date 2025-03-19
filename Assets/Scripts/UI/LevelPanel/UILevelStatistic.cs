@@ -208,4 +208,14 @@ public class UILevelStatistic : MonoBehaviour
         gameObject.SetActive(false);
         FinishLevelManager.Instance.OnCloseLevelStatisic();
     }
+
+    void ConfigPanelForSurviveMod()
+    {
+
+    }
+
+    void ConfigPanelForNormalMod()
+    {
+
+    }
 }

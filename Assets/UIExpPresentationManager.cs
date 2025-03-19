@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -9,8 +10,11 @@ public class UIExpPresentationManager : MonoBehaviour
     [SerializeField] Image _fillingImage;
     [SerializeField] GameObject _tipPCGO;
 
-    int _forLevelUpAmount;
+    [SerializeField] TextMeshProUGUI _pressSpaceText;
+    [SerializeField] Animator _glowAnimator;
 
+    bool _wasShown = false;
+    int _forLevelUpAmount;
     int _totalKilledCount;
 
     private void Awake()
@@ -21,6 +25,8 @@ public class UIExpPresentationManager : MonoBehaviour
 
     public void Init(int forLevelUpAmount)
     {
+        _pressSpaceText.text = TextConstants.PRESSSPACE;
+        _wasShown = false;
         _forLevelUpAmount = forLevelUpAmount;
         gameObject.SetActive(false);
     }
@@ -28,12 +34,14 @@ public class UIExpPresentationManager : MonoBehaviour
     public void OnStartSurviveMode()
     {
         _fillingImage.fillAmount = 0;
-        _tipPCGO.SetActive(false);
+        //_tipPCGO.SetActive(false);
+        _pressSpaceText.gameObject.SetActive(false);
         gameObject.SetActive(true);
     }
 
-    public void OnStopSurviveMode() 
+    public void OnStopSurviveMode()
     {
+        _glowAnimator.SetTrigger("Disable");
         gameObject.SetActive(false);
     }
 
@@ -44,10 +52,18 @@ public class UIExpPresentationManager : MonoBehaviour
         _fillingImage.fillAmount += 1f / _forLevelUpAmount;
         if (_fillingImage.fillAmount >= 1)
         {
-            if (YandexGame.EnvironmentData.isDesktop)
+            _glowAnimator.SetTrigger("Enable");
+            if (!_wasShown)
             {
-                _tipPCGO.SetActive(true);
+                _wasShown = true;
+                _pressSpaceText.gameObject.SetActive(true);
             }
+            
+
+            //if (YandexGame.EnvironmentData.isDesktop)
+            //{
+            //    _tipPCGO.SetActive(true);
+            //}
         }
     }
 
@@ -56,6 +72,8 @@ public class UIExpPresentationManager : MonoBehaviour
         int remainder = _totalKilledCount % _forLevelUpAmount;
 
         _fillingImage.fillAmount = (float)remainder / _forLevelUpAmount;
-        _tipPCGO.SetActive(false);
+        _pressSpaceText.gameObject.SetActive(false);
+        _glowAnimator.SetTrigger("Disable");
+        //_tipPCGO.SetActive(false);
     }
 }
