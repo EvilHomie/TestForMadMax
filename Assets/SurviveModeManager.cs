@@ -41,6 +41,8 @@ public class SurviveModeManager : MonoBehaviour
 
     int _curWeaponIndex;
 
+    float _timer = 0;
+
 
     private void Awake()
     {
@@ -71,6 +73,7 @@ public class SurviveModeManager : MonoBehaviour
 
     public void OnStartMode()
     {
+        _timer = Time.time;
         gameObject.SetActive(true);
         _curWeaponIndex = 0;
         _currentWeaponData = new(_weaponsDeffData[_curWeaponIndex]);
@@ -192,6 +195,8 @@ public class SurviveModeManager : MonoBehaviour
 
     public void OnPlayerDie()
     {
+        float survivedTime = Time.time - _timer;
+        UILevelStatistic.Instance.SetSurviveTime(survivedTime);
         Disable();
     }
 

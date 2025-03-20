@@ -13,6 +13,8 @@ public class PlayerData : MonoBehaviour
     string _lastSelectedLevelName;
     List<string> _unlockedLevelNames;
 
+    int _surviveRecordTime = 0;
+
     public List<IItemData> PlayerItemsData { get => _playerItemsData; set => _playerItemsData = value; }
     public Dictionary<ResourcesType, int> AvailableResources { get => _availableResources; set => _availableResources = value; }
 
@@ -22,6 +24,8 @@ public class PlayerData : MonoBehaviour
     public string LastSelectedLevelName { get => _lastSelectedLevelName; set => _lastSelectedLevelName = value; }
 
     public List<string> UnlockedLevelsNames { get => _unlockedLevelNames; set => _unlockedLevelNames = value; }
+
+    public int SurviveRecordTime { get => _surviveRecordTime; set => _surviveRecordTime = value; }
 
     void Awake()
     {

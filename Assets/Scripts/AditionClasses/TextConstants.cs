@@ -90,6 +90,9 @@ public static class TextConstants
     public static string UPGRADEHULLHP = "Upgrade HullHP";
     public static string UPGRADESHIELDHP = "Upgrade ShieldHP";
     public static string UPGRADESHIELDREGRATE = "Upgrade Shield RegRate";
+    public static string SURVIVEDRECORD = "Survived Record";
+    public static string CURRENTSURVIVEDTIME = "CURRENT SURVIVED TIME";
+    public static string NEWRECORD = "New Record";
 
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
@@ -212,6 +215,9 @@ public static class TextConstants
             UPGRADEHULLHP = "Улучшить ХП Корпуса";
             UPGRADESHIELDHP = "Улучшить ХП Щита";
             UPGRADESHIELDREGRATE = "Улучшить регенерацию щита";
+            SURVIVEDRECORD = "Рекорд выживания";
+            CURRENTSURVIVEDTIME = "Текущее время";
+            NEWRECORD = "Новый Рекорд";
 
 
             Dictionary<StageName, string> tutorialTextsRu = new()

@@ -6,12 +6,14 @@ public class GarageMainPanleAnimation : MonoBehaviour
     [SerializeField] AnimationCurve _animationCurve;
     [SerializeField] Vector3 _hideOffset;
     [SerializeField] float _hideDuration;
+    [SerializeField] Transform _blockRaycastPanel;
 
     Vector3 _deffPos;
 
     private void Start()
     {
         _deffPos = transform.localPosition;
+        _blockRaycastPanel.gameObject.SetActive(false);
     }
     public void ResetPosition()
     {
@@ -28,6 +30,7 @@ public class GarageMainPanleAnimation : MonoBehaviour
 
     IEnumerator HidePanelCoroutine()
     {
+        _blockRaycastPanel.gameObject.SetActive(true);
         float t = 0;
 
         while (t < 1)
@@ -37,6 +40,7 @@ public class GarageMainPanleAnimation : MonoBehaviour
             transform.localPosition = _hideOffset * _animationCurve.Evaluate(t);
             yield return null;
         }
+        _blockRaycastPanel.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 }

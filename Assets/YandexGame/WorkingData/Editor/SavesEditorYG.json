@@ -1,5 +1,5 @@
 {
-  "idSave": 42,
+  "idSave": 105,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -57,15 +57,15 @@
     "Advanced_Truck_V_1_Scheme"
   ],
   "availableResources": {
-    "Сopper": 53,
-    "Wires": 62,
-    "ScrapMetal": 48
+    "Сopper": 78,
+    "Wires": 87,
+    "ScrapMetal": 80
   },
   "equipedItems": {
     "0": "Simple_Truck_V_1",
     "1": "Simple_Cannon_V_1"
   },
-  "lastSelectedLevelName": "1-7",
+  "lastSelectedLevelName": "1-8",
   "unlockedLevelsNames": [
     "1-1",
     "1-2",
@@ -73,8 +73,10 @@
     "1-4",
     "1-5",
     "1-6",
-    "1-7"
+    "1-7",
+    "1-8"
   ],
   "tutorilaIsComplete": true,
-  "completedTutorialStages": []
+  "completedTutorialStages": [],
+  "surviveRecordTime": 87
 }

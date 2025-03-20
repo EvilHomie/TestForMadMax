@@ -36,7 +36,7 @@ public class SurviveModeExpManager
             OnPlayerLvlUp();
         }
 
-        UIExpPresentationManager.Instance.OnKillEnemy(_killedEnemiesCount - _newWeaponLvlsCount);
+        UIExpPresentationManager.Instance.AddExpOnKillEnemy();
     }
 
     void OnPlayerLvlUp()

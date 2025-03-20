@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button _changeLevelsBtn;
     [SerializeField] Button _closeInventoryBtn;
 
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this);
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
         {
             OnStartRaid();
             TutorialManager.Instance.TryConfirmStage(StageName.FirstRaidLaunch);
+            _startRaidBtn.interactable = false;
         });
         _openInventoryBtn.onClick.AddListener(delegate
         {
@@ -89,6 +92,7 @@ public class GameManager : MonoBehaviour
         _startSurviveModBtn.onClick.AddListener(delegate
         {
             SurviveModeManager.Instance.OnStartMode();
+            _startSurviveModBtn.interactable = false;
             ConfigMainPanel(true);
         });
     }
@@ -151,11 +155,19 @@ public class GameManager : MonoBehaviour
 
     void ConfigMainPanel(bool inRaidStatus)
     {
-        if (inRaidStatus) _garageMainPanel.HidePanel();
-        else _garageMainPanel.ResetPosition();
-        _startRaidBtn.interactable = !inRaidStatus;
-        _openInventoryBtn.interactable = !inRaidStatus;
-        _changeLevelsBtn.interactable = !inRaidStatus;
+        if (inRaidStatus)
+        {
+            _garageMainPanel.HidePanel();
+        }
+        else
+        {
+            _garageMainPanel.ResetPosition();
+            _startRaidBtn.interactable = true;
+            _openInventoryBtn.interactable = true;
+            _changeLevelsBtn.interactable = true;
+            _startSurviveModBtn.interactable = true;
+        }
+
     }
 
     void SurviveModCheckAvailability()

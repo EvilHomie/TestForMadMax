@@ -31,6 +31,7 @@ namespace YG
         public List<string> unlockedLevelsNames = new();
         public bool tutorilaIsComplete = false;
         public List<StageName> completedTutorialStages = new();
+        public int surviveRecordTime = 0;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 

@@ -98,6 +98,7 @@ public class SaveLoadManager : MonoBehaviour
 
         YandexGame.savesData.savesIsClear = false;
         YandexGame.savesData.savedVerion = Application.version;
+        YandexGame.savesData.surviveRecordTime = PlayerData.Instance.SurviveRecordTime;
         YandexGame.SaveProgress();
     }
 
@@ -117,6 +118,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void LoadSaveData()
     {
+        PlayerData.Instance.SurviveRecordTime = YandexGame.savesData.surviveRecordTime;
         PlayerData.Instance.PlayerItemsData = new();
 
 

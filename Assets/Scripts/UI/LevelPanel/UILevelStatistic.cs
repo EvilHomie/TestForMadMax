@@ -41,6 +41,10 @@ public class UILevelStatistic : MonoBehaviour
     [SerializeField] TextMeshProUGUI _inventoryBtnText;
     [SerializeField] TextMeshProUGUI _tipBodyText;
 
+    [SerializeField] TextMeshProUGUI _surviveRecordTimerText;
+    [SerializeField] TextMeshProUGUI _surviveCurrentTimerText;
+    [SerializeField] TextMeshProUGUI _newRecordText;
+
     int _lastTipIndex;
     int _scrapMetalCollectedSumm;
     int _whiresCollectedSumm;
@@ -93,7 +97,7 @@ public class UILevelStatistic : MonoBehaviour
 
     public void OnPlayerStartRaid()
     {
-        ResetCounters();        
+        ResetCounters();
     }
 
     void ResetCounters()
@@ -116,10 +120,10 @@ public class UILevelStatistic : MonoBehaviour
         _scrapMetalCollectedSummText.text = $"{_scrapMetalCollectedSumm}";
         _whiresCollectedSummText.text = $"{_whiresCollectedSumm}";
         _cooperCollectedSummText.text = $"{_cooperCollectedSumm}";
-        _toHullDMGRecivedSummText.text = $"{_hullDMGRecivedSumm}";
-        _toShieldDMGRecivedSummText.text = $"{_shieldDMGRecivedSumm}";
-        _toHullDMGDoneSummText.text = $"{_hullDMGDoneSumm}";
-        _toShieldDMGDoneSummText.text = $"{_shieldDMGDoneSumm}";
+        _toHullDMGRecivedSummText.text = $"{(int)_hullDMGRecivedSumm}";
+        _toShieldDMGRecivedSummText.text = $"{(int)_shieldDMGRecivedSumm}";
+        _toHullDMGDoneSummText.text = $"{(int)_hullDMGDoneSumm}";
+        _toShieldDMGDoneSummText.text = $"{(int)_shieldDMGDoneSumm}";
         _wheelsCaterpillarsDestroyedCountText.text = $"{_wheelsCaterpillarsDestroyedSumm}";
         _bodiesDestroyedCountText.text = $"{_bodiesDestroyedSumm}";
         _othersDestroyedCountText.text = $"{_othersDestroyedSumm}";
@@ -166,6 +170,14 @@ public class UILevelStatistic : MonoBehaviour
 
     public void ShowStatistic()
     {
+        if (InRaidManager.Instance.InSurviveMod)
+        {
+            ConfigPanelForSurviveMod();
+        }
+        else
+        {
+            ConfigPanelForNormalMod();
+        }
         UpdateStatistic();
         ShowNewTip();
         gameObject.SetActive(true);
@@ -211,11 +223,31 @@ public class UILevelStatistic : MonoBehaviour
 
     void ConfigPanelForSurviveMod()
     {
-
+        _resourcesCollectedText.transform.parent.gameObject.SetActive(false);
+        _tipText.transform.parent.gameObject.SetActive(false);
+        _surviveRecordTimerText.transform.parent.gameObject.SetActive(true);
     }
 
     void ConfigPanelForNormalMod()
     {
+        _resourcesCollectedText.transform.parent.gameObject.SetActive(true);
+        _tipText.transform.parent.gameObject.SetActive(true);
+        _surviveRecordTimerText.transform.parent.gameObject.SetActive(false);
+    }
 
+    public void SetSurviveTime(float seconds)
+    {
+        _surviveRecordTimerText.text =$"{TextConstants.SURVIVEDRECORD} {PlayerData.Instance.SurviveRecordTime} {TextConstants.SEC}";
+        _surviveCurrentTimerText.text = $"{TextConstants.CURRENTSURVIVEDTIME} {(int)seconds} {TextConstants.SEC}";
+        if ((int)seconds > PlayerData.Instance.SurviveRecordTime)
+        {
+            _newRecordText.text = TextConstants.NEWRECORD;
+            _newRecordText.gameObject.SetActive(true);
+            PlayerData.Instance.SurviveRecordTime = (int)seconds;
+        }
+        else
+        {
+            _newRecordText.gameObject.SetActive(false);
+        }
     }
 }
