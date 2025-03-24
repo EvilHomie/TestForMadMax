@@ -22,16 +22,15 @@ public class SurviveModeExpManager
     {
         _killedEnemiesCount++;
 
-        if ((_killedEnemiesCount + _newWeaponLvlsCount) % modeDifficultData.killAmountForNewWeapon == 0)
+        if ((_killedEnemiesCount /*+ _newWeaponLvlsCount*/) % modeDifficultData.killAmountForNewWeapon == 0)
         {
             if (GiveNewWeapon())
             {
                 _newWeaponLvlsCount++;
-                return;
             }            
         }
 
-        if ((_killedEnemiesCount + _newWeaponLvlsCount) % modeDifficultData.killAmountForLvlUp == 0)
+        if ((_killedEnemiesCount /*+ _newWeaponLvlsCount*/) % modeDifficultData.killAmountForLvlUp == 0)
         {
             OnPlayerLvlUp();
         }

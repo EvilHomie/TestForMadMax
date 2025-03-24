@@ -17,6 +17,7 @@ public class SurviveModeDifficultManager
     public ModeDifficult ModeDifficult => _difficultData;
     public LevelParameters LevelParameters => _SMLevelParameters;
 
+    
 
     public SurviveModeDifficultManager(ModeDifficult difficultData, LevelParameters sMLevelParameters)
     {
@@ -50,20 +51,19 @@ public class SurviveModeDifficultManager
         if (_timerValue >= _difficultData.enemyIncreaseTirDelay)
         {
             _timerValue = 0;
-            _difficultData.enemyDmgMod = _startEnemyDmgMod;
-            _difficultData.enemyHpMod = _startEnemyHpMod;
-            IncreaseEnemyTir();
+            SurviveModeDifficultProgress.Instance.AddDifficultScull();
+            TryIncreaseEnemyTir();
         }
 
         TESTSurviveModStatistics.Instance.UpdateEnemyData(_difficultData.enemyIncreaseTirDelay - _timerValue, _difficultData.enemyDmgMod, _currentEnemyLevel);
     }
 
-    void IncreaseEnemyTir()
+    void TryIncreaseEnemyTir()
     {
-        SurviveModeDifficultProgress.Instance.AddDifficultScull();
-
         if (_currentEnemyLevel != _enemyTirs.Last())
         {
+            _difficultData.enemyDmgMod = _startEnemyDmgMod;
+            _difficultData.enemyHpMod = _startEnemyHpMod;
             int index = _enemyTirs.FindIndex(element => element == _currentEnemyLevel);
             index++;
             _currentEnemyLevel = _enemyTirs[index];

@@ -93,6 +93,9 @@ public static class TextConstants
     public static string SURVIVEDRECORD = "Survived Record";
     public static string CURRENTSURVIVEDTIME = "CURRENT SURVIVED TIME";
     public static string NEWRECORD = "New Record";
+    public static string COLLECT = "Collect";
+    public static string BONUSCARDOFFERTEXT = "Collect Bonus\r\nCard?";
+    public static string BONUSCARDCANCELEXT = "Continue without bonus";
 
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
@@ -218,6 +221,9 @@ public static class TextConstants
             SURVIVEDRECORD = "Рекорд выживания";
             CURRENTSURVIVEDTIME = "Текущее время";
             NEWRECORD = "Новый Рекорд";
+            COLLECT = "Получить";
+            BONUSCARDOFFERTEXT = "Хотите получить\r\nбонусную карту?";
+            BONUSCARDCANCELEXT = "Продолжить без бонуса";
 
 
             Dictionary<StageName, string> tutorialTextsRu = new()

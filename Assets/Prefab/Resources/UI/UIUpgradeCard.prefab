@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 5694996786921803385}
   - component: {fileID: 3537122720865726972}
   m_Layer: 5
-  m_Name: Upgrade Button
+  m_Name: Collect Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardText: {fileID: 719124884078403922}
   _cardIcon: {fileID: 4163055038895870476}
-  _btn: {fileID: 1420235075295823864}
+  _selectBTN: {fileID: 1420235075295823864}
 --- !u!1 &5087506534060441051
 GameObject:
   m_ObjectHideFlags: 0

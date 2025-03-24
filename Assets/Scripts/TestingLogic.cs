@@ -24,7 +24,7 @@ public class TestingLogic : MonoBehaviour
     private void Start()
     {
         Application.logMessageReceived += ShowMessageOnDisplay;
-        Debug.Log("sssss");
+        //Debug.Log("sssss");
     }
 
     private void ShowMessageOnDisplay(string logString, string stackTrace, LogType type)

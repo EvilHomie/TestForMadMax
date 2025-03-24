@@ -41,6 +41,19 @@ public class TESTSurviveModStatistics : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!GameConfig.Instance.IsTesting) return;
+
+        if (Input.GetKeyDown(KeyCode.KeypadPlus)) Time.timeScale += 1;
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            if (Time.timeScale == 0) return;
+            Time.timeScale -= 1;
+        }
+
+    }
+
     public void UpdateEnemyData(float leftPowerUpTime, float powerUpMod, EnemyLevel enemyTir)
     {
         if (!gameObject.activeSelf) return;

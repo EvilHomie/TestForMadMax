@@ -10,6 +10,7 @@ public class UIPlayerHpPanel : MonoBehaviour
     [SerializeField] HorizontalLayoutGroup _hullHPseparatorsContainer;
     [SerializeField] HorizontalLayoutGroup _shieldHPseparatorsContainer;
     [SerializeField] RectTransform _separatorPF;
+    [SerializeField] int _separatorHPValue;
 
 
     RectTransform _hullHPRT;
@@ -34,10 +35,10 @@ public class UIPlayerHpPanel : MonoBehaviour
         _shieldHPSlider.value = shieldValue;
     }
 
-    public void ConfigHPSeparators(float hullHPSepAmount, float shieldHPSepAmount)
+    public void ConfigHPSeparators(float hullHP, float shieldHP)
     {
-        UpdateSeparators(hullHPSepAmount, _hullHPseparatorsContainer);
-        UpdateSeparators(shieldHPSepAmount, _shieldHPseparatorsContainer);
+        UpdateSeparators(hullHP / _separatorHPValue, _hullHPseparatorsContainer);
+        UpdateSeparators(shieldHP / _separatorHPValue, _shieldHPseparatorsContainer);
     }
 
 

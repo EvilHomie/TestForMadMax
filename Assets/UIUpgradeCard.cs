@@ -7,21 +7,25 @@ public class UIUpgradeCard : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _cardText;
     [SerializeField] Image _cardIcon;
-    [SerializeField] Button _btn;
+    [SerializeField] Button _selectBTN;
 
     UpgradeCardData _upgradeCardData;
 
+    bool _isBonusCard;
+
     private void OnEnable()
     {
-        _btn.onClick.AddListener(OnPointerClick);
+        _selectBTN.onClick.AddListener(OnCardSelected);
     }
 
     private void OnDisable()
     {
-        _btn.onClick.RemoveAllListeners();
+        _selectBTN.onClick.RemoveAllListeners();
     }
-    public void ConfigCard(UpgradeCardData upgradeCardData)
+    public void ConfigCard(UpgradeCardData upgradeCardData, bool asBonusCard = false)
     {
+        _isBonusCard = asBonusCard;
+        _selectBTN.gameObject.SetActive(!asBonusCard);
         _upgradeCardData = upgradeCardData;
         _cardIcon.sprite = upgradeCardData.Icon;
 
@@ -55,7 +59,7 @@ public class UIUpgradeCard : MonoBehaviour
         }
     }
 
-    void OnPointerClick()
+    void OnCardSelected()
     {
         if (_upgradeCardData.UpgradeItemType == UpgradeItemType.Weapon)
         {
@@ -67,4 +71,6 @@ public class UIUpgradeCard : MonoBehaviour
         }
         SurviveModeUpgradePanel.Instance.OnCardSelected();
     }
+
+
 }

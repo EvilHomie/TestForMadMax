@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using YG;
 
 public class SurviveModeManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class SurviveModeManager : MonoBehaviour
     public static SurviveModeManager Instance;
 
     [SerializeField] AbstractAmmunitionBelt _abstractAmmunitionBelt;
+    
 
     [Header("Difficult Data")]
     [SerializeField] ModeDifficult _deffDifficultData;
@@ -31,8 +33,9 @@ public class SurviveModeManager : MonoBehaviour
 
     public LevelParameters SMLevelParameters => surviveModeDifficultManager.LevelParameters;
     public int MaxEnemiesCount => surviveModeDifficultManager.ModeDifficult.maxEnemiesCount;
-    public float EnemyDmgMod => surviveModeDifficultManager.ModeDifficult.enemyDmgMod;
+
     public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod;
+    public Action<float> _onIncreaseEnemyPowerMod;
 
 
     AbstractPlayerWeapon _currentPlayerWeapon;
@@ -49,9 +52,11 @@ public class SurviveModeManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
+    
 
     public void Init()
-    {        
+    {
+        
         gameObject.SetActive(false);
         TESTSurviveModStatistics.Instance.Init();
 
@@ -73,6 +78,7 @@ public class SurviveModeManager : MonoBehaviour
 
     public void OnStartMode()
     {
+        MetricaSender.SendSurviveModeGoal(SurviveModeGoal.StartMode);
         _timer = Time.time;
         gameObject.SetActive(true);
         _curWeaponIndex = 0;
@@ -126,6 +132,7 @@ public class SurviveModeManager : MonoBehaviour
         while (true)
         {
             surviveModeDifficultManager.IncreaseEnemyPowerInTime();
+            _onIncreaseEnemyPowerMod?.Invoke(surviveModeDifficultManager.ModeDifficult.enemyDmgMod);
             yield return null;
         }
     }
@@ -193,9 +200,10 @@ public class SurviveModeManager : MonoBehaviour
 
     }
 
-    public void OnPlayerDie()
-    {
+    public void OnCLoseMod()
+    {        
         float survivedTime = Time.time - _timer;
+        MetricaSender.SendSurviveModeGoal(SurviveModeGoal.StopMode, $"{(int)survivedTime}");
         UILevelStatistic.Instance.SetSurviveTime(survivedTime);
         Disable();
     }

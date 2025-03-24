@@ -1,5 +1,5 @@
 {
-  "idSave": 105,
+  "idSave": 245,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -78,5 +78,5 @@
   ],
   "tutorilaIsComplete": true,
   "completedTutorialStages": [],
-  "surviveRecordTime": 87
+  "surviveRecordTime": 386
 }

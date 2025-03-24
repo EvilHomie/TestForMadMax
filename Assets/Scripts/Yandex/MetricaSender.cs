@@ -3,83 +3,65 @@ using YG;
 
 public class MetricaSender
 {
+    static void SendGoal(string goalName, string goalKey)
+    {
+        var eventParams = new Dictionary<string, string>
+        {
+             { goalName, goalKey }
+        };
+        YandexMetrica.Send(goalName, eventParams);
+    }
+
     public static void SendLevelStatus(string levelName, LevelStatus status)
     {
         string goalKey = $"{levelName}_{status}";
-        var eventParams = new Dictionary<string, string>
-        {
-             { "LevelsPassing", goalKey }
-        };
-        YandexMetrica.Send("LevelsPassing", eventParams);
+        SendGoal("LevelsPassing", goalKey);
     }
 
-    public static void SendInventoryData(string eventName)
+    public static void SendInventoryData(string goalKey)
     {
-        var eventParams = new Dictionary<string, string>
-        {
-             { "InventoryData", eventName }
-        };
-        YandexMetrica.Send("InventoryData", eventParams);
+        SendGoal("InventoryData", goalKey);
     }
 
     public static void SendFirstControllerTouch()
     {
-        var eventParams = new Dictionary<string, string>
-        {
-             { "LevelsPassing", "FirstControllerTouch" }
-        };
-        YandexMetrica.Send("LevelsPassing", eventParams);
+        SendGoal("LevelsPassing", "FirstControllerTouch");
     }
 
-    public static void SendTutorialData(string eventName)
+    public static void SendTutorialData(string goalKey)
     {
-        var eventParams = new Dictionary<string, string>
-        {
-             { "TutorialPassing", eventName }
-        };
-        YandexMetrica.Send("TutorialPassing", eventParams);
+        SendGoal("TutorialPassing", goalKey);
     }
 
     public static void KillEnemyOnFirstLevel(string levelName, int enemyNumber, LevelEnemyStatus levelEnemyStatus)
     {
         string goalKey = $"{levelName}_Enemy_{enemyNumber}_{levelEnemyStatus}";
-        var eventParams = new Dictionary<string, string>
-        {
-             { "LevelEnemyStatistic", goalKey }
-        };
-        YandexMetrica.Send("LevelEnemyStatistic", eventParams);
+        SendGoal("LevelEnemyStatistic", goalKey);
     }
 
     public static void QuickImprovementAfterLevel(string levelName, RewardStatus rewardStatus)
     {
         string goalKey = $"{levelName}_{rewardStatus}";
-        var eventParams = new Dictionary<string, string>
-        {
-             { "QuickImprovement", goalKey }
-        };
-        YandexMetrica.Send("QuickImprovement", eventParams);
+        SendGoal("QuickImprovement", goalKey);
     }
 
     public static void QuickImprovement(string levelName)
     {
         string goalKey = $"{levelName}_JustUpgrade";
-        var eventParams = new Dictionary<string, string>
-        {
-             { "QuickImprovement", goalKey }
-        };
-        YandexMetrica.Send("QuickImprovement", eventParams);
+        SendGoal("QuickImprovement", goalKey);
     }
 
     public static void RestoreHPByADD(string levelName, RewardStatus rewardStatus)
     {
         string goalKey = $"{levelName}_{rewardStatus}";
-        var eventParams = new Dictionary<string, string>
-        {
-             { "RestoreHP", goalKey }
-        };
-        YandexMetrica.Send("RestoreHP", eventParams);
+        SendGoal("RestoreHP", goalKey);
     }
 
+    public static void SendSurviveModeGoal(SurviveModeGoal goalName, string parameter = null)
+    {
+        string goalKey = parameter == null ? $"{goalName}" : $"{goalName}_{parameter}";
+        SendGoal("SurviveMode", goalKey);
+    }
 }
 
 public enum LevelStatus
@@ -100,4 +82,12 @@ public enum QuickImprovement
     AcceptOffer,
     CancelOffer,
     JustUpgrade
+}
+
+public enum SurviveModeGoal
+{
+    StartMode,
+    OpenUpgrades,
+    GetBonusCard,
+    StopMode
 }

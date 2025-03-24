@@ -94,13 +94,4 @@ public class GameConfig : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-
-    private void Update()
-    {
-        if (!_isTesting) return;
-
-        if (Input.GetKeyDown(KeyCode.T)) Time.timeScale += 1;
-        if (Input.GetKeyDown(KeyCode.Y)) Time.timeScale -= 1;
-
-    }
 }

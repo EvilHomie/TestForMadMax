@@ -14,8 +14,9 @@ public class UIExpPresentationManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _pressSpaceText;
     [SerializeField] TextMeshProUGUI _collectedCardsCounterText;
     [SerializeField] Animator _glowAnimator;
-    [SerializeField] float _fillDuration;
+    [SerializeField] float _fillSpeed;
 
+    int _fillSpeedMod;
     bool _wasShown = false;
     int _forLevelUpAmount;
     int _totalKilledCount;
@@ -41,6 +42,7 @@ public class UIExpPresentationManager : MonoBehaviour
     {
         StopAllCoroutines();
         _fillExpImagesCoroutine = null;
+        _fillSpeedMod = 1;
         _collectedCardCount = 0;
         _expFillImageBack.fillAmount = 0;
         _expFillImageFront.fillAmount = 0;
@@ -49,7 +51,7 @@ public class UIExpPresentationManager : MonoBehaviour
         _collectedCardsCounterText.text = _collectedCardCount.ToString();
         //_tipPCGO.SetActive(false);
         _pressSpaceText.gameObject.SetActive(false);
-        _glowAnimator.SetTrigger("Disable");
+        _glowAnimator.SetBool("Enabled", false);
         gameObject.SetActive(true);
     }
 
@@ -67,9 +69,10 @@ public class UIExpPresentationManager : MonoBehaviour
                 StopCoroutine(_fillExpImagesCoroutine);
                 _fillExpImagesCoroutine = null;
             }
+            _fillSpeedMod = 1;
             _fillValue = 0;
             _expFillImageFront.fillAmount = _fillValue;
-            
+
         }
         _fillValue += 1f / (float)_forLevelUpAmount;
         _expFillImageBack.fillAmount = _fillValue;
@@ -79,12 +82,16 @@ public class UIExpPresentationManager : MonoBehaviour
         {
             _fillExpImagesCoroutine = StartCoroutine(FillExpImages());
         }
+        else
+        {
+            _fillSpeedMod++;
+        }
 
         if (_fillValue >= 1)
         {
             _collectedCardCount++;
             _collectedCardsCounterText.text = _collectedCardCount.ToString();
-            _glowAnimator.SetTrigger("Enable");
+            _glowAnimator.SetBool("Enabled", true);
 
             if (!_wasShown)
             {
@@ -103,6 +110,7 @@ public class UIExpPresentationManager : MonoBehaviour
     public void OnOpenUpgrades()
     {
         _collectedCardCount = 0;
+        _collectedCardsCounterText.text = _collectedCardCount.ToString();
         if (_fillValue >= 1)
         {
             if (_fillExpImagesCoroutine != null)
@@ -115,19 +123,15 @@ public class UIExpPresentationManager : MonoBehaviour
             _expFillImageFront.fillAmount = _fillValue;
         }
         _pressSpaceText.gameObject.SetActive(false);
-        _glowAnimator.SetTrigger("Disable");
+        _glowAnimator.SetBool("Enabled", false);
         //_tipPCGO.SetActive(false);
     }
 
     IEnumerator FillExpImages()
-    {        
-        float startValue = _expFillImageFront.fillAmount;        
-        
-        float t = 0;
+    {
         while (_expFillImageFront.fillAmount < _expFillImageBack.fillAmount)
         {
-            t += Time.deltaTime / _fillDuration;
-            _expFillImageFront.fillAmount = Mathf.Lerp(startValue, _expFillImageBack.fillAmount, t);
+            _expFillImageFront.fillAmount += _fillSpeed / (float)_forLevelUpAmount * Time.deltaTime * _fillSpeedMod;
             yield return null;
         }
         _expFillImageFront.fillAmount = _expFillImageBack.fillAmount;

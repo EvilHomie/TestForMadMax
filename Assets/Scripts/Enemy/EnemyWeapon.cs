@@ -10,6 +10,12 @@ public class EnemyWeapon : WeaponLogic
     protected override float CurShieldDmg => _shieldDmg;
     protected override float CurFireRate => _fireRate;
 
+
+    float _baseHullDmg;
+    float _baseShieldDmg;
+    float _survModeDmgMod;
+    float _onchangeEnemyTirBonus;
+
     public void StartShooting()
     {
         ShootAsBot(weaponType);
@@ -28,10 +34,31 @@ public class EnemyWeapon : WeaponLogic
 
         if (InRaidManager.Instance.InSurviveMod)
         {
-            _hullDmg *= SurviveModeManager.Instance.EnemyDmgMod;
-            _shieldDmg *= SurviveModeManager.Instance.EnemyDmgMod;
-            //_fireRate *= SurviveModManager.Instance.EnemyFRMod;
-            //if(_fireRate > 10) _fireRate = 10;
+            _baseHullDmg = _hullDmg;
+            _baseShieldDmg = _shieldDmg;
+            _survModeDmgMod = 0;
+            _onchangeEnemyTirBonus = 0;
+            SurviveModeManager.Instance._onIncreaseEnemyPowerMod += OnIncreaseEnemyPowerMod;
         }
+    }
+
+    void OnIncreaseEnemyPowerMod(float dmgMod)
+    {
+        if (_survModeDmgMod - _onchangeEnemyTirBonus < dmgMod)
+        {
+            _survModeDmgMod = dmgMod + _onchangeEnemyTirBonus;
+        }
+        else
+        {
+            _onchangeEnemyTirBonus = _survModeDmgMod - 1;
+        }
+
+        _hullDmg = _baseHullDmg * _survModeDmgMod;
+        _shieldDmg = _baseShieldDmg * _survModeDmgMod;
+    }
+
+    private void OnDisable()
+    {
+        SurviveModeManager.Instance._onIncreaseEnemyPowerMod -= OnIncreaseEnemyPowerMod;
     }
 }

@@ -1,4 +1,7 @@
+
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +15,23 @@ public class SurviveModeUpgradePanel : MonoBehaviour
     [SerializeField] Button _availableLevelButton;
     [SerializeField] GameObject _darkBG;
 
+    [SerializeField] Transform _ADSPanel;
+    [SerializeField] Button _accepOfferBTN;
+    [SerializeField] Button _cancelOfferBTN;
+    [SerializeField] int _showADSCloseAmount;
+    [SerializeField] float _autoCloseDelay = 10f;
 
+    [SerializeField] TextMeshProUGUI _cancelOfferTimerText;
+    [SerializeField] TextMeshProUGUI _offerText;
+    [SerializeField] TextMeshProUGUI _collectText;
+    [SerializeField] TextMeshProUGUI _cancelText;
+
+
+    int _closeCounter;
     bool _showUpgradeCardsAutomatic;
     int _collectedLvlUps = 0;
     bool _panelIsOpened;
+    UpgradeCardData _bonusCardData;
 
     private void Awake()
     {
@@ -23,8 +39,33 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         else Instance = this;
     }
 
+    private void OnEnable()
+    {
+        _accepOfferBTN.onClick.AddListener(OnAcceptOffer);
+        _cancelOfferBTN.onClick.AddListener(OnCancelOffer);
+    }
+
+    private void OnDisable()
+    {
+        _accepOfferBTN.onClick.RemoveAllListeners();
+        _cancelOfferBTN.onClick.RemoveAllListeners();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            _darkBG.SetActive(false);
+        }
+
+    }
+
     public void Init(bool showUpgradeCardsAutomatic)
     {
+        _offerText.text = TextConstants.BONUSCARDOFFERTEXT;
+        _collectText.text = TextConstants.COLLECT;
+        _cancelText.text = TextConstants.BONUSCARDCANCELEXT;
+
+
         _showUpgradeCardsAutomatic = showUpgradeCardsAutomatic;
         _availableLevelButton.onClick.AddListener(OpenLevelUpPanel);
         ResetPanel();
@@ -34,7 +75,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
     {
         if (_collectedLvlUps <= 0) return;
         if(_panelIsOpened) return;
-        //_availableLevelButton.gameObject.SetActive(false);
+        
         UIExpPresentationManager.Instance.OnOpenUpgrades();
         GameFlowManager.Instance.SetPause(this);
         _darkBG.SetActive(true);
@@ -48,11 +89,12 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     private void ResetPanel()
     {
+        _closeCounter = 0;
+        _ADSPanel.gameObject.SetActive(false);
         _darkBG.SetActive(false);
         _panelIsOpened = false;
         _collectedLvlUps = 0;
         _upgradeCardsContainer.parent.gameObject.SetActive(false);
-        //_availableLevelButton.gameObject.SetActive(false);
         TESTSurviveModStatistics.Instance.UpdateCardsPack(_collectedLvlUps);
     }
 
@@ -76,9 +118,10 @@ public class SurviveModeUpgradePanel : MonoBehaviour
     {
         _darkBG.SetActive(true);
         GameFlowManager.Instance.SetPause(this);
-        foreach (Transform card in _upgradeCardsContainer)
+        foreach (Transform t in _upgradeCardsContainer)
         {
-            Destroy(card.gameObject);
+            if(t == _ADSPanel) continue;
+            Destroy(t.gameObject);
         }
         UINewWeaponCard UINewWeaponCard = Instantiate(UINewWeaponCardPF, _upgradeCardsContainer);
         UINewWeaponCard.ConfigCard(weaponName);
@@ -90,9 +133,10 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         _panelIsOpened = true;
         List<UpgradeCardData> upgradeCardDatas = SurviveModeUpgradeService.Instance.GetCardsCollection();
 
-        foreach (Transform card in _upgradeCardsContainer)
+        foreach (Transform t in _upgradeCardsContainer)
         {
-            Destroy(card.gameObject);
+            if (t == _ADSPanel) continue;
+            Destroy(t.gameObject);
         }
 
         foreach (var cardData in upgradeCardDatas)
@@ -103,6 +147,8 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         _upgradeCardsContainer.parent.gameObject.SetActive(true);
         Cursor.visible = true;
     }
+
+   
 
     public void OnCardSelected()
     {
@@ -123,11 +169,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
             }
             else
             {
-                Cursor.visible = false;
-                GameFlowManager.Instance.Unpause(this);
-                _upgradeCardsContainer.parent.gameObject.SetActive(false);
-                _panelIsOpened = false;
-                _darkBG.SetActive(false);
+                OnNoCardsLeft();
             }
         }        
     }
@@ -138,5 +180,113 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         _upgradeCardsContainer.parent.gameObject.SetActive(false);
         Cursor.visible = false;
         _darkBG.SetActive(false);
+    }
+
+    void OnNoCardsLeft()
+    {
+        _closeCounter++;
+        MetricaSender.SendSurviveModeGoal(SurviveModeGoal.OpenUpgrades, _closeCounter.ToString());
+        if (_closeCounter % _showADSCloseAmount == 0)
+        {
+            ShowBonusCardOffer();
+        }
+        else
+        {
+            CloseUpgradePanel();
+        }
+    }
+
+    void CloseUpgradePanel()
+    {
+        Cursor.visible = false;
+        GameFlowManager.Instance.Unpause(this);
+        _upgradeCardsContainer.parent.gameObject.SetActive(false);
+        _panelIsOpened = false;
+        _darkBG.SetActive(false);
+    }
+
+    void OnGetRewardResult(bool GetRewardStatus)
+    {
+        if (GetRewardStatus)
+        {
+            if (_bonusCardData.UpgradeItemType == UpgradeItemType.Weapon)
+            {
+                SurviveModeUpgradeService.Instance.OnWeaponUpgrade(_bonusCardData);
+            }
+            else
+            {
+                SurviveModeUpgradeService.Instance.OnVehicleUpgrade(_bonusCardData);
+            }
+        }
+        CloseUpgradePanel();
+    }
+
+    public void ShowBonusCardOffer()
+    {
+        ShowBonusCard();
+        RewardedAddManager.Instance.PrepareReward(OnGetRewardResult, RewardName.BonusCard);
+        ToggleRewardPanel(true);
+    }
+
+    void ShowBonusCard()
+    {
+        _panelIsOpened = true;
+        List<UpgradeCardData> upgradeCardDatas = SurviveModeUpgradeService.Instance.GetCardsCollection();
+
+        int randomIndex = Random.Range(0, upgradeCardDatas.Count);
+        _bonusCardData = upgradeCardDatas[randomIndex];
+
+        foreach (Transform t in _upgradeCardsContainer)
+        {
+            if (t == _ADSPanel) continue;
+            Destroy(t.gameObject);
+        }
+        UIUpgradeCard uIUpgradeCard = Instantiate(UIUpgradeCardPF, _upgradeCardsContainer);
+        uIUpgradeCard.ConfigCard(_bonusCardData, true);
+        uIUpgradeCard.transform.SetSiblingIndex(0);
+        _upgradeCardsContainer.parent.gameObject.SetActive(true);
+        Cursor.visible = true;
+    }
+    void OnAcceptOffer()
+    {
+        MetricaSender.SendSurviveModeGoal(SurviveModeGoal.GetBonusCard);
+        RewardedAddManager.Instance.OnAcceptOffer();
+        ToggleRewardPanel(false);
+    }
+
+    void OnCancelOffer()
+    {
+        RewardedAddManager.Instance.OnCancelOffer();
+        ToggleRewardPanel(false);
+    }
+
+    void ToggleRewardPanel(bool activeStatus)
+    {
+        Cursor.visible = activeStatus;
+        _ADSPanel.gameObject.SetActive(activeStatus);
+        _upgradeCardsContainer.parent.gameObject.SetActive(activeStatus);
+
+        if (activeStatus)
+        {
+            StartCoroutine(TimeOutCoroutine());
+        }
+        else
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    IEnumerator TimeOutCoroutine()
+    {
+        float time = _autoCloseDelay;
+
+        while (time > 0)
+        {
+            time -= Time.unscaledDeltaTime;
+            _cancelOfferTimerText.text = $"{string.Format("{0:f1}", time)} {TextConstants.SEC}";
+            yield return null;
+        }
+        RewardedAddManager.Instance.OnOfferTimeOut();
+        ToggleRewardPanel(false);
     }
 }

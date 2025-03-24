@@ -21,7 +21,7 @@ public class EnemyWeaponController : MonoBehaviour
         {
             weapon.SetCharacteristics(enemyVehicleManager.EnemyCharacteristics.WeaponDMGMod, enemyVehicleManager.EnemyCharacteristics.WeaponFRMod);
         }
-    }  
+    }
 
     IEnumerator LockOnPlayer()
     {

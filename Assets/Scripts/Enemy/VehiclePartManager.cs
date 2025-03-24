@@ -80,6 +80,20 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
         _maxShieldHp = _shieldHP;
     }
 
+    //void OnIncreaseEnemyPowerMod(float dmgMod, float hpMod)
+    //{
+    //    _maxHullHp = _baseHullHP * dmgMod;
+    //    _maxShieldHp = _baseShieldHP * dmgMod;
+
+    //    _hullHP = _baseHullHP * dmgMod;
+    //    _shieldHP = _baseShieldHP * dmgMod;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    SurviveModeManager.Instance._onIncreaseEnemyPowerMod -= OnIncreaseEnemyPowerMod;
+    //}
+
     void FillManagers()
     {
         switch (_vehiclePart)

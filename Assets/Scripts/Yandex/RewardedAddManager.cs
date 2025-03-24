@@ -9,15 +9,18 @@ public class RewardedAddManager : MonoBehaviour
 
     RewardName _proposedRewardName;
     Action<bool> _rewardReceivedAction;
+    RewardAdResult _lastRewardAdResult;
 
     Dictionary<RewardName, int> _rewardIdByName = new()
     {
         {RewardName.RestoreHP, 1 },
-        {RewardName.FreeUpgrade, 2 }
+        {RewardName.FreeUpgrade, 2 },
+        {RewardName.BonusCard, 3 }
     };
 
 
-    bool _firstOffer = true;
+    bool _rewardedResult = true;
+
 
     private void Awake()
     {
@@ -25,34 +28,45 @@ public class RewardedAddManager : MonoBehaviour
         else Instance = this;
     }
 
-    void Rewarded(int id)
+    private void Start()
     {
-        //YandexGame.timerShowAd = 0;
-        //Debug.Log("REWARD SUCCESSFUL");
-        OnReceivedRewardResult(true);
-        return;
+        YandexGame.Instance.infoYG.rewardedAfterClosing = false;
+    }
 
-        //if (id == 2)
-        //{
-        //}
+    private void OnEnable()
+    {
+        YandexGame.RewardVideoEvent += OnGetRewarded;
+        YandexGame.ErrorVideoEvent += OnRewardError;
+        YandexGame.CloseVideoEvent += OnCloseVideoEvent;
+    }
+
+    private void OnDisable()
+    {
+        YandexGame.RewardVideoEvent -= OnGetRewarded;
+        YandexGame.ErrorVideoEvent -= OnRewardError;
+        YandexGame.CloseVideoEvent -= OnCloseVideoEvent;
+    }
+
+    void OnCloseVideoEvent()
+    {
+        bool result = _lastRewardAdResult == RewardAdResult.Success ? true : false;
+        OnReceivedRewardResult(result);
+    }
+
+    void OnGetRewarded(int id)
+    {
+        _lastRewardAdResult = RewardAdResult.Success;
     }
 
     void OnRewardError()
     {
-        //Debug.Log("REWARD ERROR");
-        OnReceivedRewardResult(true);
+        _lastRewardAdResult = RewardAdResult.Error;
         SendMetrica(RewardStatus.Error);
     }
 
     public void PrepareReward(Action<bool> action, RewardName rewardName)
     {
-        if (_firstOffer)
-        {
-            _firstOffer = false;
-            YandexGame.RewardVideoEvent += Rewarded;
-            YandexGame.ErrorVideoEvent += OnRewardError;
-        }
-        
+        _lastRewardAdResult = RewardAdResult.None;
         GameFlowManager.Instance.SetPause(this);
         _rewardReceivedAction = action;
         _proposedRewardName = rewardName;
@@ -60,28 +74,24 @@ public class RewardedAddManager : MonoBehaviour
 
     public void OnAcceptOffer()
     {
-        //Debug.Log("ACCEPT OFFER");
         YandexGame.RewVideoShow(_rewardIdByName[_proposedRewardName]);
         SendMetrica(RewardStatus.Accept);
     }
 
     public void OnCancelOffer()
     {
-        //Debug.Log("CANCEL OFFER");
         OnReceivedRewardResult(false);
         SendMetrica(RewardStatus.Cancel);
     }
 
     public void OnPlayerCloseOffer()
     {
-        //Debug.Log("CLOSE OFFER");
         OnReceivedRewardResult(false);
         SendMetrica(RewardStatus.PlayerCloseOffer);
     }
 
     public void OnOfferTimeOut()
     {
-        //Debug.Log("CLOSE OFFER");
         OnReceivedRewardResult(false);
         SendMetrica(RewardStatus.TimeOut);
     }
@@ -113,7 +123,8 @@ public class RewardedAddManager : MonoBehaviour
 public enum RewardName
 {
     RestoreHP,
-    FreeUpgrade
+    FreeUpgrade,
+    BonusCard
 }
 
 public enum RewardStatus
@@ -124,3 +135,9 @@ public enum RewardStatus
     PlayerCloseOffer,
     TimeOut
 }
+enum RewardAdResult
+{
+    None,
+    Success,
+    Error
+};
