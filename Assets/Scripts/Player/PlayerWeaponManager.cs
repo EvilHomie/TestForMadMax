@@ -102,7 +102,7 @@ public class PlayerWeaponManager : MonoBehaviour
         _cameraCursor.SetActive(false);
     }
 
-    public void OnStartSurviveMod()
+    public void OnStartSurviveMode()
     {
         OnPlayerStartRaid();
     }

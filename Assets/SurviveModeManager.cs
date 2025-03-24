@@ -27,6 +27,12 @@ public class SurviveModeManager : MonoBehaviour
     [SerializeField] bool _showUpgradeCardsAutomatic;
     [SerializeField] int _maxCardsCount;
 
+
+
+    [SerializeField] Button _closeSurviveModeButton;
+    [SerializeField] Button _openPausePanel;
+    [SerializeField] Button _closePausePanel;
+
     SurviveModeDifficultManager surviveModeDifficultManager;
     SurviveModeExpManager surviveModeExpManager;
 
@@ -38,6 +44,8 @@ public class SurviveModeManager : MonoBehaviour
     public float EnemyDMGMod => surviveModeDifficultManager.ModeDifficult.enemyDmgMod;
     public Action<float> _onIncreaseEnemyPowerMod;
 
+    public NewWeaponData CurrentWeaponData => _currentWeaponData;
+    public SMVehicleData ÑurrentVehicleData => _currentVehicleData;
 
     AbstractPlayerWeapon _currentPlayerWeapon;
     NewWeaponData _currentWeaponData;
@@ -53,7 +61,21 @@ public class SurviveModeManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
     }
-    
+
+    private void OnEnable()
+    {
+        _closeSurviveModeButton.onClick.AddListener(OnCloseSurviveMod);
+        _openPausePanel.onClick.AddListener(OnOpenPausePanel);
+        _closePausePanel.onClick.AddListener(OnClosePausePanel);
+    }
+
+    private void OnDisable()
+    {
+        _closeSurviveModeButton.onClick.RemoveAllListeners();
+        _openPausePanel.onClick.RemoveAllListeners();
+        _closePausePanel.onClick.RemoveAllListeners();
+    }
+
 
     public void Init()
     {
@@ -68,6 +90,7 @@ public class SurviveModeManager : MonoBehaviour
         SurviveModeUpgradeService.Instance.Init(new(_upgradeCardsDeffData), _maxCardsCount);
 
         _abstractAmmunitionBelt.Init();
+        UISurviveModePausePanel.Instance.Init();
     }
 
     public void ChangeDifficultValues(float PUDelay, float PUValue, int KillAmount)
@@ -122,7 +145,8 @@ public class SurviveModeManager : MonoBehaviour
         UIEnemyHpPanel.Instance.OnPlayerStartRaid();
         UILevelStatistic.Instance.OnPlayerStartRaid();
         SurviveModeUpgradePanel.Instance.OnStartMode();
-        PlayerWeaponManager.Instance.OnStartSurviveMod();
+        PlayerWeaponManager.Instance.OnStartSurviveMode();
+        UISurviveModePausePanel.Instance.OnStartSurviveMode();
         _abstractAmmunitionBelt.OnStartSurviveMode(_currentWeaponData);
         YandexGame.GameplayStart();
     }
@@ -177,7 +201,20 @@ public class SurviveModeManager : MonoBehaviour
         return true;
     }
 
+    void OnOpenPausePanel()
+    {
+        UISurviveModePausePanel.Instance.OnOpenPausePanel();
+    }
 
+    void OnClosePausePanel()
+    {
+        UISurviveModePausePanel.Instance.OnClosePausePanel();
+    }
+
+    void OnCloseSurviveMod()
+    {
+        PlayerHPManager.Instance.OnLeaveSurviveMode();
+    }
 
 
 
@@ -223,6 +260,8 @@ public class SurviveModeManager : MonoBehaviour
         SurviveModeDifficultProgress.Instance.OnFinishMode();
         UIExpPresentationManager.Instance.OnStopSurviveMode();
         UIJoystickTouchController.Instance.OnStopSurviveMode();
+        UISurviveModePausePanel.Instance.OnStopSurviveMode();
+        SurviveModeUpgradePanel.Instance.OnLeaveSurviveMode();
     }
 
 

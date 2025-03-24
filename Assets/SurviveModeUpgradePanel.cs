@@ -50,14 +50,6 @@ public class SurviveModeUpgradePanel : MonoBehaviour
         _accepOfferBTN.onClick.RemoveAllListeners();
         _cancelOfferBTN.onClick.RemoveAllListeners();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            _darkBG.SetActive(false);
-        }
-
-    }
 
     public void Init(bool showUpgradeCardsAutomatic)
     {
@@ -198,11 +190,20 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     void CloseUpgradePanel()
     {
-        Cursor.visible = false;
         GameFlowManager.Instance.Unpause(this);
         _upgradeCardsContainer.parent.gameObject.SetActive(false);
         _panelIsOpened = false;
+
         _darkBG.SetActive(false);
+        Cursor.visible = false;
+    }
+
+    public void OnLeaveSurviveMode()
+    {
+        if (_upgradeCardsContainer.parent.gameObject.activeSelf)
+        {
+            CloseUpgradePanel();
+        }
     }
 
     void OnGetRewardResult(bool GetRewardStatus)
@@ -262,7 +263,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
 
     void ToggleRewardPanel(bool activeStatus)
     {
-        Cursor.visible = activeStatus;
+        //Cursor.visible = activeStatus;
         _ADSPanel.gameObject.SetActive(activeStatus);
         _upgradeCardsContainer.parent.gameObject.SetActive(activeStatus);
 

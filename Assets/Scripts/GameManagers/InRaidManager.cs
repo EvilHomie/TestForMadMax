@@ -12,7 +12,7 @@ public class InRaidManager : MonoBehaviour
     [SerializeField] float _spawnNewEnemyDelay;
     [SerializeField] float _spawnNewEnemyRepitRate;
     [SerializeField] int _maxEnemyCountInRaid;
-    [SerializeField] Button _closeSurviveModeButton;
+    [SerializeField] Transform _pauseSurviveModeButton;
 
     [SerializeField] Image _totalBlackoutImage;
     [SerializeField] float _blackoutDelay;
@@ -47,19 +47,9 @@ public class InRaidManager : MonoBehaviour
         else Instance = this;
     }
 
-    private void OnEnable()
-    {
-        _closeSurviveModeButton.onClick.AddListener(OnCloseSurviveMod);
-    }
-
-    private void OnDisable()
-    {
-        _closeSurviveModeButton.onClick.RemoveAllListeners();
-    }
-
     public void Init()
     {
-        _closeSurviveModeButton.gameObject.SetActive(false);
+        _pauseSurviveModeButton.gameObject.SetActive(false);
         _onRaid = false;
         _inSurviveMod = false;
         StopAllCoroutines();
@@ -70,7 +60,7 @@ public class InRaidManager : MonoBehaviour
         UILevelStatistic.Instance.Init();
         EnemySpawner.Instance.Init(_maxEnemyCountInRaid, _spawnNewEnemyDelay, _spawnNewEnemyRepitRate);
         UIComboCounterManager.Instance.Init();
-        FinishLevelManager.Instance.Init();
+        FinishLevelManager.Instance.Init();        
     }
 
 
@@ -139,7 +129,7 @@ public class InRaidManager : MonoBehaviour
         if (_inSurviveMod)
         {
             EnemySpawner.Instance.OnPlayerStartSurviveMod();
-            _closeSurviveModeButton.gameObject.SetActive(true);
+            _pauseSurviveModeButton.gameObject.SetActive(true);
         }
         else
         {
@@ -271,7 +261,7 @@ public class InRaidManager : MonoBehaviour
         StartCoroutine(ChangeSpeedOnDie());
         EnemySpawner.Instance.OnPLayerDie();
 
-        _closeSurviveModeButton.gameObject.SetActive(false);
+        _pauseSurviveModeButton.gameObject.SetActive(false);
         if (_inSurviveMod)
         {
             SurviveModeManager.Instance.OnCLoseMod();
@@ -284,11 +274,7 @@ public class InRaidManager : MonoBehaviour
         SaveLoadManager.Instance.SaveData();
     }
 
-    void OnCloseSurviveMod()
-    {
-        _closeSurviveModeButton.gameObject.SetActive(false);
-        PlayerHPManager.Instance.OnLeaveSurviveMode();
-    }
+   
 
     IEnumerator ChangeSpeedOnDie()
     {

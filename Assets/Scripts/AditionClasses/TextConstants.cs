@@ -5,6 +5,7 @@ public static class TextConstants
 {
     public static Language Language;
     public static string HULLDMG = "Hull Damage";
+    public static string DMG = "Damage";
     public static string SHIELDDMG = "Shield Damage";
     public static string ROTATIONSPEED = "Rotation Speed";
     public static string FIRERATE = "FireRate";
@@ -85,7 +86,9 @@ public static class TextConstants
     public static string PRESSSPACE = "Press\r\nSpace";
     public static string UPGRADEDAMAGE = "Upgrade Damage";
     public static string UPGRADEFIRERATE = "Upgrade FireRate";
+    public static string RELOADTIME = "ReloadTime";
     public static string UPGRADERELOADTIME = "Upgrade ReloadTime";
+    public static string CAPACITY = "Capacity";
     public static string UPGRADECAPACITY = "Upgrade Capacity";
     public static string UPGRADEHULLHP = "Upgrade HullHP";
     public static string UPGRADESHIELDHP = "Upgrade ShieldHP";
@@ -96,6 +99,7 @@ public static class TextConstants
     public static string COLLECT = "Collect";
     public static string BONUSCARDOFFERTEXT = "Collect Bonus\r\nCard?";
     public static string BONUSCARDCANCELEXT = "Continue without bonus";
+    public static string ABORT = "Abort";
 
     public static Dictionary<StageName, string> TUTORIALSTAGESTEXTS = new()
         {
@@ -134,6 +138,7 @@ public static class TextConstants
         else if (language == "ru")
         {
             Language = Language.ru;
+            DMG = "Урон";
             HULLDMG = "Урон Копусу";
             SHIELDDMG = "Урон Щитам";
             ROTATIONSPEED = "Скорость Поворота";
@@ -213,7 +218,9 @@ public static class TextConstants
             PRESSSPACE = "Жми\r\nПробел";
             UPGRADEDAMAGE = "Улучшить Урон";
             UPGRADEFIRERATE = "Улучшить Скорострельность";
+            RELOADTIME = "Время Перезарядки";
             UPGRADERELOADTIME = "Улучшить Время Перезарядки";
+            CAPACITY = "Емкость";
             UPGRADECAPACITY = "Улучшить Емкость";
             UPGRADEHULLHP = "Улучшить ХП Корпуса";
             UPGRADESHIELDHP = "Улучшить ХП Щита";
@@ -224,9 +231,10 @@ public static class TextConstants
             COLLECT = "Получить";
             BONUSCARDOFFERTEXT = "Хотите получить\r\nбонусную карту?";
             BONUSCARDCANCELEXT = "Продолжить без бонуса";
+            ABORT = "Прервать";
 
 
-            Dictionary<StageName, string> tutorialTextsRu = new()
+    Dictionary<StageName, string> tutorialTextsRu = new()
             {
                 { StageName.Greetings, "Привет, боец!\r\nМеня зовут Мэг, я твой водитель. Я помогу тебе в твоем первом рейде по Пустоши." },
                 { StageName.FirstRaidLaunch, "Наш склад сейчас пуст\r\nи нам срочно требуются ресурсы.\r\nДавай прокатимся за ними." },
