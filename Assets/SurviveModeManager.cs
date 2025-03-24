@@ -35,6 +35,7 @@ public class SurviveModeManager : MonoBehaviour
     public int MaxEnemiesCount => surviveModeDifficultManager.ModeDifficult.maxEnemiesCount;
 
     public float EnemyHpMod => surviveModeDifficultManager.ModeDifficult.enemyHpMod;
+    public float EnemyDMGMod => surviveModeDifficultManager.ModeDifficult.enemyDmgMod;
     public Action<float> _onIncreaseEnemyPowerMod;
 
 
@@ -132,7 +133,7 @@ public class SurviveModeManager : MonoBehaviour
         while (true)
         {
             surviveModeDifficultManager.IncreaseEnemyPowerInTime();
-            _onIncreaseEnemyPowerMod?.Invoke(surviveModeDifficultManager.ModeDifficult.enemyDmgMod);
+            _onIncreaseEnemyPowerMod?.Invoke(_deffDifficultData.increaseEnemyPowerMod * Time.deltaTime);
             yield return null;
         }
     }

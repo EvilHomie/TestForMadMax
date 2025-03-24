@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,9 @@ public class InRaidManager : MonoBehaviour
     [SerializeField] float _blackoutDelay;
     [SerializeField] float _blackoutPause;
     [SerializeField] float _blackoutDuration;
+
+    [SerializeField] Transform _surviveModeDifficult;
+    [SerializeField] TextMeshProUGUI _normalModeLevelNumberText;
 
 
     LevelParameters _selectedLeveParameters;
@@ -147,13 +151,21 @@ public class InRaidManager : MonoBehaviour
 
     void ConfigureDataOnStartRaid()
     {
+        _surviveModeDifficult.gameObject.SetActive(false);
+
         _inSurviveMod = false;
         _selectedLeveParameters = LevelManager.Instance.GetSelectedLevelParameters();
+        _normalModeLevelNumberText.text = _selectedLeveParameters.LevelName;
+        _normalModeLevelNumberText.gameObject.SetActive(true);
         ResetData();
     }
 
     void ConfigureDataOnStartSurviveMod()
     {
+        _surviveModeDifficult.gameObject.SetActive(true);
+        _normalModeLevelNumberText.gameObject.SetActive(false);
+
+
         _inSurviveMod = true;
         _selectedLeveParameters = SurviveModeManager.Instance.SMLevelParameters;
         ResetData();

@@ -24,7 +24,7 @@ public class SurviveModeDifficultProgress : MonoBehaviour
 
     public void OnStartMode()
     {
-        _difficultArrow.parent.gameObject.SetActive(true);
+        //_difficultArrow.parent.gameObject.SetActive(true);
         _difficultArrow.rotation = Quaternion.Euler(_minEulerAngles);
         foreach (Transform c in _scullsContainer)
         {
@@ -35,7 +35,7 @@ public class SurviveModeDifficultProgress : MonoBehaviour
 
     public void OnFinishMode()
     {
-        _difficultArrow.parent.gameObject.SetActive(false);
+        //_difficultArrow.parent.gameObject.SetActive(false);
         _difficultArrow.rotation = Quaternion.Euler(_minEulerAngles);
         gameObject.SetActive(false);
     }

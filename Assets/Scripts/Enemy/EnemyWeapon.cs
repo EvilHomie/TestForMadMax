@@ -10,11 +10,9 @@ public class EnemyWeapon : WeaponLogic
     protected override float CurShieldDmg => _shieldDmg;
     protected override float CurFireRate => _fireRate;
 
+    [SerializeField]  float _dmgMod = 0;
 
-    float _baseHullDmg;
-    float _baseShieldDmg;
-    float _survModeDmgMod;
-    float _onchangeEnemyTirBonus;
+    float _deffDmg = 0;
 
     public void StartShooting()
     {
@@ -33,28 +31,20 @@ public class EnemyWeapon : WeaponLogic
         _fireRate *= FRMod;
 
         if (InRaidManager.Instance.InSurviveMod)
-        {
-            _baseHullDmg = _hullDmg;
-            _baseShieldDmg = _shieldDmg;
-            _survModeDmgMod = 0;
-            _onchangeEnemyTirBonus = 0;
+        {            
+            _dmgMod = SurviveModeManager.Instance.EnemyDMGMod;
+            _deffDmg = _hullDmg;
+            _hullDmg = _deffDmg * _dmgMod;
+            _shieldDmg = _deffDmg * _dmgMod;
             SurviveModeManager.Instance._onIncreaseEnemyPowerMod += OnIncreaseEnemyPowerMod;
         }
     }
 
     void OnIncreaseEnemyPowerMod(float dmgMod)
     {
-        if (_survModeDmgMod - _onchangeEnemyTirBonus < dmgMod)
-        {
-            _survModeDmgMod = dmgMod + _onchangeEnemyTirBonus;
-        }
-        else
-        {
-            _onchangeEnemyTirBonus = _survModeDmgMod - 1;
-        }
-
-        _hullDmg = _baseHullDmg * _survModeDmgMod;
-        _shieldDmg = _baseShieldDmg * _survModeDmgMod;
+        _dmgMod += dmgMod;
+        _hullDmg = _deffDmg * _dmgMod;
+        _shieldDmg = _deffDmg * _dmgMod;
     }
 
     private void OnDisable()

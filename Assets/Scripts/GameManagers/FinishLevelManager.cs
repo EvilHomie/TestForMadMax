@@ -166,6 +166,7 @@ public class FinishLevelManager : MonoBehaviour
 
     void ShowLevelStatusPanel(bool isSuccessfully)
     {
+        if (InRaidManager.Instance.InSurviveMod) return;
         if (isSuccessfully)
         {
             _levelStatusText.color = Color.green;
