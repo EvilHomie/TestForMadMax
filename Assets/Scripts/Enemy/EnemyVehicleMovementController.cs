@@ -7,17 +7,17 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyVehicleMovementController : MonoBehaviour
 {
-    List<Transform> _frontWheels;
-    NavMeshObstacle _navMeshObstacle;
+    protected List<Transform> _frontWheels;
+    protected NavMeshObstacle _navMeshObstacle;
 
-    EnemyVehicleManager _enemyVehicleManager;
-    NavMeshAgent _navMeshAgent;
+    protected EnemyVehicleManager _enemyVehicleManager;
+    protected NavMeshAgent _navMeshAgent;
     PosInEnemyGameZone _reservedPosInEnemyGameZone;
-    Rigidbody _rigidbody;
+    protected Rigidbody _rigidbody;
 
 
     bool _gameZoneIsReached = false;
-    bool _isDead = false;
+    protected bool _isDead = false;
 
     float _currentOffset;
 
@@ -27,11 +27,11 @@ public class EnemyVehicleMovementController : MonoBehaviour
 
     float _lastBodyZPos = 0;
     float _rotationTreshhold = 0.5f;
-    bool _isInit = false;
+    protected bool _isInit = false;
     float _runSpeedMod = 3;
     bool _tryRunAway = false;
 
-    public void Init(EnemyVehicleManager enemyVehicleManager, Rigidbody rigidbody, List<Transform> frontWheels, NavMeshObstacle navMeshObstacle)
+    public virtual void Init(EnemyVehicleManager enemyVehicleManager, Rigidbody rigidbody, List<Transform> frontWheels, NavMeshObstacle navMeshObstacle)
     {
         _navMeshObstacle = navMeshObstacle;
         _frontWheels = frontWheels;
@@ -49,10 +49,10 @@ public class EnemyVehicleMovementController : MonoBehaviour
         _isInit = true;
     }
 
-    public void CustomUpdate()
+    public virtual void CustomUpdate()
     {
         if (!_isInit) return;
-        if(_tryRunAway) return;
+        if (_tryRunAway) return;
         if (!_isDead)
         {
             RotationLogic();
@@ -136,7 +136,7 @@ public class EnemyVehicleMovementController : MonoBehaviour
         _navMeshAgent.SetDestination(_reservedPosInEnemyGameZone.transform.position);
     }
 
-    public void OnDie()
+    public virtual void OnDie()
     {
         CancelInvoke();
         StopAllCoroutines();

@@ -148,6 +148,7 @@ public class SurviveModeManager : MonoBehaviour
         PlayerWeaponManager.Instance.OnStartSurviveMode();
         UISurviveModePausePanel.Instance.OnStartSurviveMode();
         _abstractAmmunitionBelt.OnStartSurviveMode(_currentWeaponData);
+        SurviveModeEnemyHPSpawner.Instance.OnStartSurviveMode();
         YandexGame.GameplayStart();
     }
 
@@ -262,6 +263,7 @@ public class SurviveModeManager : MonoBehaviour
         UIJoystickTouchController.Instance.OnStopSurviveMode();
         UISurviveModePausePanel.Instance.OnStopSurviveMode();
         SurviveModeUpgradePanel.Instance.OnLeaveSurviveMode();
+        SurviveModeEnemyHPSpawner.Instance.OnStopSurviveMode();
     }
 
 

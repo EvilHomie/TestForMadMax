@@ -10,11 +10,11 @@ public class PlayerHPManager : MonoBehaviour
 
 
     [SerializeField] float _onHitShakeIntensity;
-    
+
     [SerializeField] ParticleSystem _explosionPS;
     [SerializeField] AudioClip _onDieExplosionSound;
 
-    
+
 
     float _maxHullHp;
     float _maxShieldHp;
@@ -136,7 +136,7 @@ public class PlayerHPManager : MonoBehaviour
 
     void OnSelectRewardOption(bool GetRewardStatus)
     {
-        if(GetRewardStatus)
+        if (GetRewardStatus)
         {
             RestoreHP();
         }
@@ -171,4 +171,12 @@ public class PlayerHPManager : MonoBehaviour
         OnPlayerVehicleDestroyed();
     }
 
+    public void OnHPEnemyDestroyed()
+    {
+        float restorValue = _maxHullHp * SurviveModeEnemyHPSpawner.Instance.RestoreHpPercent / 100;
+
+        _playerHullHP += restorValue;
+        if (_playerHullHP > _maxHullHp)
+            _playerHullHP = _maxHullHp;
+    }
 }

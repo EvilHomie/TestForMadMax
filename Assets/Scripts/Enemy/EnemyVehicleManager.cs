@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(EnemyVehicleMovementController))]
 [RequireComponent(typeof(EnemyWeaponController))]
 [RequireComponent(typeof(VehicleVisualEffectsLogic))]
 [RequireComponent(typeof(ResourcesInVehicle))]

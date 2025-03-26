@@ -21,15 +21,15 @@ public class VehiclePartManager : MonoBehaviour, IDamageable
 
 
     private void Awake()
-    {
+    {        
         _enemyVehicleManager = transform.root.GetComponent<EnemyVehicleManager>();
+        _enemyCharacteristics = transform.root.GetComponent<EnemyCharacteristics>();
         _partRenderer = GetComponent<Renderer>();
         FillManagers();
     }
 
     protected virtual void Start()
     {
-        _enemyCharacteristics = _enemyVehicleManager.EnemyCharacteristics;
         _partRenderer.material.DisableKeyword("_EMISSION");
         SetHPValues();
     }
