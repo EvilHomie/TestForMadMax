@@ -218,6 +218,7 @@ public class SurviveModeUpgradePanel : MonoBehaviour
             {
                 SurviveModeUpgradeService.Instance.OnVehicleUpgrade(_bonusCardData);
             }
+            EventTextPanel.Instance.ShowEventPanel(_bonusCardData);
         }
         CloseUpgradePanel();
     }

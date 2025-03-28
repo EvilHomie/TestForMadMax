@@ -5,7 +5,7 @@ public static class TextConstants
 {
     public static Language Language;
     public static string HULLDMG = "Hull Damage";
-    public static string DMG = "Damage";
+    public static string DAMAGE = "Damage";
     public static string SHIELDDMG = "Shield Damage";
     public static string ROTATIONSPEED = "Rotation Speed";
     public static string FIRERATE = "FireRate";
@@ -16,6 +16,7 @@ public static class TextConstants
     public static string ITEMNAME = "Item Name";
 
     public static string HULLHP = "Hull HP";
+    public static string FULLHP = "Full HP";
     public static string SHIELDHP = "Shield HP";
     public static string SHIELREGENRATE = "Shield RegenRate";
     public static string WEAPONSCOUNT = "Weapons Count";
@@ -138,7 +139,7 @@ public static class TextConstants
         else if (language == "ru")
         {
             Language = Language.ru;
-            DMG = "Урон";
+            DAMAGE = "Урон";
             HULLDMG = "Урон Копусу";
             SHIELDDMG = "Урон Щитам";
             ROTATIONSPEED = "Скорость Поворота";
@@ -148,6 +149,7 @@ public static class TextConstants
             INSECOND = "/секунду";
             ITEMNAME = "Имя предмета";
             HULLHP = "ХП Корпуса";
+            FULLHP = "Максимальная прочность";
             SHIELDHP = "ХП Щита";
             SHIELREGENRATE = "Регенерация Щита";
             WEAPONSCOUNT = "Количество Орудий";

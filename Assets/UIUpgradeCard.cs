@@ -70,7 +70,9 @@ public class UIUpgradeCard : MonoBehaviour
             SurviveModeUpgradeService.Instance.OnVehicleUpgrade(_upgradeCardData);
         }
         SurviveModeUpgradePanel.Instance.OnCardSelected();
+        EventTextPanel.Instance.ShowEventPanel(_upgradeCardData);
     }
 
 
+    
 }

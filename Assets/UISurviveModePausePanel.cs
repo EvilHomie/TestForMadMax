@@ -52,7 +52,7 @@ public class UISurviveModePausePanel : MonoBehaviour
         _hullHPText.text = TextConstants.HULLHP;
         _shieldHPText.text = TextConstants.SHIELDHP;
         _shieldRegText.text = TextConstants.SHIELREGENRATE;
-        _damageText.text = TextConstants.DMG;
+        _damageText.text = TextConstants.DAMAGE;
         _fireRateText.text = TextConstants.FIRERATE;
         _reloadTimeText.text = TextConstants.RELOADTIME;
         _capacityText.text = TextConstants.CAPACITY;

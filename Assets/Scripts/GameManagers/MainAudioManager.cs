@@ -2,30 +2,31 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using YG;
 
 public class MainAudioManager : MonoBehaviour
 {
     public static MainAudioManager Instance;
     [SerializeField] AudioMixer _audioMixer;
-
-    //[SerializeField] Button _toggleSFXButton;
-    //[SerializeField] Button _toggleMusicButton;
-
-    //[SerializeField] Image _toggleSFXImage;
-    //[SerializeField] Image _toggleMusicImage;
-
+    [SerializeField] Button _toggleSFXButton;
+    [SerializeField] Image _toggleSFXImage;
     [SerializeField] Sprite _SFXEnabledIcon;
     [SerializeField] Sprite _SFXDisabledIcon;
+    [SerializeField] Transform _SFXHotKeyImage;
 
+    [SerializeField] Button _toggleMusicButton;
+    [SerializeField] Image _toggleMusicImage;
     [SerializeField] Sprite _MusicEnabledIcon;
     [SerializeField] Sprite _MusicDisabledIcon;
+    [SerializeField] Transform _MusicHotKeyImage;
 
     bool _SFXIsOn;
     bool _MusicIsOn;
 
-
     float _sfxMax = -1f;
     float _sfxMin = -80f;
+
+    bool _isDesktop;
 
     private void Awake()
     {
@@ -36,45 +37,52 @@ public class MainAudioManager : MonoBehaviour
     {
         _SFXIsOn = true;
         _MusicIsOn = true;
-        //_toggleSFXImage.sprite = _SFXEnabledIcon;
-        //_toggleMusicImage.sprite = _MusicEnabledIcon;
-        //_toggleSFXButton.onClick.AddListener(SwitchSFXVolume);
-        //_toggleMusicButton.onClick.AddListener(SwitchMusicVolume);
-        //GameFlowManager.GameFlowChangeStateOnPause += ConfigAudioOnChangeFlowState;
+        _SFXHotKeyImage.gameObject.SetActive(YandexGame.EnvironmentData.isDesktop);
+        _MusicHotKeyImage.gameObject.SetActive(YandexGame.EnvironmentData.isDesktop);
+        _isDesktop = YandexGame.EnvironmentData.isDesktop;
+
+        _toggleSFXButton.onClick.AddListener(SwitchSFXVolume);
+        _toggleMusicButton.onClick.AddListener(SwitchMusicVolume);
+    }
+    private void Update()
+    {
+        if(!_isDesktop) return;
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            SwitchSFXVolume();
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            SwitchMusicVolume();
+        }
     }
 
-    //void ConfigAudioOnChangeFlowState(bool onPause)
-    //{
-    //    if (onPause) DisableSFX();
-    //    else EnableSFX();
-    //}
-
-    public void SwitchSFXVolume(Image image)
+    public void SwitchSFXVolume()
     {
         _SFXIsOn = !_SFXIsOn;
         if (_SFXIsOn)
         {
             _audioMixer.SetFloat("SFX", _sfxMax);
-            image.sprite = _SFXEnabledIcon;
+            _toggleSFXImage.sprite = _SFXEnabledIcon;
         }
         else
         {
             _audioMixer.SetFloat("SFX", _sfxMin);
-            image.sprite = _SFXDisabledIcon;
+            _toggleSFXImage.sprite = _SFXDisabledIcon;
         }
     }
-    public void SwitchMusicVolume(Image image)
+    public void SwitchMusicVolume()
     {
         _MusicIsOn = !_MusicIsOn;
         if (_MusicIsOn)
         {
             _audioMixer.SetFloat("Music", -7f);
-            image.sprite = _MusicEnabledIcon;
+            _toggleMusicImage.sprite = _MusicEnabledIcon;
         }
         else
         {
             _audioMixer.SetFloat("Music", -80f);
-            image.sprite = _MusicDisabledIcon;
+            _toggleMusicImage.sprite = _MusicDisabledIcon;
         }
     }
 

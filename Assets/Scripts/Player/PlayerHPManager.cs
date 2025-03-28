@@ -173,10 +173,23 @@ public class PlayerHPManager : MonoBehaviour
 
     public void OnHPEnemyDestroyed()
     {
+        if (_playerHullHP == _maxHullHp)
+        {
+            EventTextPanel.Instance.ShowEventText(0, $"{TextConstants.FULLHP}");
+            return;
+        }
         float restorValue = _maxHullHp * SurviveModeEnemyHPSpawner.Instance.RestoreHpPercent / 100;
-
-        _playerHullHP += restorValue;
-        if (_playerHullHP > _maxHullHp)
+        if (_playerHullHP + restorValue > _maxHullHp)
+        {
+            restorValue = _maxHullHp - _playerHullHP;
             _playerHullHP = _maxHullHp;
+        }
+        else
+        {
+            _playerHullHP += restorValue;
+        }
+
+
+        EventTextPanel.Instance.ShowEventText((int)restorValue, $"{TextConstants.HULLHP} +");
     }
 }

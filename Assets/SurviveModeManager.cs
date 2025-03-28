@@ -9,7 +9,7 @@ public class SurviveModeManager : MonoBehaviour
     public static SurviveModeManager Instance;
 
     [SerializeField] AbstractAmmunitionBelt _abstractAmmunitionBelt;
-    
+
 
     [Header("Difficult Data")]
     [SerializeField] ModeDifficult _deffDifficultData;
@@ -31,6 +31,7 @@ public class SurviveModeManager : MonoBehaviour
 
     [SerializeField] Button _closeSurviveModeButton;
     [SerializeField] Button _openPausePanel;
+    [SerializeField] Transform _openPausePanelHotKeyImage;
     [SerializeField] Button _closePausePanel;
 
     SurviveModeDifficultManager surviveModeDifficultManager;
@@ -79,7 +80,7 @@ public class SurviveModeManager : MonoBehaviour
 
     public void Init()
     {
-        
+        _openPausePanelHotKeyImage.gameObject.SetActive(YandexGame.EnvironmentData.isDesktop);
         gameObject.SetActive(false);
         TESTSurviveModStatistics.Instance.Init();
 
@@ -118,7 +119,7 @@ public class SurviveModeManager : MonoBehaviour
     }
 
     void CreateWeapon(int weaponIndex)
-    {        
+    {
         PlayerWeaponManager.Instance.OnSurviveModChangeWeapon(_originalWeapons[weaponIndex].gameObject, out AbstractPlayerWeapon createdWeapon);
         _currentPlayerWeapon = createdWeapon;
         _currentPlayerWeapon.Init(_currentWeaponData, _abstractAmmunitionBelt);
@@ -157,6 +158,11 @@ public class SurviveModeManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         while (true)
         {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                OnOpenPausePanel();
+            }
+
             surviveModeDifficultManager.IncreaseEnemyPowerInTime();
             _onIncreaseEnemyPowerMod?.Invoke(_deffDifficultData.increaseEnemyPowerMod * Time.deltaTime);
             yield return null;
@@ -193,12 +199,12 @@ public class SurviveModeManager : MonoBehaviour
     public bool OnChangeWeapon()
     {
         _curWeaponIndex++;
-        if(_curWeaponIndex >= _weaponsDeffData.Length) return false;
+        if (_curWeaponIndex >= _weaponsDeffData.Length) return false;
         SurviveModeUpgradePanel.Instance.OnGiveNewWeapon(_weaponsDeffData[_curWeaponIndex].weaponName);
 
         _currentWeaponData.maxFireRate = _weaponsDeffData[_curWeaponIndex].maxFireRate;
         _currentWeaponData.minReloadTime = _weaponsDeffData[_curWeaponIndex].minReloadTime;
-        CreateWeapon(_curWeaponIndex);       
+        CreateWeapon(_curWeaponIndex);
         return true;
     }
 
@@ -240,7 +246,7 @@ public class SurviveModeManager : MonoBehaviour
     }
 
     public void OnCLoseMod()
-    {        
+    {
         float survivedTime = Time.time - _timer;
         MetricaSender.SendSurviveModeGoal(SurviveModeGoal.StopMode, $"{(int)survivedTime}");
         UILevelStatistic.Instance.SetSurviveTime(survivedTime);

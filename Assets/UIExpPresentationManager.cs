@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class UIExpPresentationManager : MonoBehaviour
 {
@@ -93,7 +94,7 @@ public class UIExpPresentationManager : MonoBehaviour
             _collectedCardsCounterText.text = _collectedCardCount.ToString();
             _glowAnimator.SetBool("Enabled", true);
 
-            if (!_wasShown)
+            if (!_wasShown && YandexGame.EnvironmentData.isDesktop)
             {
                 _wasShown = true;
                 _pressSpaceText.gameObject.SetActive(true);
